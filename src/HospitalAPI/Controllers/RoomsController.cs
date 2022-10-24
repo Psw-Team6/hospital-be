@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using System;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +25,7 @@ namespace HospitalAPI.Controllers
 
         // GET api/rooms/2
         [HttpGet("{id}")]
-        public ActionResult GetById(int id)
+        public ActionResult GetById(Guid id)
         {
             var room = _roomService.GetById(id);
             if (room == null)
@@ -50,7 +51,7 @@ namespace HospitalAPI.Controllers
 
         // PUT api/rooms/2
         [HttpPut("{id}")]
-        public ActionResult Update(int id, Room room)
+        public ActionResult Update(Guid id, Room room)
         {
             if (!ModelState.IsValid)
             {
@@ -76,7 +77,7 @@ namespace HospitalAPI.Controllers
 
         // DELETE api/rooms/2
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             var room = _roomService.GetById(id);
             if (room == null)
