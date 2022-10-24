@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using HospitalLibrary.DoctorRole.Model;
+using HospitalLibrary.Doctors.Model;
 
 
 namespace HospitalLibrary.DbConfigurations

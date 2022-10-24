@@ -1,6 +1,6 @@
 ﻿using System;
 using HospitalLibrary.Core.Model;
-using HospitalLibrary.DoctorRole.Model;
+using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
 
 namespace HospitalLibrary.Appointments.Model

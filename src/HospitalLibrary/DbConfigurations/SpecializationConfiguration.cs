@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.DoctorRole.Model;
+﻿using HospitalLibrary.Doctors.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HospitalLibrary.DoctorRole.Model
+namespace HospitalLibrary.Doctors.Model
 {
     public class Specialization
     {

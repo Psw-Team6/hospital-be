@@ -88,5 +88,11 @@ namespace HospitalAPI.Controllers
             _roomService.Delete(room);
             return NoContent();
         }
+        [HttpGet("/time")]
+        public string Time()
+        {
+            return DateTime.Now.TimeOfDay.ToString();
+        }
+        
     }
 }

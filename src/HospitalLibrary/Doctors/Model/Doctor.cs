@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.sharedModel;
 
-namespace HospitalLibrary.DoctorRole.Model
+namespace HospitalLibrary.Doctors.Model
 {
     public class Doctor:ApplicationUser
     {
