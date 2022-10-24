@@ -31,7 +31,8 @@ namespace HospitalAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
-
+            
+           
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
         }
@@ -46,6 +47,12 @@ namespace HospitalAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
+          
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
+                context?.Database.Migrate();
+            }
 
             if (env.IsDevelopment())
             {
