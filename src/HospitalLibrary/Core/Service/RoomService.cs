@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using System;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using System.Collections.Generic;
 
@@ -18,12 +19,12 @@ namespace HospitalLibrary.Core.Service
             return _roomRepository.GetAll();
         }
 
-        public Room GetById(int id)
+        public Room GetById(Guid id)
         {
             return _roomRepository.GetById(id);
         }
 
-        public void Create(Room room)
+          public void Create(Room room)
         {
             _roomRepository.Create(room);
         }
