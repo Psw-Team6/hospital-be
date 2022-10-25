@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace HospitalAPI.Dtos
+namespace HospitalAPI.Dtos.Response
 {
-    public class SpecializationDto
+    public class SpecializationResponse
     {
         public Guid Id { get; set; }
         public string Name{ get; set; }

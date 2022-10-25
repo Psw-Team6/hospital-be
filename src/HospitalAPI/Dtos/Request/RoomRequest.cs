@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace HospitalAPI.Dtos.Request
 {
     public class RoomRequest

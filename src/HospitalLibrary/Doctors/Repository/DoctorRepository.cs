@@ -13,10 +13,12 @@ namespace HospitalLibrary.Doctors.Repository
         {
             //this.Configuration.LazyLoadingEnabled = false;
         }
-
         public async Task<List<Doctor>> GetAllDoctors()
         {
-           return await  DbSet.Include(d => d.Room).ToListAsync();
+           return await  DbSet.Include(d => d.Room)
+                                .Include(d => d.Address)
+                                .Include(d => d.Appointments)
+                                .ToListAsync();
         }
     }
 }

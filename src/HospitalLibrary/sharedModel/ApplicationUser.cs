@@ -12,6 +12,5 @@ namespace HospitalLibrary.sharedModel
         public string Email { get; set; }
         public string Jmbg{ get; set; }
         public string Phone{ get; set; }
-        //public string FullName => $"{Name} {Surname}";
     }
 }

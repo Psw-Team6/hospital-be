@@ -8,5 +8,6 @@ namespace HospitalLibrary.Doctors.Repository
     public interface IDoctorRepository: IGenericRepository<Doctor>
     {
         Task<List<Doctor>> GetAllDoctors();
+        
     }
 }

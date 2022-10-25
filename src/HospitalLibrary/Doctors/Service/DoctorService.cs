@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalLibrary.Common;
@@ -25,6 +26,22 @@ namespace HospitalLibrary.Doctors.Service
             var newDoctor =await _unitOfWork.DoctorRepository.CreateAsync(doctor);
             await _unitOfWork.CompleteAsync();
             return newDoctor;
+        }
+
+        public async Task<Doctor> GetById(Guid id)
+        {
+            var doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(id);
+            await _unitOfWork.CompleteAsync();
+            return doctor;
+        }
+
+        public async Task<bool> DeleteById(Guid id)
+        {
+            var doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(id);
+            if (doctor == null) { return false; }
+            await _unitOfWork.DoctorRepository.DeleteAsync(doctor);
+            await _unitOfWork.CompleteAsync();
+            return true;
         }
     }
 }

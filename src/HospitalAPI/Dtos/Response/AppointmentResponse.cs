@@ -1,6 +1,6 @@
 ﻿namespace HospitalAPI.Dtos
 {
-    public class AppointmentDto
+    public class AppointmentResponse
     {
         
     }

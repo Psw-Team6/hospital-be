@@ -34,7 +34,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid?>("DoctorId")
+                    b.Property<Guid>("DoctorId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Emergent")
@@ -43,10 +43,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<DateTime>("FinishTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid?>("PatientId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("RoomId")
+                    b.Property<Guid>("PatientId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("StartTime")
@@ -58,9 +55,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Appointment");
+                    b.ToTable("Appointments");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
@@ -81,7 +76,7 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.DoctorRole.Model.Doctor", b =>
+            modelBuilder.Entity("HospitalLibrary.Doctors.Model.Doctor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,6 +101,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("SpecializationId")
                         .HasColumnType("uuid");
 
@@ -120,12 +118,15 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("AddressId");
 
+                    b.HasIndex("RoomId")
+                        .IsUnique();
+
                     b.HasIndex("SpecializationId");
 
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.DoctorRole.Model.Specialization", b =>
+            modelBuilder.Entity("HospitalLibrary.Doctors.Model.Specialization", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -205,40 +206,44 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Appointments.Model.Appointment", b =>
                 {
-                    b.HasOne("HospitalLibrary.DoctorRole.Model.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId");
+                    b.HasOne("HospitalLibrary.Doctors.Model.Doctor", "Doctor")
+                        .WithMany("Appointments")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("HospitalLibrary.Patients.Model.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
-
-                    b.HasOne("HospitalLibrary.Core.Model.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
-
-                    b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.DoctorRole.Model.Doctor", b =>
+            modelBuilder.Entity("HospitalLibrary.Doctors.Model.Doctor", b =>
                 {
                     b.HasOne("HospitalLibrary.sharedModel.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("HospitalLibrary.DoctorRole.Model.Specialization", "Specialization")
+                    b.HasOne("HospitalLibrary.Core.Model.Room", "Room")
+                        .WithOne("Doctor")
+                        .HasForeignKey("HospitalLibrary.Doctors.Model.Doctor", "RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Doctors.Model.Specialization", "Specialization")
                         .WithMany("Doctors")
                         .HasForeignKey("SpecializationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Address");
+
+                    b.Navigation("Room");
 
                     b.Navigation("Specialization");
                 });
@@ -252,9 +257,24 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.DoctorRole.Model.Specialization", b =>
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
+                {
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Doctors.Model.Doctor", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Doctors.Model.Specialization", b =>
                 {
                     b.Navigation("Doctors");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Patients.Model.Patient", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 #pragma warning restore 612, 618
         }
