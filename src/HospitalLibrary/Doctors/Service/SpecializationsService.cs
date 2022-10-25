@@ -17,18 +17,18 @@ namespace HospitalLibrary.Doctors.Service
             _mapper = mapper;
         }
 
-        public async Task<SpecializationDto> Create(SpecializationDto specializationDto)
+        public async Task<Specialization> Create(Specialization specialization)
         {
-            var convert = _mapper.Map<Specialization>(specializationDto);
-            var spec =await _unitOfWork.SpecializationsRepository.CreateAsync(convert);
+           // var convert = _mapper.Map<Specialization>(specialization);
+            var spec =await _unitOfWork.SpecializationsRepository.CreateAsync(specialization);
             await _unitOfWork.CompleteAsync();
-            return _mapper.Map<SpecializationDto>(spec);
+            return spec;
         }
 
-        public async  Task<SpecializationDto> GetById(Guid id)
+        public async  Task<Specialization> GetById(Guid id)
         {
-            var spec = await _unitOfWork.SpecializationsRepository.GetByIdAsync(id);
-            return _mapper.Map<SpecializationDto>(spec);
+            var specialization = await _unitOfWork.SpecializationsRepository.GetByIdAsync(id);
+            return specialization;
         }
     }
 }
