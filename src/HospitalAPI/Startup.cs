@@ -1,4 +1,5 @@
 using System.Reflection;
+using FluentValidation.AspNetCore;
 using HospitalLibrary.Common;
 using HospitalLibrary.Common.mapper;
 using HospitalLibrary.Core.Repository;
@@ -32,6 +33,8 @@ namespace HospitalAPI
             options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")));
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddControllers();
+            services.AddFluentValidationAutoValidation();
+            services.AddFluentValidationClientsideAdapters();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
