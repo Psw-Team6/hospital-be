@@ -17,7 +17,7 @@ namespace HospitalLibrary.Doctors.Service
 
         public async Task<List<Doctor>> GetAll()
         {
-            return (List<Doctor>) await _unitOfWork.DoctorRepository.GetAllDoctors();
+            return await _unitOfWork.DoctorRepository.GetAllDoctors();
         }
 
         public async Task<Doctor> CreateDoctor(Doctor doctor)

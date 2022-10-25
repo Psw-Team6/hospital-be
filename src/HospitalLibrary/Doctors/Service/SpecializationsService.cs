@@ -9,12 +9,10 @@ namespace HospitalLibrary.Doctors.Service
     public class SpecializationsService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
 
-        public SpecializationsService(IUnitOfWork unitOfWork, IMapper mapper)
+        public SpecializationsService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
         public async Task<Specialization> Create(Specialization specialization)
@@ -29,6 +27,18 @@ namespace HospitalLibrary.Doctors.Service
         {
             var specialization = await _unitOfWork.SpecializationsRepository.GetByIdAsync(id);
             return specialization;
+        }
+
+        public async Task<bool> Update(Specialization specialization)
+        {
+            await _unitOfWork.SpecializationsRepository.UpdateAsync(specialization);
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
+
+        public async Task<Specialization> GetByName(string name)
+        {
+            return await _unitOfWork.SpecializationsRepository.GetBySpecializationName(name);
         }
     }
 }

@@ -11,5 +11,6 @@ namespace HospitalLibrary.Common
         Task<T> GetByIdAsync(Guid id);
         Task<T> CreateAsync(T entity);
         Task DeleteAsync(T entity);
+        Task UpdateAsync(T entity);
     }
 }
