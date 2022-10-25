@@ -14,8 +14,12 @@ namespace HospitalLibrary.Common
         private DoctorRepository _doctorRepository;
         private PatientRepository _patientRepository;
         private AppointmentRepository _appointmentRepository;
+        private WorkingScheduleRepository _workingScheduleRepository;
         public  IPatientRepository PatientRepository => _patientRepository ??= new PatientRepository(_hospitalDbContext);
         public  IAppointmentRepository AppointmentRepository => _appointmentRepository ??= new AppointmentRepository(_hospitalDbContext);
+
+        public IWorkingSchueduleRepository WorkingSchueduleRepository =>
+            _workingScheduleRepository ??= new WorkingScheduleRepository(_hospitalDbContext);
 
         public ISpecializationsRepository SpecializationsRepository=> _specializationsRepository ??= new SpecializationsRepository(_hospitalDbContext);
         public IDoctorRepository DoctorRepository=> _doctorRepository ??= new DoctorRepository(_hospitalDbContext);

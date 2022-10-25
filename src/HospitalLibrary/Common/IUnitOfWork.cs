@@ -12,6 +12,8 @@ namespace HospitalLibrary.Common
         IDoctorRepository DoctorRepository { get; }
         IPatientRepository PatientRepository { get; }
         IAppointmentRepository AppointmentRepository { get; }
+        
+        IWorkingSchueduleRepository WorkingSchueduleRepository { get; }
         Task CompleteAsync();
     }
 }

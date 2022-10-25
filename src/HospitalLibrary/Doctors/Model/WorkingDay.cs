@@ -8,8 +8,6 @@ namespace HospitalLibrary.Doctors.Model
         public Guid Id { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime FinishTime { get; set; }
-        public bool IsHoliday { get; set;}
-        public bool IsSunday { get; set;}
-        public bool IsSaturday { get; set;}
+        
     }
 }
