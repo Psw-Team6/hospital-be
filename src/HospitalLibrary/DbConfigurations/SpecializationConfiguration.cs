@@ -9,12 +9,9 @@ namespace HospitalLibrary.DbConfigurations
         public void Configure(EntityTypeBuilder<Specialization> builder)
         {
             _ = builder.HasKey(x => x.Id);
-
+            _ = builder.HasIndex(x => x.Name).IsUnique();
             _ = builder.Property(x => x.Name)
                 .IsRequired();
-            // _ = builder.HasMany(specialization => specialization.Doctors)
-            //     .WithOne(doctor => doctor.Specialization)
-            //     .HasForeignKey();
         }
     }
 }

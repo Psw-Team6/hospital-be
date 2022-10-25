@@ -12,8 +12,12 @@ namespace HospitalLibrary.Doctors.Repository
 {
     public class SpecializationsRepository:GenericRepository<Specialization>, ISpecializationsRepository
     {
-        public SpecializationsRepository(HospitalDbContext dbContext) : base(dbContext)
+        public SpecializationsRepository(HospitalDbContext dbContext) : base(dbContext) { }
+
+        public async Task<Specialization> GetBySpecializationName(String name)
         {
+            var firstOrDefault = await DbSet.FirstOrDefaultAsync(specialization => specialization.Name == name);
+            return firstOrDefault;
         }
     }
 }

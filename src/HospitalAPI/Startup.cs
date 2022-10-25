@@ -1,16 +1,17 @@
+using System.Reflection;
+using System.Text.Json.Serialization;
+using FluentValidation.AspNetCore;
 using HospitalAPI.Mapper;
-using HospitalLibrary.Appointments.Repository;
-using HospitalLibrary.Appointments.Service;
+using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Common;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
-using HospitalLibrary.Patients.Repository;
-using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +35,15 @@ namespace HospitalAPI
             services.AddDbContext<HospitalDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")));
             services.AddAutoMapper(typeof(MappingProfile));
+            services.AddMvc(options =>
+                {
+                    options.EnableEndpointRouting = false;
+                    options.Filters.Add<ValidationFilter>();
+                })
+#pragma warning disable CS0618
+                .AddFluentValidation(mvc => mvc.RegisterValidatorsFromAssemblyContaining<Startup>())
+#pragma warning restore CS0618
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = null);
             services.AddSwaggerGen(c =>
@@ -45,13 +55,7 @@ namespace HospitalAPI
             services.AddScoped<ISpecializationsRepository, SpecializationsRepository>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
-            services.AddScoped<IPatientRepository, PatientRepository>();
-            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<DoctorService>();
-            services.AddScoped<PatientService>();
-            services.AddScoped<AppointmentService>();
-            
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

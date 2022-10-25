@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using HospitalAPI.Dtos.Response;
+using HospitalAPI.Dtos;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -20,22 +20,33 @@ namespace HospitalAPI.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<ActionResult> Create(SpecializationResponse specializationDto)
+        public async Task<ActionResult> Create(SpecializationDto specializationDto)
         {
-            // if (!ModelState.IsValid)
-            // {
-            //     return BadRequest(ModelState);
-            // }
             var specialization = _mapper.Map<Specialization>(specializationDto);
-            var spec = await _specializationsService.Create(specialization);
-            var result = _mapper.Map<SpecializationResponse>(spec);
+            var specializationCreated = await _specializationsService.Create(specialization);
+            var result = _mapper.Map<SpecializationDto>(specializationCreated);
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+        }
+        [HttpPut]
+        public async Task<ActionResult> Update(SpecializationDto specializationDto)
+        {
+            var specialization = _mapper.Map<Specialization>(specializationDto);
+            var spec = await _specializationsService.Update(specialization);
+            return spec ? NoContent() : NotFound();
         }
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(Guid id)
         {
             var specialization = await _specializationsService.GetById(id);
-            var result = _mapper.Map<SpecializationResponse>(specialization);
+            var result = _mapper.Map<SpecializationDto>(specialization);
+            return specialization == null ? NotFound() : Ok(result);
+        }
+
+        [HttpGet("/getByName/{name}")]
+        public async Task<ActionResult> GetByName(string name)
+        {
+            var specialization = await _specializationsService.GetByName(name);
+            var result = _mapper.Map<SpecializationDto>(specialization);
             return specialization == null ? NotFound() : Ok(result);
         }
     }

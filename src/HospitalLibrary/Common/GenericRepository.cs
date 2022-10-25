@@ -37,5 +37,20 @@ namespace HospitalLibrary.Common
             DbSet.Remove(entity);
             return Task.CompletedTask;
         }
+        public async Task DeleteByIdAsync(Guid guid)
+        {
+            var entity = await GetByIdAsync(guid);
+            if (entity == null)
+            {
+                return;
+            }
+            DbSet.Remove(entity);
+        }
+
+        public Task UpdateAsync(T entity)
+        {
+            var entityUpdate = DbSet.Update(entity);
+            return Task.FromResult(entityUpdate);
+        }
     }
 }
