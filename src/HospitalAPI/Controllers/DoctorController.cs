@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using HospitalAPI.Dtos;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
-using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -41,9 +39,18 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetById(Guid id)
+        public async Task<ActionResult> GetById([FromRoute]Guid id)
         {
-            return new NoContentResult();
+           var doctor =  await _doctorService.GetById(id);
+           var result = _mapper.Map<DoctorResponse>(doctor);
+           return result == null ? NotFound() : Ok(result);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> DeleteById( Guid id)
+        {
+            var result = await _doctorService.DeleteById(id);
+            return result ? NoContent() : NotFound();
         }
     }
 }

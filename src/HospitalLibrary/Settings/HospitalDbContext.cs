@@ -20,14 +20,6 @@ namespace HospitalLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            // _ = modelBuilder.Entity<Doctor>().HasOne(doctor => doctor.Specialization)
-            //     .WithMany(specialization => specialization.Doctors)
-            //     .HasForeignKey(doctor => doctor.SpecializationId);
-            // modelBuilder.Entity<Room>().HasData(
-            //     new Room() { Id = 1, Number = "101A", Floor = 1 },
-            //     new Room() { Id = 2, Number = "204", Floor = 2 },
-            //     new Room() { Id = 3, Number = "305B", Floor = 3 }
-            // );
             base.OnModelCreating(modelBuilder);
             
         }

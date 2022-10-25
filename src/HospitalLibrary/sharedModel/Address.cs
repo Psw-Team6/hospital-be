@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace HospitalLibrary.sharedModel
 {
@@ -11,6 +10,5 @@ namespace HospitalLibrary.sharedModel
         public string Country{ get; set; }
         public string Street{ get; set; }
         public int Postcode{ get; set; }
-        //public IEnumerable<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

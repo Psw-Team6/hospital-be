@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using HospitalAPI.Dtos;
+using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +20,7 @@ namespace HospitalAPI.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<ActionResult> Create(SpecializationDto specializationDto)
+        public async Task<ActionResult> Create(SpecializationResponse specializationDto)
         {
             // if (!ModelState.IsValid)
             // {
@@ -28,14 +28,14 @@ namespace HospitalAPI.Controllers
             // }
             var specialization = _mapper.Map<Specialization>(specializationDto);
             var spec = await _specializationsService.Create(specialization);
-            var result = _mapper.Map<SpecializationDto>(spec);
+            var result = _mapper.Map<SpecializationResponse>(spec);
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(Guid id)
         {
             var specialization = await _specializationsService.GetById(id);
-            var result = _mapper.Map<SpecializationDto>(specialization);
+            var result = _mapper.Map<SpecializationResponse>(specialization);
             return specialization == null ? NotFound() : Ok(result);
         }
     }
