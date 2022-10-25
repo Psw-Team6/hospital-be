@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HospitalLibrary.Doctors
+namespace HospitalAPI.Dtos
 {
     public class SpecializationDto
     {

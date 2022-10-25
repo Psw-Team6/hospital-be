@@ -9,7 +9,9 @@ namespace HospitalLibrary.Common
     {
         private readonly HospitalDbContext _hospitalDbContext;
         private SpecializationsRepository _specializationsRepository;
+        private DoctorRepository _doctorRepository;
         public ISpecializationsRepository SpecializationsRepository=> _specializationsRepository ??= new SpecializationsRepository(_hospitalDbContext);
+        public IDoctorRepository DoctorRepository=> _doctorRepository ??= new DoctorRepository(_hospitalDbContext);
         private bool _disposed;
         public UnitOfWork(HospitalDbContext hospitalDbContext)
         {
