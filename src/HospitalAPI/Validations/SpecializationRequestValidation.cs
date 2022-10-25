@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using HospitalAPI.Dtos;
+using HospitalAPI.Dtos.Request;
 
 namespace HospitalAPI.Validations
 {
-    public class SpecializationRequestValidation:AbstractValidator<SpecializationDto>
+    public class SpecializationRequestValidation:AbstractValidator<SpecializationRequest>
     {
         public SpecializationRequestValidation()
         {

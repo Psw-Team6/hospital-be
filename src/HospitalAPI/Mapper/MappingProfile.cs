@@ -17,6 +17,8 @@ namespace HospitalAPI.Mapper
             {
                 CreateMap<SpecializationResponse, Specialization>();
                 CreateMap<Specialization, SpecializationResponse>();
+                CreateMap<Specialization, SpecializationRequest>();
+                CreateMap<SpecializationRequest, Specialization>();
                 CreateMap<Doctor, DoctorResponse>();
                 CreateMap<DoctorRequest,Doctor>();
                 CreateMap<PatientRequest,Patient>();
