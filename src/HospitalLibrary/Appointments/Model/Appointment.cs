@@ -10,8 +10,6 @@ namespace HospitalLibrary.Appointments.Model
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
         public bool Emergent { get; set; }
-        public Room Room { get; set; }
-        public Guid RoomId { get; set; }
         public Patient Patient { get; set; }
         public Guid PatientId { get; set; }
         public Guid DoctorId { get; set; }

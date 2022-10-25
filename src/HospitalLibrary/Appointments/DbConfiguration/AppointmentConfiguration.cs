@@ -21,9 +21,9 @@ namespace HospitalLibrary.Appointments.DbConfiguration
             _ = builder.HasOne(appointment => appointment.Patient)
                 .WithMany(patient => patient.Appointments)
                 .HasForeignKey(appointment => appointment.PatientId);
-            _ = builder.HasOne(appointment => appointment.Room)
-                .WithMany(room => room.Appointments)
-                .HasForeignKey(appointment => appointment.RoomId);
+            // _ = builder.HasOne(appointment => appointment.Room)
+            //     .WithMany(room => room.Appointments)
+            //     .HasForeignKey(appointment => appointment.RoomId);
             // _ = builder.HasOne(doctor => doctor.Address)
             //     .WithMany(address => address.ApplicationUsers)
             //     .HasForeignKey(doctor => doctor.SpecializationId);

@@ -1,6 +1,7 @@
 using System.Reflection;
+using System.Text.Json.Serialization;
+using HospitalAPI.Mapper;
 using HospitalLibrary.Common;
-using HospitalLibrary.Common.mapper;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Doctors.Repository;
@@ -31,7 +32,8 @@ namespace HospitalAPI
             services.AddDbContext<HospitalDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")));
             services.AddAutoMapper(typeof(MappingProfile));
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);;
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
@@ -41,6 +43,7 @@ namespace HospitalAPI
             services.AddScoped<ISpecializationsRepository, SpecializationsRepository>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<DoctorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

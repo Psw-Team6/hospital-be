@@ -7,6 +7,7 @@ namespace HospitalLibrary.Common
     public interface IUnitOfWork:IAsyncDisposable
     {
         ISpecializationsRepository SpecializationsRepository { get; }
+        IDoctorRepository DoctorRepository { get; }
         Task CompleteAsync();
     }
 }
