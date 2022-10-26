@@ -10,8 +10,6 @@ namespace HospitalLibrary.Doctors.Model
 {
     public class Doctor:ApplicationUser
     {
-        
-        public Guid Id { get; set; }
         public Guid SpecializationId { get; set; }
         public Specialization Specialization{ get; set; }
         public IEnumerable<Appointment> Appointments { get; set; }

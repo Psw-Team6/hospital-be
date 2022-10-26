@@ -31,7 +31,7 @@ namespace HospitalAPI.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult> CreateDoctor([FromBody] PatientRequest patientRequest)
+        public async Task<ActionResult> CreatePatient([FromBody] PatientRequest patientRequest)
         {
             var patient = _mapper.Map<Patient>(patientRequest);
             var result = await _patientService.CreatePatient(patient);
