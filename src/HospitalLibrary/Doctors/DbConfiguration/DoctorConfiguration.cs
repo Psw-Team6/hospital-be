@@ -18,14 +18,9 @@ namespace HospitalLibrary.Doctors.DbConfiguration
             _ = builder.HasOne(doctor => doctor.Specialization)
                 .WithMany(specialization => specialization.Doctors)
                 .HasForeignKey(doctor => doctor.SpecializationId);
-           // _ = builder.
-            // _ = builder.HasOne(doctor => doctor.Room)
-            //     .WithOne(room => room.Doctor)
-            //     .HasForeignKey<Doctor>(doctor => doctor.RoomId);
-            //  .HasForeignKey(doctor => doctor.RoomId);
-            // _ = builder.HasOne(doctor => doctor.Address)
-            //     .WithMany(address => address.ApplicationUsers)
-            //     .HasForeignKey(doctor => doctor.SpecializationId);
+            _ = builder.HasOne(doctor => doctor.WorkingSchedule)
+                .WithMany(schedule =>  schedule.Doctors)
+                .HasForeignKey(doctor => doctor.WorkingScheduleId);
         }
     }
 }

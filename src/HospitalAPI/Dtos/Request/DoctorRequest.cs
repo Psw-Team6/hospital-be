@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HospitalAPI.Dtos.Response;
+using HospitalLibrary.Doctors.Model;
 
 namespace HospitalAPI.Dtos.Request
 {
@@ -9,6 +10,7 @@ namespace HospitalAPI.Dtos.Request
         public string Username { get; set; }
         public string Password { get; set; }
         public AddressResponse Address { get; set; }
+        public WorkingSchedule WorkingSchedule { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
