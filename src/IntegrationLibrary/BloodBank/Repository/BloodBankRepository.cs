@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IntegrationLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,29 +10,45 @@ namespace IntegrationLibrary.BloodBank.Repository
 {
     public class BloodBankRepository : IBloodBankRepository
     {
+        private readonly IntegrationDbContext _context;
+
+        public BloodBankRepository(IntegrationDbContext context) { 
+            _context = context;
+        }
         public void Create(BloodBank bloodBank)
         {
-            throw new NotImplementedException();
+            _context.BloodBanks.Add(bloodBank);
+            _context.SaveChanges();
         }
 
         public void Delete(BloodBank bloodBank)
         {
-            throw new NotImplementedException();
+            _context.BloodBanks.Remove(bloodBank);
+            _context.SaveChanges();
         }
 
         public IEnumerable<BloodBank> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.BloodBanks.ToList();
         }
 
         public BloodBank GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.BloodBanks.Find(id);
         }
 
         public void Update(BloodBank bloodBank)
         {
-            throw new NotImplementedException();
+            _context.Entry(bloodBank).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
     }
 }
