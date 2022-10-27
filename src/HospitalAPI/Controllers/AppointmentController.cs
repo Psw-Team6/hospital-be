@@ -36,6 +36,16 @@ namespace HospitalAPI.Controllers
             var result = await _appointmentService.CreateAppointment(appointment);
             return CreatedAtAction(nameof(GetById), new {id = result.Id}, result);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> RescheduleAppointement([FromBody] AppointmentRequest appointmentRequest)
+        {
+            var appointment = _mapper.Map<Appointment>(appointmentRequest);
+            var result = await _appointmentService.RescheduleAppointment(appointment);
+            return result == false ? NotFound() : NoContent();
+        }
+        
+        
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById([FromRoute]Guid id)
         {
