@@ -24,11 +24,15 @@ namespace HospitalLibrary.Appointments.Service
 
         public async Task<bool> RescheduleAppointment(Appointment appointment)
         {
-            var oldAppointment = await GetById(appointment.Id);
-            if (oldAppointment == null)
-            {
-                return false;
-            }
+            // var oldAppointment = await GetById(appointment.Id);
+            // if (oldAppointment == null)
+            // {
+            //     return false;
+            // }
+            //
+            // await _unitOfWork.AppointmentRepository.UpdateAsync(appointment);
+            // await _unitOfWork.CompleteAsync();
+            // return true;
 
             await _unitOfWork.AppointmentRepository.UpdateAsync(appointment);
             await _unitOfWork.CompleteAsync();

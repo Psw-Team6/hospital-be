@@ -39,7 +39,7 @@ namespace HospitalAPI.Controllers
 
 
         [HttpPut]
-        public async Task<ActionResult> RescheduleAppointement([FromBody] AppointmentRequest appointmentRequest)
+        public async Task<ActionResult> RescheduleAppointement([FromBody] AppointmentResponse appointmentRequest)
         {
             var appointment = _mapper.Map<Appointment>(appointmentRequest);
             var result = await _appointmentService.RescheduleAppointment(appointment);

@@ -10,10 +10,11 @@ namespace HospitalAPI.Dtos.Response
     {
         public Guid Id { get; set; }
         public bool Emergent { get; set; }
-        public TimeSlot TimeSlot { get; set; }
-        public Patient Patient { get; set; }
+        public DateTime StartTime { get; set; }
+        public TimeSpan Duration { get; set; }
+        public Guid PatientID { get; set; }
         public AppointmentType AppointmentType { get; set; }
-        public Doctor Doctor { get; set; }
+        public Guid DoctorId { get; set; }
         public AppointmentState AppointmentState { get; set; }
         
     }
