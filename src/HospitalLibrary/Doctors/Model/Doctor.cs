@@ -15,6 +15,8 @@ namespace HospitalLibrary.Doctors.Model
         public IEnumerable<Appointment> Appointments { get; set; }
         public Room Room { get; set; }
         public Guid RoomId { get; set; }
+        public Guid WorkingScheduleId { get; set; }
+        public WorkingSchedule WorkingSchedule { get; set; }
 
     }
 }

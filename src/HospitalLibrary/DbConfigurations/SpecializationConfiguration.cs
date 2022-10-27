@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Doctors.Model;
+﻿using System;
+using HospitalLibrary.Doctors.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,9 +14,9 @@ namespace HospitalLibrary.DbConfigurations
             _ = builder.Property(x => x.Name)
                 .IsRequired();
             _ = builder.HasData(
-                 new {Name = "Surgeon"}
-                ,new {Name = "Dermatology"}
-                ,new {Name = "General"}
+                 new {Id=Guid.NewGuid(), Name = "Surgeon"}
+                ,new {Id=Guid.NewGuid(), Name = "Dermatology"}
+                ,new {Id=Guid.NewGuid(), Name = "General"}
                 );
         }
     }
