@@ -36,7 +36,7 @@ namespace HospitalAPI.Controllers
             var result = await _appointmentService.CreateAppointment(appointment);
             return CreatedAtAction(nameof(GetById), new {id = result.Id}, result);
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult> GetById([FromRoute]Guid id)
         {
             var appointment =  await _appointmentService.GetById(id);
@@ -44,7 +44,7 @@ namespace HospitalAPI.Controllers
             return result == null ? NotFound() : Ok(result);
         }
         
-        [HttpGet("{id}")]
+        [HttpGet("GetDoctorAppointments/{id:guid}")]
         public async Task<ActionResult> GetDoctorAppointments([FromRoute]Guid id)
         {
             var appointments = await _appointmentService.GetDoctorAppointments(id);

@@ -13,11 +13,6 @@ namespace HospitalLibrary.DbConfigurations
             _ = builder.HasIndex(x => x.Name).IsUnique();
             _ = builder.Property(x => x.Name)
                 .IsRequired();
-            _ = builder.HasData(
-                 new {Id=Guid.NewGuid(), Name = "Surgeon"}
-                ,new {Id=Guid.NewGuid(), Name = "Dermatology"}
-                ,new {Id=Guid.NewGuid(), Name = "General"}
-                );
         }
     }
 }
