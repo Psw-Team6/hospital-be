@@ -1,5 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
+using HospitalAPI.Dtos.Request;
+using HospitalAPI.Dtos.Response;
+using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,10 +21,26 @@ namespace HospitalAPI.Controllers
             _appointmentService = appointmentService;
             _mapper = mapper;
         }
-
-        // public async Task<ActionResult> GetAllAppointments()
-        // {
-        //     return await 
-        // }
+        [HttpGet]
+        public async Task<ActionResult> GetAllAppointments()
+        {
+            var appointments = await _appointmentService.GetAllAppointments();
+            //var mappedAppointments = _mapper.Map<>
+            return Ok(appointments);
+        }
+        [HttpPost]
+        public async Task<ActionResult> CreateAppointment([FromBody] AppointmentRequest appointmentRequest)
+        {
+            var appointment = _mapper.Map<Appointment>(appointmentRequest);
+            var result = await _appointmentService.CreateAppointment(appointment);
+            return CreatedAtAction(nameof(GetById), new {id = result.Id}, result);
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetById([FromRoute]Guid id)
+        {
+            var appointment =  await _appointmentService.GetById(id);
+            var result = _mapper.Map<AppointmentResponse>(appointment);
+            return result == null ? NotFound() : Ok(result);
+        }
     }
 }

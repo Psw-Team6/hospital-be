@@ -3,7 +3,7 @@ using HospitalLibrary.Doctors.Model;
 
 namespace HospitalLibrary.Doctors.Repository
 {
-    public interface IWorkingSchueduleRepository:IGenericRepository<WorkingSchuedule>
+    public interface IWorkingSchueduleRepository:IGenericRepository<WorkingSchedule>
     {
         
     }

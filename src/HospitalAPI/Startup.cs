@@ -3,11 +3,13 @@ using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
 using HospitalAPI.Mapper;
 using HospitalAPI.Validations.Filter;
+using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Common;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
+using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,8 +58,13 @@ namespace HospitalAPI
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<DoctorService>();
+
             services.AddScoped<IWorkingSchueduleRepository, WorkingScheduleRepository>();
             services.AddScoped<WorkingScheduleService>();
+
+            services.AddScoped<PatientService>();
+            services.AddScoped<AppointmentService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
