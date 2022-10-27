@@ -54,7 +54,7 @@ namespace HospitalAPI.Controllers
             return result == null ? NotFound() : Ok(result);
         }
         
-        [HttpGet("{id}")]
+        [HttpGet("GetDoctorAppointments/{id}")]
         public async Task<ActionResult> GetDoctorAppointments([FromRoute]Guid id)
         {
             var appointments = await _appointmentService.GetDoctorAppointments(id);
