@@ -2,6 +2,7 @@
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.sharedModel;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,9 @@ namespace HospitalLibrary.Settings
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
+
+
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 

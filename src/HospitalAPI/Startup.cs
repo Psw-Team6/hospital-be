@@ -9,6 +9,8 @@ using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
+using HospitalLibrary.Feedbacks.Repository;
+using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
@@ -57,6 +59,7 @@ namespace HospitalAPI
             services.AddScoped<ISpecializationsRepository, SpecializationsRepository>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<FeedbackService, FeedbackService>();
             services.AddScoped<DoctorService>();
 
             services.AddScoped<IWorkingSchueduleRepository, WorkingScheduleRepository>();
@@ -65,6 +68,7 @@ namespace HospitalAPI
             services.AddScoped<PatientService>();
             services.AddScoped<AppointmentService>();
 
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

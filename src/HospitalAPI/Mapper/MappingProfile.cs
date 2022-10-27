@@ -6,6 +6,7 @@ using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.sharedModel;
 
@@ -25,6 +26,8 @@ namespace HospitalAPI.Mapper
                 CreateMap<Patient,PatientResponse>();
                 CreateMap<RoomResponse,Room>();
                 CreateMap<RoomRequest,Room>();
+                CreateMap<FeedbackResponse, Feedback>();
+                CreateMap<FeedbackRequest, Feedback>();
                 CreateMap<AddressResponse,Address>();
                 CreateMap<Address,AddressResponse>();
                 CreateMap<Room,RoomResponse>();
