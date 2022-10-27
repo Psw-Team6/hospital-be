@@ -12,7 +12,7 @@ namespace HospitalLibrary.Doctors.Model
         public DateTime ExpiresDate { get; set; }
         public DateTime StartTime { get; set; }
         public TimeSpan Duration { get; set; }
-        public List<Doctor> Doctors { get; set; }
+      //  public List<Doctor> Doctors { get; set; }
 
         public bool IsExpired()
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
@@ -21,6 +22,7 @@ namespace HospitalAPI.Controllers
             _appointmentService = appointmentService;
             _mapper = mapper;
         }
+
         [HttpGet]
         public async Task<ActionResult> GetAllAppointments()
         {
@@ -28,17 +30,19 @@ namespace HospitalAPI.Controllers
             //var mappedAppointments = _mapper.Map<>
             return Ok(appointments);
         }
+
         [HttpPost]
         public async Task<ActionResult> CreateAppointment([FromBody] AppointmentRequest appointmentRequest)
         {
             var appointment = _mapper.Map<Appointment>(appointmentRequest);
             var result = await _appointmentService.CreateAppointment(appointment);
-            return CreatedAtAction(nameof(GetById), new {id = result.Id}, result);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
+
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetById([FromRoute]Guid id)
+        public async Task<ActionResult> GetById([FromRoute] Guid id)
         {
-            var appointment =  await _appointmentService.GetById(id);
+            var appointment = await _appointmentService.GetById(id);
             var result = _mapper.Map<AppointmentResponse>(appointment);
             return result == null ? NotFound() : Ok(result);
         }
@@ -49,9 +53,17 @@ namespace HospitalAPI.Controllers
             var appointment = await _appointmentService.GetById(id);
             if (appointment == null)
                 return NotFound();
-            
+
             await _appointmentService.CancleAppointment(appointment);
             return NoContent();
+        }
+
+        [HttpGet("doctor")]
+        public async Task<ActionResult> GetDoctorAppointments(Guid id)
+        {
+            var appointments = await _appointmentService.GetDoctorAppointments(id);
+            var result = _mapper.Map<List<AppointmentResponse>>(appointments);
+            return result == null ? NotFound() : Ok(result);
         }
     }
 }

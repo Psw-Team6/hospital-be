@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
@@ -33,11 +34,18 @@ namespace HospitalLibrary.Appointments.Service
         {
             return await _unitOfWork.AppointmentRepository.GetByIdAsync(id);
         }
-
+        
         public async Task CancleAppointment(Appointment appointment)
         {
             await _unitOfWork.AppointmentRepository.DeleteAsync(appointment);
             await _unitOfWork.CompleteAsync();
+        }
+
+        public async Task<List<Appointment>> GetDoctorAppointments(Guid id)
+        {
+            var appointments = await _unitOfWork.AppointmentRepository.GetAllAsync();
+            var doctorAppointments = appointments.Where(x => x.DoctorId == id);
+            return doctorAppointments.ToList();
         }
     }
 }
