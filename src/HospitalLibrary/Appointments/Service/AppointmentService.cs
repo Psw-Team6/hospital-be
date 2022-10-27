@@ -33,5 +33,11 @@ namespace HospitalLibrary.Appointments.Service
         {
             return await _unitOfWork.AppointmentRepository.GetByIdAsync(id);
         }
+
+        public async Task CancleAppointment(Appointment appointment)
+        {
+            await _unitOfWork.AppointmentRepository.DeleteAsync(appointment);
+            await _unitOfWork.CompleteAsync();
+        }
     }
 }

@@ -42,5 +42,16 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<AppointmentResponse>(appointment);
             return result == null ? NotFound() : Ok(result);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> CancleAppointment([FromRoute] Guid id)
+        {
+            var appointment = await _appointmentService.GetById(id);
+            if (appointment == null)
+                return NotFound();
+            
+            await _appointmentService.CancleAppointment(appointment);
+            return NoContent();
+        }
     }
 }
