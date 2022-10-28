@@ -1,9 +1,8 @@
-﻿using System;
-using HospitalLibrary.Doctors.Model;
+﻿using HospitalLibrary.Doctors.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace HospitalLibrary.DbConfigurations
+namespace HospitalLibrary.Doctors.DbConfiguration
 {
     public class SpecializationConfiguration:IEntityTypeConfiguration<Specialization>
     {

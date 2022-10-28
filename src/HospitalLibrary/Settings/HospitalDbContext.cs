@@ -45,25 +45,47 @@ namespace HospitalLibrary.Settings
             );
             WorkingSchedule workingSchedule1 = new()
             {
-                Id = Guid.NewGuid(),
-                StartUpDate = new DateTime(2022,10,27),
-                ExpiresDate = new DateTime(2023,1,27),
-                StartTime = new DateTime(2022, 10, 27, 8, 0, 0),
-                Duration = new TimeSpan(0,8,0,0)
+                Id = Guid.NewGuid()
             };
             WorkingSchedule workingSchedule2 = new()
             {
-                Id = Guid.NewGuid(),
-                StartUpDate = new DateTime(2022,10,27),
-                ExpiresDate = new DateTime(2023,1,27),
-                StartTime = new DateTime(2022, 10, 27, 16, 0, 0),
-                Duration = new TimeSpan(0,8,0,0)
+                Id = Guid.NewGuid()
             };
+            modelBuilder.Entity<WorkingSchedule>()
+                .OwnsOne(app => app.ExpirationDate)
+                .HasData(
+                    new
+                    {
+                        WorkingScheduleId = workingSchedule1.Id,
+                        From = new DateTime(2022, 10, 27),
+                        To = new DateTime(2023, 1, 27)
+                    },
+                    new
+                    {
+                        WorkingScheduleId = workingSchedule2.Id,
+                        From = new DateTime(2022, 10, 27),
+                        To = new DateTime(2023, 1, 27)
+                    }
+                );
+            modelBuilder.Entity<WorkingSchedule>()
+                .OwnsOne(app => app.DayOfWork)
+                .HasData(
+                    new
+                    {
+                        WorkingScheduleId = workingSchedule1.Id,
+                        From = new DateTime(2022, 10, 27, 8, 0, 0),
+                        To = new DateTime(2022, 10, 27, 14, 0, 0)
+                    },
+                    new
+                    {
+                        WorkingScheduleId = workingSchedule2.Id,
+                        From = new DateTime(2022, 10, 27, 14, 0, 0),
+                        To = new DateTime(2022, 10, 27, 22, 0, 0)
+                    }
+                );
+
             modelBuilder.Entity<WorkingSchedule>().HasData(
-                workingSchedule1
-            );
-            modelBuilder.Entity<WorkingSchedule>().HasData(
-                workingSchedule2
+                workingSchedule1,workingSchedule2
             );
             Address address = new()
             {
@@ -105,9 +127,9 @@ namespace HospitalLibrary.Settings
             {
                 Id = Guid.NewGuid(),
                 SpecializationId = specializationDermatology.Id,
-                AddressId = address.Id,
+                AddressId = address1.Id,
                 WorkingScheduleId = workingSchedule1.Id,
-                RoomId = room1.Id,
+                RoomId = room2.Id,
                 Username = "Tadjo",
                 Password = "miki123",
                 Name = "Djordje",
@@ -132,12 +154,8 @@ namespace HospitalLibrary.Settings
                 Phone = "+612222222"
             };
             modelBuilder.Entity<Doctor>().HasData(
-                doctor
+                doctor,doctor1
             );
-            modelBuilder.Entity<Doctor>().HasData(
-                doctor1
-            );
-            
             Patient patient1 = new()
             {
                 Id = Guid.NewGuid(),
@@ -150,23 +168,42 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222"
             };
+            Patient patient2 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address.Id,
+                Username = "Miki",
+                Password = "sale1312",
+                Name = "Miki",
+                Surname = "Djuricic",
+                Email = "MikiDjuricic1312@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222"
+            };
             
             modelBuilder.Entity<Patient>().HasData(
-                patient1
+                patient1,patient2
             );
 
             Appointment appointment = new()
             {
                 Id = Guid.NewGuid(),
                 Emergent = false,
-                StartTime=new DateTime(2022,12,11,12,0,0),
-                Duration=new TimeSpan(0,1,0,0,0),
                 PatientId = patient1.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
-
+            modelBuilder.Entity<Appointment>()
+                .OwnsOne(app => app.Duration)
+                .HasData(
+                    new
+                    {
+                        AppointmentId = appointment.Id,
+                        From = new DateTime(2022, 10, 27, 8, 0, 0),
+                        To = new DateTime(2022, 10, 27, 14, 0, 0)
+                    }
+                );
             modelBuilder.Entity<Appointment>().HasData(
                 appointment
             );

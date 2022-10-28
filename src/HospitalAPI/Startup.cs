@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
+using HospitalAPI.Exceptions;
 using HospitalAPI.Mapper;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Appointments.Service;
@@ -47,11 +48,12 @@ namespace HospitalAPI
 #pragma warning restore CS0618
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = null);
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
+            services.AddTransient<ExceptionMiddleware>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<SpecializationsService>();
             services.AddScoped<ISpecializationsRepository, SpecializationsRepository>();
@@ -64,6 +66,7 @@ namespace HospitalAPI
 
             services.AddScoped<PatientService>();
             services.AddScoped<AppointmentService>();
+            services.AddScoped<ScheduleService>();
 
         }
 
@@ -77,7 +80,6 @@ namespace HospitalAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
-          
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
@@ -92,6 +94,8 @@ namespace HospitalAPI
             }
 
             app.UseRouting();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseAuthorization();
 

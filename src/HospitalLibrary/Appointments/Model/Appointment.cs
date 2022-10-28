@@ -9,8 +9,7 @@ namespace HospitalLibrary.Appointments.Model
     {
         public Guid Id { get; set; }
         public bool Emergent { get; set; }
-        public DateTime StartTime { get; set; }
-        public TimeSpan Duration { get; set; }
+        public DateRange Duration { get; set; }
         public Patient Patient { get; set; }
         public Guid PatientId { get; set; }
         public Guid DoctorId { get; set; }

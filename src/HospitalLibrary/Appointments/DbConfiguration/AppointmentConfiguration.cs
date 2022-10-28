@@ -17,9 +17,7 @@ namespace HospitalLibrary.Appointments.DbConfiguration
             _ = builder.HasOne(appointment => appointment.Patient)
                 .WithMany(patient => patient.Appointments)
                 .HasForeignKey(appointment => appointment.PatientId);
-            // _ = builder.Property(appointment => appointment.TimeSlot.Date).HasColumnName("Date");
-            // _ = builder.Property(appointment => appointment.TimeSlot.StartTime).HasColumnName("StartTime");
-            // _ = builder.Property(appointment => appointment.TimeSlot.Duration).HasColumnName("Duration");
+            _ = builder.OwnsOne(app => app.Duration);
         }
     }
 }
