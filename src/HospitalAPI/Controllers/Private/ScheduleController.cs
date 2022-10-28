@@ -6,6 +6,7 @@ using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.CustomException;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.Private
@@ -24,12 +25,14 @@ namespace HospitalAPI.Controllers.Private
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateAppointment([FromBody] AppointmentRequest appointmentRequest)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<AppointmentResponse>> ScheduleAppointment([FromBody] AppointmentRequest appointmentRequest)
         {
             var appointment = _mapper.Map<Appointment>(appointmentRequest);
             var appointmentCreated = await _scheduleService.ScheduleAppointment(appointment);
             var result = _mapper.Map<AppointmentResponse>(appointmentCreated);
-            return CreatedAtAction("CreateAppointment", new {id = result.Id}, result);
+            return CreatedAtAction("ScheduleAppointment", new {id = result.Id}, result);
         }
     }
 }

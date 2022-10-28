@@ -6,6 +6,7 @@ using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Patients.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -23,7 +24,9 @@ namespace HospitalAPI.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        public async Task<ActionResult> GetAllPatients()
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<PatientResponse>>> GetAllPatients()
         {
             var patients = await _patientService.GetAll();
             var result = _mapper.Map<List<PatientResponse>>(patients);
@@ -31,7 +34,9 @@ namespace HospitalAPI.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult> CreatePatient([FromBody] PatientRequest patientRequest)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<PatientResponse>> CreatePatient([FromBody] PatientRequest patientRequest)
         {
             var patient = _mapper.Map<Patient>(patientRequest);
             var result = await _patientService.CreatePatient(patient);
@@ -39,7 +44,9 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetById([FromRoute] Guid id)
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<PatientResponse>> GetById([FromRoute] Guid id)
         {
             var patient = await _patientService.GetById(id);
             var result = _mapper.Map<PatientResponse>(patient);
