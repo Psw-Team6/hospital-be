@@ -1,7 +1,7 @@
-using System.Reflection;
 using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
 using HospitalAPI.Exceptions;
+using HospitalAPI.Infrastructure;
 using HospitalAPI.Mapper;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Appointments.Service;
@@ -20,6 +20,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using NSwag.AspNetCore;
 
 namespace HospitalAPI
 {
@@ -49,9 +50,14 @@ namespace HospitalAPI
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = null);
+          
+            services.AddOpenApiDocument(options =>
+            {
+                options.SchemaNameGenerator = new CustomSwaggerSchemaNameGenerator();
+            });
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
+                c.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
             });
             services.AddTransient<ExceptionMiddleware>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -89,8 +95,10 @@ namespace HospitalAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1"));
+              //  app.UseSwagger();
+              app.UseOpenApi();
+              app.UseSwaggerUi3();
+              //  app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1"));
             }
 
             app.UseRouting();
