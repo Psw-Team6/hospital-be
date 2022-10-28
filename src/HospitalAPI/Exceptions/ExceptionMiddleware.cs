@@ -20,6 +20,11 @@ namespace HospitalAPI.Exceptions
                 context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
                 await context.Response.WriteAsync(e.Message);
             }
+            catch (DateRangeException e)
+            {
+                context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                await context.Response.WriteAsync(e.Message);
+            }
         }
         
 

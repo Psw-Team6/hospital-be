@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
@@ -17,9 +18,13 @@ namespace HospitalLibrary.Appointments.Service
 
         public async Task<Appointment> ScheduleAppointment(Appointment appointment)
         {
+            if (!appointment.Duration.IsValidRange())
+            {
+                throw new DateRangeException("Date range is not valid");
+            }
             await DoctorNotExist(appointment);
             await PatientNotExist(appointment);
-            //await CheckDoctorAvailability(appointment);
+            await CheckDoctorAvailability(appointment);
             var app = await _unitOfWork.AppointmentRepository.CreateAsync(appointment);
             await _unitOfWork.CompleteAsync();
             return app;
@@ -42,26 +47,34 @@ namespace HospitalLibrary.Appointments.Service
             }
         }
 
-        // private async Task CheckDoctorAvailability(Appointment appointment)
-        // {
-        //     var isAvailable = await IsDoctorAvailable(appointment);
-        //     if (!isAvailable)
-        //     {
-        //         throw new DoctorIsNotAvailable("Doctor is not available ");
-        //     }
-        // }
+        private async Task CheckDoctorAvailability(Appointment appointment)
+        {
+            var isAvailableSchedule = await IsDoctorAvailable(appointment);
+            var isAvailableAppointment = await CheckDoctorAvailabilityForAppointment(appointment);
+            if (!isAvailableSchedule)
+            {
+                throw new DoctorIsNotAvailable("Doctor is not available!");
+            }
+            if (!isAvailableAppointment)
+            {
+                throw new DoctorIsNotAvailable("Doctor is not available.He has already scheduled appointment!");
+            }
+        }
 
-        // private async Task<bool> IsDoctorAvailable(Appointment appointment)
-        // {
-        //     var doctorWorkingSchedule = await _unitOfWork.DoctorRepository.GetDoctorWorkingSchedule(appointment.DoctorId);
-        //     //var doctorWorkingSchedule = doctor.WorkingSchedule;
-        //     if (appointment.TimeSlot.StartTime.Date < doctorWorkingSchedule.StartUpDate ||
-        //         appointment.TimeSlot.StartTime.Date > doctorWorkingSchedule.ExpiresDate)
-        //         return false;
-        //     var appointmentFinish = appointment.TimeSlot.StartTime.Add(appointment.TimeSlot.Duration);
-        //     var doctorFinish = doctorWorkingSchedule.StartTime.Add(doctorWorkingSchedule.Duration);
-        //     return appointment.TimeSlot.StartTime.TimeOfDay >= doctorWorkingSchedule.StartTime.TimeOfDay 
-        //            && appointmentFinish.TimeOfDay <= doctorFinish.TimeOfDay;
-        // }
+        private async Task<bool> IsDoctorAvailable(Appointment appointment)
+        {
+            var doctorWorkingSchedule = await _unitOfWork.DoctorRepository.GetDoctorWorkingSchedule(appointment.DoctorId);
+            if (appointment.Duration.From.Date < doctorWorkingSchedule.ExpirationDate.From.Date ||
+                appointment.Duration.To.Date > doctorWorkingSchedule.ExpirationDate.To.Date)
+                return false;
+            return appointment.Duration.From.TimeOfDay >= doctorWorkingSchedule.DayOfWork.From.TimeOfDay 
+                   && appointment.Duration.To.TimeOfDay <= doctorWorkingSchedule.DayOfWork.To.TimeOfDay;
+        }
+
+        private async Task<bool> CheckDoctorAvailabilityForAppointment(Appointment appointment)
+        {
+           var appointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForDoctor(appointment.DoctorId);
+           return appointments.All(app => !app.IsDoctorConflicts(appointment));
+        }
     }
 }

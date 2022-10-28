@@ -1,6 +1,11 @@
-﻿using HospitalLibrary.Appointments.Model;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Appointments.Repository
 {
@@ -8,6 +13,13 @@ namespace HospitalLibrary.Appointments.Repository
     {
         public AppointmentRepository(HospitalDbContext dbContext) : base(dbContext)
         {
+        }
+
+        public async Task<IEnumerable<Appointment>> GetAllAppointmentsForDoctor(Guid doctorId)
+        {
+           return await DbSet.Where(x => x.DoctorId == doctorId)
+                .Include(x => x.Duration)
+                .ToListAsync();
         }
     }
 }

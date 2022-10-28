@@ -200,8 +200,8 @@ namespace HospitalLibrary.Settings
                     new
                     {
                         AppointmentId = appointment.Id,
-                        From = new DateTime(2022, 10, 27, 8, 0, 0),
-                        To = new DateTime(2022, 10, 27, 14, 0, 0)
+                        From = new DateTime(2022, 10, 27, 15, 0, 0),
+                        To = new DateTime(2022, 10, 27, 15, 15, 0)
                     }
                 );
             modelBuilder.Entity<Appointment>().HasData(

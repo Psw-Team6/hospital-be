@@ -8,5 +8,10 @@ namespace HospitalLibrary.sharedModel
     {
         public DateTime From { get; set; }
         public DateTime To { get; set; }
+
+        public bool IsValidRange()
+        {
+            return From < To;
+        }
     }
 }
