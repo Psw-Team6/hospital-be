@@ -9,6 +9,7 @@ using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
+using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Patients.Service;
@@ -37,7 +38,7 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HospitalDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")));
+            options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddMvc(options =>
                 {
@@ -59,7 +60,8 @@ namespace HospitalAPI
             services.AddScoped<ISpecializationsRepository, SpecializationsRepository>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
-            services.AddScoped<FeedbackService, FeedbackService>();
+            services.AddScoped<IFeedbackService, FeedbackService>();
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<DoctorService>();
 
             services.AddScoped<IWorkingSchueduleRepository, WorkingScheduleRepository>();

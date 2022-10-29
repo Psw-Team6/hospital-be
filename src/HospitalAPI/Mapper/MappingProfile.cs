@@ -26,8 +26,8 @@ namespace HospitalAPI.Mapper
                 CreateMap<Patient,PatientResponse>();
                 CreateMap<RoomResponse,Room>();
                 CreateMap<RoomRequest,Room>();
-                CreateMap<FeedbackResponse, Feedback>();
                 CreateMap<FeedbackRequest, Feedback>();
+                CreateMap<FeedbackResponse, Feedback>();
                 CreateMap<AddressResponse,Address>();
                 CreateMap<Address,AddressResponse>();
                 CreateMap<Room,RoomResponse>();

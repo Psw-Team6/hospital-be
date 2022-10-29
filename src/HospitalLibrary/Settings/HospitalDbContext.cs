@@ -11,12 +11,13 @@ namespace HospitalLibrary.Settings
     public class HospitalDbContext : DbContext
     {
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Feedback> Feedback { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
-        public DbSet<Feedback> Feedbacks { get; set; }
+      
 
 
 

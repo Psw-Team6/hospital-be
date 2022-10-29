@@ -18,17 +18,17 @@ namespace HospitalLibrary.Feedbacks.Repository
 
         public IEnumerable<Feedback> GetAll()
         {
-            return _context.Feedbacks.ToList();
+            return _context.Feedback.ToList();
         }
 
         public Feedback GetById(Guid id)
         {
-            return _context.Feedbacks.Find(id);
+            return _context.Feedback.Find(id);
         }
 
         public void Create(Feedback feedback)
         {
-            _context.Feedbacks.Add(feedback);
+            _context.Feedback.Add(feedback);
             _context.SaveChanges();
         }
 
@@ -49,7 +49,7 @@ namespace HospitalLibrary.Feedbacks.Repository
 
         public void Delete(Feedback feedback)
         {
-            _context.Feedbacks.Remove(feedback);
+            _context.Feedback.Remove(feedback);
             _context.SaveChanges();
         }
     }
