@@ -29,7 +29,6 @@ namespace HospitalLibrary.Doctors.Repository
                 Include( d => d.WorkingSchedule).
                 Select(d => d.WorkingSchedule).
                 FirstOrDefaultAsync();
-            
         }
     }
 }
