@@ -9,6 +9,7 @@ namespace HospitalLibrary.Doctors.DbConfiguration
         public void Configure(EntityTypeBuilder<Holiday> builder)
         {
             _ = builder.HasKey(x => x.Id);
+            _ = builder.OwnsOne(app => app.DateRange);
         }
     }
 }

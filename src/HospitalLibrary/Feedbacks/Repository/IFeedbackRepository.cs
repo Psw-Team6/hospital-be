@@ -1,16 +1,11 @@
 ﻿using System;
 using HospitalLibrary.Feedbacks.Model;
 using System.Collections.Generic;
-
+using HospitalLibrary.Common;
 
 namespace HospitalLibrary.Feedbacks.Repository
 {
-    public interface IFeedbackRepository
+    public interface IFeedbackRepository : IGenericRepository<Feedback>
     {
-        IEnumerable<Feedback> GetAll();
-        Feedback GetById(Guid id);
-        void Create(Feedback feedback);
-        void Update(Feedback feedback);
-        void Delete(Feedback feedback);
     }
 }

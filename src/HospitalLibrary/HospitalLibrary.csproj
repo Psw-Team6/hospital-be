@@ -22,4 +22,8 @@
     <Folder Include="Migrations" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\HospitalDbContextModelSnapshot.cs" />
+  </ItemGroup>
+
 </Project>

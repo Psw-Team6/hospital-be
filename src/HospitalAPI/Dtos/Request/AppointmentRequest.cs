@@ -9,7 +9,7 @@ namespace HospitalAPI.Dtos.Request
     public class AppointmentRequest
     {
         public bool Emergent { get; set; }
-        public TimeSlot TimeSlot { get; set;}
+        public DateRange Duration { get; set; }
         public Guid PatientId { get; set; }
         public Guid DoctorId { get; set; }
         public AppointmentType AppointmentType { get; set; }

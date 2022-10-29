@@ -8,15 +8,13 @@ namespace HospitalLibrary.Doctors.Model
     public class WorkingSchedule
     {
         public Guid Id { get; set; }
-        public DateTime StartUpDate { get; set; }
-        public DateTime ExpiresDate { get; set; }
-        public DateTime StartTime { get; set; }
-        public TimeSpan Duration { get; set; }
+        public DateRange ExpirationDate { get; set; } 
+        public DateRange DayOfWork { get; set; }
       //  public List<Doctor> Doctors { get; set; }
 
         public bool IsExpired()
         {
-            return ExpiresDate < DateTime.Now;
+            return ExpirationDate.To < DateTime.Now;
         }
     }
 }

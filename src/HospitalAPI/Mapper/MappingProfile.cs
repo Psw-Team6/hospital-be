@@ -27,13 +27,16 @@ namespace HospitalAPI.Mapper
                 CreateMap<RoomResponse,Room>();
                 CreateMap<RoomRequest,Room>();
                 CreateMap<FeedbackRequest, Feedback>();
-                CreateMap<FeedbackResponse, Feedback>();
+                CreateMap<Feedback, FeedbackResponse>();
                 CreateMap<AddressResponse,Address>();
                 CreateMap<Address,AddressResponse>();
                 CreateMap<Room,RoomResponse>();
                 CreateMap<AppointmentRequest, Appointment>();
+                CreateMap<Appointment, AppointmentRequest>();
                 CreateMap<Appointment,AppointmentResponse>();
+                CreateMap<AppointmentResponse,Appointment>();
                 CreateMap<WorkingScheduleRequest,WorkingSchedule>();
+                CreateMap<FeedbackResponse, Feedback>();
             }
     }
     

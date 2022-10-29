@@ -2,24 +2,26 @@
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Repository;
 using System.Collections.Generic;
+using HospitalLibrary.Common;
+using System.Threading.Tasks;
 
 namespace HospitalLibrary.Feedbacks.Service
 {
-    public class FeedbackService : IFeedbackService
+    public class FeedbackService
     {
-        private readonly IFeedbackRepository _feedbackRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public FeedbackService(IFeedbackRepository feedbackRepository)
+        public FeedbackService(IUnitOfWork unitOfWork)
         {
-            _feedbackRepository = feedbackRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Feedback> GetAll()
+        public async Task<IEnumerable<Feedback>> GetAll()
         {
-            return _feedbackRepository.GetAll();
+            return  await _unitOfWork.FeedbackRepository.GetAllAsync();
         }
 
-        public Feedback GetById(Guid id)
+        /*public  Feedback GetById(Guid id)
         {
             return _feedbackRepository.GetById(id);
         }
@@ -37,6 +39,6 @@ namespace HospitalLibrary.Feedbacks.Service
         public void Delete(Feedback feedback)
         {
             _feedbackRepository.Delete(feedback);
-        }
+        }*/
     }
 }

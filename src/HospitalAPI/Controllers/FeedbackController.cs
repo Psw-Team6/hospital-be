@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
+using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +14,10 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class FeedbackController : ControllerBase
     {
-        private readonly IFeedbackService _feedbackService;
+        private readonly FeedbackService _feedbackService;
         private readonly IMapper _mapper;
 
-        public FeedbackController(IFeedbackService feedbackService, IMapper mapper)
+        public FeedbackController(FeedbackService feedbackService, IMapper mapper)
         {
             _feedbackService = feedbackService;
             _mapper = mapper;
@@ -22,12 +25,14 @@ namespace HospitalAPI.Controllers
 
         // GET: api/rooms
         [HttpGet]
-        public ActionResult GetAll()
+        public async Task<ActionResult<IEnumerable<FeedbackResponse>>> GetAll()
         {
-            return Ok(_feedbackService.GetAll());
+            var feedbacks = await _feedbackService.GetAll();
+            var result = _mapper.Map<IEnumerable<FeedbackResponse>>(feedbacks);
+            return Ok(result);
         }
 
-        // GET api/rooms/2
+        /*// GET api/rooms/2
         [HttpGet("{id}")]
         public ActionResult GetById(Guid id)
         {
@@ -98,6 +103,6 @@ namespace HospitalAPI.Controllers
         {
             return DateTime.Now.TimeOfDay.ToString();
         }
-
+*/
     }
 }

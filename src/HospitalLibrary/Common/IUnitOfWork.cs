@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Doctors.Repository;
+using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Patients.Repository;
 
 namespace HospitalLibrary.Common
@@ -12,6 +13,7 @@ namespace HospitalLibrary.Common
         IDoctorRepository DoctorRepository { get; }
         IPatientRepository PatientRepository { get; }
         IAppointmentRepository AppointmentRepository { get; }
+        IFeedbackRepository FeedbackRepository { get; }
         
         IWorkingSchueduleRepository WorkingSchueduleRepository { get; }
         Task CompleteAsync();
