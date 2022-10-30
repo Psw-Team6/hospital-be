@@ -2,6 +2,8 @@
 using IntegrationLibrary.BloodBank.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace IntegrationAPI.Controllers
 {
@@ -86,6 +88,36 @@ namespace IntegrationAPI.Controllers
 
             _bloodBankService.Delete(bloodBank);
             return NoContent();
+        }
+
+        //GET api/bloodbank/bloodSupply
+        [HttpGet("bloodSupply")]
+        public async Task<bool> GetBloodBankSupply()
+        {
+            return await RunAsync();
+        }
+
+        static HttpClient client = new HttpClient();
+        static async Task<bool> GetProductAsync(string path)
+        {
+            bool hasBlood = false;
+            HttpResponseMessage response = await client.GetAsync(path);
+            if (response.IsSuccessStatusCode)
+            { 
+                hasBlood = Boolean.Parse(await response.Content.ReadAsStringAsync());
+            }
+            return hasBlood;
+        }
+
+        static async Task<bool> RunAsync()
+        {
+            client.BaseAddress = new Uri("http://localhost:5000/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            //client.DefaultRequestHeaders.Accept.Add(
+            //    new MediaTypeWithQualityHeaderValue("application/json"));
+
+            bool hasBlood = await GetProductAsync("http://localhost:8080/api/blood");
+            return hasBlood;
         }
     }
 }
