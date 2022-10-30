@@ -64,6 +64,7 @@ namespace HospitalAPI.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> CancleAppointment([FromRoute] Guid id)
         {
             var appointment = await _appointmentService.GetById(id);
@@ -71,7 +72,7 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             
             if(await _appointmentService.CancleAppointment(appointment) == null)
-                return NotFound();
+                return BadRequest();
             
             return NoContent();
         }
