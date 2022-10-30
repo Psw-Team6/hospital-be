@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
 using HospitalLibrary.Doctors.Model;
@@ -19,6 +21,14 @@ namespace HospitalLibrary.Doctors.Repository
                                 .Include(d => d.Address)
                                 .Include(d => d.Appointments)
                                 .ToListAsync();
+        }
+
+        public async Task<WorkingSchedule> GetDoctorWorkingSchedule(Guid doctorId)
+        {
+            return await DbSet.Where(doctor1 => doctor1.Id == doctorId).
+                Include( d => d.WorkingSchedule).
+                Select(d => d.WorkingSchedule).
+                FirstOrDefaultAsync();
         }
     }
 }

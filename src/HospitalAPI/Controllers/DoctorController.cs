@@ -6,6 +6,7 @@ using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -23,15 +24,20 @@ namespace HospitalAPI.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        public async Task<ActionResult> GetAllDoctors()
+        [ProducesResponseType(typeof(List<DoctorResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<DoctorResponse>>> GetAllDoctors()
         {
             var doctors = await _doctorService.GetAll();
             var result = _mapper.Map<List<DoctorResponse>>(doctors);
            return Ok(result);
         }
         
+        
         [HttpPost]
-        public async Task<ActionResult> CreateDoctor([FromBody] DoctorRequest doctorRequest)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<DoctorResponse>> CreateDoctor([FromBody] DoctorRequest doctorRequest)
         {
             var doctor = _mapper.Map<Doctor>(doctorRequest);
             var result = await _doctorService.CreateDoctor(doctor);
@@ -39,7 +45,9 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetById([FromRoute]Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<DoctorResponse>> GetById([FromRoute]Guid id)
         {
            var doctor =  await _doctorService.GetById(id);
            var result = _mapper.Map<DoctorResponse>(doctor);
@@ -47,6 +55,8 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteById( Guid id)
         {
             var result = await _doctorService.DeleteById(id);

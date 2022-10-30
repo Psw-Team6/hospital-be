@@ -1,4 +1,5 @@
 ﻿using System;
+using HospitalLibrary.sharedModel;
 
 namespace HospitalLibrary.Doctors.Model
 {
@@ -6,7 +7,6 @@ namespace HospitalLibrary.Doctors.Model
     {
         public Guid Id { get; set; }
         public Doctor Doctor { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateRange DateRange { get; set;}
     }
 }

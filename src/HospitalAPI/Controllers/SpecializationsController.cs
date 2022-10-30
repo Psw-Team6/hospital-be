@@ -6,6 +6,7 @@ using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 namespace HospitalAPI.Controllers
 {
@@ -22,7 +23,9 @@ namespace HospitalAPI.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<ActionResult> Create(SpecializationRequest specializationDto)
+        [ProducesResponseType( StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<SpecializationResponse>> Create(SpecializationRequest specializationDto)
         {
             var specialization = _mapper.Map<Specialization>(specializationDto);
             var specializationCreated = await _specializationsService.Create(specialization);
@@ -30,6 +33,8 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
         [HttpPut]
+        [ProducesResponseType( StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Update(SpecializationRequest specializationDto)
         {
             var specialization = _mapper.Map<Specialization>(specializationDto);
@@ -37,7 +42,9 @@ namespace HospitalAPI.Controllers
             return spec ? NoContent() : NotFound();
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetById(Guid id)
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<PatientResponse>> GetById(Guid id)
         {
             var specialization = await _specializationsService.GetById(id);
             var result = _mapper.Map<SpecializationResponse>(specialization);
@@ -45,7 +52,9 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("/getByName/{name}")]
-        public async Task<ActionResult> GetByName(string name)
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<SpecializationResponse>> GetByName(string name)
         {
             var specialization = await _specializationsService.GetByName(name);
             var result = _mapper.Map<SpecializationResponse>(specialization);

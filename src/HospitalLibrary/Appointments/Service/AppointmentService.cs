@@ -22,6 +22,25 @@ namespace HospitalLibrary.Appointments.Service
             return appointments;
         }
 
+        public async Task<bool> RescheduleAppointment(Appointment appointment)
+        {
+            // var oldAppointment = await GetById(appointment.Id);
+            // if (oldAppointment == null)
+            // {
+            //     return false;
+            // }
+            //
+            // await _unitOfWork.AppointmentRepository.UpdateAsync(appointment);
+            // await _unitOfWork.CompleteAsync();
+            // return true;
+
+            await _unitOfWork.AppointmentRepository.UpdateAsync(appointment);
+            await _unitOfWork.CompleteAsync();
+            return true;
+            
+            
+        }
+
         public async Task<Appointment> CreateAppointment(Appointment appointment)
         {
            //Task.FromException(new Exception("aaa"));

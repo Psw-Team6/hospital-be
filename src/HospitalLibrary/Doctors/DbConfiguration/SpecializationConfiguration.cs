@@ -1,9 +1,8 @@
-﻿using System;
-using HospitalLibrary.Doctors.Model;
+﻿using HospitalLibrary.Doctors.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace HospitalLibrary.DbConfigurations
+namespace HospitalLibrary.Doctors.DbConfiguration
 {
     public class SpecializationConfiguration:IEntityTypeConfiguration<Specialization>
     {
@@ -13,11 +12,6 @@ namespace HospitalLibrary.DbConfigurations
             _ = builder.HasIndex(x => x.Name).IsUnique();
             _ = builder.Property(x => x.Name)
                 .IsRequired();
-            _ = builder.HasData(
-                 new {Id=Guid.NewGuid(), Name = "Surgeon"}
-                ,new {Id=Guid.NewGuid(), Name = "Dermatology"}
-                ,new {Id=Guid.NewGuid(), Name = "General"}
-                );
         }
     }
 }
