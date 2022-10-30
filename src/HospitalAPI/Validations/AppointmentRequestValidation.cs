@@ -9,8 +9,7 @@ namespace HospitalAPI.Validations
         {
             RuleFor(x => x.Duration)
                 .NotEmpty()
-                .NotNull()
-                .Must(x=> x.From < x.To);
+                .NotNull();
         }
     }
 }
