@@ -69,8 +69,10 @@ namespace HospitalAPI.Controllers
             var appointment = await _appointmentService.GetById(id);
             if (appointment == null)
                 return NotFound();
-
-            await _appointmentService.CancleAppointment(appointment);
+            
+            if(await _appointmentService.CancleAppointment(appointment) == null)
+                return NotFound();
+            
             return NoContent();
         }
         

@@ -54,17 +54,31 @@ namespace HospitalLibrary.Appointments.Service
             return await _unitOfWork.AppointmentRepository.GetByIdAsync(id);
         }
         
-        public async Task CancleAppointment(Appointment appointment)
+        public async Task<Appointment> CancleAppointment(Appointment appointment)
         {
-            await _unitOfWork.AppointmentRepository.DeleteAsync(appointment);
-            await _unitOfWork.CompleteAsync();
-        }
+            if (canCancleAppointment(appointment))
+            {
+                await _unitOfWork.AppointmentRepository.DeleteAsync(appointment);
+                await _unitOfWork.CompleteAsync();
+                return appointment;
+            }
 
+            return null;
+        }
+        
         public async Task<List<Appointment>> GetDoctorAppointments(Guid id)
         {
             var appointments = await _unitOfWork.AppointmentRepository.GetAllAsync();
             var doctorAppointments = appointments.Where(x => x.DoctorId == id);
             return doctorAppointments.ToList();
+        }
+        
+        
+        private bool canCancleAppointment(Appointment appointment)
+        {
+            if(appointment.Duration.From.CompareTo(DateTime.Today.AddDays(-1)) < 0)
+                return true;
+            return false;
         }
     }
 }
