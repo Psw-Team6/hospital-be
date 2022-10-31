@@ -1,3 +1,4 @@
+using IntegrationAPI.Mapper;
 using IntegrationLibrary.BloodBank.Repository;
 using IntegrationLibrary.BloodBank.Service;
 using IntegrationLibrary.Settings;
@@ -25,7 +26,8 @@ namespace IntegrationAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<IntegrationDbContext>(options =>
-           options.UseNpgsql(Configuration.GetConnectionString("IntegrationDB")));
+            options.UseNpgsql(Configuration.GetConnectionString("IntegrationDB")));
+            services.AddAutoMapper(typeof(MappingProfile));
             services.AddMvc(options =>
             {
                 options.EnableEndpointRouting = false;
@@ -55,7 +57,7 @@ namespace IntegrationAPI
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<IntegrationDbContext>();
-                context?.Database.Migrate();
+                //context?.Database.Migrate();
             }
             if (env.IsDevelopment())
             {
