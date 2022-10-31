@@ -20,6 +20,20 @@ namespace HospitalLibrary.Feedbacks.Service
         {
             return  await _unitOfWork.FeedbackRepository.GetAllAsync();
         }
+        
+        public async Task<Feedback> CreateFeedback(Feedback feedback)
+        {
+            var newFeedback = await _unitOfWork.FeedbackRepository.CreateAsync(feedback);
+            await _unitOfWork.CompleteAsync();
+            return newFeedback;
+        }
+
+        public async Task<Feedback> GetById(Guid id)
+        {
+            var feedback = await _unitOfWork.FeedbackRepository.GetByIdAsync(id);
+            await _unitOfWork.CompleteAsync();
+            return feedback;
+        }
 
         /*public  Feedback GetById(Guid id)
         {
