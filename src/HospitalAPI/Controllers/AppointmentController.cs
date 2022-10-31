@@ -71,7 +71,7 @@ namespace HospitalAPI.Controllers
             if (appointment == null)
                 return NotFound();
             
-            if(await _appointmentService.CancleAppointment(appointment) == null)
+            if(await _appointmentService.CancleAppointment(appointment) == false)
                 return BadRequest();
             
             return NoContent();
