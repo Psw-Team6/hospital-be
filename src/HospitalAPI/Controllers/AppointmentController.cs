@@ -65,13 +65,13 @@ namespace HospitalAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CancleAppointment([FromRoute] Guid id)
+        public async Task<ActionResult> CancelAppointment([FromRoute] Guid id)
         {
             var appointment = await _appointmentService.GetById(id);
             if (appointment == null)
                 return NotFound();
             
-            if(await _appointmentService.CancleAppointment(appointment) == false)
+            if(await _appointmentService.CancelAppointment(appointment) == false)
                 return BadRequest();
             
             return NoContent();

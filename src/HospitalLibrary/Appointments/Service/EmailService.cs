@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.sharedModel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -30,6 +31,16 @@ namespace HospitalLibrary.Appointments.Service
             _ = await client.SendEmailAsync(msg);
             
         }
-        
+
+        public async Task SendCancelAppointmentEmail(Appointment appointment)
+        {
+            string toMail = appointment.Patient.Email;
+            string subject = "Appointment has been canclled";
+            string plainTextContent = "Your appointment has been canclled.";
+            string htmlContent = "<p> Your appointment has been cancelled.<p>";
+            Email email = new Email(toMail, subject, plainTextContent, htmlContent);
+            await SendEmail(email);
+        }
+
     }
 }
