@@ -6,6 +6,7 @@ using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -31,7 +32,26 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<IEnumerable<FeedbackResponse>>(feedbacks);
             return Ok(result);
         }
-
+        
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<FeedbackResponse>> CreateFeedback([FromBody] FeedbackRequest feedbackRequest)
+        {
+            var feedback = _mapper.Map<Feedback>(feedbackRequest);
+            var result = await _feedbackService.CreateFeedback(feedback);
+            return CreatedAtAction(nameof(GetById), new {id = result.Id}, result);
+        }
+        
+        [HttpGet("{id}")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<FeedbackResponse>> GetById([FromRoute] Guid id)
+        {
+            var feedback = await _feedbackService.GetById(id);
+            var result = _mapper.Map<FeedbackResponse>(feedback);
+            return result == null ? NotFound() : Ok(result);
+        }
         /*// GET api/rooms/2
         [HttpGet("{id}")]
         public ActionResult GetById(Guid id)
