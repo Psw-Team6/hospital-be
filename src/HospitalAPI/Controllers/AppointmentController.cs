@@ -23,6 +23,7 @@ namespace HospitalAPI.Controllers
             _appointmentService = appointmentService;
             _mapper = mapper;
         }
+
         [HttpGet]
         [ProducesResponseType( StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -32,8 +33,14 @@ namespace HospitalAPI.Controllers
             return Ok(appointments);
         }
         
-
-
+        [HttpPost]
+        public async Task<ActionResult> CreateAppointment([FromBody] AppointmentRequest appointmentRequest)
+        {
+            var appointment = _mapper.Map<Appointment>(appointmentRequest);
+            var result = await _appointmentService.CreateAppointment(appointment);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+        }
+        
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -44,18 +51,31 @@ namespace HospitalAPI.Controllers
             return result == false ? NotFound() : NoContent();
         }
         
-        
-
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(AppointmentResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AppointmentResponse>> GetById([FromRoute]Guid id)
         {
-            var appointment =  await _appointmentService.GetById(id);
+            var appointment = await _appointmentService.GetById(id);
             var result = _mapper.Map<AppointmentResponse>(appointment);
             return result == null ? NotFound() : Ok(result);
         }
         
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> CancleAppointment([FromRoute] Guid id)
+        {
+            var appointment = await _appointmentService.GetById(id);
+            if (appointment == null)
+                return NotFound();
+            
+            if(await _appointmentService.CancleAppointment(appointment) == null)
+                return BadRequest();
+            
+            return NoContent();
+        }
         
         [HttpGet("GetDoctorAppointments/{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

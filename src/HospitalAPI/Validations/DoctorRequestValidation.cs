@@ -12,8 +12,7 @@ namespace HospitalAPI.Validations
                 .NotNull();
             RuleFor(x => x.Email)
                 .NotEmpty()
-                .NotNull()
-                .Matches("");
+                .NotNull();
         }
     }
 }
