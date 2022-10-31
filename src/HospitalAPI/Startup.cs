@@ -15,6 +15,7 @@ using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Settings;
+using HospitalLibrary.sharedModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,7 @@ namespace HospitalAPI
         {
             services.AddDbContext<HospitalDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
+            services.Configure<EmailOptions>(Configuration.GetSection(EmailOptions.SendGridEmail));
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddMvc(options =>
                 {
@@ -78,8 +80,8 @@ namespace HospitalAPI
             services.AddScoped<PatientService>();
             services.AddScoped<AppointmentService>();
             services.AddScoped<ScheduleService>();
-
-         
+            services.AddScoped<IEmailService, EmailService>();
+            services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
