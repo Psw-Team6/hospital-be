@@ -38,6 +38,7 @@ namespace HospitalAPI.Mapper
                 CreateMap<WorkingScheduleRequest,WorkingSchedule>();
                 CreateMap<FeedbackResponse, Feedback>();
                 CreateMap<Feedback, FeedbackRequest>();
+                CreateMap<Patient, PatientResponseName>();
             }
     }
     

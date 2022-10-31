@@ -4,6 +4,7 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using HospitalLibrary.Common;
 
 namespace HospitalLibrary.Feedbacks.Repository
@@ -12,6 +13,13 @@ namespace HospitalLibrary.Feedbacks.Repository
     {
         public FeedbackRepository(HospitalDbContext dbContext) : base(dbContext)
         {
+            
+        }
+
+        public async Task<IEnumerable<Feedback>> GetAllPublic()
+        {
+            return await DbSet.Include(p => p.patient).Where(feedback => feedback.isPublic)
+                .ToListAsync();
         }
     }
 }
