@@ -37,7 +37,7 @@ namespace HospitalLibrary.Appointments.Service
             string toMail = appointment.Patient.Email;
             string subject = "Appointment has been canclled";
             string plainTextContent = "Your appointment has been canclled.";
-            string htmlContent = "<p> Your appointment has been cancelled.<p>";
+            string htmlContent = "<p> Your appointment has been cancelled.</p>";
             Email email = new Email(toMail, subject, plainTextContent, htmlContent);
             await SendEmail(email);
         }
