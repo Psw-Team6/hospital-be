@@ -33,6 +33,14 @@ namespace HospitalAPI.Controllers
             return Ok(result);
         }
         
+        [HttpGet("/api/v1/Feedback-public")]
+        public async Task<ActionResult<IEnumerable<FeedbackResponse>>> GetAllPublic()
+        {
+            var feedbacks = await _feedbackService.GetAllPublic();
+            var result = _mapper.Map<IEnumerable<FeedbackResponse>>(feedbacks);
+            return Ok(result);
+        }
+        
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
