@@ -54,16 +54,16 @@ namespace HospitalLibrary.Appointments.Service
             return await _unitOfWork.AppointmentRepository.GetByIdAsync(id);
         }
         
-        public async Task<Appointment> CancleAppointment(Appointment appointment)
+        public async Task<bool> CancleAppointment(Appointment appointment)
         {
             if (canCancleAppointment(appointment))
             {
                 await _unitOfWork.AppointmentRepository.DeleteAsync(appointment);
                 await _unitOfWork.CompleteAsync();
-                return appointment;
+                return true;
             }
 
-            return null;
+            return false;
         }
         
         public async Task<List<Appointment>> GetDoctorAppointments(Guid id)
