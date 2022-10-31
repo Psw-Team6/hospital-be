@@ -10,10 +10,12 @@ namespace HospitalLibrary.Appointments.Service
     public class AppointmentService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailService _emailService;
 
-        public AppointmentService(IUnitOfWork unitOfWork)
+        public AppointmentService(IUnitOfWork unitOfWork, IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
+            _emailService = emailService;
         }
 
         public async Task<IEnumerable<Appointment>> GetAllAppointments()
@@ -54,12 +56,13 @@ namespace HospitalLibrary.Appointments.Service
             return await _unitOfWork.AppointmentRepository.GetByIdAsync(id);
         }
         
-        public async Task<bool> CancleAppointment(Appointment appointment)
+        public async Task<bool> CancelAppointment(Appointment appointment)
         {
             if (canCancleAppointment(appointment))
             {
                 await _unitOfWork.AppointmentRepository.DeleteAsync(appointment);
                 await _unitOfWork.CompleteAsync();
+                await _emailService.SendCancelAppointmentEmail(appointment);
                 return true;
             }
 
