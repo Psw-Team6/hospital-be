@@ -23,11 +23,8 @@ namespace HospitalLibrary.Feedbacks.Service
 
         public async Task<IEnumerable<Feedback>> GetAllPublic()
         {
-            var feedbacks = await _unitOfWork.FeedbackRepository.GetAllAsync();
-            List<Feedback> oldFeedback = feedbacks.ToList();
-            List<Feedback> newFeedback = oldFeedback.Where(feedback => feedback.isPublic).ToList();
-            await _unitOfWork.CompleteAsync();
-            return  newFeedback;
+            var feedbacks = await _unitOfWork.FeedbackRepository.GetAllPublic();
+            return  feedbacks;
         }
 
         public async Task<Feedback> CreateFeedback(Feedback feedback)

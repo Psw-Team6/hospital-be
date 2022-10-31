@@ -51,8 +51,8 @@ namespace HospitalAPI
                 .AddFluentValidation(mvc => mvc.RegisterValidatorsFromAssemblyContaining<Startup>())
 #pragma warning restore CS0618
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = null);
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
           
             services.AddOpenApiDocument(options =>
             {
