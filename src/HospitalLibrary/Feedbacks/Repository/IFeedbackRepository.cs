@@ -9,5 +9,6 @@ namespace HospitalLibrary.Feedbacks.Repository
     public interface IFeedbackRepository : IGenericRepository<Feedback>
     {
         Task<IEnumerable<Feedback>> GetAllPublic();
+        Task<IEnumerable<Feedback>> GetAllFeedback();
     }
 }

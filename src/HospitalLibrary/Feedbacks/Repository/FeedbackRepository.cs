@@ -15,11 +15,19 @@ namespace HospitalLibrary.Feedbacks.Repository
         {
             
         }
+        
+        public async Task<IEnumerable<Feedback>> GetAllFeedback()
+        {
+            return await DbSet.Include(p => p.patient)
+                .ToListAsync();
+        }
 
         public async Task<IEnumerable<Feedback>> GetAllPublic()
         {
             return await DbSet.Include(p => p.patient).Where(feedback => feedback.isPublic)
                 .ToListAsync();
         }
+
+       
     }
 }

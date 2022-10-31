@@ -18,7 +18,7 @@ namespace HospitalLibrary.Feedbacks.Service
 
         public async Task<IEnumerable<Feedback>> GetAll()
         {
-            return  await _unitOfWork.FeedbackRepository.GetAllAsync();
+            return  await _unitOfWork.FeedbackRepository.GetAllFeedback();
         }
 
         public async Task<IEnumerable<Feedback>> GetAllPublic()
