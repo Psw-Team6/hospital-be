@@ -68,9 +68,9 @@ namespace HospitalLibrary.Appointments.Service
         
         public async Task<List<Appointment>> GetDoctorAppointments(Guid id)
         {
-            var appointments = await _unitOfWork.AppointmentRepository.GetAllAsync();
-            var doctorAppointments = appointments.Where(x => x.DoctorId == id);
-            return doctorAppointments.ToList();
+            var appointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForDoctor(id);
+            //var doctorAppointments = appointments.Where(x => x.DoctorId == id);
+            return appointments.ToList();
         }
         
         
