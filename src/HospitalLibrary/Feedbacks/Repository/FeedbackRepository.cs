@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
+using HospitalLibrary.Enums;
 
 namespace HospitalLibrary.Feedbacks.Repository
 {
@@ -24,7 +25,7 @@ namespace HospitalLibrary.Feedbacks.Repository
 
         public async Task<IEnumerable<Feedback>> GetAllPublic()
         {
-            return await DbSet.Include(p => p.patient).Where(feedback => feedback.isPublic)
+            return await DbSet.Include(p => p.patient).Where(feedback => feedback.isPublic && feedback.status == Status.APPROVED)
                 .ToListAsync();
         }
 
