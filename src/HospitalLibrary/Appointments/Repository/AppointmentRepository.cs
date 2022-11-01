@@ -18,7 +18,7 @@ namespace HospitalLibrary.Appointments.Repository
         public async Task<IEnumerable<Appointment>> GetAllAppointmentsForDoctor(Guid doctorId)
         {
            return await DbSet.Where(x => x.DoctorId == doctorId)
-                .Include(x => x.Duration)
+                .Include(x => x.Duration).Include(x => x.Patient)
                 .ToListAsync();
         }
     }
