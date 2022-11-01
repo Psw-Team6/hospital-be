@@ -39,6 +39,10 @@ namespace HospitalAPI.Mapper
                 CreateMap<FeedbackResponse, Feedback>();
                 CreateMap<Feedback, FeedbackRequest>();
                 CreateMap<Patient, PatientResponseName>();
+                CreateMap<Feedback, FeedbackStatusRequest>();
+                CreateMap<Feedback, FeedbackStatusResponse>();
+                CreateMap<FeedbackStatusResponse, Feedback>();
+                CreateMap<FeedbackStatusRequest, Feedback>();
             }
     }
     
