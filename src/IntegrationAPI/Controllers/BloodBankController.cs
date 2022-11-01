@@ -1,4 +1,6 @@
-﻿using IntegrationLibrary.BloodBank;
+﻿using AutoMapper;
+using IntegrationAPI.Dtos.Request;
+using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.BloodBank.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,9 +12,13 @@ namespace IntegrationAPI.Controllers
     public class BloodBankController: ControllerBase
     {
         private readonly IBloodBankService _bloodBankService;
+        private readonly IMapper _mapper;
 
-        public BloodBankController(IBloodBankService bloodBankService) { 
+        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper)
+        {
             _bloodBankService = bloodBankService;
+            _mapper = mapper;
+
         }
 
         // GET: api/bloodbank
@@ -37,13 +43,13 @@ namespace IntegrationAPI.Controllers
 
         // POST api/bloodbank
         [HttpPost]
-        public ActionResult Create(BloodBank bloodBank)
+        public ActionResult Create(BloodBankRequest bloodBankRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            var bloodBank = _mapper.Map<BloodBank>(bloodBankRequest);
             _bloodBankService.Create(bloodBank);
             return CreatedAtAction("GetById", new { id = bloodBank.Id }, bloodBank);
         }

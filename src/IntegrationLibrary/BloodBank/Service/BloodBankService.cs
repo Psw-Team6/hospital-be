@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +17,8 @@ namespace IntegrationLibrary.BloodBank.Service
         }
         public void Create(BloodBank bloodBank)
         {
+            bloodBank.Password = String.Concat(bloodBank.Name.Where(c => !Char.IsWhiteSpace(c))) + "12345";
+            bloodBank.ApiKey = GenerateApiKey();
             _bloodBankRepository.Create(bloodBank);
         }
 
@@ -37,6 +40,14 @@ namespace IntegrationLibrary.BloodBank.Service
         public void Update(BloodBank bloodBank)
         {
             _bloodBankRepository.Update(bloodBank);
+        }
+
+        private String GenerateApiKey() {
+            var key = new byte[32];
+            using (var generator = RandomNumberGenerator.Create())
+                generator.GetBytes(key);
+            return Convert.ToBase64String(key);
+            
         }
     }
 }
