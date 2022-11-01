@@ -91,13 +91,6 @@ namespace IntegrationAPI.Controllers
             return NoContent();
         }
 
-        //GET api/bloodbank/bloodSupply/A
-        [HttpGet("bloodSupply/{bloodType}")]
-        public async Task<bool> GetBBSupplyByType(String bloodType)
-        {
-            return await RunAsync("http://localhost:8080/api/blood/bloodType/" + bloodType);
-        }
-
         //GET api/bloodbank/bloodSupply/A/8
         [HttpGet("bloodSupply/{bloodType}/{quantity}")]
         public async Task<bool> GetBBSupplyByTypeAndQuantity(String bloodType, String quantity)
