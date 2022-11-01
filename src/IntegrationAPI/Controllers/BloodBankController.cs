@@ -95,7 +95,7 @@ namespace IntegrationAPI.Controllers
         [HttpGet("bloodSupply/{bloodType}/{quantity}")]
         public async Task<bool> GetBBSupplyByTypeAndQuantity(String bloodType, String quantity)
         {
-            return await RunAsync("http://localhost:8080/api/blood/bloodType/" + bloodType +'/'+ quantity);
+            return await GetProductAsync("http://localhost:8080/api/blood/bloodType/" + bloodType +'/'+ quantity);
         }
 
         static HttpClient client = new HttpClient();
@@ -107,16 +107,6 @@ namespace IntegrationAPI.Controllers
             { 
                 hasBlood = Boolean.Parse(await response.Content.ReadAsStringAsync());
             }
-            return hasBlood;
-        }
-
-        static async Task<bool> RunAsync(string path)
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, path);
-            request.Headers.Accept.Clear();
-            var response = await client.SendAsync(request, CancellationToken.None);
-
-            bool hasBlood = await GetProductAsync(path);
             return hasBlood;
         }
     }
