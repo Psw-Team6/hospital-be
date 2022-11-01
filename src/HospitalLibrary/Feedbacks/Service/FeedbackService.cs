@@ -41,24 +41,11 @@ namespace HospitalLibrary.Feedbacks.Service
             return feedback;
         }
 
-        /*public  Feedback GetById(Guid id)
+        public async Task<bool> Update(Feedback feedback)
         {
-            return _feedbackRepository.GetById(id);
+            await _unitOfWork.FeedbackRepository.UpdateAsync(feedback);
+            await _unitOfWork.CompleteAsync();
+            return true;
         }
-
-        public void Create(Feedback feedback)
-        {
-            _feedbackRepository.Create(feedback);
-        }
-
-        public void Update(Feedback feedback)
-        {
-            _feedbackRepository.Update(feedback);
-        }
-
-        public void Delete(Feedback feedback)
-        {
-            _feedbackRepository.Delete(feedback);
-        }*/
     }
 }

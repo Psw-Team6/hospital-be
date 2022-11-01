@@ -60,77 +60,15 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<FeedbackResponse>(feedback);
             return result == null ? NotFound() : Ok(result);
         }
-        /*// GET api/rooms/2
-        [HttpGet("{id}")]
-        public ActionResult GetById(Guid id)
+       
+        [HttpPut]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> UpdateFeedbackStatus([FromBody] FeedbackStatusResponse feedbackStatusResponse)
         {
-            var feedback = _feedbackService.GetById(id);
-            if (feedback == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(feedback);
+            var feedback = _mapper.Map<Feedback>(feedbackStatusResponse);
+            var result = await _feedbackService.Update(feedback);
+            return result == false ? NotFound() : NoContent();
         }
-
-        // POST api/rooms
-        [HttpPost]
-        public ActionResult Create(FeedbackRequest feedbackRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var feedback = _mapper.Map<Feedback>(feedbackRequest);
-            _feedbackService.Create(feedback);
-            return CreatedAtAction("GetById", new { id = feedback.Id }, feedback); // make class FeedbackRequest
-        }
-
-        // PUT api/rooms/2
-        [HttpPut("{id}")]
-        public ActionResult Update(Guid id, Feedback feedback)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != feedback.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                _feedbackService.Update(feedback);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-
-            return Ok(feedback);
-        }
-
-        // DELETE api/rooms/2
-        [HttpDelete("{id}")]
-        public ActionResult Delete(Guid id)
-        {
-            var feedback = _feedbackService.GetById(id);
-            if (feedback == null)
-            {
-                return NotFound();
-            }
-
-            _feedbackService.Delete(feedback);
-            return NoContent();
-        }
-        [HttpGet("/time")]
-        public string Time()
-        {
-            return DateTime.Now.TimeOfDay.ToString();
-        }
-*/
     }
 }
