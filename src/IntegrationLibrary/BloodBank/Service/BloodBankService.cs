@@ -1,4 +1,6 @@
 ﻿using IntegrationLibrary.BloodBank.Repository;
+using IntegrationLibrary.SendMail;
+using IntegrationLibrary.SendMail.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +13,22 @@ namespace IntegrationLibrary.BloodBank.Service
     public class BloodBankService : IBloodBankService
     {
         private readonly IBloodBankRepository _bloodBankRepository;
+        private readonly IEmailService _emailService;
 
-        public BloodBankService(IBloodBankRepository bloodBankRepository) { 
+        public BloodBankService(IBloodBankRepository bloodBankRepository, IEmailService emailService)
+        {
             _bloodBankRepository = bloodBankRepository;
+            _emailService = emailService;
         }
         public void Create(BloodBank bloodBank)
         {
             bloodBank.Password = String.Concat(bloodBank.Name.Where(c => !Char.IsWhiteSpace(c))) + "12345";
             bloodBank.ApiKey = GenerateApiKey();
+            String user = bloodBank.Name;
+            String link = "Dear " + user + ",\n Click on link " + "<a href=\"http://localhost:4200/bloodBank/changePassword\">Change password</a>"
+                + " and change your initial password.";
+            String mail = bloodBank.Email;
+            _emailService.SendEmail(new Email(mail, "PSW-hospital", "TEKST", link));
             _bloodBankRepository.Create(bloodBank);
         }
 
