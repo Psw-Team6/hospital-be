@@ -3,6 +3,7 @@ using IntegrationLibrary.BloodBank.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace IntegrationAPI.Controllers
@@ -90,11 +91,18 @@ namespace IntegrationAPI.Controllers
             return NoContent();
         }
 
-        //GET api/bloodbank/bloodSupply
-        [HttpGet("bloodSupply")]
-        public async Task<bool> GetBloodBankSupply()
+        //GET api/bloodbank/bloodSupply/A
+        [HttpGet("bloodSupply/{bloodType}")]
+        public async Task<bool> GetBBSupplyByType(String bloodType)
         {
-            return await RunAsync();
+            return await RunAsync("http://localhost:8080/api/blood/bloodType/" + bloodType);
+        }
+
+        //GET api/bloodbank/bloodSupply/A/8
+        [HttpGet("bloodSupply/{bloodType}/{quantity}")]
+        public async Task<bool> GetBBSupplyByTypeAndQuantity(String bloodType, String quantity)
+        {
+            return await RunAsync("http://localhost:8080/api/blood/bloodType/" + bloodType +'/'+ quantity);
         }
 
         static HttpClient client = new HttpClient();
@@ -109,14 +117,13 @@ namespace IntegrationAPI.Controllers
             return hasBlood;
         }
 
-        static async Task<bool> RunAsync()
+        static async Task<bool> RunAsync(string path)
         {
-            client.BaseAddress = new Uri("http://localhost:5000/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            //client.DefaultRequestHeaders.Accept.Add(
-            //    new MediaTypeWithQualityHeaderValue("application/json"));
+            var request = new HttpRequestMessage(HttpMethod.Get, path);
+            request.Headers.Accept.Clear();
+            var response = await client.SendAsync(request, CancellationToken.None);
 
-            bool hasBlood = await GetProductAsync("http://localhost:8080/api/blood");
+            bool hasBlood = await GetProductAsync(path);
             return hasBlood;
         }
     }
