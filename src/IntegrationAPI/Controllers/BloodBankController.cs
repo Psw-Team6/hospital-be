@@ -2,8 +2,11 @@
 using IntegrationLibrary.BloodBank.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace IntegrationAPI.Controllers
 {
@@ -98,6 +101,8 @@ namespace IntegrationAPI.Controllers
         }
 
         static HttpClient client = new HttpClient();
+
+
         static async Task<bool> GetProductAsync(string path)
         {
             bool hasBlood = false;
@@ -118,6 +123,30 @@ namespace IntegrationAPI.Controllers
 
             bool hasBlood = await GetProductAsync("http://localhost:8080/api/blood");
             return hasBlood;
+        }
+
+        //GET api/bloodbank/checkConnection
+        [HttpGet("checkConnection")]
+        public async Task<int> CheckConnection()
+        {
+            int statusCode = 0;
+            try
+            {
+                var response = await client.GetAsync("http://localhost:8080/api/blood");
+                statusCode= (int)response.StatusCode; 
+            } catch (HttpRequestException httpEx)
+            {
+                if (httpEx.StatusCode.HasValue)
+                {
+                    statusCode = (int)httpEx.StatusCode;
+                } else
+                {
+                    if (httpEx.Message.Contains("No connection could be made because the target machine actively refused it."))
+                        statusCode = 500;
+                   
+                }
+            }
+            return statusCode;
         }
     }
 }
