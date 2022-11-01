@@ -60,9 +60,10 @@ namespace HospitalLibrary.Appointments.Service
         {
             if (canCancleAppointment(appointment))
             {
+                appointment.Patient = await _unitOfWork.PatientRepository.GetByIdAsync(appointment.PatientId);
+                await _emailService.SendCancelAppointmentEmail(appointment);
                 await _unitOfWork.AppointmentRepository.DeleteAsync(appointment);
                 await _unitOfWork.CompleteAsync();
-                await _emailService.SendCancelAppointmentEmail(appointment);
                 return true;
             }
 
@@ -79,7 +80,7 @@ namespace HospitalLibrary.Appointments.Service
         
         private bool canCancleAppointment(Appointment appointment)
         {
-            if(appointment.Duration.From.CompareTo(DateTime.Today.AddDays(-1)) < 0)
+            if(DateTime.Now.AddDays(1).CompareTo(appointment.Duration.From) < 0)
                 return true;
             return false;
         }
