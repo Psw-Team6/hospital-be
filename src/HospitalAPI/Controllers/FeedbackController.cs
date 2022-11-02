@@ -6,6 +6,7 @@ using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -31,78 +32,43 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<IEnumerable<FeedbackResponse>>(feedbacks);
             return Ok(result);
         }
-
-        /*// GET api/rooms/2
-        [HttpGet("{id}")]
-        public ActionResult GetById(Guid id)
+        
+        [HttpGet("/api/v1/Feedback-public")]
+        public async Task<ActionResult<IEnumerable<FeedbackResponse>>> GetAllPublic()
         {
-            var feedback = _feedbackService.GetById(id);
-            if (feedback == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(feedback);
+            var feedbacks = await _feedbackService.GetAllPublic();
+            var result = _mapper.Map<IEnumerable<FeedbackResponse>>(feedbacks);
+            return Ok(result);
         }
-
-        // POST api/rooms
+        
         [HttpPost]
-        public ActionResult Create(FeedbackRequest feedbackRequest)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<FeedbackResponse>> CreateFeedback([FromBody] FeedbackRequest feedbackRequest)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var feedback = _mapper.Map<Feedback>(feedbackRequest);
-            _feedbackService.Create(feedback);
-            return CreatedAtAction("GetById", new { id = feedback.Id }, feedback); // make class FeedbackRequest
+            var result = await _feedbackService.CreateFeedback(feedback);
+            return CreatedAtAction(nameof(GetById), new {id = result.Id}, result);
         }
-
-        // PUT api/rooms/2
-        [HttpPut("{id}")]
-        public ActionResult Update(Guid id, Feedback feedback)
+        
+        [HttpGet("{id}")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<FeedbackResponse>> GetById([FromRoute] Guid id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != feedback.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                _feedbackService.Update(feedback);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-
-            return Ok(feedback);
+            var feedback = await _feedbackService.GetById(id);
+            var result = _mapper.Map<FeedbackResponse>(feedback);
+            return result == null ? NotFound() : Ok(result);
         }
-
-        // DELETE api/rooms/2
-        [HttpDelete("{id}")]
-        public ActionResult Delete(Guid id)
+       
+        [HttpPut]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> UpdateFeedbackStatus([FromBody] FeedbackStatusResponse feedbackStatusResponse)
         {
-            var feedback = _feedbackService.GetById(id);
-            if (feedback == null)
-            {
-                return NotFound();
-            }
-
-            _feedbackService.Delete(feedback);
-            return NoContent();
+            var feedback = _mapper.Map<Feedback>(feedbackStatusResponse);
+            var result = await _feedbackService.Update(feedback);
+            return result == false ? NotFound() : NoContent();
         }
-        [HttpGet("/time")]
-        public string Time()
-        {
-            return DateTime.Now.TimeOfDay.ToString();
-        }
-*/
     }
 }

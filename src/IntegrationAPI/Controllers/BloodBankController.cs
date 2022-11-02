@@ -1,4 +1,5 @@
-﻿using IntegrationAPI.Dtos.Response;
+﻿using AutoMapper;
+using IntegrationAPI.Dtos.Request;
 using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.BloodBank.Service;
 using Microsoft.AspNetCore.Http;
@@ -18,9 +19,13 @@ namespace IntegrationAPI.Controllers
     public class BloodBankController: ControllerBase
     {
         private readonly IBloodBankService _bloodBankService;
+        private readonly IMapper _mapper;
 
-        public BloodBankController(IBloodBankService bloodBankService) { 
+        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper)
+        {
             _bloodBankService = bloodBankService;
+            _mapper = mapper;
+
         }
 
         // GET: api/bloodbank
@@ -43,15 +48,28 @@ namespace IntegrationAPI.Controllers
             return Ok(room);
         }
 
+        // GET api/bloodbank/BankaKrvi
+        [HttpGet("findByName/{name}")]
+        public ActionResult GetByName(String name)
+        {
+            var room = _bloodBankService.GetByName(name);
+            if (room == null)
+            {
+                return Ok(null);
+            }
+
+            return Ok(room);
+        }
+
         // POST api/bloodbank
         [HttpPost]
-        public ActionResult Create(BloodBank bloodBank)
+        public ActionResult Create(BloodBankRequest bloodBankRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            var bloodBank = _mapper.Map<BloodBank>(bloodBankRequest);
             _bloodBankService.Create(bloodBank);
             return CreatedAtAction("GetById", new { id = bloodBank.Id }, bloodBank);
         }
@@ -131,8 +149,6 @@ namespace IntegrationAPI.Controllers
             }         
             return bloodSupplyResponse;
         }
-
-
 
 
     }

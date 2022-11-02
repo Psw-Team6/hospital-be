@@ -1,7 +1,7 @@
 ﻿using System;
 using HospitalLibrary.Feedbacks.Model;
-using HospitalLibrary.Feedbacks.Repository;
 using System.Collections.Generic;
+using System.Linq;
 using HospitalLibrary.Common;
 using System.Threading.Tasks;
 
@@ -18,27 +18,34 @@ namespace HospitalLibrary.Feedbacks.Service
 
         public async Task<IEnumerable<Feedback>> GetAll()
         {
-            return  await _unitOfWork.FeedbackRepository.GetAllAsync();
+            return  await _unitOfWork.FeedbackRepository.GetAllFeedback();
         }
 
-        /*public  Feedback GetById(Guid id)
+        public async Task<IEnumerable<Feedback>> GetAllPublic()
         {
-            return _feedbackRepository.GetById(id);
+            var feedbacks = await _unitOfWork.FeedbackRepository.GetAllPublic();
+            return  feedbacks;
         }
 
-        public void Create(Feedback feedback)
+        public async Task<Feedback> CreateFeedback(Feedback feedback)
         {
-            _feedbackRepository.Create(feedback);
+            var newFeedback = await _unitOfWork.FeedbackRepository.CreateAsync(feedback);
+            await _unitOfWork.CompleteAsync();
+            return newFeedback;
         }
 
-        public void Update(Feedback feedback)
+        public async Task<Feedback> GetById(Guid id)
         {
-            _feedbackRepository.Update(feedback);
+            var feedback = await _unitOfWork.FeedbackRepository.GetByIdAsync(id);
+            await _unitOfWork.CompleteAsync();
+            return feedback;
         }
 
-        public void Delete(Feedback feedback)
+        public async Task<bool> Update(Feedback feedback)
         {
-            _feedbackRepository.Delete(feedback);
-        }*/
+            await _unitOfWork.FeedbackRepository.UpdateAsync(feedback);
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
     }
 }

@@ -1,5 +1,8 @@
+using IntegrationAPI.Mapper;
 using IntegrationLibrary.BloodBank.Repository;
 using IntegrationLibrary.BloodBank.Service;
+using IntegrationLibrary.SendMail;
+using IntegrationLibrary.SendMail.Services;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +28,9 @@ namespace IntegrationAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<IntegrationDbContext>(options =>
-           options.UseNpgsql(Configuration.GetConnectionString("IntegrationDB")));
+            options.UseNpgsql(Configuration.GetConnectionString("IntegrationDB")));
+            services.Configure<EmailOptions>(Configuration.GetSection(EmailOptions.SendGridEmail));
+            services.AddAutoMapper(typeof(MappingProfile));
             services.AddMvc(options =>
             {
                 options.EnableEndpointRouting = false;
@@ -36,7 +41,13 @@ namespace IntegrationAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
+
             });
+
+            services.AddScoped<IEmailService, EmailService>();
+            services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
+
+
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
 
@@ -55,7 +66,7 @@ namespace IntegrationAPI
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<IntegrationDbContext>();
-                context?.Database.Migrate();
+                //context?.Database.Migrate();
             }
             if (env.IsDevelopment())
             {

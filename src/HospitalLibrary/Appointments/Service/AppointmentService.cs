@@ -10,10 +10,12 @@ namespace HospitalLibrary.Appointments.Service
     public class AppointmentService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailService _emailService;
 
-        public AppointmentService(IUnitOfWork unitOfWork)
+        public AppointmentService(IUnitOfWork unitOfWork, IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
+            _emailService = emailService;
         }
 
         public async Task<IEnumerable<Appointment>> GetAllAppointments()
@@ -53,12 +55,34 @@ namespace HospitalLibrary.Appointments.Service
         {
             return await _unitOfWork.AppointmentRepository.GetByIdAsync(id);
         }
+        
+        public async Task<bool> CancelAppointment(Appointment appointment)
+        {
+            if (canCancleAppointment(appointment))
+            {
+                appointment.Patient = await _unitOfWork.PatientRepository.GetByIdAsync(appointment.PatientId);
+                await _emailService.SendCancelAppointmentEmail(appointment);
+                await _unitOfWork.AppointmentRepository.DeleteAsync(appointment);
+                await _unitOfWork.CompleteAsync();
+                return true;
+            }
 
+            return false;
+        }
+        
         public async Task<List<Appointment>> GetDoctorAppointments(Guid id)
         {
-            var appointments = await _unitOfWork.AppointmentRepository.GetAllAsync();
-            var doctorAppointments = appointments.Where(x => x.DoctorId == id);
-            return doctorAppointments.ToList();
+            var appointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForDoctor(id);
+            //var doctorAppointments = appointments.Where(x => x.DoctorId == id);
+            return appointments.ToList();
+        }
+        
+        
+        private bool canCancleAppointment(Appointment appointment)
+        {
+            if(DateTime.Now.AddDays(1).CompareTo(appointment.Duration.From) < 0)
+                return true;
+            return false;
         }
     }
 }

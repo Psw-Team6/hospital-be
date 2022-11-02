@@ -105,8 +105,17 @@ namespace HospitalLibrary.Settings
                 Street = "Partizanska",
                 Postcode = 21000
             };
+            Address address2 = new()
+            {
+                Id = Guid.NewGuid(),
+                City = "Novi Sad",
+                StreetNumber = "33",
+                Country = "Serbia",
+                Street = "JNA",
+                Postcode = 21000
+            };
             modelBuilder.Entity<Address>().HasData(
-                address,address1
+                address,address1,address2
             );
             Room room1 = new()
             {
@@ -164,19 +173,19 @@ namespace HospitalLibrary.Settings
                 Password = "sale1312",
                 Name = "Sale",
                 Surname = "Lave",
-                Email = "SaleLave1312@gmail.com",
+                Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222"
             };
             Patient patient2 = new()
             {
                 Id = Guid.NewGuid(),
-                AddressId = address.Id,
+                AddressId = address2.Id,
                 Username = "Miki",
                 Password = "sale1312",
                 Name = "Miki",
                 Surname = "Djuricic",
-                Email = "MikiDjuricic1312@gmail.com",
+                Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222"
             };
