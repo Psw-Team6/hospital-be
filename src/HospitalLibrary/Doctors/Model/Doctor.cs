@@ -17,6 +17,7 @@ namespace HospitalLibrary.Doctors.Model
         public Guid RoomId { get; set; }
         public Guid WorkingScheduleId { get; set; }
         public WorkingSchedule WorkingSchedule { get; set; }
+        
 
     }
 }

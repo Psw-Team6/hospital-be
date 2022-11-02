@@ -47,6 +47,11 @@ namespace IntegrationLibrary.BloodBank.Service
             return _bloodBankRepository.GetById(id);
         }
 
+        public BloodBank GetByName(String name)
+        {
+            return _bloodBankRepository.GetByName(name);
+        }
+
         public void Update(BloodBank bloodBank)
         {
             _bloodBankRepository.Update(bloodBank);

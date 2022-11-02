@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.CustomException;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace HospitalAPI.Exceptions
 {
@@ -15,15 +16,39 @@ namespace HospitalAPI.Exceptions
             {
                 await next(context);
             }
-            catch (DoctorException e)
+            catch (DoctorException error)
             {
-                context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
-                await context.Response.WriteAsync(e.Message);
+                var response = context.Response;
+                //Set response ContentType
+                response.ContentType = "application/json";
+                response.StatusCode = (int) HttpStatusCode.BadRequest;
+                var responseContent = new ResponseContent()
+                {
+                    Error = error.Message
+                };
+                //Using Newtonsoft.Json to convert object to json string
+                var jsonResult = JsonConvert.SerializeObject(responseContent);
+                await context.Response.WriteAsync(jsonResult);
             }
             catch (DateRangeException e)
             {
                 context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
-                await context.Response.WriteAsync(e.Message);
+                var str = JsonConvert.SerializeObject(ExceptionStatusCodes.GetExceptionDetails(e));
+                await context.Response.WriteAsync(str);
+            }
+            catch (PatientException e)
+            {
+                var response = context.Response;
+                //Set response ContentType
+                response.ContentType = "application/json";
+                response.StatusCode = (int) HttpStatusCode.BadRequest;
+                var responseContent = new ResponseContent()
+                {
+                    Error = e.Message
+                };
+                //Using Newtonsoft.Json to convert object to json string
+                var jsonResult = JsonConvert.SerializeObject(responseContent);
+                await context.Response.WriteAsync(jsonResult);
             }
         }
         

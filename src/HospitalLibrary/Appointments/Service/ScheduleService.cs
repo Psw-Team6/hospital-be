@@ -25,6 +25,7 @@ namespace HospitalLibrary.Appointments.Service
             await DoctorNotExist(appointment);
             await PatientNotExist(appointment);
             await CheckDoctorAvailability(appointment);
+            await CheckPatientAvailability(appointment);
             var app = await _unitOfWork.AppointmentRepository.CreateAsync(appointment);
             await _unitOfWork.CompleteAsync();
             return app;
@@ -44,6 +45,15 @@ namespace HospitalLibrary.Appointments.Service
             if (patient == null)
             {
                 throw new DoctorException("Patient with id: " + appointment.PatientId + "does not exist");
+            }
+        }
+
+        private async Task CheckPatientAvailability(Appointment appointment)
+        {
+            var isPatientAvailable = await CheckPatientAvailabilityForAppointment(appointment);
+            if (!isPatientAvailable)
+            {
+                throw new PatientException("Patient is not available.");
             }
         }
 
@@ -75,6 +85,11 @@ namespace HospitalLibrary.Appointments.Service
         {
            var appointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForDoctor(appointment.DoctorId);
            return appointments.All(app => !app.IsDoctorConflicts(appointment));
+        }
+        private async Task<bool> CheckPatientAvailabilityForAppointment(Appointment appointment)
+        {
+            var appointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForDoctor(appointment.DoctorId);
+            return appointments.All(app => !appointment.IsPatientConflicts(app));
         }
     }
 }
