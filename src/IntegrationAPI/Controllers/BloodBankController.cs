@@ -2,11 +2,15 @@
 using IntegrationAPI.Dtos.Request;
 using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.BloodBank.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace IntegrationAPI.Controllers
 {
@@ -112,21 +116,40 @@ namespace IntegrationAPI.Controllers
 
         //GET api/bloodbank/bloodSupply/A/8
         [HttpGet("bloodSupply/{bloodType}/{quantity}")]
-        public async Task<bool> GetBBSupplyByTypeAndQuantity(String bloodType, String quantity)
+        public async Task<BloodSupplyResponse> GetBBSupplyByTypeAndQuantity(String bloodType, String quantity)
         {
             return await GetProductAsync("http://localhost:8080/api/blood/bloodType/" + bloodType +'/'+ quantity);
         }
 
         static HttpClient client = new HttpClient();
-        static async Task<bool> GetProductAsync(string path)
+
+
+        static async Task<BloodSupplyResponse> GetProductAsync(string path)
         {
-            bool hasBlood = false;
-            HttpResponseMessage response = await client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            { 
-                hasBlood = Boolean.Parse(await response.Content.ReadAsStringAsync());
-            }
-            return hasBlood;
+            BloodSupplyResponse bloodSupplyResponse = new BloodSupplyResponse(false, 0);
+
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(path);
+                bloodSupplyResponse.StatusCode = (int)response.StatusCode;
+                bloodSupplyResponse.Response= Boolean.Parse(await response.Content.ReadAsStringAsync());
+            } catch (HttpRequestException httpEx)
+            {
+                if (httpEx.StatusCode.HasValue)
+                {
+                    bloodSupplyResponse.StatusCode = (int)httpEx.StatusCode;
+                }
+                else
+                {
+                    if (httpEx.Message.Contains("No connection could be made because the target machine actively refused it."))
+                        bloodSupplyResponse.StatusCode = 500;
+
+                }
+
+            }         
+            return bloodSupplyResponse;
         }
+
+
     }
 }
