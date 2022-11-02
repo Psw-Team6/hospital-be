@@ -10,6 +10,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using IntegrationAPI.Dtos.Response;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace IntegrationAPI.Controllers
