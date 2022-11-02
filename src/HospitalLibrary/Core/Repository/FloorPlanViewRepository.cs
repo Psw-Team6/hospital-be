@@ -15,11 +15,7 @@ namespace HospitalLibrary.Core.Repository
         }
         public async Task<List<FloorPlanView>> GetAllFloorPlanViews()
         {
-            return await  DbSet.Include(d => d.Id)
-                .Include(d => d.PosX)
-                .Include(d => d.PosY)
-                .Include(d => d.Lenght)
-                .Include(d => d.Width)
+            return await  DbSet
                 .ToListAsync();
         }
         

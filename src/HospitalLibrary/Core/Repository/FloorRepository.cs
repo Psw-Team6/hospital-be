@@ -15,10 +15,7 @@ namespace HospitalLibrary.Core.Repository
         }
         public async Task<List<Floor>> GetAllFloors()
         {
-            return await  DbSet.Include(d => d.Id)
-                .Include(d => d.Name)
-                .Include(d => d.BuildingId)
-                .Include(d => d.FloorNumber)
+            return await  DbSet
                 .ToListAsync();
         }
         

@@ -182,6 +182,36 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Floor>().HasData(
                 floor11,floor12,floor13,floor21,floor22,floor23
             );
+
+            FloorPlanView floorPlanView1 = new()
+            {
+                Id = Guid.NewGuid(),
+                PosX = 0,
+                PosY = 0,
+                Lenght = 5,
+                Width = 5
+            };
+            
+            FloorPlanView floorPlanView2 = new()
+            {
+                Id = Guid.NewGuid(),
+                PosX = 5,
+                PosY = 0,
+                Lenght = 5,
+                Width = 5
+            };
+            
+            FloorPlanView floorPlanView3 = new()
+            {
+                Id = Guid.NewGuid(),
+                PosX = 0,
+                PosY = 5,
+                Lenght = 5,
+                Width = 5
+            };
+            modelBuilder.Entity<FloorPlanView>().HasData(
+                floorPlanView1, floorPlanView2, floorPlanView3
+            );
             Room room1 = new()
             {
                 Id = Guid.NewGuid(),
@@ -241,6 +271,7 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Room>().HasData(
                 room1,room2,room3,room4,room5,room6,room7,room8
             );
+
             Doctor doctor = new()
             {
                 Id = Guid.NewGuid(),
