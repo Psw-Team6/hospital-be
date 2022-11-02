@@ -6,7 +6,7 @@ namespace HospitalLibrary.Core.Model
     public class Floor
     {
         public Guid Id { get; set; }
-        
+        public int FloorNumber { get; set; }
         public string Name { get; set; }
         
         public IEnumerable<Room> Rooms { get; set; }
@@ -14,7 +14,7 @@ namespace HospitalLibrary.Core.Model
         public Guid BuildingId { get; set; }
         public Building Building { get; set; }
         
-        public Guid FloorPlanViewId { get; set; }
-        public FloorPlanView FloorPlanView { get; set; }
+       /* public Guid FloorPlanViewId { get; set; }
+        public FloorPlanView FloorPlanView { get; set; }*/
     }
 }

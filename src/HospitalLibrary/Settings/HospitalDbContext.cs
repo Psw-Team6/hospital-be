@@ -120,18 +120,126 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Address>().HasData(
                 address,address1,address2
             );
+            
+            Building building1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Stara bolnica"
+            };
+            Floor floor11 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F0",
+                FloorNumber = 0,
+                BuildingId = building1.Id
+            };
+            Floor floor12 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F1",
+                FloorNumber = 1,
+                BuildingId = building1.Id
+            };
+            Floor floor13 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F2",
+                FloorNumber = 2,
+                BuildingId = building1.Id
+            };
+            Building building2 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Nova bolnica"
+            };
+            
+            Floor floor21 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F0",
+                FloorNumber = 0,
+                BuildingId = building2.Id
+            };
+            Floor floor22 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F1",
+                FloorNumber = 1,
+                BuildingId = building2.Id
+            };
+            Floor floor23 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F2",
+                FloorNumber = 2,
+                BuildingId = building2.Id
+            };
+            
+            modelBuilder.Entity<Building>().HasData(
+                building1,building2
+            );
+            
+            modelBuilder.Entity<Floor>().HasData(
+                floor11,floor12,floor13,floor21,floor22,floor23
+            );
             Room room1 = new()
             {
                 Id = Guid.NewGuid(),
+                FloorId = floor11.Id,
+                BuildingId = floor11.BuildingId,
                 Number = "11A"
             };
             Room room2 = new()
             {
                 Id = Guid.NewGuid(),
+                FloorId = floor11.Id,
+                BuildingId = floor11.BuildingId,
                 Number = "12A"
             };
+            Room room3 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor12.Id,
+                BuildingId = floor12.BuildingId,
+                Number = "13A"
+            };
+            Room room4 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor13.Id,
+                BuildingId = floor13.BuildingId,
+                Number = "14A"
+            };
+            Room room5 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor21.Id,
+                BuildingId = floor21.BuildingId,
+                Number = "11B"
+            };
+            Room room6 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor21.Id,
+                BuildingId = floor21.BuildingId,
+                Number = "12B"
+            };
+            Room room7 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor22.Id,
+                BuildingId = floor22.BuildingId,
+                Number = "13B"
+            };
+            Room room8 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor23.Id,
+                BuildingId = floor23.BuildingId,
+                Number = "14B"
+            };
             modelBuilder.Entity<Room>().HasData(
-                room1,room2
+                room1,room2,room3,room4,room5,room6,room7,room8
             );
             Doctor doctor = new()
             {

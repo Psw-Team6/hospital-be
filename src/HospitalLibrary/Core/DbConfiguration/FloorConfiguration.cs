@@ -13,13 +13,6 @@ namespace HospitalLibrary.Core.DbConfiguration
             _ = builder.Property(x => x.Id)
                 .IsRequired();
             
-            _ = builder.HasKey(x => x.BuildingId);
-            _ = builder.Property(x => x.BuildingId)
-                .IsRequired();
-            
-            _ = builder.HasKey(x => x.FloorPlanViewId);
-            _ = builder.Property(x => x.FloorPlanViewId)
-                .IsRequired();
         } 
     }
 }
