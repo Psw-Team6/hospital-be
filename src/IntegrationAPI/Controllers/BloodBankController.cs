@@ -41,6 +41,19 @@ namespace IntegrationAPI.Controllers
             return Ok(room);
         }
 
+        // GET api/bloodbank/BankaKrvi
+        [HttpGet("findByName/{name}")]
+        public ActionResult GetByName(String name)
+        {
+            var room = _bloodBankService.GetByName(name);
+            if (room == null)
+            {
+                return Ok(null);
+            }
+
+            return Ok(room);
+        }
+
         // POST api/bloodbank
         [HttpPost]
         public ActionResult Create(BloodBankRequest bloodBankRequest)
