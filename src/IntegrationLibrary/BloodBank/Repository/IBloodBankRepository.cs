@@ -10,6 +10,7 @@ namespace IntegrationLibrary.BloodBank.Repository
     {
         IEnumerable<BloodBank> GetAll();
         BloodBank GetById(Guid id);
+        BloodBank GetByName(String name);
         void Create(BloodBank bloodBank);
         void Update(BloodBank bloodBank);
         void Delete(BloodBank bloodBank);

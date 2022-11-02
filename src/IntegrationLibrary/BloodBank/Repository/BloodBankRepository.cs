@@ -36,6 +36,12 @@ namespace IntegrationLibrary.BloodBank.Repository
         {
             return _context.BloodBanks.Find(id);
         }
+        public BloodBank GetByName(String name)
+        {
+            var pom = _context.BloodBanks.FromSqlRaw<BloodBank>("select * from public.\"BloodBanks\" where \"Name\" =" + "'" + name + "'");
+            return pom.FirstOrDefault();
+        }
+
 
         public void Update(BloodBank bloodBank)
         {

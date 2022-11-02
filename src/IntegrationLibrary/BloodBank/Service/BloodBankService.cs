@@ -22,11 +22,11 @@ namespace IntegrationLibrary.BloodBank.Service
         }
         public void Create(BloodBank bloodBank)
         {
-            bloodBank.Password = String.Concat(bloodBank.Name.Where(c => !Char.IsWhiteSpace(c))) + "12345";
+            bloodBank.Password = GenerateDummyPassword();
             bloodBank.ApiKey = GenerateApiKey();
             String user = bloodBank.Name;
             String link = "Dear " + user + ",\n Click on link " + "<a href=\"http://localhost:4200/bloodBank/changePassword\">Change password</a>"
-                + " and change your initial password.";
+                + " and change your initial password.\n\n Your username is <strong>" + user + "</strong> and initial password is <strong>" + bloodBank.Password + "</strong>.";
             String mail = bloodBank.Email;
             _emailService.SendEmail(new Email(mail, "PSW-hospital", "TEKST", link));
             _bloodBankRepository.Create(bloodBank);
@@ -47,6 +47,11 @@ namespace IntegrationLibrary.BloodBank.Service
             return _bloodBankRepository.GetById(id);
         }
 
+        public BloodBank GetByName(String name)
+        {
+            return _bloodBankRepository.GetByName(name);
+        }
+
         public void Update(BloodBank bloodBank)
         {
             _bloodBankRepository.Update(bloodBank);
@@ -58,6 +63,15 @@ namespace IntegrationLibrary.BloodBank.Service
                 generator.GetBytes(key);
             return Convert.ToBase64String(key);
             
+        }
+
+        private String GenerateDummyPassword()
+        {
+            var key = new byte[8];
+            using (var generator = RandomNumberGenerator.Create())
+                generator.GetBytes(key);
+            return Convert.ToBase64String(key);
+
         }
     }
 }
