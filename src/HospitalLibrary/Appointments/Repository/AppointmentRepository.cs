@@ -21,5 +21,11 @@ namespace HospitalLibrary.Appointments.Repository
                 .Include(x => x.Duration).Include(x => x.Patient)
                 .ToListAsync();
         }
+        public async Task<IEnumerable<Appointment>> GetAllAppointmentsForPatient(Guid patientId)
+        {
+            return await DbSet.Where(x => x.PatientId == patientId)
+                .Include(x => x.Duration)
+                .ToListAsync();
+        }
     }
 }

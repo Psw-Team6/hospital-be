@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using HospitalLibrary.CustomException;
 
@@ -7,15 +8,19 @@ namespace HospitalAPI.Exceptions
 {
     public static class ExceptionStatusCodes
     {
-        private static Dictionary<Type, HttpStatusCode> _exceptionStatusCodes = new Dictionary<Type, HttpStatusCode>()
+        public static Dictionary<string, string> GetExceptionDetails(Exception exception)
         {
-            {typeof(DoctorException), HttpStatusCode.BadRequest}
-        };
-
-        public static HttpStatusCode GetExceptionStatusCode(Exception exception)
-        {
-            var exFound = _exceptionStatusCodes.TryGetValue(exception.GetType(), out var statusCode);
-            return exFound ? statusCode : HttpStatusCode.InternalServerError;
+            var properties = exception.GetType()
+                .GetProperties();
+            var fields = properties
+                .Select(property => new
+                {
+                    Name = property.Name,
+                    Value = property.GetValue(exception, null)
+                })
+                .Select(x => $"{x.Name} = {(x.Value != null ? x.Value.ToString() : string.Empty)}")
+                .ToDictionary(k => k, v => v);
+            return fields;
         }
     }
 }
