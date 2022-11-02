@@ -12,6 +12,9 @@ namespace HospitalLibrary.Settings
     public class HospitalDbContext : DbContext
     {
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Building> Buildings { get; set; }
+        public DbSet<Floor> Floors { get; set; }
+        public DbSet<FloorPlanView> FloorPlanViews { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
@@ -120,14 +123,12 @@ namespace HospitalLibrary.Settings
             Room room1 = new()
             {
                 Id = Guid.NewGuid(),
-                Number = "11A",
-                Floor = 1,
+                Number = "11A"
             };
             Room room2 = new()
             {
                 Id = Guid.NewGuid(),
-                Number = "12A",
-                Floor = 2,
+                Number = "12A"
             };
             modelBuilder.Entity<Room>().HasData(
                 room1,room2
