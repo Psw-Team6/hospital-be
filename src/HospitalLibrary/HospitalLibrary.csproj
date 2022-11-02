@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\HospitalDbContextModelSnapshot.cs" />
+    <Compile Remove="Migrations\20221028154245_Initial.Designer.cs" />
   </ItemGroup>
 
 </Project>
