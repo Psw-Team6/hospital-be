@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using System;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace HospitalLibrary.Core.Repository
             return _context.Rooms.ToList();
         }
 
-        public Room GetById(int id)
+        public Room GetById(Guid id)
         {
             return _context.Rooms.Find(id);
         }

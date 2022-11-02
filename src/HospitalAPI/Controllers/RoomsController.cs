@@ -1,4 +1,7 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using System;
+using AutoMapper;
+using HospitalAPI.Dtos.Request;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +12,12 @@ namespace HospitalAPI.Controllers
     public class RoomsController : ControllerBase
     {
         private readonly IRoomService _roomService;
+        private readonly IMapper _mapper;
 
-        public RoomsController(IRoomService roomService)
+        public RoomsController(IRoomService roomService, IMapper mapper)
         {
             _roomService = roomService;
+            _mapper = mapper;
         }
 
         // GET: api/rooms
@@ -24,7 +29,7 @@ namespace HospitalAPI.Controllers
 
         // GET api/rooms/2
         [HttpGet("{id}")]
-        public ActionResult GetById(int id)
+        public ActionResult GetById(Guid id)
         {
             var room = _roomService.GetById(id);
             if (room == null)
@@ -37,20 +42,21 @@ namespace HospitalAPI.Controllers
 
         // POST api/rooms
         [HttpPost]
-        public ActionResult Create(Room room)
+        public ActionResult Create(RoomRequest roomRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var room = _mapper.Map<Room>(roomRequest);
             _roomService.Create(room);
             return CreatedAtAction("GetById", new { id = room.Id }, room);
         }
 
         // PUT api/rooms/2
         [HttpPut("{id}")]
-        public ActionResult Update(int id, Room room)
+        public ActionResult Update(Guid id, Room room)
         {
             if (!ModelState.IsValid)
             {
@@ -76,7 +82,7 @@ namespace HospitalAPI.Controllers
 
         // DELETE api/rooms/2
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             var room = _roomService.GetById(id);
             if (room == null)
@@ -87,5 +93,11 @@ namespace HospitalAPI.Controllers
             _roomService.Delete(room);
             return NoContent();
         }
+        [HttpGet("/time")]
+        public string Time()
+        {
+            return DateTime.Now.TimeOfDay.ToString();
+        }
+        
     }
 }
