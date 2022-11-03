@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.CustomException;
+using HospitalLibrary.Doctors.Model;
 
 namespace HospitalLibrary.Appointments.Service
 {
@@ -18,17 +19,19 @@ namespace HospitalLibrary.Appointments.Service
 
         public async Task<Appointment> ScheduleAppointment(Appointment appointment)
         {
-            if (!appointment.Duration.IsValidRange())
-            {
-                throw new DateRangeException("Date range is not valid");
-            }
+            await ValidateAppointment(appointment);
+            var app = await _unitOfWork.AppointmentRepository.CreateAsync(appointment);
+            await _unitOfWork.CompleteAsync();
+            return app;
+        }
+
+        private async Task ValidateAppointment(Appointment appointment)
+        {
+            CheckDateRange(appointment);
             await DoctorNotExist(appointment);
             await PatientNotExist(appointment);
             await CheckDoctorAvailability(appointment);
             await CheckPatientAvailability(appointment);
-            var app = await _unitOfWork.AppointmentRepository.CreateAsync(appointment);
-            await _unitOfWork.CompleteAsync();
-            return app;
         }
 
         private async Task DoctorNotExist(Appointment appointment)
@@ -59,26 +62,35 @@ namespace HospitalLibrary.Appointments.Service
 
         private async Task CheckDoctorAvailability(Appointment appointment)
         {
-            var isAvailableSchedule = await IsDoctorAvailable(appointment);
+            var isAvailableSchedule = await IsDoctorWorking(appointment);
             var isAvailableAppointment = await CheckDoctorAvailabilityForAppointment(appointment);
             if (!isAvailableSchedule)
             {
-                throw new DoctorIsNotAvailable("Doctor is not available!");
+                throw new DoctorIsNotAvailable("You are  not available.Check your schedule.");
             }
             if (!isAvailableAppointment)
             {
-                throw new DoctorIsNotAvailable("Doctor is not available.He has already scheduled appointment!");
+                throw new DoctorIsNotAvailable("You have already scheduled appointment!");
             }
         }
 
-        private async Task<bool> IsDoctorAvailable(Appointment appointment)
+        private async Task<bool> IsDoctorWorking(Appointment appointment)
         {
             var doctorWorkingSchedule = await _unitOfWork.DoctorRepository.GetDoctorWorkingSchedule(appointment.DoctorId);
-            if (appointment.Duration.From.Date < doctorWorkingSchedule.ExpirationDate.From.Date ||
-                appointment.Duration.To.Date > doctorWorkingSchedule.ExpirationDate.To.Date)
-                return false;
-            return appointment.Duration.From.TimeOfDay >= doctorWorkingSchedule.DayOfWork.From.TimeOfDay 
+            if (!CheckWorkingDate(appointment, doctorWorkingSchedule)) return false;
+            return CheckWorkingHours(appointment, doctorWorkingSchedule);
+        }
+
+        private static bool CheckWorkingHours(Appointment appointment, WorkingSchedule doctorWorkingSchedule)
+        {
+            return appointment.Duration.From.TimeOfDay >= doctorWorkingSchedule.DayOfWork.From.TimeOfDay
                    && appointment.Duration.To.TimeOfDay <= doctorWorkingSchedule.DayOfWork.To.TimeOfDay;
+        }
+
+        private static bool CheckWorkingDate(Appointment appointment, WorkingSchedule doctorWorkingSchedule)
+        {
+            return appointment.Duration.From.Date >= doctorWorkingSchedule.ExpirationDate.From.Date 
+                   && appointment.Duration.To.Date <= doctorWorkingSchedule.ExpirationDate.To.Date;
         }
 
         private async Task<bool> CheckDoctorAvailabilityForAppointment(Appointment appointment)
@@ -90,6 +102,18 @@ namespace HospitalLibrary.Appointments.Service
         {
             var appointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForDoctor(appointment.DoctorId);
             return appointments.All(app => !appointment.IsPatientConflicts(app));
+        }
+        private static void CheckDateRange(Appointment appointment)
+        {
+            if (!appointment.Duration.IsValidRange())
+            {
+                throw new DateRangeException("Date range is not valid");
+            }
+
+            if (appointment.Duration.IsBeforeToday())
+            {
+                throw new DateRangeNotValid("Please select upcoming date");
+            }
         }
     }
 }

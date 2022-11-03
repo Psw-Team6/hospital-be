@@ -16,6 +16,19 @@ namespace HospitalAPI.Exceptions
             {
                 await next(context);
             }
+            catch (DateRangeException error)
+            {
+                var response = context.Response;
+                //Set response ContentType
+                response.ContentType = "application/json";
+                response.StatusCode = (int) HttpStatusCode.BadRequest;
+                var responseContent = new ResponseContent()
+                {
+                    Error = error.Message
+                };
+                var jsonResult = JsonConvert.SerializeObject(responseContent);
+                await context.Response.WriteAsync(jsonResult);
+            }
             catch (DoctorException error)
             {
                 var response = context.Response;
@@ -26,15 +39,8 @@ namespace HospitalAPI.Exceptions
                 {
                     Error = error.Message
                 };
-                //Using Newtonsoft.Json to convert object to json string
                 var jsonResult = JsonConvert.SerializeObject(responseContent);
                 await context.Response.WriteAsync(jsonResult);
-            }
-            catch (DateRangeException e)
-            {
-                context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
-                var str = JsonConvert.SerializeObject(ExceptionStatusCodes.GetExceptionDetails(e));
-                await context.Response.WriteAsync(str);
             }
             catch (PatientException e)
             {
@@ -46,7 +52,6 @@ namespace HospitalAPI.Exceptions
                 {
                     Error = e.Message
                 };
-                //Using Newtonsoft.Json to convert object to json string
                 var jsonResult = JsonConvert.SerializeObject(responseContent);
                 await context.Response.WriteAsync(jsonResult);
             }
