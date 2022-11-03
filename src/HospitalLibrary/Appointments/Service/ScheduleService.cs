@@ -126,7 +126,7 @@ namespace HospitalLibrary.Appointments.Service
                 throw new DateRangeException("Date range is not valid");
             }
 
-            if (appointment.Duration.IsBeforeToday())
+            if (appointment.Duration.IsBeforeDate())
             {
                 throw new DateRangeNotValid("Please select upcoming date");
             }
