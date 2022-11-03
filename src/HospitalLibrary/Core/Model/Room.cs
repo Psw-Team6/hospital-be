@@ -21,7 +21,16 @@ namespace HospitalLibrary.Core.Model
         
         public Guid FloorId { get; set; }
         public Floor Floor { get; set; }
-
+        
+        public string BuildingName { get; set; }
+        public string FloorName { get; set; }
+        public  int PositionX { get; set; }
+        
+        public  int PositionY { get; set; }
+        
+        public  int Lenght { get; set; }
+        
+        public  int Width { get; set; }
         /*public Guid FloorPlanViewId { get; set; }
         public FloorPlanView FloorPlanView { get; set; }*/
 
