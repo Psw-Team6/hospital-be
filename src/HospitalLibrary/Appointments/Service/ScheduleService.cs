@@ -30,6 +30,21 @@ namespace HospitalLibrary.Appointments.Service
             await _unitOfWork.CompleteAsync();
             return app;
         }
+        public async Task<bool> RescheduleAppointment(Appointment appointment)
+        {
+            if (!appointment.Duration.IsValidRange())
+            {
+                throw new DateRangeException("Date range is not valid");
+            }
+            await CheckDoctorAvailability(appointment);
+            await CheckPatientAvailability(appointment);
+
+            await _unitOfWork.AppointmentRepository.UpdateAsync(appointment);
+            await _unitOfWork.CompleteAsync();
+            return true;
+            
+            
+        }
 
         private async Task DoctorNotExist(Appointment appointment)
         {
