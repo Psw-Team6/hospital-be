@@ -5,7 +5,7 @@ namespace HospitalLibrary.CustomException
 {
     public class DateRangeException:Exception
     {
-        public DateRangeException()
+        protected DateRangeException()
         {
         }
 
@@ -18,6 +18,25 @@ namespace HospitalLibrary.CustomException
         }
 
         public DateRangeException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+    }
+
+    class DateRangeNotValid : DateRangeException
+    {
+        protected DateRangeNotValid()
+        {
+        }
+
+        protected DateRangeNotValid(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+
+        public DateRangeNotValid(string message) : base(message)
+        {
+        }
+
+        public DateRangeNotValid(string message, Exception innerException) : base(message, innerException)
         {
         }
     }
