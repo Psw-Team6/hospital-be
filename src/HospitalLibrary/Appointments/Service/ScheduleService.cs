@@ -41,8 +41,9 @@ namespace HospitalLibrary.Appointments.Service
             }
             await CheckDoctorAvailability(appointment);
             await CheckPatientAvailability(appointment);
-
-            await _unitOfWork.AppointmentRepository.UpdateAsync(appointment);
+            var app = await _unitOfWork.AppointmentRepository.GetByIdAsync(appointment.Id);
+            app.Duration = appointment.Duration;
+            await _unitOfWork.AppointmentRepository.UpdateAsync(app);
             await _unitOfWork.CompleteAsync();
             return true;
             
