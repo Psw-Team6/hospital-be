@@ -11,10 +11,12 @@ namespace HospitalLibrary.Appointments.Service
     public class ScheduleService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailService _emailService;
 
-        public ScheduleService(IUnitOfWork unitOfWork)
+        public ScheduleService(IUnitOfWork unitOfWork,IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
+            _emailService = emailService;
         }
 
         public async Task<Appointment> ScheduleAppointment(Appointment appointment)
@@ -43,6 +45,9 @@ namespace HospitalLibrary.Appointments.Service
             await CheckPatientAvailability(appointment);
             var app = await _unitOfWork.AppointmentRepository.GetByIdAsync(appointment.Id);
             app.Duration = appointment.Duration;
+            appointment.Patient = await _unitOfWork.PatientRepository.GetByIdAsync(appointment.PatientId);
+
+            await _emailService.SendRescheduleAppointmentEmail(appointment);
             await _unitOfWork.AppointmentRepository.UpdateAsync(app);
             await _unitOfWork.CompleteAsync();
             return true;

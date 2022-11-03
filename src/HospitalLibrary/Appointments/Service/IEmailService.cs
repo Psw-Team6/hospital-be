@@ -8,5 +8,7 @@ namespace HospitalLibrary.Appointments.Service
     {
         public Task SendEmail(Email email);
         public Task SendCancelAppointmentEmail(Appointment appointment);
+        
+        public Task SendRescheduleAppointmentEmail(Appointment appointment);
     }
 }
