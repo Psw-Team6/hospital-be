@@ -12,6 +12,9 @@ namespace HospitalLibrary.Settings
     public class HospitalDbContext : DbContext
     {
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Building> Buildings { get; set; }
+        public DbSet<Floor> Floors { get; set; }
+        public DbSet<FloorPlanView> FloorPlanViews { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
@@ -117,21 +120,219 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Address>().HasData(
                 address,address1,address2
             );
+            
+            Building building1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Stara bolnica"
+            };
+            Floor floor11 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F0",
+                FloorNumber = 0,
+                BuildingId = building1.Id
+            };
+            Floor floor12 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F1",
+                FloorNumber = 1,
+                BuildingId = building1.Id
+            };
+            Floor floor13 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F2",
+                FloorNumber = 2,
+                BuildingId = building1.Id
+            };
+            Building building2 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Nova bolnica"
+            };
+            
+            Floor floor21 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F0",
+                FloorNumber = 0,
+                BuildingId = building2.Id
+            };
+            Floor floor22 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F1",
+                FloorNumber = 1,
+                BuildingId = building2.Id
+            };
+            Floor floor23 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F2",
+                FloorNumber = 2,
+                BuildingId = building2.Id
+            };
+            
+            modelBuilder.Entity<Building>().HasData(
+                building1,building2
+            );
+            
+            modelBuilder.Entity<Floor>().HasData(
+                floor11,floor12,floor13,floor21,floor22,floor23
+            );
+
+            FloorPlanView floorPlanView1 = new()
+            {
+                Id = Guid.NewGuid(),
+                PosX = 0,
+                PosY = 0,
+                Lenght = 5,
+                Width = 5
+            };
+            
+            FloorPlanView floorPlanView2 = new()
+            {
+                Id = Guid.NewGuid(),
+                PosX = 5,
+                PosY = 0,
+                Lenght = 5,
+                Width = 5
+            };
+            
+            FloorPlanView floorPlanView3 = new()
+            {
+                Id = Guid.NewGuid(),
+                PosX = 0,
+                PosY = 5,
+                Lenght = 5,
+                Width = 5
+            };
+            modelBuilder.Entity<FloorPlanView>().HasData(
+                floorPlanView1, floorPlanView2, floorPlanView3
+            );
             Room room1 = new()
             {
                 Id = Guid.NewGuid(),
+                FloorId = floor11.Id,
+                BuildingId = floor11.BuildingId,
+                BuildingName = "Stara zgrada",
+                FloorName = "Prvi",
                 Number = "11A",
-                Floor = 1,
+                PositionX = 0,
+                PositionY  = 0,
+                Lenght = 5,
+                Width = 5
             };
             Room room2 = new()
             {
                 Id = Guid.NewGuid(),
+                FloorId = floor11.Id,
+                BuildingId = floor11.BuildingId,
+                BuildingName = "Stara zgrada",
+                FloorName = "Prvi",
                 Number = "12A",
-                Floor = 2,
+                PositionX = 5,
+                PositionY  = 0,
+                Lenght = 5,
+                Width = 5
+            };
+            Room room3 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor12.Id,
+                BuildingName = "Stara zgrada",
+                FloorName = "Drugi",
+                BuildingId = floor12.BuildingId,
+                Number = "13A",
+                PositionX = 10,
+                PositionY  = 0,
+                Lenght = 5,
+                Width = 5
+            };
+            Room room4 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor13.Id,
+                BuildingName = "Stara zgrada",
+                FloorName = "Treci",
+                BuildingId = floor13.BuildingId,
+                Number = "14A",
+                PositionX = 0,
+                PositionY  = 5,
+                Lenght = 5,
+                Width = 5
+            };
+            Room room5 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor21.Id,
+                BuildingName = "Nova zgrada",
+                FloorName = "Prvi",
+                BuildingId = floor21.BuildingId,
+                Number = "11B",
+                PositionX = 0,
+                PositionY  = 10,
+                Lenght = 5,
+                Width = 5
+            };
+            Room room6 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor21.Id,
+                BuildingName = "Nova zgrada",
+                FloorName = "Prvi",
+                BuildingId = floor21.BuildingId,
+                Number = "12B",
+                PositionX = 5,
+                PositionY  = 5,
+                Lenght = 5,
+                Width = 5
+            };
+            Room room7 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor22.Id,
+                BuildingName = "Nova zgrada",
+                FloorName = "Drugi",
+                BuildingId = floor22.BuildingId,
+                Number = "13B",
+                PositionX = 10,
+                PositionY  = 5,
+                Lenght = 5,
+                Width = 5
+            };
+            Room room8 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor23.Id,
+                BuildingName = "Nova zgrada",
+                FloorName = "Treci",
+                BuildingId = floor23.BuildingId,
+                Number = "14B",
+                PositionX = 0,
+                PositionY  = 0,
+                Lenght = 10,
+                Width = 20
+            };
+            Room room9 = new()
+            {
+                Id = Guid.NewGuid(),
+                BuildingName = "Nova zgrada",
+                FloorId = floor23.Id,
+                BuildingId = floor23.BuildingId,
+                FloorName = "Treci",
+                Number = "15B",
+                PositionX = 0,
+                PositionY  = 10,
+                Lenght = 5,
+                Width = 20
             };
             modelBuilder.Entity<Room>().HasData(
-                room1,room2
+                room1,room2,room3,room4,room5,room6,room7,room8,room9
             );
+
             Doctor doctor = new()
             {
                 Id = Guid.NewGuid(),

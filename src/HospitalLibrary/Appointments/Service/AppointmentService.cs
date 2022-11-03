@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
+using HospitalLibrary.CustomException;
 
 namespace HospitalLibrary.Appointments.Service
 {
@@ -22,25 +23,6 @@ namespace HospitalLibrary.Appointments.Service
         {
             var appointments =  await _unitOfWork.AppointmentRepository.GetAllAsync();
             return appointments;
-        }
-
-        public async Task<bool> RescheduleAppointment(Appointment appointment)
-        {
-            // var oldAppointment = await GetById(appointment.Id);
-            // if (oldAppointment == null)
-            // {
-            //     return false;
-            // }
-            //
-            // await _unitOfWork.AppointmentRepository.UpdateAsync(appointment);
-            // await _unitOfWork.CompleteAsync();
-            // return true;
-
-            await _unitOfWork.AppointmentRepository.UpdateAsync(appointment);
-            await _unitOfWork.CompleteAsync();
-            return true;
-            
-            
         }
 
         public async Task<Appointment> CreateAppointment(Appointment appointment)
@@ -84,5 +66,6 @@ namespace HospitalLibrary.Appointments.Service
                 return true;
             return false;
         }
+      
     }
 }

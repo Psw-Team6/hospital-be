@@ -43,6 +43,12 @@ namespace HospitalAPI.Mapper
                 CreateMap<Feedback, FeedbackStatusResponse>();
                 CreateMap<FeedbackStatusResponse, Feedback>();
                 CreateMap<FeedbackStatusRequest, Feedback>();
+                CreateMap<BuildingResponse, Building>();
+                CreateMap<Building, BuildingResponse>();
+                CreateMap<FloorResponse, Floor>();
+                CreateMap<Floor, FloorResponse>();
+                CreateMap<FloorPlanViewResponse, FloorPlanView>();
+                CreateMap<FloorPlanView, FloorPlanViewResponse>();
             }
     }
     
