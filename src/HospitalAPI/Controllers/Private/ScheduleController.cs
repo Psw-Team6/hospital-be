@@ -34,5 +34,15 @@ namespace HospitalAPI.Controllers.Private
             var result = _mapper.Map<AppointmentResponse>(appointmentCreated);
             return CreatedAtAction("ScheduleAppointment", new {id = result.Id}, result);
         }
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> RescheduleAppointment([FromBody] AppointmentResponse appointmentRequest)
+        {
+            var appointment = _mapper.Map<Appointment>(appointmentRequest);
+            var result = await _scheduleService.RescheduleAppointment(appointment);
+            return result == false ? NotFound() : NoContent();
+        }
     }
 }
