@@ -60,7 +60,7 @@ namespace HospitalLibrary.Appointments.Service
             var doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(appointment.DoctorId);
             if (doctor == null)
             {
-                throw new DoctorNotExist("Doctor with id: " + appointment.DoctorId + "does not exist");
+                throw new DoctorNotExist("Doctor  does not exist");
             }
         }
         private async Task PatientNotExist(Appointment appointment)

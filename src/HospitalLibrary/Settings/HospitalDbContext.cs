@@ -18,8 +18,9 @@ namespace HospitalLibrary.Settings
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Address> Addresses { get; set; }
+        //public DbSet<Address> Addresses { get; set; }
         public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
+        public DbSet<GRoom> GRooms { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -216,7 +217,6 @@ namespace HospitalLibrary.Settings
             {
                 Id = Guid.NewGuid(),
                 FloorId = floor11.Id,
-                BuildingId = floor11.BuildingId,
                 BuildingName = "Stara zgrada",
                 FloorName = "Prvi",
                 Number = "11A",
@@ -225,14 +225,38 @@ namespace HospitalLibrary.Settings
                 Lenght = 5,
                 Width = 5
             };
+            //pravilno
+            // Room room1 = new()
+            // {
+            //     Id = Guid.NewGuid(),
+            //     FloorId = floor11.Id,
+            //     Number = "11A",
+            // };
+            GRoom gRoom1 = new()
+            {
+                Id = Guid.NewGuid(),
+                RoomId = room1.Id,
+                PositionX = 0,
+                PositionY = 0,
+                Lenght = 5,
+                Width = 5
+            };
             Room room2 = new()
             {
                 Id = Guid.NewGuid(),
                 FloorId = floor11.Id,
-                BuildingId = floor11.BuildingId,
                 BuildingName = "Stara zgrada",
                 FloorName = "Prvi",
                 Number = "12A",
+                PositionX = 5,
+                PositionY  = 0,
+                Lenght = 5,
+                Width = 5
+            };
+            GRoom gRoom2 = new()
+            {
+                Id = Guid.NewGuid(),
+                RoomId = room2.Id,
                 PositionX = 5,
                 PositionY  = 0,
                 Lenght = 5,
@@ -244,7 +268,6 @@ namespace HospitalLibrary.Settings
                 FloorId = floor12.Id,
                 BuildingName = "Stara zgrada",
                 FloorName = "Drugi",
-                BuildingId = floor12.BuildingId,
                 Number = "13A",
                 PositionX = 10,
                 PositionY  = 0,
@@ -257,7 +280,6 @@ namespace HospitalLibrary.Settings
                 FloorId = floor13.Id,
                 BuildingName = "Stara zgrada",
                 FloorName = "Treci",
-                BuildingId = floor13.BuildingId,
                 Number = "14A",
                 PositionX = 0,
                 PositionY  = 5,
@@ -270,7 +292,6 @@ namespace HospitalLibrary.Settings
                 FloorId = floor21.Id,
                 BuildingName = "Nova zgrada",
                 FloorName = "Prvi",
-                BuildingId = floor21.BuildingId,
                 Number = "11B",
                 PositionX = 0,
                 PositionY  = 10,
@@ -283,7 +304,6 @@ namespace HospitalLibrary.Settings
                 FloorId = floor21.Id,
                 BuildingName = "Nova zgrada",
                 FloorName = "Prvi",
-                BuildingId = floor21.BuildingId,
                 Number = "12B",
                 PositionX = 5,
                 PositionY  = 5,
@@ -296,7 +316,6 @@ namespace HospitalLibrary.Settings
                 FloorId = floor22.Id,
                 BuildingName = "Nova zgrada",
                 FloorName = "Drugi",
-                BuildingId = floor22.BuildingId,
                 Number = "13B",
                 PositionX = 10,
                 PositionY  = 5,
@@ -309,7 +328,6 @@ namespace HospitalLibrary.Settings
                 FloorId = floor23.Id,
                 BuildingName = "Nova zgrada",
                 FloorName = "Treci",
-                BuildingId = floor23.BuildingId,
                 Number = "14B",
                 PositionX = 0,
                 PositionY  = 0,
@@ -321,7 +339,6 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 BuildingName = "Nova zgrada",
                 FloorId = floor23.Id,
-                BuildingId = floor23.BuildingId,
                 FloorName = "Treci",
                 Number = "15B",
                 PositionX = 0,
@@ -331,6 +348,9 @@ namespace HospitalLibrary.Settings
             };
             modelBuilder.Entity<Room>().HasData(
                 room1,room2,room3,room4,room5,room6,room7,room8,room9
+            );
+            modelBuilder.Entity<GRoom>().HasData(
+                gRoom1,gRoom2
             );
 
             Doctor doctor = new()

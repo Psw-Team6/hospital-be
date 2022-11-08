@@ -86,6 +86,7 @@ namespace HospitalAPI
             services.AddScoped<BuildingService>();
             services.AddScoped<FloorService>();
             services.AddScoped<FloorPlanViewService>();
+            services.AddScoped<GRoomService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

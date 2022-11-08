@@ -20,6 +20,7 @@ namespace HospitalLibrary.Common
         IFloorRepository FloorRepository { get; }
         IBuildingRepository BuildingRepository { get; }
         IFloorPlanViewRepository FloorPlanViewRepository { get; }
+        IGRoomRepository GRoomRepository { get; }
         Task CompleteAsync();
     }
 }
