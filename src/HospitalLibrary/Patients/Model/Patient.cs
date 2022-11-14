@@ -10,6 +10,7 @@ namespace HospitalLibrary.Patients.Model
     {
         public IEnumerable<Appointment> Appointments { get; set; }
         public IEnumerable<Feedback> Feedbacks { get; set; }
+        public IEnumerable<Ingredient> Allergies { get; set; }
 
     }
 }
