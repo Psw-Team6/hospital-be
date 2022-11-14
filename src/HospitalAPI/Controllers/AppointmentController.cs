@@ -33,24 +33,6 @@ namespace HospitalAPI.Controllers
             return Ok(appointments);
         }
         
-        [HttpPost]
-        public async Task<ActionResult> CreateAppointment([FromBody] AppointmentRequest appointmentRequest)
-        {
-            var appointment = _mapper.Map<Appointment>(appointmentRequest);
-            var result = await _appointmentService.CreateAppointment(appointment);
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
-        }
-        
-        // [HttpPut]
-        // [ProducesResponseType(StatusCodes.Status204NoContent)]
-        // [ProducesResponseType(StatusCodes.Status404NotFound)]
-        // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        // public async Task<ActionResult> RescheduleAppointement([FromBody] AppointmentResponse appointmentRequest)
-        // {
-        //     var appointment = _mapper.Map<Appointment>(appointmentRequest);
-        //     var result = await _appointmentService.RescheduleAppointment(appointment);
-        //     return result == false ? NotFound() : NoContent();
-        // }
         
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(AppointmentResponse), StatusCodes.Status200OK)]

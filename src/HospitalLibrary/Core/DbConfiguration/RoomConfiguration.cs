@@ -12,6 +12,9 @@ namespace HospitalLibrary.Core.DbConfiguration
             _ = builder.HasKey(x => x.Id);
             _ = builder.Property(x => x.Id)
                 .IsRequired();
+            _ = builder.HasMany((room) => room.Beds)
+                .WithOne(bed => bed.Room)
+                .HasForeignKey(bed => bed.RoomId);
         }
     }
 }

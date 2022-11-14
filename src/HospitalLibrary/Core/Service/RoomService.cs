@@ -2,41 +2,46 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using HospitalLibrary.Common;
 
 namespace HospitalLibrary.Core.Service
 {
-    public class RoomService : IRoomService
+    public class RoomService
     {
-        private readonly IRoomRepository _roomRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RoomService(IRoomRepository roomRepository)
+        public RoomService(IUnitOfWork unitOfWork)
         {
-            _roomRepository = roomRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Room> GetAll()
+        public async Task<IEnumerable<Room>> GetAll()
         {
-            return _roomRepository.GetAll();
+            return await _unitOfWork.RoomRepository.GetAllAsync();
         }
 
-        public Room GetById(Guid id)
+        public async Task<Room> GetById(Guid id)
         {
-            return _roomRepository.GetById(id);
+            return await _unitOfWork.RoomRepository.GetByIdAsync(id);
         }
 
           public void Create(Room room)
         {
-            _roomRepository.Create(room);
+            _unitOfWork.RoomRepository.CreateAsync(room);
+            _unitOfWork.CompleteAsync();
         }
 
         public void Update(Room room)
         {
-            _roomRepository.Update(room);
+            _unitOfWork.RoomRepository.UpdateAsync(room);
+            _unitOfWork.CompleteAsync();
         }
 
         public void Delete(Room room)
         {
-            _roomRepository.Delete(room);
+            _unitOfWork.RoomRepository.DeleteAsync(room);
+            _unitOfWork.CompleteAsync();
         }
     }
 }

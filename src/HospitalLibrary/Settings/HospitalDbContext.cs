@@ -21,6 +21,8 @@ namespace HospitalLibrary.Settings
         //public DbSet<Address> Addresses { get; set; }
         public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
         public DbSet<GRoom> GRooms { get; set; }
+        public DbSet<RoomBed> RoomBeds { get; set; }
+        public DbSet<PatientAdmission> PatientAdmissions { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -352,6 +354,73 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<GRoom>().HasData(
                 gRoom1,gRoom2
             );
+            RoomBed room1Bed1 = new()
+            {
+                Id = Guid.NewGuid(),
+                IsFree = true,
+                Number = "11A1",
+                RoomId = room1.Id
+            };
+            RoomBed room1Bed2 = new()
+            {
+                Id = Guid.NewGuid(),
+                IsFree = true,
+                Number = "11A2",
+                RoomId = room1.Id
+            };
+            RoomBed room1Bed3 = new()
+            {
+                Id = Guid.NewGuid(),
+                IsFree = true,
+                Number = "11A3",
+                RoomId = room1.Id
+            };
+            RoomBed room1Bed4 = new()
+            {
+                Id = Guid.NewGuid(),
+                IsFree = true,
+                Number = "11A4",
+                RoomId = room1.Id
+            };
+            RoomBed room2Bed1 = new()
+            {
+                Id = Guid.NewGuid(),
+                IsFree = true,
+                Number = "12A1",
+                RoomId = room2.Id
+            };
+            RoomBed room2Bed2 = new()
+            {
+                Id = Guid.NewGuid(),
+                IsFree = true,
+                Number = "12A2",
+                RoomId = room2.Id
+            };
+            RoomBed room2Bed3 = new()
+            {
+                Id = Guid.NewGuid(),
+                IsFree = true,
+                Number = "12A3",
+                RoomId = room2.Id
+            };
+            RoomBed room2Bed4 = new()
+            {
+                Id = Guid.NewGuid(),
+                IsFree = true,
+                Number = "12A4",
+                RoomId = room2.Id
+            };
+            RoomBed room2Bed5 = new()
+            {
+                Id = Guid.NewGuid(),
+                IsFree = true,
+                Number = "12A5",
+                RoomId = room2.Id
+            };
+            modelBuilder.Entity<RoomBed>().HasData(
+                room1Bed1, room1Bed2, room1Bed3, room1Bed4, 
+                room2Bed1, room2Bed2, room2Bed3, room2Bed4, room2Bed5
+            );
 
             Doctor doctor = new()
             {
@@ -410,11 +479,21 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222"
             };
-            
             modelBuilder.Entity<Patient>().HasData(
                 patient1,patient2
             );
-
+            // PatientAdmission patientAdmission1 = new()
+            // {
+            //     Id = Guid.NewGuid(),
+            //     DateOfAdmission = new DateTime(2022,13,11,15, 0, 0),
+            //     PatientId = patient1.Id,
+            //     SelectedBedId = room1Bed1.Id,
+            //     SelectedRoomId = room1.Id,
+            //     Reason = "lorem ipsum"
+            // };
+            // modelBuilder.Entity<PatientAdmission>().HasData(
+            //     patientAdmission1
+            // );
             Appointment appointment = new()
             {
                 Id = Guid.NewGuid(),

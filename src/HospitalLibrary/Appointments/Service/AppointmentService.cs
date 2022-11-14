@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Common;
 using HospitalLibrary.CustomException;
 
@@ -21,21 +22,14 @@ namespace HospitalLibrary.Appointments.Service
 
         public async Task<IEnumerable<Appointment>> GetAllAppointments()
         {
-            var appointments =  await _unitOfWork.AppointmentRepository.GetAllAsync();
+            var appointments =  await _unitOfWork.GetRepository<AppointmentRepository>().GetAllAsync();
             return appointments;
         }
-
-        public async Task<Appointment> CreateAppointment(Appointment appointment)
-        {
-           //Task.FromException(new Exception("aaa"));
-            var appointmentCreated = await _unitOfWork.AppointmentRepository.CreateAsync(appointment);
-            await _unitOfWork.CompleteAsync();
-            return appointmentCreated;
-        }
+        
 
         public async Task<Appointment> GetById(Guid id)
         {
-            return await _unitOfWork.AppointmentRepository.GetByIdAsync(id);
+            return await _unitOfWork.GetRepository<AppointmentRepository>().GetByIdAsync(id);
         }
         
         public async Task<bool> CancelAppointment(Appointment appointment)
@@ -44,7 +38,7 @@ namespace HospitalLibrary.Appointments.Service
             {
                 appointment.Patient = await _unitOfWork.PatientRepository.GetByIdAsync(appointment.PatientId);
                 await _emailService.SendCancelAppointmentEmail(appointment);
-                await _unitOfWork.AppointmentRepository.DeleteAsync(appointment);
+                await _unitOfWork.GetRepository<AppointmentRepository>().DeleteAsync(appointment);
                 await _unitOfWork.CompleteAsync();
                 return true;
             }
@@ -54,7 +48,7 @@ namespace HospitalLibrary.Appointments.Service
         
         public async Task<List<Appointment>> GetDoctorAppointments(Guid id)
         {
-            var appointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForDoctor(id);
+            var appointments = await _unitOfWork.GetRepository<AppointmentRepository>().GetAllAppointmentsForDoctor(id);
             //var doctorAppointments = appointments.Where(x => x.DoctorId == id);
             return appointments.ToList();
         }

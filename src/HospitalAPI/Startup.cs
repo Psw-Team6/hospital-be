@@ -69,11 +69,12 @@ namespace HospitalAPI
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<SpecializationsService>();
             services.AddScoped<ISpecializationsRepository, SpecializationsRepository>();
-            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<FeedbackService>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<DoctorService>();
+            services.AddScoped<IDoctorRepository,DoctorRepository>();
 
             services.AddScoped<IWorkingSchueduleRepository, WorkingScheduleRepository>();
             services.AddScoped<WorkingScheduleService>();
@@ -87,6 +88,7 @@ namespace HospitalAPI
             services.AddScoped<FloorService>();
             services.AddScoped<FloorPlanViewService>();
             services.AddScoped<GRoomService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,13 +106,14 @@ namespace HospitalAPI
                 var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
                 context?.Database.Migrate();
             }
-
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
               //  app.UseSwagger();
               app.UseOpenApi();
               app.UseSwaggerUi3();
+              app.UseReDoc();
               //  app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1"));
             }
 

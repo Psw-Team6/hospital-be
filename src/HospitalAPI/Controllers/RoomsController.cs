@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalLibrary.Core.Model;
@@ -11,10 +12,10 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private readonly IRoomService _roomService;
+        private readonly RoomService _roomService;
         private readonly IMapper _mapper;
 
-        public RoomsController(IRoomService roomService, IMapper mapper)
+        public RoomsController(RoomService roomService, IMapper mapper)
         {
             _roomService = roomService;
             _mapper = mapper;
@@ -22,20 +23,16 @@ namespace HospitalAPI.Controllers
 
         // GET: api/rooms
         [HttpGet]
-        public ActionResult GetAll()
+        public async Task<ActionResult> GetAll()
         {
-            return Ok(_roomService.GetAll());
+            return Ok(await _roomService.GetAll());
         }
 
         // GET api/rooms/2
         [HttpGet("{id}")]
-        public ActionResult GetById(Guid id)
+        public async Task<ActionResult> GetById(Guid id)
         {
-            var room = _roomService.GetById(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
+            var room = await _roomService.GetById(id);
 
             return Ok(room);
         }
@@ -55,7 +52,7 @@ namespace HospitalAPI.Controllers
         }
 
         // PUT api/rooms/2
-        [HttpPut("{id}")]
+        [HttpPut("{id:guid}")]
         public ActionResult Update(Guid id, Room room)
         {
             if (!ModelState.IsValid)
@@ -81,23 +78,13 @@ namespace HospitalAPI.Controllers
         }
 
         // DELETE api/rooms/2
-        [HttpDelete("{id}")]
-        public ActionResult Delete(Guid id)
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult> Delete(Guid id)
         {
-            var room = _roomService.GetById(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
+            var room = await _roomService.GetById(id);
 
             _roomService.Delete(room);
             return NoContent();
         }
-        [HttpGet("/time")]
-        public string Time()
-        {
-            return DateTime.Now.TimeOfDay.ToString();
-        }
-        
     }
 }

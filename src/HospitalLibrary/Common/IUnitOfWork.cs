@@ -12,15 +12,15 @@ namespace HospitalLibrary.Common
     public interface IUnitOfWork:IAsyncDisposable
     {
         ISpecializationsRepository SpecializationsRepository { get; }
-        IDoctorRepository DoctorRepository { get; }
         IPatientRepository PatientRepository { get; }
-        IAppointmentRepository AppointmentRepository { get; }
         IFeedbackRepository FeedbackRepository { get; }
         IWorkingSchueduleRepository WorkingSchueduleRepository { get; }
         IFloorRepository FloorRepository { get; }
         IBuildingRepository BuildingRepository { get; }
         IFloorPlanViewRepository FloorPlanViewRepository { get; }
         IGRoomRepository GRoomRepository { get; }
+        IRoomRepository RoomRepository { get; }
+        T GetRepository<T>() where T : class;
         Task CompleteAsync();
     }
 }

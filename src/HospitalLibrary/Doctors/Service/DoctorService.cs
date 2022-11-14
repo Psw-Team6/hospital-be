@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HospitalLibrary.Common;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Doctors.Repository;
 
 namespace HospitalLibrary.Doctors.Service
 {
@@ -18,28 +19,28 @@ namespace HospitalLibrary.Doctors.Service
 
         public async Task<List<Doctor>> GetAll()
         {
-            return await _unitOfWork.DoctorRepository.GetAllDoctors();
+            return await _unitOfWork.GetRepository<DoctorRepository>().GetAllDoctors();
         }
 
         public async Task<Doctor> CreateDoctor(Doctor doctor)
         {
-            var newDoctor =await _unitOfWork.DoctorRepository.CreateAsync(doctor);
+            var newDoctor =await _unitOfWork.GetRepository<DoctorRepository>().CreateAsync(doctor);
             await _unitOfWork.CompleteAsync();
             return newDoctor;
         }
 
         public async Task<Doctor> GetById(Guid id)
         {
-            var doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(id);
+            var doctor = await _unitOfWork.GetRepository<DoctorRepository>().GetByIdAsync(id);
             await _unitOfWork.CompleteAsync();
             return doctor;
         }
 
         public async Task<bool> DeleteById(Guid id)
         {
-            var doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(id);
+            var doctor = await _unitOfWork.GetRepository<DoctorRepository>().GetByIdAsync(id);
             if (doctor == null) { return false; }
-            await _unitOfWork.DoctorRepository.DeleteAsync(doctor);
+            await _unitOfWork.GetRepository<DoctorRepository>().DeleteAsync(doctor);
             await _unitOfWork.CompleteAsync();
             return true;
         }

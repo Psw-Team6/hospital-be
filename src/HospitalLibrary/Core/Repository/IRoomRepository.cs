@@ -1,15 +1,11 @@
 ﻿using System;
 using HospitalLibrary.Core.Model;
 using System.Collections.Generic;
+using HospitalLibrary.Common;
 
 namespace HospitalLibrary.Core.Repository
 {
-    public interface IRoomRepository
+    public interface IRoomRepository:IGenericRepository<Room>
     {
-        IEnumerable<Room> GetAll();
-        Room GetById(Guid id);
-        void Create(Room room);
-        void Update(Room room);
-        void Delete(Room room);
     }
 }
