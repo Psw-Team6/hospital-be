@@ -4,7 +4,9 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.sharedModel;
+using HospitalLibrary.TreatmentReports.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Settings
@@ -23,7 +25,9 @@ namespace HospitalLibrary.Settings
         public DbSet<GRoom> GRooms { get; set; }
         public DbSet<RoomBed> RoomBeds { get; set; }
         public DbSet<PatientAdmission> PatientAdmissions { get; set; }
-
+        public DbSet<MedicinePrescription> MedicinePrescriptions { get; set; }
+        public DbSet<BloodPrescription> BloodPrescriptions { get; set; }
+        public DbSet<TreatmentReport> TreatmentReports { get; set; }
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

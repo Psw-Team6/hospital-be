@@ -4,7 +4,7 @@ using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.sharedModel;
 
-namespace HospitalLibrary.TreatmentReport.Model
+namespace HospitalLibrary.TreatmentReports.Model
 {
     public class TreatmentReport
     {

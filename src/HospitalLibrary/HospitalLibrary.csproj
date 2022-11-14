@@ -21,12 +21,9 @@
 
   <ItemGroup>
     <Folder Include="Medicines\Controller" />
-    <Folder Include="Medicines\Repository" />
+    <Folder Include="Medicines\Medicine" />
     <Folder Include="Medicines\Service" />
     <Folder Include="Migrations" />
-    <Folder Include="TreatmentReport\Controller" />
-    <Folder Include="TreatmentReport\Repository" />
-    <Folder Include="TreatmentReport\Service" />
   </ItemGroup>
 
   <ItemGroup>
