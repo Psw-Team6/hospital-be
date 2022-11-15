@@ -17,7 +17,6 @@ namespace HospitalLibrary.Common
         IWorkingSchueduleRepository WorkingSchueduleRepository { get; }
         IFloorRepository FloorRepository { get; }
         IBuildingRepository BuildingRepository { get; }
-        IFloorPlanViewRepository FloorPlanViewRepository { get; }
         IGRoomRepository GRoomRepository { get; }
         IRoomRepository RoomRepository { get; }
         T GetRepository<T>() where T : class;

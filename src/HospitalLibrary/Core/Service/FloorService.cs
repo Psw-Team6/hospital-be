@@ -19,5 +19,11 @@ namespace HospitalLibrary.Core.Service
             return await _unitOfWork.FloorRepository.GetAllFloors();
         }
         
+        public async Task<bool> Update(Floor floor)
+        {
+            await _unitOfWork.FloorRepository.UpdateAsync(floor);
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
     }
 }

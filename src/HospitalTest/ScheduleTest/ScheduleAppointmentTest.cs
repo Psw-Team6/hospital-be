@@ -42,14 +42,7 @@ namespace HospitalTest.ScheduleTest
             };
             Room room1 = new()
             {
-                Id = Guid.NewGuid(),
-                BuildingName = "Stara zgrada",
-                FloorName = "Prvi",
-                Number = "11A",
-                PositionX = 0,
-                PositionY  = 0,
-                Lenght = 5,
-                Width = 5
+                Id = Guid.NewGuid()
             };
             Specialization specializationDermatology = new()
             {

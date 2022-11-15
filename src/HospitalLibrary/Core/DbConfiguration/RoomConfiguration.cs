@@ -15,6 +15,8 @@ namespace HospitalLibrary.Core.DbConfiguration
             _ = builder.HasMany((room) => room.Beds)
                 .WithOne(bed => bed.Room)
                 .HasForeignKey(bed => bed.RoomId);
+
+            
         }
     }
 }

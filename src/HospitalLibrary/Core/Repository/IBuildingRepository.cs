@@ -7,7 +7,7 @@ namespace HospitalLibrary.Core.Repository
 {
     public interface IBuildingRepository: IGenericRepository<Building>
     {
-        Task<List<Building>> GetAllBuildings();
+        Task<IEnumerable<Building>> GetAllBuildings();
         
     }
 }

@@ -18,15 +18,12 @@ namespace HospitalLibrary.Common
         private FeedbackRepository _feedbackRepository;
         private BuildingRepository _buildingRepository;
         private FloorRepository _floorRepository;
-        private FloorPlanViewRepository _floorPlanViewRepository;
         private GRoomRepository _gRoomRepository;
         private RoomRepository _roomRepository;
         public IBuildingRepository BuildingRepository =>
             _buildingRepository ??= new BuildingRepository(_hospitalDbContext);
         public IFloorRepository FloorRepository =>
             _floorRepository ??= new FloorRepository(_hospitalDbContext);
-        public IFloorPlanViewRepository FloorPlanViewRepository =>
-            _floorPlanViewRepository ??= new FloorPlanViewRepository(_hospitalDbContext);
 
         public IGRoomRepository GRoomRepository =>
             _gRoomRepository ??= new GRoomRepository(_hospitalDbContext);

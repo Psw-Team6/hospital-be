@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
-using HospitalLibrary.Core.Model;
 
-namespace HospitalAPI.Dtos.Response
+namespace HospitalAPI.Dtos.Request
 {
-    public class FloorResponse
+    public class FloorRequest
     {
         public Guid Id { get; set; }
         public int FloorNumber { get; set; }

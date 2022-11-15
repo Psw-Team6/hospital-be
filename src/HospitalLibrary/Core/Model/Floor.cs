@@ -10,11 +10,7 @@ namespace HospitalLibrary.Core.Model
         public string Name { get; set; }
         
         public IEnumerable<Room> Rooms { get; set; }
-        
         public Guid BuildingId { get; set; }
-        public Building Building { get; set; }
         
-       /* public Guid FloorPlanViewId { get; set; }
-        public FloorPlanView FloorPlanView { get; set; }*/
     }
 }

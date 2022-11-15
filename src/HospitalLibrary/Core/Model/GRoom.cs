@@ -12,7 +12,6 @@ namespace HospitalLibrary.Core.Model
         public  int Lenght { get; set; }
         
         public  int Width { get; set; }
-        public Room Room { get; set; }//add one to one mapping with room
         public Guid RoomId { get; set; }//add one to one mapping with room
     }
 }

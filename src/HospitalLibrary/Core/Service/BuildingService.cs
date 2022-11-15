@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
@@ -14,9 +15,21 @@ namespace HospitalLibrary.Core.Service
             _unitOfWork = unitOfWork;
         }
         
-        public async Task<List<Building>> GetAll()
+        public async Task<IEnumerable<Building>> GetAll()
         {
             return await _unitOfWork.BuildingRepository.GetAllBuildings();
+        }
+
+        public async Task<Building> GetById(Guid id)
+        {
+            return await _unitOfWork.BuildingRepository.GetByIdAsync(id);
+        }
+
+        public async Task<bool> Update(Building building)
+        {
+            await _unitOfWork.BuildingRepository.UpdateAsync(building);
+            await _unitOfWork.CompleteAsync();
+            return true;
         }
     }
 }

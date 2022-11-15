@@ -1,11 +1,10 @@
 using System;
 
-namespace HospitalAPI.Dtos.Response
+namespace HospitalAPI.Dtos.Request
 {
-    public class BuildingResponse
+    public class BuildingRequest
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        
     }
 }
