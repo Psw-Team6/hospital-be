@@ -3,6 +3,8 @@ using System.Reflection;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Rooms.Model;
+using HospitalLibrary.BloodConsumptions.Model;
+using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.sharedModel;
@@ -25,6 +27,7 @@ namespace HospitalLibrary.Settings
         public DbSet<RoomBed> RoomBeds { get; set; }
         public DbSet<PatientAdmission> PatientAdmissions { get; set; }
         //public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<BloodUnit> BloodUnits { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -518,6 +521,57 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Appointment>().HasData(
                 appointment
             );
+
+            BloodUnit unit1 = new()
+            {
+                Id= Guid.NewGuid(),
+                BloodType = BloodType.Aneg,
+                Amount = 7,
+                BloodBankName = "Moja Banka Krvi"
+                    
+            };
+            
+            BloodUnit unit2 = new()
+            {
+                Id= Guid.NewGuid(),
+                BloodType = BloodType.Oneg,
+                Amount = 10,
+                BloodBankName = "Moja Banka Krvi"
+                    
+            };
+            
+            modelBuilder.Entity<BloodUnit>().HasData(
+                unit1, unit2
+            );
+
+            BloodConsumption consumption1 = new BloodConsumption()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.Aneg,
+                Amount = 2,
+                BloodBankName = "Moja Banka Krvi",
+                DoctorId = doctor.Id,
+                //Doctor = doctor,
+                date = new DateTime(2022, 10, 27, 15, 0, 0),
+                purpose = "operation"
+            };
+            
+            BloodConsumption consumption2 = new BloodConsumption()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.Aneg,
+                Amount = 4,
+                BloodBankName = "Moja Banka Krvi",
+                DoctorId = doctor.Id,
+                //Doctor = doctor,
+                date = new DateTime(2022, 11, 14, 15, 0, 0),
+                purpose = "operation"
+            };
+            
+            modelBuilder.Entity<BloodConsumption>().HasData(
+                consumption1, consumption2
+            );
+
         }
     }
 }
