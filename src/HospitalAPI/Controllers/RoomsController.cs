@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
-using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Service;
+using HospitalLibrary.Rooms.Model;
+using HospitalLibrary.Rooms.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers

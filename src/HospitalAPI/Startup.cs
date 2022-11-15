@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
 using HospitalAPI.Exceptions;
@@ -6,19 +7,19 @@ using HospitalAPI.Mapper;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Common;
-using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Repository;
-using HospitalLibrary.Core.Service;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Patients.Service;
+using HospitalLibrary.Rooms.Repository;
+using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.Settings;
 using HospitalLibrary.sharedModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -74,7 +75,6 @@ namespace HospitalAPI
             services.AddScoped<FeedbackService>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<DoctorService>();
-            services.AddScoped<IDoctorRepository,DoctorRepository>();
 
             services.AddScoped<IWorkingSchueduleRepository, WorkingScheduleRepository>();
             services.AddScoped<WorkingScheduleService>();
@@ -88,6 +88,37 @@ namespace HospitalAPI
             services.AddScoped<FloorService>();
             services.AddScoped<FloorPlanViewService>();
             services.AddScoped<GRoomService>();
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
             
         }
 
@@ -122,6 +153,7 @@ namespace HospitalAPI
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

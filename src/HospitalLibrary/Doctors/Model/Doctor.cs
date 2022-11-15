@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using HospitalLibrary.ApplicationUsers;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
-using HospitalLibrary.Core.Model;
+using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.sharedModel;
 
 namespace HospitalLibrary.Doctors.Model

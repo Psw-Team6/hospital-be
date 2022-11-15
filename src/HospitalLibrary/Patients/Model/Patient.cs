@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using HospitalLibrary.ApplicationUsers;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.sharedModel;

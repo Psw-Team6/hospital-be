@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using HospitalLibrary.Appointments.Model;
-using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.sharedModel;
 using Microsoft.EntityFrameworkCore;
 
