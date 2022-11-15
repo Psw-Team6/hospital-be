@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using HospitalLibrary.ApplicationUsers.Repository;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Feedbacks.Repository;
@@ -22,6 +23,7 @@ namespace HospitalLibrary.Common
         private FloorRepository _floorRepository;
         private FloorPlanViewRepository _floorPlanViewRepository;
         private GRoomRepository _gRoomRepository;
+        private ApplicationUserRepository _applicationUserRepository;
 
         public IBuildingRepository BuildingRepository =>
             _buildingRepository ??= new BuildingRepository(_hospitalDbContext);
@@ -41,6 +43,9 @@ namespace HospitalLibrary.Common
             _workingScheduleRepository ??= new WorkingScheduleRepository(_hospitalDbContext);
         private RoomRepository _roomRepository;
         public IRoomRepository RoomRepository => _roomRepository ??= new RoomRepository(_hospitalDbContext);
+
+        public IApplicationUserRepository UserRepository =>
+            _applicationUserRepository ??= new ApplicationUserRepository(_hospitalDbContext);
 
         public ISpecializationsRepository SpecializationsRepository=> _specializationsRepository ??= new SpecializationsRepository(_hospitalDbContext);
         public IDoctorRepository DoctorRepository=> _doctorRepository ??= new DoctorRepository(_hospitalDbContext);

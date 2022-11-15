@@ -4,6 +4,7 @@ using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Managers;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.sharedModel;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Floor> Floors { get; set; }
         public DbSet<FloorPlanView> FloorPlanViews { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Manager> Managers { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         //public DbSet<Address> Addresses { get; set; }
@@ -24,7 +27,7 @@ namespace HospitalLibrary.Settings
         public DbSet<GRoom> GRooms { get; set; }
         public DbSet<RoomBed> RoomBeds { get; set; }
         public DbSet<PatientAdmission> PatientAdmissions { get; set; }
-        //public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -423,7 +426,7 @@ namespace HospitalLibrary.Settings
                 room1Bed1, room1Bed2, room1Bed3, room1Bed4, 
                 room2Bed1, room2Bed2, room2Bed3, room2Bed4, room2Bed5
             );
-
+            
             Doctor doctor = new()
             {
                 Id = Guid.NewGuid(),
@@ -432,12 +435,13 @@ namespace HospitalLibrary.Settings
                 WorkingScheduleId = workingSchedule1.Id,
                 RoomId = room2.Id,
                 Username = "Tadjo",
-                Password = "miki123",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
                 Name = "Djordje",
                 Surname = "Vuckovic",
                 Email = "DjordjeLopov@gmail.com",
                 Jmbg = "99999999",
-                Phone = "+612222222"
+                Phone = "+612222222",
+                UserRole = UserRole.Doctor
             };
             Doctor doctor1 = new()
             {
@@ -447,12 +451,13 @@ namespace HospitalLibrary.Settings
                 WorkingScheduleId = workingSchedule2.Id,
                 RoomId = room1.Id,
                 Username = "Ilija",
-                Password = "miki123",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
                 Name = "Ilija",
                 Surname = "Maric",
                 Email = "Cajons@gmail.com",
                 Jmbg = "99999999",
-                Phone = "+612222222"
+                Phone = "+612222222",
+                UserRole = UserRole.Doctor
             };
             modelBuilder.Entity<Doctor>().HasData(
                 doctor,doctor1
@@ -462,27 +467,46 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 AddressId = address.Id,
                 Username = "Sale",
-                Password = "sale1312",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
                 Name = "Sale",
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
-                Phone = "+612222222"
+                Phone = "+612222222",
+                UserRole = UserRole.Patient
             };
             Patient patient2 = new()
             {
                 Id = Guid.NewGuid(),
                 AddressId = address2.Id,
                 Username = "Miki",
-                Password = "sale1312",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
                 Name = "Miki",
                 Surname = "Djuricic",
                 Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
-                Phone = "+612222222"
+                Phone = "+612222222",
+                UserRole = UserRole.Patient
             };
             modelBuilder.Entity<Patient>().HasData(
                 patient1,patient2
+            );
+            //password = 123
+            Manager manager = new ()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Manager",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Manager",
+                Surname = "Manger",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Manager
+            };
+            modelBuilder.Entity<Manager>().HasData(
+                manager
             );
             // PatientAdmission patientAdmission1 = new()
             // {

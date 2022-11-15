@@ -10,6 +10,7 @@ using HospitalLibrary.sharedModel;
 
 namespace HospitalLibrary.Doctors.Model
 {
+    [Table("Doctors")]
     public class Doctor:ApplicationUser
     {
         public Guid SpecializationId { get; set; }

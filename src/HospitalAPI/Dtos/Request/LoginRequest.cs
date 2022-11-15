@@ -1,4 +1,4 @@
-﻿namespace HospitalLibrary.ApplicationUsers.Dto
+﻿namespace HospitalAPI.Dtos.Request
 {
     public class LoginRequest
     {

@@ -19,6 +19,51 @@ namespace HospitalLibrary.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("HospitalLibrary.ApplicationUsers.Model.ApplicationUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AddressId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Jmbg")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("text");
+
+                    b.Property<int>("UserRole")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("ApplicationUsers");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Appointments.Model.Appointment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -51,523 +96,12 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("84c30541-cca9-40c1-8006-d454842a1569"),
+                            Id = new Guid("dbaf9b6b-52af-481f-a99d-582740181da1"),
                             AppointmentState = 0,
                             AppointmentType = 0,
-                            DoctorId = new Guid("c5110e27-8281-4ced-9858-b016a703d02c"),
+                            DoctorId = new Guid("f76f23df-efcf-43ce-8c3e-a5af0038212e"),
                             Emergent = false,
-                            PatientId = new Guid("6f38f91b-e0e1-4d0f-9646-52defb38fc71")
-                        });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Building", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Buildings");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("5d1f6912-3821-441f-9046-61a75ec541e3"),
-                            Name = "Stara bolnica"
-                        },
-                        new
-                        {
-                            Id = new Guid("9d5d39e3-1ecc-4f93-a725-125b50b268c6"),
-                            Name = "Nova bolnica"
-                        });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Floor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("BuildingId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("FloorNumber")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BuildingId");
-
-                    b.ToTable("Floors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("36cc628b-c473-4e76-bbf5-731adeb8f091"),
-                            BuildingId = new Guid("5d1f6912-3821-441f-9046-61a75ec541e3"),
-                            FloorNumber = 0,
-                            Name = "F0"
-                        },
-                        new
-                        {
-                            Id = new Guid("2fedf02e-168f-4645-bf9c-2de065ad32cd"),
-                            BuildingId = new Guid("5d1f6912-3821-441f-9046-61a75ec541e3"),
-                            FloorNumber = 1,
-                            Name = "F1"
-                        },
-                        new
-                        {
-                            Id = new Guid("ff228adb-8798-4c15-b431-a55a5bbbdb64"),
-                            BuildingId = new Guid("5d1f6912-3821-441f-9046-61a75ec541e3"),
-                            FloorNumber = 2,
-                            Name = "F2"
-                        },
-                        new
-                        {
-                            Id = new Guid("a4e739ae-99e5-461e-8547-38c7472169ba"),
-                            BuildingId = new Guid("9d5d39e3-1ecc-4f93-a725-125b50b268c6"),
-                            FloorNumber = 0,
-                            Name = "F0"
-                        },
-                        new
-                        {
-                            Id = new Guid("38afb014-fb35-402b-8b32-326ca8461fb2"),
-                            BuildingId = new Guid("9d5d39e3-1ecc-4f93-a725-125b50b268c6"),
-                            FloorNumber = 1,
-                            Name = "F1"
-                        },
-                        new
-                        {
-                            Id = new Guid("86454b9d-ba45-4876-86fd-44806d5296ad"),
-                            BuildingId = new Guid("9d5d39e3-1ecc-4f93-a725-125b50b268c6"),
-                            FloorNumber = 2,
-                            Name = "F2"
-                        });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.FloorPlanView", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Lenght")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PosX")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PosY")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FloorPlanViews");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f2142674-2a64-4e61-9b55-f03bf9e642bc"),
-                            Lenght = 5,
-                            PosX = 0,
-                            PosY = 0,
-                            Width = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("fbb8d6c1-eabb-45e9-a183-0bcfe26c0306"),
-                            Lenght = 5,
-                            PosX = 5,
-                            PosY = 0,
-                            Width = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("84242faa-c38f-4437-b640-51be6923b509"),
-                            Lenght = 5,
-                            PosX = 0,
-                            PosY = 5,
-                            Width = 5
-                        });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.GRoom", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Lenght")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PositionX")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PositionY")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("RoomId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("GRooms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("e28eec06-abdd-490d-a97a-60406a920c04"),
-                            Lenght = 5,
-                            PositionX = 0,
-                            PositionY = 0,
-                            RoomId = new Guid("49705487-4e4b-473c-bdcd-516a7efecadc"),
-                            Width = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("4637a6a6-7f3e-47ad-ad50-d41c872e49a2"),
-                            Lenght = 5,
-                            PositionX = 5,
-                            PositionY = 0,
-                            RoomId = new Guid("d0d8611c-799d-4158-98e2-c1f3564c10b0"),
-                            Width = 5
-                        });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("BuildingName")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("FloorId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("FloorName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Lenght")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("PositionX")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PositionY")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FloorId");
-
-                    b.ToTable("Rooms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("49705487-4e4b-473c-bdcd-516a7efecadc"),
-                            BuildingName = "Stara zgrada",
-                            FloorId = new Guid("36cc628b-c473-4e76-bbf5-731adeb8f091"),
-                            FloorName = "Prvi",
-                            Lenght = 5,
-                            Number = "11A",
-                            PositionX = 0,
-                            PositionY = 0,
-                            Width = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("d0d8611c-799d-4158-98e2-c1f3564c10b0"),
-                            BuildingName = "Stara zgrada",
-                            FloorId = new Guid("36cc628b-c473-4e76-bbf5-731adeb8f091"),
-                            FloorName = "Prvi",
-                            Lenght = 5,
-                            Number = "12A",
-                            PositionX = 5,
-                            PositionY = 0,
-                            Width = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("dde38fb7-1ec5-4473-b04f-09a1e2dc2486"),
-                            BuildingName = "Stara zgrada",
-                            FloorId = new Guid("2fedf02e-168f-4645-bf9c-2de065ad32cd"),
-                            FloorName = "Drugi",
-                            Lenght = 5,
-                            Number = "13A",
-                            PositionX = 10,
-                            PositionY = 0,
-                            Width = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("aa39e477-c359-4007-833f-c6ea154c0b49"),
-                            BuildingName = "Stara zgrada",
-                            FloorId = new Guid("ff228adb-8798-4c15-b431-a55a5bbbdb64"),
-                            FloorName = "Treci",
-                            Lenght = 5,
-                            Number = "14A",
-                            PositionX = 0,
-                            PositionY = 5,
-                            Width = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("3b2a7b52-51b5-4e7a-8105-84dfebb5acc6"),
-                            BuildingName = "Nova zgrada",
-                            FloorId = new Guid("a4e739ae-99e5-461e-8547-38c7472169ba"),
-                            FloorName = "Prvi",
-                            Lenght = 5,
-                            Number = "11B",
-                            PositionX = 0,
-                            PositionY = 10,
-                            Width = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("b3ddc979-7bc0-4046-9b02-49acd6f79994"),
-                            BuildingName = "Nova zgrada",
-                            FloorId = new Guid("a4e739ae-99e5-461e-8547-38c7472169ba"),
-                            FloorName = "Prvi",
-                            Lenght = 5,
-                            Number = "12B",
-                            PositionX = 5,
-                            PositionY = 5,
-                            Width = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("a7383fd8-51f0-4931-95d3-b46e7773f19c"),
-                            BuildingName = "Nova zgrada",
-                            FloorId = new Guid("38afb014-fb35-402b-8b32-326ca8461fb2"),
-                            FloorName = "Drugi",
-                            Lenght = 5,
-                            Number = "13B",
-                            PositionX = 10,
-                            PositionY = 5,
-                            Width = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("65993656-190e-4461-9914-a9007c56b765"),
-                            BuildingName = "Nova zgrada",
-                            FloorId = new Guid("86454b9d-ba45-4876-86fd-44806d5296ad"),
-                            FloorName = "Treci",
-                            Lenght = 10,
-                            Number = "14B",
-                            PositionX = 0,
-                            PositionY = 0,
-                            Width = 20
-                        },
-                        new
-                        {
-                            Id = new Guid("fd32f597-c192-451e-8c4f-629cb6e6ebe8"),
-                            BuildingName = "Nova zgrada",
-                            FloorId = new Guid("86454b9d-ba45-4876-86fd-44806d5296ad"),
-                            FloorName = "Treci",
-                            Lenght = 5,
-                            Number = "15B",
-                            PositionX = 0,
-                            PositionY = 10,
-                            Width = 20
-                        });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.RoomBed", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsFree")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Number")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("RoomId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("RoomBeds");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("c3bc8d76-426e-48fd-b04a-4a919fb71b92"),
-                            IsFree = true,
-                            Number = "11A1",
-                            RoomId = new Guid("49705487-4e4b-473c-bdcd-516a7efecadc")
-                        },
-                        new
-                        {
-                            Id = new Guid("83672593-63c9-4f8a-a8f7-1767ab073dee"),
-                            IsFree = true,
-                            Number = "11A2",
-                            RoomId = new Guid("49705487-4e4b-473c-bdcd-516a7efecadc")
-                        },
-                        new
-                        {
-                            Id = new Guid("f5184d44-aca7-446e-bad4-799e2a6f77a4"),
-                            IsFree = true,
-                            Number = "11A3",
-                            RoomId = new Guid("49705487-4e4b-473c-bdcd-516a7efecadc")
-                        },
-                        new
-                        {
-                            Id = new Guid("0d349e4b-6a55-4d91-8717-ed3f78098b28"),
-                            IsFree = true,
-                            Number = "11A4",
-                            RoomId = new Guid("49705487-4e4b-473c-bdcd-516a7efecadc")
-                        },
-                        new
-                        {
-                            Id = new Guid("a1ac8774-b7fd-4c27-9700-5668a0290c24"),
-                            IsFree = true,
-                            Number = "12A1",
-                            RoomId = new Guid("d0d8611c-799d-4158-98e2-c1f3564c10b0")
-                        },
-                        new
-                        {
-                            Id = new Guid("1ec19b49-1206-4017-ba1e-74e6279a6b6a"),
-                            IsFree = true,
-                            Number = "12A2",
-                            RoomId = new Guid("d0d8611c-799d-4158-98e2-c1f3564c10b0")
-                        },
-                        new
-                        {
-                            Id = new Guid("5b0c13d5-b6ee-4f54-8a1a-3b690c74f5fe"),
-                            IsFree = true,
-                            Number = "12A3",
-                            RoomId = new Guid("d0d8611c-799d-4158-98e2-c1f3564c10b0")
-                        },
-                        new
-                        {
-                            Id = new Guid("ae5d829d-9cce-4287-bb8f-c51032bb3aa7"),
-                            IsFree = true,
-                            Number = "12A4",
-                            RoomId = new Guid("d0d8611c-799d-4158-98e2-c1f3564c10b0")
-                        },
-                        new
-                        {
-                            Id = new Guid("4864cecb-ec16-4146-b8d5-89479339e2d7"),
-                            IsFree = true,
-                            Number = "12A5",
-                            RoomId = new Guid("d0d8611c-799d-4158-98e2-c1f3564c10b0")
-                        });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Doctors.Model.Doctor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AddressId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Jmbg")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("RoomId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("SpecializationId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Surname")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("WorkingScheduleId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.HasIndex("RoomId")
-                        .IsUnique();
-
-                    b.HasIndex("SpecializationId");
-
-                    b.HasIndex("WorkingScheduleId");
-
-                    b.ToTable("Doctors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("261157b2-747d-4717-a0f6-a4680d58b8f8"),
-                            AddressId = new Guid("fbf14c95-79f6-4198-a78c-a5fd59193939"),
-                            Email = "DjordjeLopov@gmail.com",
-                            Jmbg = "99999999",
-                            Name = "Djordje",
-                            Password = "miki123",
-                            Phone = "+612222222",
-                            RoomId = new Guid("d0d8611c-799d-4158-98e2-c1f3564c10b0"),
-                            SpecializationId = new Guid("ff722a00-6683-4bad-98f8-5977a8f9b88f"),
-                            Surname = "Vuckovic",
-                            Username = "Tadjo",
-                            WorkingScheduleId = new Guid("a68ba620-7e81-43bd-8cb9-b9b2206019d9")
-                        },
-                        new
-                        {
-                            Id = new Guid("c5110e27-8281-4ced-9858-b016a703d02c"),
-                            AddressId = new Guid("34527e0e-970a-410f-90cc-4fb49fa82ff3"),
-                            Email = "Cajons@gmail.com",
-                            Jmbg = "99999999",
-                            Name = "Ilija",
-                            Password = "miki123",
-                            Phone = "+612222222",
-                            RoomId = new Guid("49705487-4e4b-473c-bdcd-516a7efecadc"),
-                            SpecializationId = new Guid("ff722a00-6683-4bad-98f8-5977a8f9b88f"),
-                            Surname = "Maric",
-                            Username = "Ilija",
-                            WorkingScheduleId = new Guid("bcea3df8-2a9d-4a5d-878c-73173062090e")
+                            PatientId = new Guid("dfa95147-67dd-4325-9d52-d35dfbfb6390")
                         });
                 });
 
@@ -613,17 +147,17 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("af63394c-a9e6-422c-ad65-fb8bb77ca5bd"),
+                            Id = new Guid("6fc1844d-13ab-4c57-8bd6-2a1736d8e057"),
                             Name = "Surgeon"
                         },
                         new
                         {
-                            Id = new Guid("6438cc73-12eb-47ff-b175-bfd7de352b68"),
+                            Id = new Guid("5b083a96-a3e6-4e97-bf43-64bd27dea8ce"),
                             Name = "General"
                         },
                         new
                         {
-                            Id = new Guid("ff722a00-6683-4bad-98f8-5977a8f9b88f"),
+                            Id = new Guid("a6053f84-3935-420c-8b78-b6f080b45684"),
                             Name = "Dermatology"
                         });
                 });
@@ -641,11 +175,11 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a68ba620-7e81-43bd-8cb9-b9b2206019d9")
+                            Id = new Guid("0d458459-8a98-488a-8e44-16c6f2ffffca")
                         },
                         new
                         {
-                            Id = new Guid("bcea3df8-2a9d-4a5d-878c-73173062090e")
+                            Id = new Guid("82f35854-2ffc-4d8b-865e-3098b545ebbd")
                         });
                 });
 
@@ -701,71 +235,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("MedicinePrescriptionId");
 
                     b.ToTable("Medicine");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Patients.Model.Patient", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AddressId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Jmbg")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Surname")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.ToTable("Patient");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("6f38f91b-e0e1-4d0f-9646-52defb38fc71"),
-                            AddressId = new Guid("34527e0e-970a-410f-90cc-4fb49fa82ff3"),
-                            Email = "psw.isa.mail@gmail.com",
-                            Jmbg = "99999999",
-                            Name = "Sale",
-                            Password = "sale1312",
-                            Phone = "+612222222",
-                            Surname = "Lave",
-                            Username = "Sale"
-                        },
-                        new
-                        {
-                            Id = new Guid("979f1f9c-fc6d-462d-8e53-46afc8ebb8d4"),
-                            AddressId = new Guid("656e147a-08a7-43cd-876f-4d7c1882251a"),
-                            Email = "psw.isa.mail@gmail.com",
-                            Jmbg = "99999999",
-                            Name = "Miki",
-                            Password = "sale1312",
-                            Phone = "+612222222",
-                            Surname = "Djuricic",
-                            Username = "Miki"
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Patients.Model.PatientAdmission", b =>
@@ -854,6 +323,430 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("MedicinePrescription");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Rooms.Model.Building", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Buildings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a314039a-7688-4fc4-be11-475916371152"),
+                            Name = "Stara bolnica"
+                        },
+                        new
+                        {
+                            Id = new Guid("755e84b4-3ac6-4bc8-8533-d466e2782424"),
+                            Name = "Nova bolnica"
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Rooms.Model.Floor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BuildingId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("FloorNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuildingId");
+
+                    b.ToTable("Floors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("174f70e6-110f-44de-8037-df297c0458bc"),
+                            BuildingId = new Guid("a314039a-7688-4fc4-be11-475916371152"),
+                            FloorNumber = 0,
+                            Name = "F0"
+                        },
+                        new
+                        {
+                            Id = new Guid("2d824678-0eaf-41ce-b40e-8e35d82711c4"),
+                            BuildingId = new Guid("a314039a-7688-4fc4-be11-475916371152"),
+                            FloorNumber = 1,
+                            Name = "F1"
+                        },
+                        new
+                        {
+                            Id = new Guid("65dab700-f709-46cd-b36c-7151059affa5"),
+                            BuildingId = new Guid("a314039a-7688-4fc4-be11-475916371152"),
+                            FloorNumber = 2,
+                            Name = "F2"
+                        },
+                        new
+                        {
+                            Id = new Guid("45be5d12-e397-4e9b-bb4b-7ab21893ee75"),
+                            BuildingId = new Guid("755e84b4-3ac6-4bc8-8533-d466e2782424"),
+                            FloorNumber = 0,
+                            Name = "F0"
+                        },
+                        new
+                        {
+                            Id = new Guid("740ff522-e672-4cd6-acd3-eb47a04e0faf"),
+                            BuildingId = new Guid("755e84b4-3ac6-4bc8-8533-d466e2782424"),
+                            FloorNumber = 1,
+                            Name = "F1"
+                        },
+                        new
+                        {
+                            Id = new Guid("e735bed3-b938-4040-813b-bb23e9e05aef"),
+                            BuildingId = new Guid("755e84b4-3ac6-4bc8-8533-d466e2782424"),
+                            FloorNumber = 2,
+                            Name = "F2"
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Rooms.Model.FloorPlanView", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Lenght")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PosX")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PosY")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FloorPlanViews");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f44c0aa2-b4cd-406a-8ac7-eb330010e993"),
+                            Lenght = 5,
+                            PosX = 0,
+                            PosY = 0,
+                            Width = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("e66df454-e317-43bc-a45d-7fb02b7786ea"),
+                            Lenght = 5,
+                            PosX = 5,
+                            PosY = 0,
+                            Width = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("2fcb4da4-7c88-48ff-929e-29de4db8a217"),
+                            Lenght = 5,
+                            PosX = 0,
+                            PosY = 5,
+                            Width = 5
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Rooms.Model.GRoom", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Lenght")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PositionX")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PositionY")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("GRooms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0b99386f-d726-4276-ad1b-d7af433dec70"),
+                            Lenght = 5,
+                            PositionX = 0,
+                            PositionY = 0,
+                            RoomId = new Guid("733224e3-4e3d-43dc-a381-2cc0833f4e8f"),
+                            Width = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("d3a80d49-f963-41f2-bea7-32247f5dad67"),
+                            Lenght = 5,
+                            PositionX = 5,
+                            PositionY = 0,
+                            RoomId = new Guid("3b93fc36-24ed-4fd8-a5b2-ddcfc9ab273d"),
+                            Width = 5
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Rooms.Model.Room", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BuildingName")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("FloorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("FloorName")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Lenght")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("PositionX")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PositionY")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FloorId");
+
+                    b.ToTable("Rooms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("733224e3-4e3d-43dc-a381-2cc0833f4e8f"),
+                            BuildingName = "Stara zgrada",
+                            FloorId = new Guid("174f70e6-110f-44de-8037-df297c0458bc"),
+                            FloorName = "Prvi",
+                            Lenght = 5,
+                            Number = "11A",
+                            PositionX = 0,
+                            PositionY = 0,
+                            Width = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("3b93fc36-24ed-4fd8-a5b2-ddcfc9ab273d"),
+                            BuildingName = "Stara zgrada",
+                            FloorId = new Guid("174f70e6-110f-44de-8037-df297c0458bc"),
+                            FloorName = "Prvi",
+                            Lenght = 5,
+                            Number = "12A",
+                            PositionX = 5,
+                            PositionY = 0,
+                            Width = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("614dca51-1e65-463e-8b6b-f41bac803e40"),
+                            BuildingName = "Stara zgrada",
+                            FloorId = new Guid("2d824678-0eaf-41ce-b40e-8e35d82711c4"),
+                            FloorName = "Drugi",
+                            Lenght = 5,
+                            Number = "13A",
+                            PositionX = 10,
+                            PositionY = 0,
+                            Width = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("d63f38b9-5b86-46d5-ba61-2198a9a54d73"),
+                            BuildingName = "Stara zgrada",
+                            FloorId = new Guid("65dab700-f709-46cd-b36c-7151059affa5"),
+                            FloorName = "Treci",
+                            Lenght = 5,
+                            Number = "14A",
+                            PositionX = 0,
+                            PositionY = 5,
+                            Width = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("838f3c73-94ef-4a80-a3e4-134db3cb7ed1"),
+                            BuildingName = "Nova zgrada",
+                            FloorId = new Guid("45be5d12-e397-4e9b-bb4b-7ab21893ee75"),
+                            FloorName = "Prvi",
+                            Lenght = 5,
+                            Number = "11B",
+                            PositionX = 0,
+                            PositionY = 10,
+                            Width = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("7eb7d021-cc41-4ccc-984b-09e84cda1ae5"),
+                            BuildingName = "Nova zgrada",
+                            FloorId = new Guid("45be5d12-e397-4e9b-bb4b-7ab21893ee75"),
+                            FloorName = "Prvi",
+                            Lenght = 5,
+                            Number = "12B",
+                            PositionX = 5,
+                            PositionY = 5,
+                            Width = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("a456581e-d8ad-41a9-9a9f-e6166d2a88a3"),
+                            BuildingName = "Nova zgrada",
+                            FloorId = new Guid("740ff522-e672-4cd6-acd3-eb47a04e0faf"),
+                            FloorName = "Drugi",
+                            Lenght = 5,
+                            Number = "13B",
+                            PositionX = 10,
+                            PositionY = 5,
+                            Width = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("75a67aeb-145e-4968-b902-89e69105f88e"),
+                            BuildingName = "Nova zgrada",
+                            FloorId = new Guid("e735bed3-b938-4040-813b-bb23e9e05aef"),
+                            FloorName = "Treci",
+                            Lenght = 10,
+                            Number = "14B",
+                            PositionX = 0,
+                            PositionY = 0,
+                            Width = 20
+                        },
+                        new
+                        {
+                            Id = new Guid("4292fb5f-df05-4a06-b0f3-2c94b67ed0d4"),
+                            BuildingName = "Nova zgrada",
+                            FloorId = new Guid("e735bed3-b938-4040-813b-bb23e9e05aef"),
+                            FloorName = "Treci",
+                            Lenght = 5,
+                            Number = "15B",
+                            PositionX = 0,
+                            PositionY = 10,
+                            Width = 20
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Rooms.Model.RoomBed", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsFree")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("RoomBeds");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("60f1ac8d-0e21-40ed-a1de-a738d6de4374"),
+                            IsFree = true,
+                            Number = "11A1",
+                            RoomId = new Guid("733224e3-4e3d-43dc-a381-2cc0833f4e8f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8c0cf92e-9c53-4ec6-8d9d-68cb5b0d9ca4"),
+                            IsFree = true,
+                            Number = "11A2",
+                            RoomId = new Guid("733224e3-4e3d-43dc-a381-2cc0833f4e8f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b1286ebf-f1c1-4abd-82b3-039633e87b9e"),
+                            IsFree = true,
+                            Number = "11A3",
+                            RoomId = new Guid("733224e3-4e3d-43dc-a381-2cc0833f4e8f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b2d6b05c-0d43-45f1-b210-48d1cbf2ef77"),
+                            IsFree = true,
+                            Number = "11A4",
+                            RoomId = new Guid("733224e3-4e3d-43dc-a381-2cc0833f4e8f")
+                        },
+                        new
+                        {
+                            Id = new Guid("744c308d-86bf-4b4a-8711-69a4be74e53a"),
+                            IsFree = true,
+                            Number = "12A1",
+                            RoomId = new Guid("3b93fc36-24ed-4fd8-a5b2-ddcfc9ab273d")
+                        },
+                        new
+                        {
+                            Id = new Guid("dc2245ae-e2ff-4a36-8c0b-00b950a05643"),
+                            IsFree = true,
+                            Number = "12A2",
+                            RoomId = new Guid("3b93fc36-24ed-4fd8-a5b2-ddcfc9ab273d")
+                        },
+                        new
+                        {
+                            Id = new Guid("84be2802-ed2c-4a2d-b7fe-b38a18bc8398"),
+                            IsFree = true,
+                            Number = "12A3",
+                            RoomId = new Guid("3b93fc36-24ed-4fd8-a5b2-ddcfc9ab273d")
+                        },
+                        new
+                        {
+                            Id = new Guid("b026f15f-8b4e-4db8-b192-7a5ca725ba82"),
+                            IsFree = true,
+                            Number = "12A4",
+                            RoomId = new Guid("3b93fc36-24ed-4fd8-a5b2-ddcfc9ab273d")
+                        },
+                        new
+                        {
+                            Id = new Guid("118461e8-3718-4873-a4a1-e6a03ba09900"),
+                            IsFree = true,
+                            Number = "12A5",
+                            RoomId = new Guid("3b93fc36-24ed-4fd8-a5b2-ddcfc9ab273d")
+                        });
+                });
+
             modelBuilder.Entity("HospitalLibrary.TreatmentReports.Model.TreatmentReport", b =>
                 {
                     b.Property<Guid>("Id")
@@ -904,7 +797,7 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("34527e0e-970a-410f-90cc-4fb49fa82ff3"),
+                            Id = new Guid("9148a4b1-5182-44ed-8c96-2e9a7403ce54"),
                             City = "Novi Sad",
                             Country = "Serbia",
                             Postcode = 21000,
@@ -913,7 +806,7 @@ namespace HospitalLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fbf14c95-79f6-4198-a78c-a5fd59193939"),
+                            Id = new Guid("1c4d07cb-0015-4ae3-8c05-dd3e259b1607"),
                             City = "Novi Sad",
                             Country = "Serbia",
                             Postcode = 21000,
@@ -922,7 +815,7 @@ namespace HospitalLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("656e147a-08a7-43cd-876f-4d7c1882251a"),
+                            Id = new Guid("7c48ffb7-c427-4d7a-9498-b59a01eb4eef"),
                             City = "Novi Sad",
                             Country = "Serbia",
                             Postcode = 21000,
@@ -975,6 +868,131 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("IngredientPatient");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Doctors.Model.Doctor", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.ApplicationUsers.Model.ApplicationUser");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SpecializationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("WorkingScheduleId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("RoomId")
+                        .IsUnique();
+
+                    b.HasIndex("SpecializationId");
+
+                    b.HasIndex("WorkingScheduleId");
+
+                    b.ToTable("Doctors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("640eb4bd-63ff-4969-9549-542bdea1ae08"),
+                            AddressId = new Guid("1c4d07cb-0015-4ae3-8c05-dd3e259b1607"),
+                            Email = "DjordjeLopov@gmail.com",
+                            Jmbg = "99999999",
+                            Name = "Djordje",
+                            Password = "miki123",
+                            Phone = "+612222222",
+                            Surname = "Vuckovic",
+                            UserRole = 0,
+                            Username = "Tadjo",
+                            RoomId = new Guid("3b93fc36-24ed-4fd8-a5b2-ddcfc9ab273d"),
+                            SpecializationId = new Guid("a6053f84-3935-420c-8b78-b6f080b45684"),
+                            WorkingScheduleId = new Guid("0d458459-8a98-488a-8e44-16c6f2ffffca")
+                        },
+                        new
+                        {
+                            Id = new Guid("f76f23df-efcf-43ce-8c3e-a5af0038212e"),
+                            AddressId = new Guid("9148a4b1-5182-44ed-8c96-2e9a7403ce54"),
+                            Email = "Cajons@gmail.com",
+                            Jmbg = "99999999",
+                            Name = "Ilija",
+                            Password = "miki123",
+                            Phone = "+612222222",
+                            Surname = "Maric",
+                            UserRole = 0,
+                            Username = "Ilija",
+                            RoomId = new Guid("733224e3-4e3d-43dc-a381-2cc0833f4e8f"),
+                            SpecializationId = new Guid("a6053f84-3935-420c-8b78-b6f080b45684"),
+                            WorkingScheduleId = new Guid("82f35854-2ffc-4d8b-865e-3098b545ebbd")
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Managers.Manager", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.ApplicationUsers.Model.ApplicationUser");
+
+                    b.ToTable("Managers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("2a25403d-4c42-4d1e-a9c1-cb0bee1b3562"),
+                            AddressId = new Guid("7c48ffb7-c427-4d7a-9498-b59a01eb4eef"),
+                            Email = "psw.isa.mail@gmail.com",
+                            Jmbg = "99999999",
+                            Name = "Manager",
+                            Password = "password",
+                            Phone = "+612222222",
+                            Surname = "Manger",
+                            UserRole = 1,
+                            Username = "Manager"
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Patients.Model.Patient", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.ApplicationUsers.Model.ApplicationUser");
+
+                    b.ToTable("Patients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("dfa95147-67dd-4325-9d52-d35dfbfb6390"),
+                            AddressId = new Guid("9148a4b1-5182-44ed-8c96-2e9a7403ce54"),
+                            Email = "psw.isa.mail@gmail.com",
+                            Jmbg = "99999999",
+                            Name = "Sale",
+                            Password = "sale1312",
+                            Phone = "+612222222",
+                            Surname = "Lave",
+                            UserRole = 2,
+                            Username = "Sale"
+                        },
+                        new
+                        {
+                            Id = new Guid("57c4ab0e-b5bc-4946-bc79-cf0f2e48a598"),
+                            AddressId = new Guid("7c48ffb7-c427-4d7a-9498-b59a01eb4eef"),
+                            Email = "psw.isa.mail@gmail.com",
+                            Jmbg = "99999999",
+                            Name = "Miki",
+                            Password = "sale1312",
+                            Phone = "+612222222",
+                            Surname = "Djuricic",
+                            UserRole = 2,
+                            Username = "Miki"
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.ApplicationUsers.Model.ApplicationUser", b =>
+                {
+                    b.HasOne("HospitalLibrary.sharedModel.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Appointments.Model.Appointment", b =>
                 {
                     b.HasOne("HospitalLibrary.Doctors.Model.Doctor", "Doctor")
@@ -1010,7 +1028,7 @@ namespace HospitalLibrary.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    AppointmentId = new Guid("84c30541-cca9-40c1-8006-d454842a1569"),
+                                    AppointmentId = new Guid("dbaf9b6b-52af-481f-a99d-582740181da1"),
                                     From = new DateTime(2022, 10, 27, 15, 0, 0, 0, DateTimeKind.Unspecified),
                                     To = new DateTime(2022, 10, 27, 15, 15, 0, 0, DateTimeKind.Unspecified)
                                 });
@@ -1021,85 +1039,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Duration");
 
                     b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Floor", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Building", "Building")
-                        .WithMany("Floors")
-                        .HasForeignKey("BuildingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Building");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.GRoom", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Room");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Floor", "Floor")
-                        .WithMany("Rooms")
-                        .HasForeignKey("FloorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Floor");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.RoomBed", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Room", "Room")
-                        .WithMany("Beds")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Room");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Doctors.Model.Doctor", b =>
-                {
-                    b.HasOne("HospitalLibrary.sharedModel.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Core.Model.Room", "Room")
-                        .WithOne("Doctor")
-                        .HasForeignKey("HospitalLibrary.Doctors.Model.Doctor", "RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Doctors.Model.Specialization", "Specialization")
-                        .WithMany("Doctors")
-                        .HasForeignKey("SpecializationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Doctors.Model.WorkingSchedule", "WorkingSchedule")
-                        .WithMany()
-                        .HasForeignKey("WorkingScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Address");
-
-                    b.Navigation("Room");
-
-                    b.Navigation("Specialization");
-
-                    b.Navigation("WorkingSchedule");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Doctors.Model.Holiday", b =>
@@ -1157,13 +1096,13 @@ namespace HospitalLibrary.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    WorkingScheduleId = new Guid("a68ba620-7e81-43bd-8cb9-b9b2206019d9"),
+                                    WorkingScheduleId = new Guid("0d458459-8a98-488a-8e44-16c6f2ffffca"),
                                     From = new DateTime(2022, 10, 27, 8, 0, 0, 0, DateTimeKind.Unspecified),
                                     To = new DateTime(2022, 10, 27, 14, 0, 0, 0, DateTimeKind.Unspecified)
                                 },
                                 new
                                 {
-                                    WorkingScheduleId = new Guid("bcea3df8-2a9d-4a5d-878c-73173062090e"),
+                                    WorkingScheduleId = new Guid("82f35854-2ffc-4d8b-865e-3098b545ebbd"),
                                     From = new DateTime(2022, 10, 27, 14, 0, 0, 0, DateTimeKind.Unspecified),
                                     To = new DateTime(2022, 10, 27, 22, 0, 0, 0, DateTimeKind.Unspecified)
                                 });
@@ -1192,13 +1131,13 @@ namespace HospitalLibrary.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    WorkingScheduleId = new Guid("a68ba620-7e81-43bd-8cb9-b9b2206019d9"),
+                                    WorkingScheduleId = new Guid("0d458459-8a98-488a-8e44-16c6f2ffffca"),
                                     From = new DateTime(2022, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                                     To = new DateTime(2023, 1, 27, 0, 0, 0, 0, DateTimeKind.Unspecified)
                                 },
                                 new
                                 {
-                                    WorkingScheduleId = new Guid("bcea3df8-2a9d-4a5d-878c-73173062090e"),
+                                    WorkingScheduleId = new Guid("82f35854-2ffc-4d8b-865e-3098b545ebbd"),
                                     From = new DateTime(2022, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                                     To = new DateTime(2023, 1, 27, 0, 0, 0, 0, DateTimeKind.Unspecified)
                                 });
@@ -1227,17 +1166,6 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("MedicinePrescriptionId");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Patients.Model.Patient", b =>
-                {
-                    b.HasOne("HospitalLibrary.sharedModel.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Address");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Patients.Model.PatientAdmission", b =>
                 {
                     b.HasOne("HospitalLibrary.Patients.Model.Patient", "Patient")
@@ -1246,13 +1174,13 @@ namespace HospitalLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HospitalLibrary.Core.Model.RoomBed", "SelectedBed")
+                    b.HasOne("HospitalLibrary.Rooms.Model.RoomBed", "SelectedBed")
                         .WithMany()
                         .HasForeignKey("SelectedBedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HospitalLibrary.Core.Model.Room", "SelectedRoom")
+                    b.HasOne("HospitalLibrary.Rooms.Model.Room", "SelectedRoom")
                         .WithMany()
                         .HasForeignKey("SelectedRoomId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1301,6 +1229,50 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Patient");
 
                     b.Navigation("TreatmentReport");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Rooms.Model.Floor", b =>
+                {
+                    b.HasOne("HospitalLibrary.Rooms.Model.Building", "Building")
+                        .WithMany("Floors")
+                        .HasForeignKey("BuildingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Building");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Rooms.Model.GRoom", b =>
+                {
+                    b.HasOne("HospitalLibrary.Rooms.Model.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Rooms.Model.Room", b =>
+                {
+                    b.HasOne("HospitalLibrary.Rooms.Model.Floor", "Floor")
+                        .WithMany("Rooms")
+                        .HasForeignKey("FloorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Floor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Rooms.Model.RoomBed", b =>
+                {
+                    b.HasOne("HospitalLibrary.Rooms.Model.Room", "Room")
+                        .WithMany("Beds")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("HospitalLibrary.TreatmentReports.Model.TreatmentReport", b =>
@@ -1365,31 +1337,94 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Building", b =>
+            modelBuilder.Entity("HospitalLibrary.Doctors.Model.Doctor", b =>
+                {
+                    b.HasOne("HospitalLibrary.ApplicationUsers.Model.ApplicationUser", null)
+                        .WithOne()
+                        .HasForeignKey("HospitalLibrary.Doctors.Model.Doctor", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Rooms.Model.Room", "Room")
+                        .WithOne("Doctor")
+                        .HasForeignKey("HospitalLibrary.Doctors.Model.Doctor", "RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Doctors.Model.Specialization", "Specialization")
+                        .WithMany("Doctors")
+                        .HasForeignKey("SpecializationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Doctors.Model.WorkingSchedule", "WorkingSchedule")
+                        .WithMany()
+                        .HasForeignKey("WorkingScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+
+                    b.Navigation("Specialization");
+
+                    b.Navigation("WorkingSchedule");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Managers.Manager", b =>
+                {
+                    b.HasOne("HospitalLibrary.ApplicationUsers.Model.ApplicationUser", null)
+                        .WithOne()
+                        .HasForeignKey("HospitalLibrary.Managers.Manager", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Patients.Model.Patient", b =>
+                {
+                    b.HasOne("HospitalLibrary.ApplicationUsers.Model.ApplicationUser", null)
+                        .WithOne()
+                        .HasForeignKey("HospitalLibrary.Patients.Model.Patient", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Doctors.Model.Specialization", b =>
+                {
+                    b.Navigation("Doctors");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Prescriptions.Model.MedicinePrescription", b =>
+                {
+                    b.Navigation("Medicines");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Rooms.Model.Building", b =>
                 {
                     b.Navigation("Floors");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Floor", b =>
+            modelBuilder.Entity("HospitalLibrary.Rooms.Model.Floor", b =>
                 {
                     b.Navigation("Rooms");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
+            modelBuilder.Entity("HospitalLibrary.Rooms.Model.Room", b =>
                 {
                     b.Navigation("Beds");
 
                     b.Navigation("Doctor");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.TreatmentReports.Model.TreatmentReport", b =>
+                {
+                    b.Navigation("BloodPrescriptions");
+
+                    b.Navigation("MedicinePrescriptions");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Doctors.Model.Doctor", b =>
                 {
                     b.Navigation("Appointments");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Doctors.Model.Specialization", b =>
-                {
-                    b.Navigation("Doctors");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Patients.Model.Patient", b =>
@@ -1401,18 +1436,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("PatientAdmissions");
 
                     b.Navigation("TreatmentReports");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Prescriptions.Model.MedicinePrescription", b =>
-                {
-                    b.Navigation("Medicines");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.TreatmentReports.Model.TreatmentReport", b =>
-                {
-                    b.Navigation("BloodPrescriptions");
-
-                    b.Navigation("MedicinePrescriptions");
                 });
 #pragma warning restore 612, 618
         }

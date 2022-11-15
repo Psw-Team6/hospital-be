@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using HospitalLibrary.ApplicationUsers.Repository;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Feedbacks.Repository;
@@ -21,6 +22,7 @@ namespace HospitalLibrary.Common
         IFloorPlanViewRepository FloorPlanViewRepository { get; }
         IGRoomRepository GRoomRepository { get; }
         IRoomRepository RoomRepository { get; }
+        IApplicationUserRepository UserRepository { get; }
         T GetRepository<T>() where T : class;
         Task CompleteAsync();
     }

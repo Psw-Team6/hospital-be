@@ -15,6 +15,6 @@ namespace HospitalLibrary.ApplicationUsers.Model
         public string Email { get; set; }
         public string Jmbg{ get; set; }
         public string Phone{ get; set; }
-        private UserRole UserRole { get; set; }
+        public UserRole UserRole { get; set; }
     }
 }
