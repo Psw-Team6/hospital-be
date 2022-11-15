@@ -20,11 +20,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="BloodConsumptions\Repository" />
+    <Folder Include="BloodConsumptions\Service" />
+    <Folder Include="BloodUnits\Repository" />
+    <Folder Include="BloodUnits\Service" />
     <Folder Include="Migrations" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Migrations\HospitalDbContextModelSnapshot.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IntegrationLibrary\IntegrationLibrary.csproj" />
   </ItemGroup>
 
 </Project>
