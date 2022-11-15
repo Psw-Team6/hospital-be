@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Reflection;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
-using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.sharedModel;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,7 @@ namespace HospitalLibrary.Settings
         public DbSet<GRoom> GRooms { get; set; }
         public DbSet<RoomBed> RoomBeds { get; set; }
         public DbSet<PatientAdmission> PatientAdmissions { get; set; }
+        //public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 

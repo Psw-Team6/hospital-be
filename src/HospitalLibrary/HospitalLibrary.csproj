@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Medicines\Controller" />
+    <Folder Include="Medicines\Medicine" />
+    <Folder Include="Medicines\Service" />
     <Folder Include="Migrations" />
   </ItemGroup>
 
