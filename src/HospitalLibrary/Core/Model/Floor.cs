@@ -11,6 +11,6 @@ namespace HospitalLibrary.Core.Model
         
         public IEnumerable<Room> Rooms { get; set; }
         public Guid BuildingId { get; set; }
-        
+        public Building Building { get; set; }
     }
 }

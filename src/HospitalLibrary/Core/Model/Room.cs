@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Doctors.Model;
 
 namespace HospitalLibrary.Core.Model
@@ -16,7 +15,9 @@ namespace HospitalLibrary.Core.Model
         public Doctor Doctor { get; set; }
         public List<RoomBed> Beds { get; set; }
         public Guid FloorId { get; set; }
+        public Floor Floor { get; set; }
         public Guid BuildingId { get; set; }
+        
         public Guid GRoomId { get; set; }
 
         public List<RoomBed> GetAllAvailableBeds()
