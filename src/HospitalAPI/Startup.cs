@@ -90,9 +90,12 @@ namespace HospitalAPI
             services.AddScoped<IEmailService, EmailService>();
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
             services.AddScoped<BuildingService>();
+            services.AddScoped<IBuildingRepository, BuildingRepository>();
             services.AddScoped<FloorService>();
-            services.AddScoped<FloorPlanViewService>();
+            services.AddScoped<IFloorRepository, FloorRepository>();
             services.AddScoped<GRoomService>();
+            services.AddScoped<IGRoomRepository, GRoomRepository>();
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

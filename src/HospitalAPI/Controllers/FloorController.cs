@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
+using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Rooms.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,5 +33,14 @@ namespace HospitalAPI.Controllers
             return Ok(result);
         }
         
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> Update(FloorRequest floorDto)
+        {
+            var floor = _mapper.Map<Floor>(floorDto);
+            var res = await _floorService.Update(floor);
+            return res ? NoContent() : NotFound();
+        }
     }
 }

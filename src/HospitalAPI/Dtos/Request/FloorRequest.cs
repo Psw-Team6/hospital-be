@@ -1,14 +1,12 @@
-﻿
 using System;
 
 namespace HospitalAPI.Dtos.Request
 {
-    public class RoomRequest
+    public class FloorRequest
     {
         public Guid Id { get; set; }
+        public int FloorNumber { get; set; }
         public string Name { get; set; }
         public Guid BuildingId { get; set; }
-        public Guid FloorId { get; set; }
-        public Guid GRoomId { get; set; }
     }
 }

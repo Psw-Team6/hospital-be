@@ -82,16 +82,24 @@ namespace HospitalTest
                 Street = "Kosovska",
                 Postcode = 21000
             };
+            Building building1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Stara bolnica"
+            };
+            Floor floor11 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F0",
+                FloorNumber = 0,
+                BuildingId = building1.Id
+            };
             Room room1 = new()
             {
                 Id = Guid.NewGuid(),
-                BuildingName = "Stara zgrada",
-                FloorName = "Prvi",
-                Number = "11A",
-                PositionX = 0,
-                PositionY = 0,
-                Lenght = 5,
-                Width = 5
+                FloorId = floor11.Id,
+                Name = "A11",
+                BuildingId = floor11.BuildingId
             };
             WorkingSchedule workingSchedule1 = new()
             {
@@ -182,16 +190,24 @@ namespace HospitalTest
                 Street = "Kosovska",
                 Postcode = 21000
             };
+            Building building1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Stara bolnica"
+            };
+            Floor floor11 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F0",
+                FloorNumber = 0,
+                BuildingId = building1.Id
+            };
             Room room1 = new()
             {
                 Id = Guid.NewGuid(),
-                BuildingName = "Stara zgrada",
-                FloorName = "Prvi",
-                Number = "11A",
-                PositionX = 0,
-                PositionY = 0,
-                Lenght = 5,
-                Width = 5
+                FloorId = floor11.Id,
+                Name = "A11",
+                BuildingId = floor11.BuildingId
             };
             Specialization specializationDermatology = new()
             {
@@ -278,16 +294,24 @@ namespace HospitalTest
                 Street = "Kosovska",
                 Postcode = 21000
             };
+            Building building1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Stara bolnica"
+            };
+            Floor floor11 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F0",
+                FloorNumber = 0,
+                BuildingId = building1.Id
+            };
             Room room1 = new()
             {
                 Id = Guid.NewGuid(),
-                BuildingName = "Stara zgrada",
-                FloorName = "Prvi",
-                Number = "11A",
-                PositionX = 0,
-                PositionY = 0,
-                Lenght = 5,
-                Width = 5
+                FloorId = floor11.Id,
+                Name = "A11",
+                BuildingId = floor11.BuildingId
             };
             Specialization specializationDermatology = new()
             {
@@ -367,16 +391,24 @@ namespace HospitalTest
                 Street = "Kosovska",
                 Postcode = 21000
             };
+            Building building1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Stara bolnica"
+            };
+            Floor floor11 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F0",
+                FloorNumber = 0,
+                BuildingId = building1.Id
+            };
             Room room1 = new()
             {
                 Id = Guid.NewGuid(),
-                BuildingName = "Stara zgrada",
-                FloorName = "Prvi",
-                Number = "11A",
-                PositionX = 0,
-                PositionY = 0,
-                Lenght = 5,
-                Width = 5
+                FloorId = floor11.Id,
+                Name = "A11",
+                BuildingId = floor11.BuildingId
             };
             Specialization specializationDermatology = new()
             {
