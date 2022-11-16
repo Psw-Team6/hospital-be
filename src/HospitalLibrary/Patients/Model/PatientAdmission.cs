@@ -1,5 +1,5 @@
 ﻿using System;
-using HospitalLibrary.Core.Model;
+using HospitalLibrary.Rooms.Model;
 
 namespace HospitalLibrary.Patients.Model
 {

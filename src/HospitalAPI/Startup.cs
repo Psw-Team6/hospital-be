@@ -1,29 +1,34 @@
+using System;
+using System.Text;
 using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
 using HospitalAPI.Exceptions;
 using HospitalAPI.Infrastructure;
 using HospitalAPI.Mapper;
 using HospitalAPI.Validations.Filter;
+using HospitalLibrary.ApplicationUsers.Service;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Common;
-using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Repository;
-using HospitalLibrary.Core.Service;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Patients.Service;
+using HospitalLibrary.Rooms.Repository;
+using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.Settings;
 using HospitalLibrary.sharedModel;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NSwag.AspNetCore;
 
@@ -74,7 +79,7 @@ namespace HospitalAPI
             services.AddScoped<FeedbackService>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<DoctorService>();
-            services.AddScoped<IDoctorRepository,DoctorRepository>();
+            services.AddScoped<ApplicationUserService>();
 
             services.AddScoped<IWorkingSchueduleRepository, WorkingScheduleRepository>();
             services.AddScoped<WorkingScheduleService>();
@@ -91,6 +96,23 @@ namespace HospitalAPI
             services.AddScoped<GRoomService>();
             services.AddScoped<IGRoomRepository, GRoomRepository>();
 
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("veryverysecret.....")),
+                        ValidateAudience = false,
+                        ValidateIssuer = false
+                    };
+                }
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -124,6 +146,8 @@ namespace HospitalAPI
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseAuthorization();
+            
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

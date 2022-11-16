@@ -26,7 +26,6 @@ namespace HospitalAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType( StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<AppointmentResponse>>> GetAllAppointments()
         {
             var appointments = await _appointmentService.GetAllAppointments();

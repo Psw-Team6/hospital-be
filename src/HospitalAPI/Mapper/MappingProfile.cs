@@ -4,10 +4,10 @@ using HospitalAPI.Dtos;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Appointments.Model;
-using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.sharedModel;
 
 namespace HospitalAPI.Mapper

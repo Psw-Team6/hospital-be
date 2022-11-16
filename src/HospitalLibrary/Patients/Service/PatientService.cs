@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.Patients.Model;
 
@@ -22,6 +23,9 @@ namespace HospitalLibrary.Patients.Service
 
         public async Task<Patient> CreatePatient(Patient patient)
         {
+            var hashPassword =PasswordHasher.HashPassword(patient.Password);
+            patient.Password = hashPassword;
+            patient.UserRole = UserRole.Patient;
             var newPatient = await _unitOfWork.PatientRepository.CreateAsync(patient);
             await _unitOfWork.CompleteAsync();
             return newPatient;

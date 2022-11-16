@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using HospitalLibrary.Core.Model;
+using HospitalLibrary.Rooms.Model;
 
 namespace HospitalAPI.Dtos.Response
 {
