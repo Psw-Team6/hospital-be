@@ -11,5 +11,10 @@ namespace HospitalLibrary.BloodUnits.Model
         public int Amount { get; set; }
         public String BloodBankName { get; set; }
         public IEnumerable<BloodConsumption> Consumptions { get; set; }
+
+        public void decreseAmount(int consumptionAmount)
+        {
+            Amount -=consumptionAmount;
+        }
     }
 }

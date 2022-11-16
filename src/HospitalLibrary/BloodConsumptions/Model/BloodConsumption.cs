@@ -12,5 +12,6 @@ namespace HospitalLibrary.BloodConsumptions.Model
         public Guid DoctorId { get; set; }
         public DateTime Date { get; set; }
         public String Purpose { get; set; }
+        
     }
 }
