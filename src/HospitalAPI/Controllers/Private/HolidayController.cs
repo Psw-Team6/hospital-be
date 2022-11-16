@@ -29,5 +29,14 @@ namespace HospitalAPI.Controllers.Private
             return Ok(holidays);
         }
 
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Holiday>> ScheduleHoliday([FromBody] Holiday holiday)
+        {
+            var holidayScheduled = await _holidayService.ScheduleHoliday(holiday);
+            return CreatedAtAction("ScheduleHoliday", new {id = holidayScheduled.Id}, holidayScheduled);
+        }
+
     }
 }
