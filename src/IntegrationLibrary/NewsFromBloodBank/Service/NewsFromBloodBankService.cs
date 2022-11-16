@@ -29,6 +29,11 @@ namespace IntegrationLibrary.NewsFromBloodBank.Service
             _newsFromBloodBankRepository.Delete(news);
         }
 
+        public IEnumerable<Model.NewsFromBloodBank> GetAllOnHold()
+        {
+            return _newsFromBloodBankRepository.GetAllOnHold();
+        }
+
         public IEnumerable<Model.NewsFromBloodBank> GetAll()
         {
             return _newsFromBloodBankRepository.GetAll();

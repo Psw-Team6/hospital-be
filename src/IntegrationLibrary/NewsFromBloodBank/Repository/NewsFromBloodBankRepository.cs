@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Settings;
+﻿using IntegrationLibrary.Enums;
+using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using RabbitMQ.Client;
@@ -17,30 +18,6 @@ namespace IntegrationLibrary.NewsFromBloodBank.Repository
         public NewsFromBloodBankRepository(IntegrationDbContext context)
         {
             _context = context;
-        }
-
-        private void ListenForIntegrationEvents()
-        {
-            var factory = new ConnectionFactory();
-            var connection = factory.CreateConnection();
-            var channel = connection.CreateModel();
-            var consumer = new EventingBasicConsumer(channel);
-
-            consumer.Received += (model, ea) =>
-            {
-
-                var body = ea.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
-
-                var data = JObject.Parse(message);
-                _context.Add(new NewsFromBloodBank.Model.NewsFromBloodBank()
-                {
-                    title = data["title"].Value<string>(),
-                    content = data["content"].Value<string>(),
-                    bloodBankName = data["bloodBankName"].Value<string>()
-                });
-            };
-            channel.BasicConsume(queue: "newsForHospital", autoAck: true, consumer: consumer);
         }
         public void Create(Model.NewsFromBloodBank news)
         {
@@ -81,6 +58,11 @@ namespace IntegrationLibrary.NewsFromBloodBank.Repository
             {
                 throw;
             }
+        }
+
+        public IEnumerable<NewsFromBloodBank.Model.NewsFromBloodBank> GetAllOnHold()
+        {
+            return _context.NewsFromBloodBank.Where(newFromBloodBank => newFromBloodBank.newsStatus == 0);
         }
     }
 }

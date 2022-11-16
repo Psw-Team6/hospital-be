@@ -1,6 +1,7 @@
 using IntegrationLibrary.NewsFromBloodBank.Model;
 using IntegrationLibrary.NewsFromBloodBank.Repository;
 using IntegrationLibrary.NewsFromBloodBank.Service;
+using IntegrationLibrary.RabbitMQService;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -22,20 +23,12 @@ namespace IntegrationAPI
     {
         public static void Main(string[] args)
         {
-            ListenForIntegrationEvents();
-    
-            var host = CreateHostBuilder(args).Build();
+            //ListenForIntegrationEvents();
 
-            using (var scope = host.Services.CreateScope())
-            {
-                var db = scope.ServiceProvider.GetRequiredService<IntegrationDbContext>();
-                db.Database.EnsureCreated();
-            }
-
-            host.Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
-        private static void ListenForIntegrationEvents()
+        /*private static void ListenForIntegrationEvents()
         {
             var factory = new ConnectionFactory();
             var connection = factory.CreateConnection();
@@ -56,10 +49,14 @@ namespace IntegrationAPI
                 dbContext.SaveChanges();
             };
             channel.BasicConsume(queue: "newsForHospital", autoAck: true, consumer: consumer);
-        }
+        }*/
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHostedService<RabbitMQService>();
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

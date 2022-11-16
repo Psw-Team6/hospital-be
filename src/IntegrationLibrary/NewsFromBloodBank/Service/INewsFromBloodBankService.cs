@@ -14,5 +14,6 @@ namespace IntegrationLibrary.NewsFromBloodBank.Service
         void Create(Model.NewsFromBloodBank news);
         void Update(Model.NewsFromBloodBank news);
         void Delete(Model.NewsFromBloodBank news);
+        public IEnumerable<Model.NewsFromBloodBank> GetAllOnHold();
     }
 }

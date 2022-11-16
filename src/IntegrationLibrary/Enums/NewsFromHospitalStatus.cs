@@ -8,8 +8,8 @@ namespace IntegrationLibrary.Enums
 {
     public enum NewsFromHospitalStatus
     {
-        ON_HOLD,
-        ACTIVE,
-        REFUSED
+        ON_HOLD = 0,
+        ACTIVE = 1,
+        REFUSED = 2
     }
 }
