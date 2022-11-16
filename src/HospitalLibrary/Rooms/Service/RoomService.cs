@@ -1,5 +1,4 @@
 ﻿using System;
-using HospitalLibrary.Core.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;

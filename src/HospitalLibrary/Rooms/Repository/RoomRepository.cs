@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Common;
+﻿using System;
+using HospitalLibrary.Common;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;

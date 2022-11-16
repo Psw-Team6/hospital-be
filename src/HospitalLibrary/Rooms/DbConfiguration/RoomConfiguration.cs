@@ -1,5 +1,4 @@
 using System;
-using HospitalLibrary.Core.Model;
 using HospitalLibrary.Rooms.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
