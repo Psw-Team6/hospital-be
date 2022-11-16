@@ -9,5 +9,6 @@ namespace HospitalAPI.Dtos.Request
         public string Name { get; set; }
         public Guid BuildingId { get; set; }
         public Guid FloorId { get; set; }
+        public Guid GRoomId { get; set; }
     }
 }

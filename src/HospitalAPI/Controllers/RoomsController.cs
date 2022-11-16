@@ -60,7 +60,7 @@ namespace HospitalAPI.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> Update(RoomRequest roomDto)
+        public async Task<ActionResult> Update([FromBody] RoomRequest roomDto)
         {
             var room = _mapper.Map<Room>(roomDto);
             var res = await _roomService.Update(room);
