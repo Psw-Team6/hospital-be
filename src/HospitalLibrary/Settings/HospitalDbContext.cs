@@ -565,8 +565,18 @@ namespace HospitalLibrary.Settings
                     
             };
             
+            BloodUnit unit3 = new()
+            {
+                Id= Guid.NewGuid(),
+                BloodType = BloodType.Aneg,
+                Amount = 1,
+                BloodBankName = "Moja Banka Krvi"
+                    
+            };
+
+            
             modelBuilder.Entity<BloodUnit>().HasData(
-                unit1, unit2
+                unit1, unit2,unit3
             );
 
             BloodConsumption consumption1 = new BloodConsumption()
