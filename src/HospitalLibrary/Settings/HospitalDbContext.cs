@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Reflection;
+using System.Security.Principal;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.sharedModel;
@@ -31,6 +33,7 @@ namespace HospitalLibrary.Settings
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<BloodConsumption> BloodConsumptions { get; set; }
+        public DbSet<Holiday> Holidays { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -527,6 +530,28 @@ namespace HospitalLibrary.Settings
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
+
+            Holiday holiday1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Description = "I want to go to Paralia",
+                DoctorId = doctor1.Id,
+                IsUrgent = false,
+                HolidayStatus = 0
+            };
+
+            modelBuilder.Entity<Holiday>()
+                .OwnsOne(holiday => holiday.DateRange)
+                .HasData(
+                    new
+                    {
+                        HolidayId = holiday1.Id,
+                        From = new DateTime(2022, 10, 27, 15, 0, 0),
+                        To = new DateTime(2022, 10, 27, 15, 15, 0)
+                    }
+                    );
+            modelBuilder.Entity<Holiday>().HasData(holiday1);
+
             modelBuilder.Entity<Appointment>()
                 .OwnsOne(app => app.Duration)
                 .HasData(

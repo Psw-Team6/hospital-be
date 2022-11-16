@@ -6,6 +6,7 @@ using HospitalLibrary.BloodConsumptions.Repository;
 using HospitalLibrary.BloodUnits.Repository;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Feedbacks.Repository;
+using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Settings;
@@ -19,6 +20,7 @@ namespace HospitalLibrary.Common
         private DoctorRepository _doctorRepository;
         private PatientRepository _patientRepository;
         private AppointmentRepository _appointmentRepository;
+        private HolidayRepository _holidayRepository;
         private WorkingScheduleRepository _workingScheduleRepository;
         private FeedbackRepository _feedbackRepository;
         private BuildingRepository _buildingRepository;
@@ -40,9 +42,11 @@ namespace HospitalLibrary.Common
         public IGRoomRepository GRoomRepository =>
             _gRoomRepository ??= new GRoomRepository(_hospitalDbContext);
 
+        public IHolidayRepository HolidayRepository => _holidayRepository ??= new HolidayRepository(_hospitalDbContext);
         public IFeedbackRepository FeedbackRepository => _feedbackRepository ??= new FeedbackRepository(_hospitalDbContext);
         public  IPatientRepository PatientRepository => _patientRepository ??= new PatientRepository(_hospitalDbContext);
         public  IAppointmentRepository AppointmentRepository => _appointmentRepository ??= new AppointmentRepository(_hospitalDbContext);
+        
 
         public IWorkingSchueduleRepository WorkingSchueduleRepository =>
             _workingScheduleRepository ??= new WorkingScheduleRepository(_hospitalDbContext);
