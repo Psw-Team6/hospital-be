@@ -31,6 +31,7 @@ namespace HospitalLibrary.Settings
         public DbSet<PatientAdmission> PatientAdmissions { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<BloodUnit> BloodUnits { get; set; }
+        public DbSet<BloodConsumption> BloodConsumptions { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -571,25 +572,21 @@ namespace HospitalLibrary.Settings
             BloodConsumption consumption1 = new BloodConsumption()
             {
                 Id = Guid.NewGuid(),
-                BloodType = BloodType.Aneg,
+                BloodUnitId = unit1.Id,
                 Amount = 2,
-                BloodBankName = "Moja Banka Krvi",
                 DoctorId = doctor.Id,
-                //Doctor = doctor,
-                date = new DateTime(2022, 10, 27, 15, 0, 0),
-                purpose = "operation"
+                Date = new DateTime(2022, 10, 27, 15, 0, 0),
+                Purpose = "operation"
             };
             
             BloodConsumption consumption2 = new BloodConsumption()
             {
                 Id = Guid.NewGuid(),
-                BloodType = BloodType.Aneg,
+                BloodUnitId = unit1.Id,
                 Amount = 4,
-                BloodBankName = "Moja Banka Krvi",
                 DoctorId = doctor.Id,
-                //Doctor = doctor,
-                date = new DateTime(2022, 11, 14, 15, 0, 0),
-                purpose = "operation"
+                Date = new DateTime(2022, 11, 14, 15, 0, 0),
+                Purpose = "operation"
             };
             
             modelBuilder.Entity<BloodConsumption>().HasData(
