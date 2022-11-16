@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using HospitalLibrary.ApplicationUsers.Repository;
 using HospitalLibrary.Appointments.Repository;
+using HospitalLibrary.BloodConsumptions.Repository;
+using HospitalLibrary.BloodUnits.Repository;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Patients.Repository;
@@ -23,6 +25,8 @@ namespace HospitalLibrary.Common
         IGRoomRepository GRoomRepository { get; }
         IRoomRepository RoomRepository { get; }
         IApplicationUserRepository UserRepository { get; }
+        IBloodUnitRepository BloodUnitRepository { get; }
+        IBloodConsumptionRepository BloodConsumptionRepository { get; }
         T GetRepository<T>() where T : class;
         Task CompleteAsync();
     }
