@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
+using HospitalAPI.Exceptions;
 using Microsoft.IdentityModel.Tokens;
 
 namespace HospitalAPI.Controllers
@@ -19,6 +20,8 @@ namespace HospitalAPI.Controllers
     public class ApplicationUserController:ControllerBase
     {
         private readonly ApplicationUserService _userService;
+        private const string StaffUrl = "https://doctor-portal";
+        private const string PatientUrl = "https://patient-portal";
 
         public ApplicationUserController(ApplicationUserService userService)
         {
@@ -30,6 +33,26 @@ namespace HospitalAPI.Controllers
         public async Task<ActionResult<LoginResponse>> Authenticate([FromBody]LoginRequest loginRequest)
         {
            var user = await _userService.Authenticate(loginRequest.Username, loginRequest.Password);
+           if (user.UserRole is UserRole.Patient)
+           {
+               if (loginRequest.PortalUrl != PatientUrl)
+               {
+                   return BadRequest(new ResponseContent()
+                   {
+                       Error = "Bad Credentials!"
+                   });
+               }
+           }
+           if (user.UserRole is UserRole.Doctor or UserRole.Manager)
+           {
+               if (loginRequest.PortalUrl != StaffUrl)
+               {
+                   return BadRequest(new ResponseContent()
+                   {
+                       Error = "Bad Credentials!"
+                   });
+               }
+           }
            var token = CreateJwt(user);
            return Ok(new LoginResponse
            {
