@@ -13,7 +13,7 @@ namespace HospitalLibrary.Rooms.Repository
         {
             //this.Configuration.LazyLoadingEnabled = false;
         }
-        public async Task<List<Building>> GetAllBuildings()
+        public async Task<IEnumerable<Building>> GetAllBuildings()
         {
             return await  DbSet
                 .ToListAsync();

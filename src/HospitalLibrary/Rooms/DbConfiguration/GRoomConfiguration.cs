@@ -4,14 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HospitalLibrary.Rooms.DbConfiguration
 {
-    public class FloorPlanViewConfiguration: IEntityTypeConfiguration<FloorPlanView>
+    public class GRoomConfiguration: IEntityTypeConfiguration<GRoom>
     {
         
-        public void Configure(EntityTypeBuilder<FloorPlanView> builder)
+        public void Configure(EntityTypeBuilder<GRoom> builder)
         {
             _ = builder.HasKey(x => x.Id);
             _ = builder.Property(x => x.Id)
                 .IsRequired();
-        } 
+
+        }
     }
 }

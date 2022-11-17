@@ -8,12 +8,15 @@ using HospitalAPI.Mapper;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.ApplicationUsers.Service;
 using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.BloodConsumptions.Service;
+using HospitalLibrary.BloodUnits.Service;
 using HospitalLibrary.Common;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
-using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
+using HospitalLibrary.Holidays.Repository;
+using HospitalLibrary.Holidays.Service;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Rooms.Service;
@@ -86,13 +89,20 @@ namespace HospitalAPI
 
             services.AddScoped<PatientService>();
             services.AddScoped<AppointmentService>();
+            services.AddScoped<HolidayService>();
             services.AddScoped<ScheduleService>();
             services.AddScoped<IEmailService, EmailService>();
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
             services.AddScoped<BuildingService>();
+            services.AddScoped<IBuildingRepository, BuildingRepository>();
             services.AddScoped<FloorService>();
-            services.AddScoped<FloorPlanViewService>();
+            services.AddScoped<IFloorRepository, FloorRepository>();
             services.AddScoped<GRoomService>();
+            services.AddScoped<IGRoomRepository, GRoomRepository>();
+            services.AddScoped<IHolidayRepository, HolidayRepository>();
+            services.AddScoped<BloodUnitService>();
+            services.AddScoped<BloodConsumptionService>();
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

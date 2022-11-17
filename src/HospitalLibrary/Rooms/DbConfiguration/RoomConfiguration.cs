@@ -1,3 +1,4 @@
+using System;
 using HospitalLibrary.Rooms.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -15,6 +16,11 @@ namespace HospitalLibrary.Rooms.DbConfiguration
             _ = builder.HasMany((room) => room.Beds)
                 .WithOne(bed => bed.Room)
                 .HasForeignKey(bed => bed.RoomId);
+            
+            _ = builder.HasOne((room) => room.Floor)
+                .WithMany(floor => floor.Rooms)
+                .HasForeignKey(room => room.FloorId);
+            
         }
     }
 }

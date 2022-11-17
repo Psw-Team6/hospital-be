@@ -17,7 +17,12 @@ namespace HospitalLibrary.Rooms.Service
 
         public async Task<IEnumerable<Room>> GetAll()
         {
-            return await _unitOfWork.RoomRepository.GetAllAsync();
+            return await _unitOfWork.RoomRepository.GetAllRooms();
+        }
+        
+        public async Task<IEnumerable<Room>> GetAllByBuildingIdAndFloorId(Guid buildingId, Guid floorId)
+        {
+            return await _unitOfWork.RoomRepository.GetAllRoomsByBuildingIdAndFloorId(buildingId, floorId);
         }
 
         public async Task<Room> GetById(Guid id)
@@ -25,22 +30,11 @@ namespace HospitalLibrary.Rooms.Service
             return await _unitOfWork.RoomRepository.GetByIdAsync(id);
         }
 
-          public void Create(Room room)
+        public async Task<bool> Update(Room room)
         {
-            _unitOfWork.RoomRepository.CreateAsync(room);
-            _unitOfWork.CompleteAsync();
-        }
-
-        public void Update(Room room)
-        {
-            _unitOfWork.RoomRepository.UpdateAsync(room);
-            _unitOfWork.CompleteAsync();
-        }
-
-        public void Delete(Room room)
-        {
-            _unitOfWork.RoomRepository.DeleteAsync(room);
-            _unitOfWork.CompleteAsync();
+            await _unitOfWork.RoomRepository.UpdateAsync(room);
+            await _unitOfWork.CompleteAsync();
+            return true;
         }
     }
 }
