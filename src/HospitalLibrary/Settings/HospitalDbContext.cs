@@ -25,7 +25,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        //public DbSet<Address> Addresses { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
         public DbSet<GRoom> GRooms { get; set; }
         public DbSet<RoomBed> RoomBeds { get; set; }
@@ -442,7 +442,8 @@ namespace HospitalLibrary.Settings
                 Email = "DjordjeLopov@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Doctor
+                UserRole = UserRole.Doctor,
+                Enabled = true
             };
             Doctor doctor1 = new()
             {
@@ -458,7 +459,8 @@ namespace HospitalLibrary.Settings
                 Email = "Cajons@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Doctor
+                UserRole = UserRole.Doctor,
+                Enabled = true
             };
             modelBuilder.Entity<Doctor>().HasData(
                 doctor,doctor1
@@ -474,7 +476,8 @@ namespace HospitalLibrary.Settings
                 Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Patient
+                UserRole = UserRole.Patient,
+                Enabled = true
             };
             Patient patient2 = new()
             {
@@ -487,7 +490,8 @@ namespace HospitalLibrary.Settings
                 Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Patient
+                UserRole = UserRole.Patient,
+                Enabled = true
             };
             modelBuilder.Entity<Patient>().HasData(
                 patient1,patient2
@@ -504,7 +508,8 @@ namespace HospitalLibrary.Settings
                 Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Manager
+                UserRole = UserRole.Manager,
+                Enabled = true
             };
             modelBuilder.Entity<Manager>().HasData(
                 manager

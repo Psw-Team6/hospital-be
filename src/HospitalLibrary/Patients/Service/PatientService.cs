@@ -26,6 +26,7 @@ namespace HospitalLibrary.Patients.Service
             var hashPassword =PasswordHasher.HashPassword(patient.Password);
             patient.Password = hashPassword;
             patient.UserRole = UserRole.Patient;
+            patient.Enabled = false;
             var newPatient = await _unitOfWork.PatientRepository.CreateAsync(patient);
             await _unitOfWork.CompleteAsync();
             return newPatient;
