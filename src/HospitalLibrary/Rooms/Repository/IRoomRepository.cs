@@ -10,8 +10,8 @@ namespace HospitalLibrary.Rooms.Repository
     {
         Task<List<Room>> GetAllRooms();
 
-
         Task<List<Room>> GetAllRoomsByBuildingIdAndFloorId(Guid buildingId, Guid floorId);
    
+       
     }
 }

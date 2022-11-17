@@ -49,8 +49,12 @@ namespace HospitalAPI.Mapper
                 CreateMap<Building, BuildingResponse>();
                 CreateMap<FloorResponse, Floor>();
                 CreateMap<Floor, FloorResponse>();
+                CreateMap<RoomEquipmentResponse, RoomEquipment>();
+                CreateMap<RoomEquipment, RoomEquipmentResponse>();
                 CreateMap<FloorRequest, Floor>();
                 CreateMap<Floor, FloorRequest>();
+                CreateMap<RoomEquipmentRequest, RoomEquipment>();
+                CreateMap<RoomEquipment, RoomEquipmentRequest>();
                 CreateMap<BuildingRequest, Building>();
                 CreateMap<Building, BuildingRequest>();
                 CreateMap<BloodConsumationRequest, BloodConsumption>();

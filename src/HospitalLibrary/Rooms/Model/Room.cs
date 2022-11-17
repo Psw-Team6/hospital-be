@@ -14,6 +14,8 @@ namespace HospitalLibrary.Rooms.Model
         
         public Doctor Doctor { get; set; }
         public List<RoomBed> Beds { get; set; }
+        
+        public List<RoomEquipment> Equipments { get; set; }
         public Guid FloorId { get; set; }
         public Floor Floor { get; set; }
         public Guid BuildingId { get; set; }

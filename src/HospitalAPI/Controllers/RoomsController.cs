@@ -24,6 +24,7 @@ namespace HospitalAPI.Controllers
             _mapper = mapper;
         }
 
+        
         // GET: api/rooms
         [HttpGet]
         [ProducesResponseType(typeof(List<RoomResponse>), StatusCodes.Status200OK)]
