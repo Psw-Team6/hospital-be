@@ -49,8 +49,6 @@ namespace HospitalLibrary.Appointments.Service
             await _unitOfWork.AppointmentRepository.UpdateAsync(app);
             await _unitOfWork.CompleteAsync();
             return true;
-            
-            
         }
 
         private async Task DoctorNotExist(Appointment appointment)
@@ -119,7 +117,7 @@ namespace HospitalLibrary.Appointments.Service
         }
         private async Task<bool> CheckPatientAvailabilityForAppointment(Appointment appointment)
         {
-            var appointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForDoctor(appointment.DoctorId);
+            var appointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForPatient(appointment.PatientId);
             return appointments.All(app => !appointment.IsPatientConflicts(app));
         }
         private static void CheckDateRange(Appointment appointment)

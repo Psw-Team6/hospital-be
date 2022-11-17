@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Security.Principal;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Rooms.Model;
@@ -8,6 +9,7 @@ using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Enums;
+using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.sharedModel;
@@ -25,7 +27,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        //public DbSet<Address> Addresses { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
         public DbSet<GRoom> GRooms { get; set; }
         public DbSet<RoomBed> RoomBeds { get; set; }
@@ -34,6 +36,7 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<BloodConsumption> BloodConsumptions { get; set; }
         public DbSet<RoomEquipment> RoomEquipment { get; set; }
+        public DbSet<Holiday> Holidays { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -75,13 +78,13 @@ namespace HospitalLibrary.Settings
                     {
                         WorkingScheduleId = workingSchedule1.Id,
                         From = new DateTime(2022, 10, 27),
-                        To = new DateTime(2023, 1, 27)
+                        To = new DateTime(2023, 12, 27)
                     },
                     new
                     {
                         WorkingScheduleId = workingSchedule2.Id,
                         From = new DateTime(2022, 10, 27),
-                        To = new DateTime(2023, 1, 27)
+                        To = new DateTime(2023, 12, 27)
                     }
                 );
             modelBuilder.Entity<WorkingSchedule>()
@@ -91,7 +94,7 @@ namespace HospitalLibrary.Settings
                     {
                         WorkingScheduleId = workingSchedule1.Id,
                         From = new DateTime(2022, 10, 27, 8, 0, 0),
-                        To = new DateTime(2022, 10, 27, 14, 0, 0)
+                        To = new DateTime(2023, 12, 27, 14, 0, 0)
                     },
                     new
                     {
@@ -527,7 +530,7 @@ namespace HospitalLibrary.Settings
                 room1Bed1, room1Bed2, room1Bed3, room1Bed4, 
                 room2Bed1, room2Bed2, room2Bed3, room2Bed4, room2Bed5
             );
-            
+            //password 123
             Doctor doctor = new()
             {
                 Id = Guid.NewGuid(),
@@ -542,14 +545,15 @@ namespace HospitalLibrary.Settings
                 Email = "DjordjeLopov@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Doctor
+                UserRole = UserRole.Doctor,
+                Enabled = true
             };
             Doctor doctor1 = new()
             {
                 Id = Guid.NewGuid(),
                 SpecializationId = specializationDermatology.Id,
                 AddressId = address.Id,
-                WorkingScheduleId = workingSchedule2.Id,
+                WorkingScheduleId = workingSchedule1.Id,
                 RoomId = room1.Id,
                 Username = "Ilija",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
@@ -558,7 +562,8 @@ namespace HospitalLibrary.Settings
                 Email = "Cajons@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Doctor
+                UserRole = UserRole.Doctor,
+                Enabled = true
             };
             modelBuilder.Entity<Doctor>().HasData(
                 doctor,doctor1
@@ -574,7 +579,8 @@ namespace HospitalLibrary.Settings
                 Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Patient
+                UserRole = UserRole.Patient,
+                Enabled = true
             };
             Patient patient2 = new()
             {
@@ -587,7 +593,8 @@ namespace HospitalLibrary.Settings
                 Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Patient
+                UserRole = UserRole.Patient,
+                Enabled = true
             };
             modelBuilder.Entity<Patient>().HasData(
                 patient1,patient2
@@ -604,7 +611,8 @@ namespace HospitalLibrary.Settings
                 Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Manager
+                UserRole = UserRole.Manager,
+                Enabled = true
             };
             modelBuilder.Entity<Manager>().HasData(
                 manager
@@ -630,14 +638,36 @@ namespace HospitalLibrary.Settings
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
+
+            Holiday holiday1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Description = "I want to go to Paralia",
+                DoctorId = doctor1.Id,
+                IsUrgent = false,
+                HolidayStatus = 0
+            };
+
+            modelBuilder.Entity<Holiday>()
+                .OwnsOne(holiday => holiday.DateRange)
+                .HasData(
+                    new
+                    {
+                        HolidayId = holiday1.Id,
+                        From = new DateTime(2022, 10, 27, 10, 0, 0),
+                        To = new DateTime(2022, 10, 27, 10, 30, 0)
+                    }
+                    );
+            modelBuilder.Entity<Holiday>().HasData(holiday1);
+
             modelBuilder.Entity<Appointment>()
                 .OwnsOne(app => app.Duration)
                 .HasData(
                     new
                     {
                         AppointmentId = appointment.Id,
-                        From = new DateTime(2022, 10, 27, 15, 0, 0),
-                        To = new DateTime(2022, 10, 27, 15, 15, 0)
+                        From = new DateTime(2023, 7, 27, 10, 0, 0),
+                        To = new DateTime(2023, 7, 27, 10, 30, 0)
                     }
                 );
             modelBuilder.Entity<Appointment>().HasData(
