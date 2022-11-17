@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.Settings;
@@ -16,18 +15,22 @@ namespace HospitalLibrary.BloodUnits.Repository
             
         }
         
-        public async Task<IEnumerable<BloodUnitDto>> GetUnits()
+        public async Task<IEnumerable<BloodUnitDto>> GetUnitsGroupByType()
         {
-            return DbSet.GroupBy(x => x.BloodType)
+            return await DbSet.GroupBy(x => x.BloodType)
                 .Select(g => new BloodUnitDto(g.Key, g.Select(s => s.Amount).Sum()))
-                .AsEnumerable<BloodUnitDto>();;
+                .ToListAsync();
         }
-
-        public async Task<BloodUnit> GetUnitAvailableUnitByType(BloodType bloodType, int amount)
+        
+        public async Task<IEnumerable<BloodUnit>> GetSortUnitsByType(BloodType bloodType)
         {
-            return await DbSet.Where(x => x.BloodType==bloodType && x.Amount>= amount)
-                        .FirstOrDefaultAsync();
+            return await DbSet.Where(x => x.BloodType == bloodType && x.Amount>0).OrderByDescending(z=>z.Amount).ToListAsync();
         }
-
+        
+        public async Task<int> GetUnitsAmountByType(BloodType bloodType)
+        {
+            return DbSet.Where(x => x.BloodType == bloodType).Sum(i => i.Amount);
+        }
+        
     }
 }

@@ -7,7 +7,8 @@ namespace HospitalLibrary.BloodUnits.Repository
 {
     public interface IBloodUnitRepository: IGenericRepository<BloodUnit>
     {
-        Task<IEnumerable<BloodUnitDto>> GetUnits();
-        Task<BloodUnit> GetUnitAvailableUnitByType(BloodType bloodType, int amount);
+        Task<IEnumerable<BloodUnitDto>> GetUnitsGroupByType();
+        Task<int> GetUnitsAmountByType(BloodType bloodType);
+        Task<IEnumerable<BloodUnit>> GetSortUnitsByType(BloodType bloodType);
     }
 }
