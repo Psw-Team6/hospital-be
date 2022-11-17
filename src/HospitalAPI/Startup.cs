@@ -98,6 +98,8 @@ namespace HospitalAPI
             services.AddScoped<IGRoomRepository, GRoomRepository>();
             services.AddScoped<BloodUnitService>();
             services.AddScoped<BloodConsumptionService>();
+            services.AddScoped<EquipmentService>();
+            services.AddScoped<IIEquipmentRepository, EquipmentRepository>();
 
             services.AddAuthentication(x =>
             {

@@ -22,8 +22,7 @@ namespace HospitalLibrary.Rooms.Repository
         
         public async Task<List<RoomEquipment>> GetAllEquipment()
         {
-            return await  DbSet
-                .ToListAsync();
+            return await  DbSet.ToListAsync();
         }
             
         public async Task<List<RoomEquipment>> GetAllEquipmentById(Guid roomEquipmentId) //ista fora kao kod blood consuptiona
