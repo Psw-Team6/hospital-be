@@ -75,13 +75,13 @@ namespace HospitalLibrary.Settings
                     {
                         WorkingScheduleId = workingSchedule1.Id,
                         From = new DateTime(2022, 10, 27),
-                        To = new DateTime(2023, 1, 27)
+                        To = new DateTime(2023, 12, 27)
                     },
                     new
                     {
                         WorkingScheduleId = workingSchedule2.Id,
                         From = new DateTime(2022, 10, 27),
-                        To = new DateTime(2023, 1, 27)
+                        To = new DateTime(2023, 12, 27)
                     }
                 );
             modelBuilder.Entity<WorkingSchedule>()
@@ -91,7 +91,7 @@ namespace HospitalLibrary.Settings
                     {
                         WorkingScheduleId = workingSchedule1.Id,
                         From = new DateTime(2022, 10, 27, 8, 0, 0),
-                        To = new DateTime(2022, 10, 27, 14, 0, 0)
+                        To = new DateTime(2023, 12, 27, 14, 0, 0)
                     },
                     new
                     {
@@ -449,7 +449,7 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 SpecializationId = specializationDermatology.Id,
                 AddressId = address.Id,
-                WorkingScheduleId = workingSchedule2.Id,
+                WorkingScheduleId = workingSchedule1.Id,
                 RoomId = room1.Id,
                 Username = "Ilija",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
@@ -546,8 +546,8 @@ namespace HospitalLibrary.Settings
                     new
                     {
                         HolidayId = holiday1.Id,
-                        From = new DateTime(2022, 10, 27, 15, 0, 0),
-                        To = new DateTime(2022, 10, 27, 15, 15, 0)
+                        From = new DateTime(2022, 10, 27, 10, 0, 0),
+                        To = new DateTime(2022, 10, 27, 10, 30, 0)
                     }
                     );
             modelBuilder.Entity<Holiday>().HasData(holiday1);
@@ -558,8 +558,8 @@ namespace HospitalLibrary.Settings
                     new
                     {
                         AppointmentId = appointment.Id,
-                        From = new DateTime(2023, 7, 27, 15, 0, 0),
-                        To = new DateTime(2023, 8, 7, 15, 15, 0)
+                        From = new DateTime(2023, 7, 27, 10, 0, 0),
+                        To = new DateTime(2023, 7, 27, 10, 30, 0)
                     }
                 );
             modelBuilder.Entity<Appointment>().HasData(

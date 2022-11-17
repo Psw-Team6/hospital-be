@@ -49,8 +49,6 @@ namespace HospitalLibrary.Appointments.Service
             await _unitOfWork.AppointmentRepository.UpdateAsync(app);
             await _unitOfWork.CompleteAsync();
             return true;
-            
-            
         }
 
         private async Task DoctorNotExist(Appointment appointment)
