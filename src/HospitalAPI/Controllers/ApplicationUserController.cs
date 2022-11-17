@@ -1,6 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
-using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
 using HospitalLibrary.ApplicationUsers.Model;
@@ -11,8 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
+using HospitalAPI.Exceptions;
 using Microsoft.IdentityModel.Tokens;
-using YamlDotNet.Core.Tokens;
 
 namespace HospitalAPI.Controllers
 {
@@ -20,29 +19,56 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class ApplicationUserController:ControllerBase
     {
-        private readonly IMapper _mapper;
         private readonly ApplicationUserService _userService;
+        private const string StaffUrl = "https://doctor-portal";
+        private const string PatientUrl = "https://patient-portal";
 
-        public ApplicationUserController(IMapper mapper, ApplicationUserService userService)
+        public ApplicationUserController(ApplicationUserService userService)
         {
-            _mapper = mapper;
             _userService = userService;
         }
-        
         [HttpPost("Authenticate")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<LoginResponse>> Authenticate([FromBody]LoginRequest loginRequest)
         {
            var user = await _userService.Authenticate(loginRequest.Username, loginRequest.Password);
+           if (user.UserRole is UserRole.Patient)
+           {
+               if (loginRequest.PortalUrl != PatientUrl)
+               {
+                   return BadRequest(new ResponseContent()
+                   {
+                       Error = "Bad Credentials!"
+                   });
+               }
+           }
+           if (user.UserRole is UserRole.Doctor or UserRole.Manager)
+           {
+               if (loginRequest.PortalUrl != StaffUrl)
+               {
+                   return BadRequest(new ResponseContent()
+                   {
+                       Error = "Bad Credentials!"
+                   });
+               }
+           }
            var token = CreateJwt(user);
            return Ok(new LoginResponse
            {
                Token = token,
-               Message = "Login Success"
+               Message = "Login Success",
+               UserToken = new UserToken
+               {
+                   Id = user.Id,
+                   Email = user.Email,
+                   Role = user.UserRole.ToString(),
+                   Username = user.Username,
+                   Name = user.Name,
+                   Surname = user.Surname
+               }
            });
         }
-
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<ApplicationUser>>> GetAllApplicationUsers()
@@ -61,7 +87,7 @@ namespace HospitalAPI.Controllers
             {
                 new(ClaimTypes.Role, user.UserRole.ToString()),
                 new(ClaimTypes.Name,$"{user.Username}"),
-                new(ClaimTypes.Email,$"{user.Email}")
+                new(ClaimTypes.NameIdentifier,$"{user.Id}")
             });
             var credential = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
             var tokenDescriptor = new SecurityTokenDescriptor()
