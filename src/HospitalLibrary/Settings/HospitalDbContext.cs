@@ -429,7 +429,7 @@ namespace HospitalLibrary.Settings
                 room1Bed1, room1Bed2, room1Bed3, room1Bed4, 
                 room2Bed1, room2Bed2, room2Bed3, room2Bed4, room2Bed5
             );
-            
+            //password 123
             Doctor doctor = new()
             {
                 Id = Guid.NewGuid(),
