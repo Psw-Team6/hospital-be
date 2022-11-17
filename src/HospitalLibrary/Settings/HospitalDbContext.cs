@@ -696,7 +696,7 @@ namespace HospitalLibrary.Settings
             {
                 Id= Guid.NewGuid(),
                 BloodType = BloodType.Aneg,
-                Amount = 1,
+                Amount = 4,
                 BloodBankName = "Moja Banka Krvi"
                     
             };
