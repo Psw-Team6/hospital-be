@@ -12,7 +12,9 @@ namespace IntegrationLibrary.NewsFromBloodBank.Model
         public Guid Id { get; set; }
         public String title { get; set; }
         public String content { get; set; }
-        public String bloodBankName { get; set; }
+        public String apiKey { get; set; }
         public NewsFromHospitalStatus newsStatus { get; set; }
+        public String base64image { get; set; }
+        public String bloodBankName { get; set; }
     }
 }

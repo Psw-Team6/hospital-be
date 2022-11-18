@@ -37,8 +37,13 @@ namespace IntegrationLibrary.RabbitMQService
                 var message = Encoding.UTF8.GetString(body);
 
                 NewsFromBloodBank.Model.NewsFromBloodBank data = Newtonsoft.Json.JsonConvert.DeserializeObject<NewsFromBloodBank.Model.NewsFromBloodBank>(message);
-                dbContext.NewsFromBloodBank.Add(data);
-                dbContext.SaveChanges();
+                List<BloodBank.BloodBank> bbList = dbContext.BloodBanks.ToList();
+                foreach (BloodBank.BloodBank bb in bbList) {
+                    if (data.apiKey.Equals(bb.ApiKey)) {
+                        dbContext.NewsFromBloodBank.Add(data);
+                        dbContext.SaveChanges();
+                    }
+                }
             };
             channel.BasicConsume(queue: "newsForHospital", autoAck: true, consumer: consumer);
             return base.StartAsync(cancellationToken);

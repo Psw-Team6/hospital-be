@@ -35,7 +35,8 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public ActionResult GetAllOnHold()
         {
-            return Ok(_newsService.GetAllOnHold());
+            IEnumerable<NewsFromBloodBank> news = _newsService.GetAllOnHold();
+            return Ok(news);
         }
 
         [HttpPut("{id}")]
