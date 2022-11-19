@@ -1,6 +1,7 @@
 using IntegrationAPI.Mapper;
 using IntegrationLibrary.BloodBank.Repository;
 using IntegrationLibrary.BloodBank.Service;
+using IntegrationLibrary.PDFReport.Service;
 using IntegrationLibrary.SendMail;
 using IntegrationLibrary.SendMail.Services;
 using IntegrationLibrary.Settings;
@@ -49,6 +50,7 @@ namespace IntegrationAPI
 
 
             services.AddScoped<IBloodBankService, BloodBankService>();
+            services.AddScoped<PDFReportService>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
 
         }
