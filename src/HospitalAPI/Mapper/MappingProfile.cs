@@ -5,6 +5,7 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
+using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.sharedModel;
@@ -31,6 +32,10 @@ namespace HospitalAPI.Mapper
                 CreateMap<Address,AddressResponse>();
                 CreateMap<Room,RoomResponse>();
                 CreateMap<AppointmentRequest, Appointment>();
+                CreateMap<HolidayResponse, Holiday>();
+                CreateMap<Holiday,HolidayResponse>();
+                CreateMap<HolidayRequest, Holiday>();
+                CreateMap<Holiday,HolidayRequest>();
                 CreateMap<Appointment, AppointmentRequest>();
                 CreateMap<Appointment,AppointmentResponse>();
                 CreateMap<AppointmentResponse,Appointment>();

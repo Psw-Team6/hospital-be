@@ -34,16 +34,33 @@ namespace HospitalLibrary.Holidays.Service
         public async Task<Holiday> ScheduleHoliday(Holiday holiday)
         {
             await ValidateHoliday(holiday);
+            holiday = SetHolidayStatus(holiday);
             var newHoliday = await _unitOfWork.HolidayRepository.CreateAsync(holiday);
             await _unitOfWork.CompleteAsync();
             return newHoliday;
         }
 
+        private Holiday SetHolidayStatus(Holiday holiday)
+        {
+            if (holiday.IsUrgent)
+            {
+                holiday.HolidayStatus = HolidayStatus.Approved;
+            }
+            else
+            {
+                holiday.HolidayStatus = HolidayStatus.Pending;
+
+            }
+
+            return holiday;
+        }
+
         private async Task ValidateHoliday(Holiday holiday)
         {
             await DoctorNotExist(holiday);
-            await CheckDoctorsSchedule(holiday);
             CheckDateRange(holiday);
+            await CheckDoctorsSchedule(holiday);
+            
         }
 
         private async Task DoctorNotExist(Holiday holiday)
