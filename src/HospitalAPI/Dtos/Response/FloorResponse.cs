@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using HospitalLibrary.Core.Model;
+using HospitalLibrary.Rooms.Model;
 
 namespace HospitalAPI.Dtos.Response
 {
@@ -9,9 +9,6 @@ namespace HospitalAPI.Dtos.Response
         public Guid Id { get; set; }
         public int FloorNumber { get; set; }
         public string Name { get; set; }
-        
-        
         public Guid BuildingId { get; set; }
-        public Building Building { get; set; }
     }
 }

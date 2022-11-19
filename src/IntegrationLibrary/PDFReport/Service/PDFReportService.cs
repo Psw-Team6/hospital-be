@@ -7,14 +7,14 @@ using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
 using Syncfusion.Drawing;
 using System.IO;
-using Microsoft.AspNetCore.Mvc;
-using Syncfusion.Pdf.Parsing;
+
 
 namespace IntegrationLibrary.PDFReport.Service
 {
     public class PDFReportService
     {
-        public byte[] CreateDocument()
+        
+        public byte[] CreateDocument(String bankName, int generatePeriod)
         {
             PdfDocument document = new PdfDocument();
 

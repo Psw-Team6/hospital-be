@@ -18,46 +18,34 @@ namespace HospitalAPI.Exceptions
             }
             catch (DateRangeException error)
             {
-                var response = context.Response;
-                //Set response ContentType
-                response.ContentType = "application/json";
-                response.StatusCode = (int) HttpStatusCode.BadRequest;
-                var responseContent = new ResponseContent()
-                {
-                    Error = error.Message
-                };
-                var jsonResult = JsonConvert.SerializeObject(responseContent);
-                await context.Response.WriteAsync(jsonResult);
+                await BadRequestException(context, error);
             }
             catch (DoctorException error)
             {
-                var response = context.Response;
-                //Set response ContentType
-                response.ContentType = "application/json";
-                response.StatusCode = (int) HttpStatusCode.BadRequest;
-                var responseContent = new ResponseContent()
-                {
-                    Error = error.Message
-                };
-                var jsonResult = JsonConvert.SerializeObject(responseContent);
-                await context.Response.WriteAsync(jsonResult);
+                await BadRequestException(context, error);
             }
             catch (PatientException e)
             {
-                var response = context.Response;
-                //Set response ContentType
-                response.ContentType = "application/json";
-                response.StatusCode = (int) HttpStatusCode.BadRequest;
-                var responseContent = new ResponseContent()
-                {
-                    Error = e.Message
-                };
-                var jsonResult = JsonConvert.SerializeObject(responseContent);
-                await context.Response.WriteAsync(jsonResult);
+                await BadRequestException(context, e);
+            }
+            catch (AuthenticationException e)
+            {
+                await BadRequestException(context, e);
             }
         }
-        
 
-        
+        private static async Task BadRequestException(HttpContext context, Exception e)
+        {
+            var response = context.Response;
+            //Set response ContentType
+            response.ContentType = "application/json";
+            response.StatusCode = (int) HttpStatusCode.BadRequest;
+            var responseContent = new ResponseContent()
+            {
+                Error = e.Message
+            };
+            var jsonResult = JsonConvert.SerializeObject(responseContent);
+            await context.Response.WriteAsync(jsonResult);
+        }
     }
 }

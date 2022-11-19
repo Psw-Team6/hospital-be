@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HospitalLibrary.BloodConsumptions.Service;
 using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.BloodBank.Service;
 using IntegrationLibrary.PDFReport.Service;
@@ -17,6 +18,7 @@ namespace IntegrationAPI.Controllers
     public class PDFReportController
     {
         private readonly PDFReportService _pDFReportService;
+        private readonly BloodConsumptionService bloodConsumptionService;
         private readonly IMapper _mapper;
         static HttpClient httpClient = new HttpClient();
         public PDFReportController(PDFReportService pDFReportService, IMapper mapper)
@@ -41,8 +43,8 @@ namespace IntegrationAPI.Controllers
         // POST api/pdfreport
         [HttpPost]
         public async void sendReport(String bankName, int generatePeriod)
-        {
-           await UploadPDF("http://localhost:8080/api/PDFReport/" + bankName, _pDFReportService.CreateDocument());
+        {          
+        await UploadPDF("http://localhost:8080/api/PDFReport/" + bankName, _pDFReportService.CreateDocument(bankName, generatePeriod));
         }
 
     }

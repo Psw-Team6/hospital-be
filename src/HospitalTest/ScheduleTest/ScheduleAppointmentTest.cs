@@ -5,12 +5,12 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Common;
-using HospitalLibrary.Core.Model;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Patients.Repository;
+using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.sharedModel;
 using Moq;
 using Shouldly;
@@ -42,14 +42,7 @@ namespace HospitalTest.ScheduleTest
             };
             Room room1 = new()
             {
-                Id = Guid.NewGuid(),
-                BuildingName = "Stara zgrada",
-                FloorName = "Prvi",
-                Number = "11A",
-                PositionX = 0,
-                PositionY  = 0,
-                Lenght = 5,
-                Width = 5
+                Id = Guid.NewGuid()
             };
             Specialization specializationDermatology = new()
             {

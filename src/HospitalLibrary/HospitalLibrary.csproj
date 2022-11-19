@@ -7,11 +7,11 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -21,16 +21,21 @@
 
   <ItemGroup>
     <Folder Include="Medicines\Controller" />
-    <Folder Include="Medicines\Repository" />
+    <Folder Include="Medicines\Medicine" />
     <Folder Include="Medicines\Service" />
-    <Folder Include="Migrations" />
-    <Folder Include="TreatmentReport\Controller" />
-    <Folder Include="TreatmentReport\Repository" />
-    <Folder Include="TreatmentReport\Service" />
+    <Folder Include="BloodConsumptions\Repository" />
+    <Folder Include="BloodConsumptions\Service" />
+    <Folder Include="BloodUnits\Repository" />
+    <Folder Include="BloodUnits\Service" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\HospitalDbContextModelSnapshot.cs" />
+    <Compile Remove="Enums\RoomEquipment.cs" />
+    <Compile Remove="Rooms\Repository\IEquipmentRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IntegrationLibrary\IntegrationLibrary.csproj" />
   </ItemGroup>
 
 </Project>
