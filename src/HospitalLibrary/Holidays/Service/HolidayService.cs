@@ -58,8 +58,9 @@ namespace HospitalLibrary.Holidays.Service
         private async Task ValidateHoliday(Holiday holiday)
         {
             await DoctorNotExist(holiday);
-            await CheckDoctorsSchedule(holiday);
             CheckDateRange(holiday);
+            await CheckDoctorsSchedule(holiday);
+            
         }
 
         private async Task DoctorNotExist(Holiday holiday)
