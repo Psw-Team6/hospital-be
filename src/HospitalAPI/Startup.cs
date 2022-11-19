@@ -83,6 +83,15 @@ namespace HospitalAPI
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
             services.AddMyDependencyGroup();
             services.AddHttpClient();
+            services.AddScoped<BuildingService>();
+            services.AddScoped<IBuildingRepository, BuildingRepository>();
+            services.AddScoped<FloorService>();
+            services.AddScoped<IFloorRepository, FloorRepository>();
+            services.AddScoped<GRoomService>();
+            services.AddScoped<IGRoomRepository, GRoomRepository>();
+            services.AddScoped<IHolidayRepository, HolidayRepository>();
+            services.AddScoped<BloodUnitService>();
+            services.AddScoped<BloodConsumptionService>();
 
             services.AddAuthentication(x =>
             {

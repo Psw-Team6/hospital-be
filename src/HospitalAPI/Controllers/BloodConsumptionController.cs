@@ -52,13 +52,13 @@ namespace HospitalAPI.Controllers
 
         [HttpPost("{doctorId:Guid}")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<BloodConsumption>>> GetByBloodBankName([FromRoute] Guid doctorId,[FromBody] BloodConsumationRequest request)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<List<BloodConsumption>>> CreateConsumptions([FromRoute] Guid doctorId,[FromBody] BloodConsumationRequest request)
         {
-            var consumption = _mapper.Map<BloodConsumption>(request);
-            consumption.DoctorId = doctorId;
-            var result = await _bloodConsumptionService.CreateConsumption(consumption);
-            return result == null ? NotFound() : Ok(result);
+            var bloodConsumptionDto = _mapper.Map<BloodConsumptionCreateDto>(request);
+            bloodConsumptionDto.doctorId = doctorId;
+            var result = await _bloodConsumptionService.CreateConsumptions(bloodConsumptionDto, doctorId);
+            return result == null ? BadRequest() : StatusCode(201, result);
         }
 
     }

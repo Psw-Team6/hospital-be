@@ -29,6 +29,8 @@ namespace HospitalLibrary.Common
         IApplicationUserRepository UserRepository { get; }
         IBloodUnitRepository BloodUnitRepository { get; }
         IBloodConsumptionRepository BloodConsumptionRepository { get; }
+        IIEquipmentRepository EquipmentRepository { get; }
+        
         T GetRepository<T>() where T : class;
         Task CompleteAsync();
     }

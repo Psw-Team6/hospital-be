@@ -26,5 +26,9 @@ namespace HospitalLibrary.Rooms.Repository
             return await  DbSet.Where(room1 => room1.BuildingId == buildingId && room1.FloorId == floorId)
                 .ToListAsync();
         }
+        
+        
+       
+        
     }
 }
