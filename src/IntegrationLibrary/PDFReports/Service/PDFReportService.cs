@@ -7,14 +7,14 @@ using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
 using Syncfusion.Drawing;
 using System.IO;
+using IntegrationLibrary.PDFReports.Model;
 
-
-namespace IntegrationLibrary.PDFReport.Service
+namespace IntegrationLibrary.PDFReports.Service
 {
     public class PDFReportService
     {
         
-        public byte[] CreateDocument(String bankName, int generatePeriod)
+        public byte[] CreateDocument(PDFReport pDFReport)
         {
             PdfDocument document = new PdfDocument();
 
@@ -31,7 +31,7 @@ namespace IntegrationLibrary.PDFReport.Service
             PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
 
             //Draw the text.
-            graphics.DrawString("Hello World!!! NOVII", font, PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 0));
+            graphics.DrawString(pDFReport.bankName, font, PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 0));
 
             //Create file stream.
             using (FileStream outputFileStream = new FileStream(Path.GetFullPath(@"../../../Output.pdf"), FileMode.Create, FileAccess.ReadWrite))
@@ -39,8 +39,7 @@ namespace IntegrationLibrary.PDFReport.Service
                 //Save the PDF document to file stream.
                 document.Save(outputFileStream);
             }
-
-   
+  
             MemoryStream stream = new MemoryStream();
             document.Save(stream);
             //Close the document.

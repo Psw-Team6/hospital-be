@@ -1,7 +1,10 @@
+using HospitalLibrary.BloodConsumptions.Service;
+using HospitalLibrary.Common;
+using HospitalLibrary.Settings;
 using IntegrationAPI.Mapper;
 using IntegrationLibrary.BloodBank.Repository;
 using IntegrationLibrary.BloodBank.Service;
-using IntegrationLibrary.PDFReport.Service;
+using IntegrationLibrary.PDFReports.Service;
 using IntegrationLibrary.SendMail;
 using IntegrationLibrary.SendMail.Services;
 using IntegrationLibrary.Settings;
@@ -47,11 +50,14 @@ namespace IntegrationAPI
 
             services.AddScoped<IEmailService, EmailService>();
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
-
+            services.AddDbContext<HospitalDbContext>(options =>options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
 
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<PDFReportService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<BloodConsumptionService>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
+            
 
         }
 

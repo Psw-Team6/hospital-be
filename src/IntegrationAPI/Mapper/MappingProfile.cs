@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using HospitalLibrary.BloodConsumptions.Model;
 using IntegrationAPI.Dtos.Request;
 using IntegrationLibrary.BloodBank;
+using IntegrationLibrary.PDFReports.Model;
 
 namespace IntegrationAPI.Mapper
 {
@@ -8,6 +10,8 @@ namespace IntegrationAPI.Mapper
     {
         public MappingProfile() {
             CreateMap<BloodBankRequest, BloodBank>();
+            CreateMap<BloodConsumption, BloodConsumptionPDFReport>();
+            CreateMap<BloodConsumptionPDFReport, BloodConsumption>();
         }
             
     }
