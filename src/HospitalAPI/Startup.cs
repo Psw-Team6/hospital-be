@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
 using HospitalAPI.Exceptions;
+using HospitalAPI.Extensions;
 using HospitalAPI.Infrastructure;
 using HospitalAPI.Mapper;
 using HospitalAPI.Validations.Filter;
@@ -53,14 +54,17 @@ namespace HospitalAPI
             options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
             services.Configure<EmailOptions>(Configuration.GetSection(EmailOptions.SendGridEmail));
             services.AddAutoMapper(typeof(MappingProfile));
+            //services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
             services.AddMvc(options =>
                 {
                     options.EnableEndpointRouting = false;
                     options.Filters.Add<ValidationFilter>();
                 })
+
 #pragma warning disable CS0618
                 .AddFluentValidation(mvc => mvc.RegisterValidatorsFromAssemblyContaining<Startup>())
 #pragma warning restore CS0618
+
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -74,34 +78,11 @@ namespace HospitalAPI
                 c.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
             });
             services.AddTransient<ExceptionMiddleware>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<SpecializationsService>();
-            services.AddScoped<ISpecializationsRepository, SpecializationsRepository>();
-            services.AddScoped<RoomService>();
-            services.AddScoped<IRoomRepository, RoomRepository>();
-            services.AddScoped<FeedbackService>();
-            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
-            services.AddScoped<DoctorService>();
-            services.AddScoped<ApplicationUserService>();
-
-            services.AddScoped<IWorkingSchueduleRepository, WorkingScheduleRepository>();
-            services.AddScoped<WorkingScheduleService>();
-
-            services.AddScoped<PatientService>();
-            services.AddScoped<AppointmentService>();
-            services.AddScoped<HolidayService>();
-            services.AddScoped<ScheduleService>();
+            
             services.AddScoped<IEmailService, EmailService>();
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
-            services.AddScoped<BuildingService>();
-            services.AddScoped<IBuildingRepository, BuildingRepository>();
-            services.AddScoped<FloorService>();
-            services.AddScoped<IFloorRepository, FloorRepository>();
-            services.AddScoped<GRoomService>();
-            services.AddScoped<IGRoomRepository, GRoomRepository>();
-            services.AddScoped<IHolidayRepository, HolidayRepository>();
-            services.AddScoped<BloodUnitService>();
-            services.AddScoped<BloodConsumptionService>();
+            services.AddMyDependencyGroup();
+            services.AddHttpClient();
 
             services.AddAuthentication(x =>
             {

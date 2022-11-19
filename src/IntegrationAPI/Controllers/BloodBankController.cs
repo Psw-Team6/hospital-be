@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using System.Net.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using IntegrationAPI.Dtos.Response;
@@ -60,6 +61,21 @@ namespace IntegrationAPI.Controllers
             }
 
             return Ok(room);
+        }
+        [HttpPost("Authenticate")]
+        public ActionResult Authenticate([FromBody] LoginRequest loginRequest)
+        {
+            var bank = _bloodBankService.Authenticate(loginRequest.Name, loginRequest.Password);
+            if (bank == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(new LoginResponse
+            {
+                Name = bank.Name,
+                Id = bank.Id
+            });
         }
 
         // POST api/bloodbank

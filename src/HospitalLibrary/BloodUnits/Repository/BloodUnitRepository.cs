@@ -18,9 +18,9 @@ namespace HospitalLibrary.BloodUnits.Repository
         
         public async Task<IEnumerable<BloodUnitDto>> GetUnits()
         {
-            return DbSet.GroupBy(x => x.BloodType)
+            return await Task.FromResult(DbSet.GroupBy(x => x.BloodType)
                 .Select(g => new BloodUnitDto(g.Key, g.Select(s => s.Amount).Sum()))
-                .AsEnumerable<BloodUnitDto>();;
+                .AsEnumerable());;
         }
 
         public async Task<BloodUnit> GetUnitAvailableUnitByType(BloodType bloodType, int amount)
