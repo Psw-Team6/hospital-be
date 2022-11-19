@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
-using HospitalAPI.Dtos;
+﻿using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptions.Model;
-using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Patients.Model;
@@ -49,11 +46,15 @@ namespace HospitalAPI.Mapper
                 CreateMap<Building, BuildingResponse>();
                 CreateMap<FloorResponse, Floor>();
                 CreateMap<Floor, FloorResponse>();
+                CreateMap<RoomEquipmentResponse, RoomEquipment>();
+                CreateMap<RoomEquipment, RoomEquipmentResponse>();
                 CreateMap<FloorRequest, Floor>();
                 CreateMap<Floor, FloorRequest>();
+                CreateMap<RoomEquipmentRequest, RoomEquipment>();
+                CreateMap<RoomEquipment, RoomEquipmentRequest>();
                 CreateMap<BuildingRequest, Building>();
                 CreateMap<Building, BuildingRequest>();
-                CreateMap<BloodConsumationRequest, BloodConsumption>();
+                CreateMap<BloodConsumationRequest, BloodConsumptionCreateDto>();
             }
     }
     

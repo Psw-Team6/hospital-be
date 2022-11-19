@@ -16,5 +16,6 @@ namespace HospitalLibrary.ApplicationUsers.Model
         public string Jmbg{ get; set; }
         public string Phone{ get; set; }
         public UserRole UserRole { get; set; }
+        public bool Enabled { get; set; }
     }
 }

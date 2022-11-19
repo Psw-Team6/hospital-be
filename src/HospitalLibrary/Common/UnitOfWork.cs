@@ -29,6 +29,7 @@ namespace HospitalLibrary.Common
         private ApplicationUserRepository _applicationUserRepository;
         private BloodUnitRepository _bloodUnitRepository;
         private BloodConsumptionRepository _bloodConsumptionRepository;
+        private EquipmentRepository _equipmentRepository;
 
         public IBloodConsumptionRepository BloodConsumptionRepository =>
             _bloodConsumptionRepository ??= new BloodConsumptionRepository(_hospitalDbContext);
@@ -41,6 +42,9 @@ namespace HospitalLibrary.Common
 
         public IGRoomRepository GRoomRepository =>
             _gRoomRepository ??= new GRoomRepository(_hospitalDbContext);
+
+        public IIEquipmentRepository EquipmentRepository =>
+            _equipmentRepository ??= new EquipmentRepository(_hospitalDbContext);
 
         public IHolidayRepository HolidayRepository => _holidayRepository ??= new HolidayRepository(_hospitalDbContext);
         public IFeedbackRepository FeedbackRepository => _feedbackRepository ??= new FeedbackRepository(_hospitalDbContext);

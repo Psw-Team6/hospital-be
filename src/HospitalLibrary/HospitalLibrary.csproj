@@ -7,11 +7,11 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -32,6 +32,20 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\HospitalDbContextModelSnapshot.cs" />
+    <Compile Remove="Enums\RoomEquipment.cs" />
+    <Compile Remove="Rooms\Repository\IEquipmentRepository.cs" />
+    <Compile Remove="Migrations\20221106160400_Initial.cs" />
+    <Compile Remove="Migrations\20221106160400_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221117130524_Initial.cs" />
+    <Compile Remove="Migrations\20221117130524_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221117134331_Initial.cs" />
+    <Compile Remove="Migrations\20221117134331_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221117134545_Initial.cs" />
+    <Compile Remove="Migrations\20221117134545_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221117140820_Initial.cs" />
+    <Compile Remove="Migrations\20221117140820_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221117141010_Initial.cs" />
+    <Compile Remove="Migrations\20221117141010_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

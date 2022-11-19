@@ -102,6 +102,8 @@ namespace HospitalAPI
             services.AddScoped<IHolidayRepository, HolidayRepository>();
             services.AddScoped<BloodUnitService>();
             services.AddScoped<BloodConsumptionService>();
+            services.AddScoped<EquipmentService>();
+            services.AddScoped<IIEquipmentRepository, EquipmentRepository>();
 
             services.AddAuthentication(x =>
             {
