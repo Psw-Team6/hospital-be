@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
-using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Service;
+using HospitalAPI.Dtos.Response;
+using Microsoft.AspNetCore.Http;
+using HospitalLibrary.Rooms.Model;
+using HospitalLibrary.Rooms.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -11,93 +15,57 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private readonly IRoomService _roomService;
+        private readonly RoomService _roomService;
         private readonly IMapper _mapper;
 
-        public RoomsController(IRoomService roomService, IMapper mapper)
+        public RoomsController(RoomService roomService, IMapper mapper)
         {
             _roomService = roomService;
             _mapper = mapper;
         }
 
+        
         // GET: api/rooms
         [HttpGet]
-        public ActionResult GetAll()
+        [ProducesResponseType(typeof(List<RoomResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<RoomResponse>>> GetAll()
         {
-            return Ok(_roomService.GetAll());
-        }
-
-        // GET api/rooms/2
-        [HttpGet("{id}")]
-        public ActionResult GetById(Guid id)
-        {
-            var room = _roomService.GetById(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(room);
-        }
-
-        // POST api/rooms
-        [HttpPost]
-        public ActionResult Create(RoomRequest roomRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var room = _mapper.Map<Room>(roomRequest);
-            _roomService.Create(room);
-            return CreatedAtAction("GetById", new { id = room.Id }, room);
-        }
-
-        // PUT api/rooms/2
-        [HttpPut("{id}")]
-        public ActionResult Update(Guid id, Room room)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != room.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                _roomService.Update(room);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-
-            return Ok(room);
-        }
-
-        // DELETE api/rooms/2
-        [HttpDelete("{id}")]
-        public ActionResult Delete(Guid id)
-        {
-            var room = _roomService.GetById(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-
-            _roomService.Delete(room);
-            return NoContent();
-        }
-        [HttpGet("/time")]
-        public string Time()
-        {
-            return DateTime.Now.TimeOfDay.ToString();
+            var rooms = await _roomService.GetAll();
+            var result = _mapper.Map<List<RoomResponse>>(rooms);
+            return Ok(result);
         }
         
+        // GET: api/rooms
+        [HttpGet("{buildingId}/{floorId}")]
+        [ProducesResponseType(typeof(List<RoomResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<RoomResponse>>> GetAllByBuildingAndFloor([FromRoute]Guid buildingId, [FromRoute]Guid floorId)
+        {
+            var rooms = await _roomService.GetAllByBuildingIdAndFloorId(buildingId,floorId);
+            var result = _mapper.Map<List<RoomResponse>>(rooms);
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<RoomResponse>> GetById(Guid id)
+        {
+            var room = await _roomService.GetById(id);
+            var result = _mapper.Map<RoomResponse>(room);
+            return room == null ? NotFound() : Ok(result);
+
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> Update([FromBody] RoomRequest roomDto)
+        {
+            var room = _mapper.Map<Room>(roomDto);
+            var res = await _roomService.Update(room);
+            return res ? NoContent() : NotFound();
+        }
     }
 }

@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Common;
+using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Doctors.Repository;
 
 namespace HospitalLibrary.Doctors.Service
 {
@@ -23,9 +26,24 @@ namespace HospitalLibrary.Doctors.Service
 
         public async Task<Doctor> CreateDoctor(Doctor doctor)
         {
+            var password = PasswordHasher.HashPassword(doctor.Password);
+            doctor.Password = password;
+            doctor.UserRole = UserRole.Doctor;
             var newDoctor =await _unitOfWork.DoctorRepository.CreateAsync(doctor);
+            
             await _unitOfWork.CompleteAsync();
             return newDoctor;
+        }
+
+        public async Task<Doctor> GetByUsername(string username)
+        {
+            var doc = await _unitOfWork.DoctorRepository.GetByUsername(username);
+            if (doc == null)
+            {
+                throw new DoctorNotExist("Doctor not exist");
+            }
+
+            return doc;
         }
 
         public async Task<Doctor> GetById(Guid id)
