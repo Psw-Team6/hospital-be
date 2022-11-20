@@ -22,6 +22,7 @@ namespace HospitalLibrary.Patients.Model
         public IEnumerable<TreatmentReport> TreatmentReports { get; set; }
 
         public Gender Gender { get; set; }
+        public int Age { get; set; }
 
     }
 }
