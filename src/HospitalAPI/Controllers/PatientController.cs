@@ -80,5 +80,40 @@ namespace HospitalAPI.Controllers
             return Ok(patients);
         }
 
+        [HttpGet("/api/v1/Patient-pediatric-group")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<PatientResponse>> GetPediatricGroup()
+        {
+            var patients = await _patientService.GetPediatricGroup();
+            return Ok(patients);
+        }
+
+        [HttpGet("/api/v1/Patient-young-group")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<PatientResponse>> GetYoungGroup()
+        {
+            var patients = await _patientService.GetYoungGroup();
+            return Ok(patients);
+        }
+
+        [HttpGet("/api/v1/Patient-middle-age-group")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<PatientResponse>> GetMiddleAgeGroup()
+        {
+            var patients = await _patientService.GetMiddleAgeGroup();
+            return Ok(patients);
+        }
+        
+        [HttpGet("/api/v1/Patient-elderly-group")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<PatientResponse>> GetElderlyGroup()
+        {
+            var patients = await _patientService.GetElderlyGroup();
+            return Ok(patients);
+        }
     }
 }
