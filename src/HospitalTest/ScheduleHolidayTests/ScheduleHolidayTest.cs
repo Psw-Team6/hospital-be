@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Common;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Holidays.Model;
+using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Holidays.Service;
+using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.sharedModel;
 using Moq;
@@ -35,12 +40,107 @@ namespace HospitalTest.ScheduleHolidayTests
         }
 
         [Fact]
-        public async Task Schedule_Holliday_invalid_date()
+        public async Task Schedule_holiday_invalid_date()
         {
             var holiday = CreateMockNotValidDate(out var holidayService);
             Func<Task> act = () => holidayService.ScheduleHoliday(holiday);
             var ex = await Assert.ThrowsAsync<DateRangeException>(act);
             Assert.Equal("Date range is not valid",ex.Message);
+        }
+
+        [Fact]
+        public async Task Schedule_holiday_over_appointment()
+        {
+            var holiday = CreateMockAllredyScheduledApp(out var holidayService);
+            Func<Task> act = () => holidayService.ScheduleHoliday(holiday);
+            var ex = await Assert.ThrowsAsync<DoctorIsNotAvailable>(act);
+            Assert.Equal("You have already scheduled appointment in that period.",ex.Message);
+        }
+
+        [Fact]
+        public async Task Schedule_holiday_no_replacement_found()
+        {
+            var holiday = CreateMockNoReplacementsFound(out var holidayService);
+            Func<Task> act = () => holidayService.ScheduleHoliday(holiday);
+            var ex = await Assert.ThrowsAsync<DoctorIsNotAvailable>(act);
+            Assert.Equal("No replacement found for appointments scheduled in that period.",ex.Message);
+        }
+        private static Appointment SeedDataAppointment()
+        {
+            Address address = new()
+            {
+                Id = Guid.NewGuid(),
+                City = "Novi Sad",
+                StreetNumber = "23A",
+                Country = "Serbia",
+                Street = "Kosovska",
+                Postcode = 21000
+            };
+            Room room1 = new()
+            {
+                Id = Guid.NewGuid()
+            };
+            Specialization specializationDermatology = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Dermatology"
+            };
+            WorkingSchedule workingSchedule1 = new()
+            {
+                Id = Guid.NewGuid(),
+                ExpirationDate = new DateRange
+                {
+                    From = new DateTime(2022, 10, 27),
+                    To = new DateTime(2023, 1, 27)
+                },
+                DayOfWork = new DateRange()
+                {
+                    From = new DateTime(2022, 10, 27, 8, 0, 0),
+                    To = new DateTime(2022, 10, 27, 14, 0, 0)
+                }
+            };
+            Doctor doctor1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Specialization = specializationDermatology,
+                Address = address,
+                WorkingSchedule = workingSchedule1,
+                Room = room1,
+                Username = "Ilija",
+                Password = "miki123",
+                Name = "Ilija",
+                Surname = "Maric",
+                Email = "Cajons@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222"
+            };
+            Patient patient1 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address.Id,
+                Username = "Sale",
+                Password = "sale1312",
+                Name = "Sale",
+                Surname = "Lave",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222"
+            };
+            Appointment appointment = new()
+            {
+                Id = Guid.NewGuid(),
+                Emergent = false,
+                Doctor = doctor1,
+                Patient = patient1,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending,
+                Duration = new DateRange
+                {
+                    From = new DateTime(2023, 10, 27, 15, 0, 0),
+                    To = new DateTime(2023, 10, 27, 15, 15, 0)
+                }
+            };
+            return appointment;
         }
 
         private static Doctor SeedDataDoctor(out Holiday holiday)
@@ -120,14 +220,17 @@ namespace HospitalTest.ScheduleHolidayTests
                 DateRange = new DateRange()
                 {
                     From = new DateTime(2023, 10, 27, 15, 0, 0),
-                    To = new DateTime(2023, 10, 27, 15, 30, 0)
+                    To = new DateTime(2023, 10, 29, 15, 30, 0)
                 }
             };
             return doctor1;
         }
+        
+        
+        
 
         private static Holiday CreateMockNotValidDate(out HolidayService holidayService)
-        { 
+        {
             var mockDoctorRepo = new Mock<IDoctorRepository>();
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             var doctor1 = SeedDataDoctor(out Holiday holiday);
@@ -140,6 +243,76 @@ namespace HospitalTest.ScheduleHolidayTests
             mockUnitOfWork.Setup(x => x.DoctorRepository
                     .GetByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(() => doctor1);
+            holidayService = new HolidayService(mockUnitOfWork.Object);
+            return holiday;
+        }
+
+        private static Holiday CreateMockAllredyScheduledApp(out HolidayService holidayService)
+        {
+            var mockAppointmentRepo = new Mock<IAppointmentRepository>();
+            var mockDoctorRepo = new Mock<IDoctorRepository>();
+            var mockHolidayRepo = new Mock<IHolidayRepository>();
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            var doctor = SeedDataDoctor(out Holiday holiday);
+            var appointment = SeedDataAppointment();
+            mockUnitOfWork.Setup(x => x.DoctorRepository).Returns(mockDoctorRepo.Object);
+            mockUnitOfWork.Setup(x => x.DoctorRepository
+                    .GetByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(() => doctor);
+            mockUnitOfWork.Setup(x => x.AppointmentRepository).Returns(mockAppointmentRepo.Object);
+            mockUnitOfWork.Setup(x => x.AppointmentRepository
+                    .GetAllAppointmentsForDoctor(It.IsAny<Guid>()))
+                .ReturnsAsync(() => new []{appointment});
+            mockUnitOfWork.Setup(x => x.HolidayRepository).Returns(mockHolidayRepo.Object);
+            mockUnitOfWork.Setup(x => x.HolidayRepository
+                    .GetAllHolidaysForDoctor(It.IsAny<Guid>()))
+                .ReturnsAsync(() => new List<Holiday>());
+            holidayService = new HolidayService(mockUnitOfWork.Object);
+            return holiday;
+        }
+        
+        private static Holiday CreateMockNoReplacementsFound(out HolidayService holidayService)
+        {
+            var mockAppointmentRepo = new Mock<IAppointmentRepository>();
+            var mockDoctorRepo = new Mock<IDoctorRepository>();
+            var mockHolidayRepo = new Mock<IHolidayRepository>();
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            var doctor = SeedDataDoctor(out Holiday holiday);
+            holiday.IsUrgent = true;
+            WorkingSchedule workingSchedule1 = new()
+            {
+                Id = Guid.NewGuid(),
+                ExpirationDate = new DateRange
+                {
+                    From = new DateTime(2022, 10, 27),
+                    To = new DateTime(2024, 1, 27)
+                },
+                DayOfWork = new DateRange()
+                {
+                    From = new DateTime(2022, 10, 27, 8, 0, 0),
+                    To = new DateTime(2024, 12, 27, 14, 0, 0)
+                }
+            };
+            
+            var appointment = SeedDataAppointment();
+            mockUnitOfWork.Setup(x => x.DoctorRepository).Returns(mockDoctorRepo.Object);
+            mockUnitOfWork.Setup(x => x.DoctorRepository
+                    .GetByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(() => doctor);
+            mockUnitOfWork.Setup(x => x.DoctorRepository
+                    .GetAllDoctors())
+                .ReturnsAsync(() =>new List<Doctor>(){doctor});
+            mockUnitOfWork.Setup(x => x.DoctorRepository
+                    .GetDoctorWorkingSchedule(It.IsAny<Guid>()))
+                .ReturnsAsync(() =>workingSchedule1);
+            mockUnitOfWork.Setup(x => x.AppointmentRepository).Returns(mockAppointmentRepo.Object);
+            mockUnitOfWork.Setup(x => x.AppointmentRepository
+                    .GetAllAppointmentsForDoctor(It.IsAny<Guid>()))
+                .ReturnsAsync(() => new []{appointment});
+            mockUnitOfWork.Setup(x => x.HolidayRepository).Returns(mockHolidayRepo.Object);
+            mockUnitOfWork.Setup(x => x.HolidayRepository
+                    .GetAllHolidaysForDoctor(It.IsAny<Guid>()))
+                .ReturnsAsync(() => new List<Holiday>());
             holidayService = new HolidayService(mockUnitOfWork.Object);
             return holiday;
         }
