@@ -15,11 +15,14 @@ namespace IntegrationLibrary.ConfigureGenerateAndSend.Model
         public string GeneratePeriod { get; set; }
         public string SendPeriod { get; set; }
 
-        public ConfigureGenerateAndSend(string bloodBankName, string generatePeriod, string sendPeriod)
+        public DateTime NextDateForSending { get; set; }
+
+        public ConfigureGenerateAndSend(string bloodBankName, string generatePeriod, string sendPeriod, DateTime nextDateForSending)
         {
             BloodBankName = bloodBankName;
             GeneratePeriod = generatePeriod;
             SendPeriod = sendPeriod;
+            NextDateForSending = nextDateForSending;
         }
     }
 }

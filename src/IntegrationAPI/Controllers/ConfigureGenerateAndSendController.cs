@@ -30,8 +30,8 @@ namespace IntegrationAPI.Controllers
                 return BadRequest(ModelState);
             }
             var configure = _mapper.Map<ConfigureGenerateAndSend>(configureGenerateAndSend);
-            _configureGenerateAndSendService.Create(configureGenerateAndSend);
-            return CreatedAtAction("GetById", new { id = configureGenerateAndSend.BloodBankName }, configureGenerateAndSend);
+           _configureGenerateAndSendService.Create(configureGenerateAndSend);
+            return Ok();
         }
 
       

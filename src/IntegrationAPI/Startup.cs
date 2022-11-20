@@ -3,6 +3,8 @@ using IntegrationLibrary.BloodBank.Repository;
 using IntegrationLibrary.BloodBank.Service;
 using IntegrationLibrary.ConfigureGenerateAndSend.Repository;
 using IntegrationLibrary.ConfigureGenerateAndSend.Service;
+using IntegrationLibrary.ScheduleTask;
+using IntegrationLibrary.ScheduleTask.Service;
 using IntegrationLibrary.SendMail;
 using IntegrationLibrary.SendMail.Services;
 using IntegrationLibrary.Settings;
@@ -55,6 +57,9 @@ namespace IntegrationAPI
 
             services.AddScoped<IConfigureGenerateAndSendRepository, ConfigureGenerateAndSendRepository>();
             services.AddScoped<IConfigureGenerateAndSendService, ConfigureGenerateAndSendService>();
+            services.AddScoped<IReportSenderService, ReportSenderService>();
+
+            services.AddSingleton<IHostedService, SampleTask1>();
 
         }
 
