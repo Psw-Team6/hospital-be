@@ -30,10 +30,5 @@ namespace HospitalLibrary.Doctors.Repository
                 Select(d => d.WorkingSchedule).
                 FirstOrDefaultAsync();
         }
-
-        public async Task<Doctor> GetByUsername(string username)
-        {
-            return await DbSet.FirstOrDefaultAsync(doctor => doctor.Username == username);
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Feedbacks.Model;
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Feedbacks.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -13,15 +13,10 @@ namespace HospitalLibrary.sharedModel
         {
             return From < To;
         }
-        
-        public bool IsBeforeDate()
+
+        public bool IsBeforeToday()
         {
-            return From.Date.Date <= DateTime.Now.Date || To.Date.Date <= DateTime.Now.Date;
-        }
-        
-        public bool CheckAfterMonthDate()
-        {
-            return From.Date.Date >= DateTime.Now.Date.AddMonths(1) && To.Date.Date >= DateTime.Now.Date.AddMonths(1);
+            return From.Date.Date < DateTime.Now.Date || From.Date.Date < DateTime.Now.Date;
         }
     }
 }

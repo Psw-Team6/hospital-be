@@ -25,7 +25,7 @@ namespace HospitalLibrary.Appointments.Service
                 From = new EmailAddress(_options.FromEmail, _options.FromName),
                 Subject =email.Subject,
                 PlainTextContent = email.PlainTextContent,
-                HtmlContent = email.HtmlContent  
+                HtmlContent = email.HtmlContent
             };
             msg.AddTo(new EmailAddress(email.ToEmail));
             _ = await client.SendEmailAsync(msg);
