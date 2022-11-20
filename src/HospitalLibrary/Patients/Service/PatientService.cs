@@ -85,7 +85,65 @@ namespace HospitalLibrary.Patients.Service
 
             return counter;
         }
+
+        public async Task<int> GetPediatricGroup()
+        {
+            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            int counter = 0;
+            foreach (var p in patients)
+            {
+                if (p.Age >= 0 && p.Age <= 14)
+                {
+                    ++counter;
+                }
+            }
+
+            return counter;
+        }
+
+        public async Task<int> GetYoungGroup()
+        {
+            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            int counter = 0;
+            foreach (var p in patients)
+            {
+                if (p.Age >= 15 && p.Age <= 47)
+                {
+                    ++counter;
+                }
+            }
+
+            return counter;
+        }
         
-        
+        public async Task<int> GetMiddleAgeGroup()
+        {
+            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            int counter = 0;
+            foreach (var p in patients)
+            {
+                if (p.Age >= 48 && p.Age <= 63)
+                {
+                    ++counter;
+                }
+            }
+
+            return counter;
+        }
+
+        public async Task<int> GetElderlyGroup()
+        {
+            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            int counter = 0;
+            foreach (var p in patients)
+            {
+                if (p.Age >= 64)
+                {
+                    ++counter;
+                }
+            }
+
+            return counter;
+        }
     }
 }
