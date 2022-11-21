@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
+using HospitalAPI.Infrastructure.Authorization;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Rooms.Service;
@@ -14,6 +16,7 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [HospitalAuthorization(UserRole.Manager)]
     public class BuildingController: ControllerBase
     {
         private readonly BuildingService _buildingService;

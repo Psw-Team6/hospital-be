@@ -12,8 +12,6 @@ namespace HospitalAPI.Controllers.Private
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    
-    
     public class RoomEquipmentController:ControllerBase
     {
         
