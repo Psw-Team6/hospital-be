@@ -9,16 +9,17 @@ using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Rooms.Repository;
+using HospitalLibrary.TreatmentReports.Repository;
 
 namespace HospitalLibrary.Common
 {
-    public interface IUnitOfWork:IAsyncDisposable
+    public interface IUnitOfWork : IAsyncDisposable
     {
         ISpecializationsRepository SpecializationsRepository { get; }
         IDoctorRepository DoctorRepository { get; }
         IPatientRepository PatientRepository { get; }
         IAppointmentRepository AppointmentRepository { get; }
-        
+
         IHolidayRepository HolidayRepository { get; }
         IFeedbackRepository FeedbackRepository { get; }
         IWorkingSchueduleRepository WorkingSchueduleRepository { get; }
@@ -29,8 +30,12 @@ namespace HospitalLibrary.Common
         IApplicationUserRepository UserRepository { get; }
         IBloodUnitRepository BloodUnitRepository { get; }
         IBloodConsumptionRepository BloodConsumptionRepository { get; }
-        IIEquipmentRepository EquipmentRepository { get; }
+        IPatientAdmissionRepository PatientAdmissionRepository { get; }
         
+        IIEquipmentRepository EquipmentRepository { get; }
+        ITreatmentReportRepository TreatmentReportRepository { get; }
+        IRoomBedRepository RoomBedRepository { get; }
+
         T GetRepository<T>() where T : class;
         Task CompleteAsync();
     }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using HospitalLibrary.Patients.Model;
 
 namespace HospitalLibrary.Rooms.Model
 {
@@ -9,5 +11,6 @@ namespace HospitalLibrary.Rooms.Model
         public string Number { get; set; }
         public Room Room { get; set; }
         public Guid RoomId { get; set; }
+        public IEnumerable<PatientAdmission> Patients { get; set; }
     }
 }

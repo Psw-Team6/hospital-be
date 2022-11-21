@@ -18,11 +18,14 @@ using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Holidays.Service;
+using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.Settings;
 using HospitalLibrary.sharedModel;
+using HospitalLibrary.TreatmentReports.Repository;
+using HospitalLibrary.TreatmentReports.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -92,7 +95,14 @@ namespace HospitalAPI
             services.AddScoped<IHolidayRepository, HolidayRepository>();
             services.AddScoped<BloodUnitService>();
             services.AddScoped<BloodConsumptionService>();
-
+            services.AddScoped<EquipmentService>();
+            services.AddScoped<IIEquipmentRepository, EquipmentRepository>();
+            services.AddScoped<PatientAdmissionService>();
+            services.AddScoped<IPatientAdmissionRepository, PatientAdmissionRepository>();
+            services.AddScoped<TreatmentReportService>();
+            services.AddScoped<ITreatmentReportRepository, TreatmentReportRepository>();
+            services.AddScoped<RoomBedService>();
+            services.AddScoped<IRoomBedRepository, RoomBedRepository>();
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
