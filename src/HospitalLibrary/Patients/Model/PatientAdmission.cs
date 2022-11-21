@@ -14,6 +14,13 @@ namespace HospitalLibrary.Patients.Model
         public Guid SelectedRoomId { get; set;}
         public Room SelectedRoom { get; set;}
         public string Reason { get; set;}
-        public DateTime DateOfDischarge { get; set; }
+        public string ReasonOfDischarge { get; set; }
+        public DateTime? DateOfDischarge { get; set; }
+        
+        public void Update(string reasonOfDischarge, DateTime? dateOfDischarge)
+        {
+            ReasonOfDischarge = reasonOfDischarge;
+            DateOfDischarge = dateOfDischarge;
+        }
     }
 }

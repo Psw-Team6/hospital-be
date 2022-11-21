@@ -64,7 +64,7 @@ namespace HospitalAPI.Mapper
                 CreateMap<PatientAdmission, PatientAdmissionResponse>();
                 CreateMap<PatientAdmissionResponse, PatientAdmission>();
                 CreateMap<PatientAdmission, PatientAdmissionRequest>();
-               
+                CreateMap<DischargePatientAdmissionRequest, PatientAdmission>();
             }
     }
     

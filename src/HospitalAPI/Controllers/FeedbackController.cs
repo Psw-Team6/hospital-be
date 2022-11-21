@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
+using HospitalAPI.Infrastructure.Authorization;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Service;
 using Microsoft.AspNetCore.Http;
@@ -26,6 +28,7 @@ namespace HospitalAPI.Controllers
 
         // GET: api/rooms
         [HttpGet]
+        [HospitalAuthorization(UserRole.Manager)]
         public async Task<ActionResult<IEnumerable<FeedbackResponse>>> GetAll()
         {
             var feedbacks = await _feedbackService.GetAll();
@@ -34,6 +37,7 @@ namespace HospitalAPI.Controllers
         }
         
         [HttpGet("/api/v1/Feedback-public")]
+        [HospitalAuthorization(UserRole.Patient)]
         public async Task<ActionResult<IEnumerable<FeedbackResponse>>> GetAllPublic()
         {
             var feedbacks = await _feedbackService.GetAllPublic();
@@ -44,6 +48,7 @@ namespace HospitalAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HospitalAuthorization(UserRole.Patient)]
         public async Task<ActionResult<FeedbackResponse>> CreateFeedback([FromBody] FeedbackRequest feedbackRequest)
         {
             var feedback = _mapper.Map<Feedback>(feedbackRequest);
@@ -64,6 +69,7 @@ namespace HospitalAPI.Controllers
         [HttpPut]
         [ProducesResponseType( StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HospitalAuthorization(UserRole.Manager)]
         public async Task<ActionResult> UpdateFeedbackStatus([FromBody] FeedbackStatusResponse feedbackStatusResponse)
         {
             var feedback = _mapper.Map<Feedback>(feedbackStatusResponse);

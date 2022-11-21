@@ -68,12 +68,22 @@ namespace HospitalLibrary.Patients.Service
             List<PatientAdmission> patientAdmissions = (List<PatientAdmission>)await _unitOfWork.PatientAdmissionRepository.GetAllAsync();
             foreach(var p in patientAdmissions)
             {
-                if (p.PatientId.Equals(admission.PatientId) && DateTime.Compare(p.DateOfDischarge, DateTime.Now) <= 0)
+                if (p.PatientId.Equals(admission.PatientId) && p.DateOfDischarge == null)
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        public async Task<Boolean> DiscargePatient(PatientAdmission admissionRequest)
+        {
+            var admission = await _unitOfWork.PatientAdmissionRepository.GetByIdAsync(admissionRequest.Id);
+            if (admission == null) return false;
+            admission.Update(admissionRequest.ReasonOfDischarge,admissionRequest.DateOfDischarge);
+            await _unitOfWork.PatientAdmissionRepository.UpdateAsync(admission);
+            await _unitOfWork.CompleteAsync();
+            return true;
         }
     }
 }
