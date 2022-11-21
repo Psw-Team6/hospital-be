@@ -46,9 +46,14 @@ namespace HospitalAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PatientAdmission>> CreateAdmission([FromBody] PatientAdmissionRequest patientAdmissionRequest)
+        public async Task<ActionResult<PatientAdmissionResponse>> CreateAdmission([FromBody] PatientAdmissionRequest patientAdmissionRequest)
         {
             var admission = _mapper.Map<PatientAdmission>(patientAdmissionRequest);
+            var isHospitalized = await _patientAdmissionService.IsHospitalized(admission);
+            if (isHospitalized)
+            {
+                return Forbid();
+            }
             var result = await _patientAdmissionService.CreateAdmission(admission);
             if (result == null)
             {
