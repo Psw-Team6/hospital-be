@@ -21,7 +21,8 @@ namespace IntegrationLibrary.RabbitMQService
         IConnection connection;
         IModel channel;
         public override Task StartAsync(CancellationToken cancellationToken)
-        {
+        {/*
+
             var factory = new ConnectionFactory();
             var connection = factory.CreateConnection();
             var channel = connection.CreateModel();
@@ -45,14 +46,14 @@ namespace IntegrationLibrary.RabbitMQService
                     }
                 }
             };
-            channel.BasicConsume(queue: "newsForHospital", autoAck: true, consumer: consumer);
+            channel.BasicConsume(queue: "newsForHospital", autoAck: true, consumer: consumer);*/
             return base.StartAsync(cancellationToken);
         }
 
         public override Task StopAsync(CancellationToken cancellationToken)
-        {
+        {/*
             channel.Close();
-            connection.Close();
+            connection.Close();*/
             return base.StopAsync(cancellationToken);
         }
 
@@ -60,5 +61,6 @@ namespace IntegrationLibrary.RabbitMQService
         {
             return Task.CompletedTask;
         }
+
     }
 }
