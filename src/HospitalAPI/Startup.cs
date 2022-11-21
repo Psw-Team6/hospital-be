@@ -1,43 +1,22 @@
-using System;
 using System.Text;
-using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
 using HospitalAPI.Exceptions;
 using HospitalAPI.Extensions;
 using HospitalAPI.Infrastructure;
 using HospitalAPI.Mapper;
 using HospitalAPI.Validations.Filter;
-using HospitalLibrary.ApplicationUsers.Service;
 using HospitalLibrary.Appointments.Service;
-using HospitalLibrary.BloodConsumptions.Service;
-using HospitalLibrary.BloodUnits.Service;
-using HospitalLibrary.Common;
-using HospitalLibrary.Doctors.Repository;
-using HospitalLibrary.Doctors.Service;
-using HospitalLibrary.Feedbacks.Repository;
-using HospitalLibrary.Feedbacks.Service;
-using HospitalLibrary.Holidays.Repository;
-using HospitalLibrary.Holidays.Service;
-using HospitalLibrary.Patients.Repository;
-using HospitalLibrary.Patients.Service;
-using HospitalLibrary.Rooms.Repository;
-using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.Settings;
 using HospitalLibrary.sharedModel;
-using HospitalLibrary.TreatmentReports.Repository;
-using HospitalLibrary.TreatmentReports.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using NSwag.AspNetCore;
 
 namespace HospitalAPI
 {
@@ -54,7 +33,7 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HospitalDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
+            options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")!));
             services.Configure<EmailOptions>(Configuration.GetSection(EmailOptions.SendGridEmail));
             services.AddAutoMapper(typeof(MappingProfile));
             //services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
@@ -86,23 +65,6 @@ namespace HospitalAPI
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
             services.AddMyDependencyGroup();
             services.AddHttpClient();
-            services.AddScoped<BuildingService>();
-            services.AddScoped<IBuildingRepository, BuildingRepository>();
-            services.AddScoped<FloorService>();
-            services.AddScoped<IFloorRepository, FloorRepository>();
-            services.AddScoped<GRoomService>();
-            services.AddScoped<IGRoomRepository, GRoomRepository>();
-            services.AddScoped<IHolidayRepository, HolidayRepository>();
-            services.AddScoped<BloodUnitService>();
-            services.AddScoped<BloodConsumptionService>();
-            services.AddScoped<EquipmentService>();
-            services.AddScoped<IIEquipmentRepository, EquipmentRepository>();
-            services.AddScoped<PatientAdmissionService>();
-            services.AddScoped<IPatientAdmissionRepository, PatientAdmissionRepository>();
-            services.AddScoped<TreatmentReportService>();
-            services.AddScoped<ITreatmentReportRepository, TreatmentReportRepository>();
-            services.AddScoped<RoomBedService>();
-            services.AddScoped<IRoomBedRepository, RoomBedRepository>();
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

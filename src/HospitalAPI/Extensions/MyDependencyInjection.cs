@@ -9,9 +9,12 @@ using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Holidays.Service;
+using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Rooms.Service;
+using HospitalLibrary.TreatmentReports.Repository;
+using HospitalLibrary.TreatmentReports.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -45,6 +48,23 @@ namespace HospitalAPI.Extensions
             services.AddScoped<IHolidayRepository, HolidayRepository>();
             services.AddScoped<BloodUnitService>();
             services.AddScoped<BloodConsumptionService>();
+            services.AddScoped<BuildingService>();
+            services.AddScoped<IBuildingRepository, BuildingRepository>();
+            services.AddScoped<FloorService>();
+            services.AddScoped<IFloorRepository, FloorRepository>();
+            services.AddScoped<GRoomService>();
+            services.AddScoped<IGRoomRepository, GRoomRepository>();
+            services.AddScoped<IHolidayRepository, HolidayRepository>();
+            services.AddScoped<BloodUnitService>();
+            services.AddScoped<BloodConsumptionService>();
+            services.AddScoped<EquipmentService>();
+            services.AddScoped<IIEquipmentRepository, EquipmentRepository>();
+            services.AddScoped<PatientAdmissionService>();
+            services.AddScoped<IPatientAdmissionRepository, PatientAdmissionRepository>();
+            services.AddScoped<TreatmentReportService>();
+            services.AddScoped<ITreatmentReportRepository, TreatmentReportRepository>();
+            services.AddScoped<RoomBedService>();
+            services.AddScoped<IRoomBedRepository, RoomBedRepository>();
         }
     }
 }
