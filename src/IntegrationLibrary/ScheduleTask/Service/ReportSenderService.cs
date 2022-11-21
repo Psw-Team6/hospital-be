@@ -39,20 +39,24 @@ namespace IntegrationLibrary.ScheduleTask.Service
             {
                 if (DateTime.Compare(allDatesForSend[i].NextDateForSending, DateTime.Now)<0)
                 {
-                    if (allDatesForSend[i].SendPeriod.Equals("EVERY_TWO_MINUT"))
-                    {
-                        DateTime currentTime = DateTime.Now;
-                        allDatesForSend[i].NextDateForSending = currentTime.AddMinutes(2);
-                        Console.WriteLine(allDatesForSend[i].NextDateForSending);
-                    }
-                    else
-                    {
-                        allDatesForSend[i].NextDateForSending = allDatesForSend[i].NextDateForSending.AddDays(calculateDate.DefinePeriodForSendingReports(allDatesForSend[i].SendPeriod));
-                    }
+                    CalculateNextSendPeriod(allDatesForSend[i]);
                     _configureGenerateAndSendRepository.Update(allDatesForSend[i]);
                     Console.WriteLine("Send message: "+ allDatesForSend[i].NextDateForSending);
-                   
+
                 }
+            }
+        }
+
+
+        public void CalculateNextSendPeriod(ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configuration) {
+
+            if (configuration.SendPeriod.Equals("EVERY_TWO_MINUT"))
+            {
+                configuration.NextDateForSending = DateTime.Now.AddMinutes(2);
+            }
+            else
+            {
+                configuration.NextDateForSending = configuration.NextDateForSending.AddDays(calculateDate.DefinePeriodForSendingReports(configuration.SendPeriod));
             }
         }
 

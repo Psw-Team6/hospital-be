@@ -18,11 +18,11 @@ namespace IntegrationLibrary.ConfigureGenerateAndSend.Service
             if (date.Equals("ONE_MONTH"))
                 days = 30;
             else if (date.Equals("TWO_MONTH"))
-                days = 60;
+                days = 61;
             else if (date.Equals("THREE_MONTH"))
-                days = 90;
+                days = 91;
             else if (date.Equals("SIX_MONTH"))
-                days = 180;
+                days = 183;
             else if (date.Equals("ONE_YEAR"))
                 days = 365;
             else if (date.Equals("EVERY_TWO_MINUT"))
