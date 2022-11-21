@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
-using HospitalLibrary.sharedModel;
 using HospitalLibrary.TreatmentReports.Model;
 
 namespace HospitalLibrary.Patients.Service
@@ -83,9 +81,19 @@ namespace HospitalLibrary.Patients.Service
             if (admission == null) throw new PatientAdmissionException("Patient admission not found!");
             if (admission.DateOfDischarge != null) throw new PatientDischargeException("Patient is already discharged!");
             admission.Update(admissionRequest.ReasonOfDischarge,DateTime.Now);
+            await UpdateRoomAvailability(admission);
             await _unitOfWork.PatientAdmissionRepository.UpdateAsync(admission);
             await _unitOfWork.CompleteAsync();
             return true;
+        }
+
+        private async Task UpdateRoomAvailability(PatientAdmission admission)
+        {
+            var updateBed = await _unitOfWork.RoomBedRepository.GetByIdAsync(admission.SelectedBedId);
+            if (updateBed == null) throw new PatientAdmissionException("Bed doesn't exists!");
+            updateBed.Update(true);
+            await _unitOfWork.RoomBedRepository.UpdateAsync(updateBed);
+            await _unitOfWork.CompleteAsync();
         }
     }
 }
