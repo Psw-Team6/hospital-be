@@ -12,5 +12,10 @@ namespace HospitalLibrary.Rooms.Model
         public Room Room { get; set; }
         public Guid RoomId { get; set; }
         public IEnumerable<PatientAdmission> Patients { get; set; }
+
+        public void Update(bool isFree)
+        {
+            IsFree = isFree;
+        }
     }
 }
