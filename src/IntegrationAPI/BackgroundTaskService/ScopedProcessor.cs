@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.BackgroundService
+namespace IntegrationAPI.BackgroundTaskService
 {
     public abstract class ScopedProcessor : BackgroundService
     {

@@ -1,5 +1,4 @@
-﻿using IntegrationLibrary.ScheduleTask.Service;
-using IntegrationLibrary.Settings;
+﻿using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

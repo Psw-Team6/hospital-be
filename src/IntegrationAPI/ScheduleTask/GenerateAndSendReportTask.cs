@@ -1,5 +1,5 @@
-﻿using IntegrationLibrary.BackgroundService;
-using IntegrationLibrary.ScheduleTask.Service;
+using IntegrationAPI.BackgroundTaskService;
+using IntegrationAPI.ScheduleTask.Service;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.ScheduleTask
+namespace IntegrationAPI.ScheduleTask
 {
-    public class SampleTask1 : ScheduledProcessor
+    public class GenerateAndSendReportTask : ScheduledProcessor
     {
-        public SampleTask1(IServiceScopeFactory serviceScopeFactory) : base(serviceScopeFactory)
+        public GenerateAndSendReportTask(IServiceScopeFactory serviceScopeFactory) : base(serviceScopeFactory)
         {
 
         }

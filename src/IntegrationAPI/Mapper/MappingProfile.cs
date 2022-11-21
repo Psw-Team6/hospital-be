@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using IntegrationAPI.Dtos.Request;
+using IntegrationAPI.Dtos.Response;
 using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.ConfigureGenerateAndSend.Model;
+using IntegrationLibrary.PDFReports.Model;
+
 
 namespace IntegrationAPI.Mapper
 {
@@ -10,6 +13,7 @@ namespace IntegrationAPI.Mapper
         public MappingProfile() {
             CreateMap<BloodBankRequest, BloodBank>();
             CreateMap<BloodBankName, BloodBank>();
+
         }
 
 

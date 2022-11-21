@@ -51,20 +51,29 @@ namespace HospitalLibrary.Patients.Service
             {
                 return null;
             }
-
+            
             await _unitOfWork.RoomBedRepository.UpdateAsync(bed);
-            admission.SelectedBed = bed;
             admission.SelectedBedId = bed.Id;
-            admission.SelectedRoom = room;
             admission.SelectedRoomId = room.Id;
-            var patient = await _unitOfWork.PatientRepository.GetByIdAsync(admission.PatientId);
-            admission.Patient = patient;
             TreatmentReport report = new TreatmentReport();
             report.PatientId = admission.PatientId;
             var newReport = await _unitOfWork.TreatmentReportRepository.CreateAsync(report);
             var newAdmission = await _unitOfWork.PatientAdmissionRepository.CreateAsync(admission);
             await _unitOfWork.CompleteAsync();
             return newAdmission;
+        }
+
+        public async Task<Boolean> IsHospitalized(PatientAdmission admission)
+        {
+            List<PatientAdmission> patientAdmissions = (List<PatientAdmission>)await _unitOfWork.PatientAdmissionRepository.GetAllAsync();
+            foreach(var p in patientAdmissions)
+            {
+                if (p.PatientId.Equals(admission.PatientId) && DateTime.Compare(p.DateOfDischarge, DateTime.Now) <= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IntegrationLibrary.ScheduleTask.Service;
 using Microsoft.EntityFrameworkCore;
 
 namespace IntegrationLibrary.ConfigureGenerateAndSend.Service

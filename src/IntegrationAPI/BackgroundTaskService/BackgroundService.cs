@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.BackgroundService
+namespace IntegrationAPI.BackgroundTaskService
 {
     public abstract class BackgroundService : IHostedService
     {

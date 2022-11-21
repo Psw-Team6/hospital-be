@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.ScheduleTask.Service
+namespace IntegrationAPI.ScheduleTask.Service
 {
     public interface IReportSenderService
     {

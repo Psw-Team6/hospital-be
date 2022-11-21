@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Patients.Model;
 
 namespace HospitalLibrary.Rooms.Model
 {
@@ -16,6 +17,7 @@ namespace HospitalLibrary.Rooms.Model
         public List<RoomBed> Beds { get; set; }
         
         public List<RoomEquipment> Equipments { get; set; }
+        public IEnumerable<PatientAdmission> Patients { get; set; }
         public Guid FloorId { get; set; }
         public Floor Floor { get; set; }
         public Guid BuildingId { get; set; }
