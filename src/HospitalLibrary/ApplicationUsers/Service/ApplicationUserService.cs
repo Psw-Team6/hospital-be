@@ -29,6 +29,11 @@ namespace HospitalLibrary.ApplicationUsers.Service
                 throw new AuthenticationException("Bad credentials!");
             }
 
+            if (!user.Enabled)
+            {
+                throw new AuthenticationException("Please verify you account!");
+            }
+
             return user;
         }
 

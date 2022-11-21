@@ -10,6 +10,8 @@ using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Settings;
+using HospitalLibrary.TreatmentReports.Repository;
+using HospitalLibrary.TreatmentReports.Service;
 
 namespace HospitalLibrary.Common
 {
@@ -29,7 +31,19 @@ namespace HospitalLibrary.Common
         private ApplicationUserRepository _applicationUserRepository;
         private BloodUnitRepository _bloodUnitRepository;
         private BloodConsumptionRepository _bloodConsumptionRepository;
+        private PatientAdmissionRepository _patientAdmissionRepository;
+        private EquipmentRepository _equipmentRepository;
+        private TreatmentReportRepository _treatmentReportRepository;
+        private RoomBedRepository _roomBedRepository;
 
+        public IRoomBedRepository RoomBedRepository =>
+            _roomBedRepository ??= new RoomBedRepository(_hospitalDbContext);
+        public ITreatmentReportRepository TreatmentReportRepository =>
+            _treatmentReportRepository ??= new TreatmentReportRepository(_hospitalDbContext);
+        public IIEquipmentRepository EquipmentRepository =>
+            _equipmentRepository ??= new EquipmentRepository(_hospitalDbContext);
+        public IPatientAdmissionRepository PatientAdmissionRepository =>
+            _patientAdmissionRepository ??= new PatientAdmissionRepository(_hospitalDbContext);
         public IBloodConsumptionRepository BloodConsumptionRepository =>
             _bloodConsumptionRepository ??= new BloodConsumptionRepository(_hospitalDbContext);
         public IBloodUnitRepository BloodUnitRepository =>

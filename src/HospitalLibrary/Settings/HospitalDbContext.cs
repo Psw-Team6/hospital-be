@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Security.Principal;
 using HospitalLibrary.ApplicationUsers.Model;
@@ -7,6 +8,7 @@ using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Enums;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
 using HospitalLibrary.Patients.Model;
@@ -25,7 +27,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        //public DbSet<Address> Addresses { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
         public DbSet<GRoom> GRooms { get; set; }
         public DbSet<RoomBed> RoomBeds { get; set; }
@@ -33,6 +35,7 @@ namespace HospitalLibrary.Settings
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<BloodConsumption> BloodConsumptions { get; set; }
+        public DbSet<RoomEquipment> RoomEquipment { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
@@ -75,13 +78,13 @@ namespace HospitalLibrary.Settings
                     {
                         WorkingScheduleId = workingSchedule1.Id,
                         From = new DateTime(2022, 10, 27),
-                        To = new DateTime(2023, 1, 27)
+                        To = new DateTime(2023, 12, 27)
                     },
                     new
                     {
                         WorkingScheduleId = workingSchedule2.Id,
                         From = new DateTime(2022, 10, 27),
-                        To = new DateTime(2023, 1, 27)
+                        To = new DateTime(2023, 12, 27)
                     }
                 );
             modelBuilder.Entity<WorkingSchedule>()
@@ -91,7 +94,7 @@ namespace HospitalLibrary.Settings
                     {
                         WorkingScheduleId = workingSchedule1.Id,
                         From = new DateTime(2022, 10, 27, 8, 0, 0),
-                        To = new DateTime(2022, 10, 27, 14, 0, 0)
+                        To = new DateTime(2023, 12, 27, 14, 0, 0)
                     },
                     new
                     {
@@ -360,6 +363,106 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<GRoom>().HasData(
                 gRoom1,gRoom2,gRoom3,gRoom4,gRoom5,gRoom6,gRoom7,gRoom8,gRoom9
             );
+
+
+            RoomEquipment roomEquipment1 = new()
+            {
+                RoomId = room1.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 15,
+                EquipmentName = "SURGICAL_TABLES"
+                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+            };
+            
+            RoomEquipment roomEquipment2 = new()
+            {
+                RoomId = room2.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 10,
+                EquipmentName = "ANESTHESIA"
+                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+            };
+            
+            
+            RoomEquipment roomEquipment3 = new()
+            {
+                RoomId = room3.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 3,
+                EquipmentName = "EKG_MACHINE"
+                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+            };
+            
+            
+            RoomEquipment roomEquipment4 = new()
+            {
+                RoomId = room4.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 1,
+                EquipmentName = "ANESTHESIA"
+                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+            };
+           
+            
+            RoomEquipment roomEquipment5 = new()
+            {
+                RoomId = room5.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 2,
+                EquipmentName = "EKG_MACHINE"
+                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+            };
+           
+            
+            RoomEquipment roomEquipment6 = new()
+            {
+                RoomId = room6.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 4,
+                EquipmentName = "SURGICAL_TABLES"
+                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+            };
+            
+            
+            RoomEquipment roomEquipment7 = new()
+            {
+                RoomId = room7.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 6,
+                EquipmentName = "BANDAGE"
+                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+            };
+           
+            
+            RoomEquipment roomEquipment8 = new()
+            {
+                RoomId = room8.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 3,
+                EquipmentName = "ANESTHESIA"
+                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+            };
+           
+            
+            RoomEquipment roomEquipment9 = new()
+            {
+                RoomId = room9.Id, 
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 9,
+                EquipmentName = "SURGICAL_TABLES"
+                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+            };
+            
+            
+            //room9.Equipments.Add(roomEquipment9);
+            
+            
+            
+            modelBuilder.Entity<RoomEquipment>().HasData(
+                roomEquipment1,roomEquipment2,roomEquipment3,roomEquipment4,roomEquipment5,roomEquipment6,roomEquipment7,roomEquipment8,roomEquipment9
+            );
+            
+            
             RoomBed room1Bed1 = new()
             {
                 Id = Guid.NewGuid(),
@@ -442,14 +545,15 @@ namespace HospitalLibrary.Settings
                 Email = "DjordjeLopov@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Doctor
+                UserRole = UserRole.Doctor,
+                Enabled = true
             };
             Doctor doctor1 = new()
             {
                 Id = Guid.NewGuid(),
                 SpecializationId = specializationDermatology.Id,
                 AddressId = address.Id,
-                WorkingScheduleId = workingSchedule2.Id,
+                WorkingScheduleId = workingSchedule1.Id,
                 RoomId = room1.Id,
                 Username = "Ilija",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
@@ -458,7 +562,8 @@ namespace HospitalLibrary.Settings
                 Email = "Cajons@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Doctor
+                UserRole = UserRole.Doctor,
+                Enabled = true
             };
             modelBuilder.Entity<Doctor>().HasData(
                 doctor,doctor1
@@ -474,7 +579,8 @@ namespace HospitalLibrary.Settings
                 Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Patient
+                UserRole = UserRole.Patient,
+                Enabled = true
             };
             Patient patient2 = new()
             {
@@ -487,7 +593,8 @@ namespace HospitalLibrary.Settings
                 Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Patient
+                UserRole = UserRole.Patient,
+                Enabled = true
             };
             modelBuilder.Entity<Patient>().HasData(
                 patient1,patient2
@@ -504,7 +611,8 @@ namespace HospitalLibrary.Settings
                 Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
-                UserRole = UserRole.Manager
+                UserRole = UserRole.Manager,
+                Enabled = true
             };
             modelBuilder.Entity<Manager>().HasData(
                 manager
@@ -546,8 +654,8 @@ namespace HospitalLibrary.Settings
                     new
                     {
                         HolidayId = holiday1.Id,
-                        From = new DateTime(2022, 10, 27, 15, 0, 0),
-                        To = new DateTime(2022, 10, 27, 15, 15, 0)
+                        From = new DateTime(2022, 10, 27, 10, 0, 0),
+                        To = new DateTime(2022, 10, 27, 10, 30, 0)
                     }
                     );
             modelBuilder.Entity<Holiday>().HasData(holiday1);
@@ -558,8 +666,8 @@ namespace HospitalLibrary.Settings
                     new
                     {
                         AppointmentId = appointment.Id,
-                        From = new DateTime(2023, 7, 27, 15, 0, 0),
-                        To = new DateTime(2023, 8, 7, 15, 15, 0)
+                        From = new DateTime(2023, 7, 27, 10, 0, 0),
+                        To = new DateTime(2023, 7, 27, 10, 30, 0)
                     }
                 );
             modelBuilder.Entity<Appointment>().HasData(
@@ -588,7 +696,7 @@ namespace HospitalLibrary.Settings
             {
                 Id= Guid.NewGuid(),
                 BloodType = BloodType.Aneg,
-                Amount = 1,
+                Amount = 4,
                 BloodBankName = "Moja Banka Krvi"
                     
             };

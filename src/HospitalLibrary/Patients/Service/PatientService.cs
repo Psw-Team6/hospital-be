@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Common;
+using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
 
 namespace HospitalLibrary.Patients.Service
@@ -26,6 +28,7 @@ namespace HospitalLibrary.Patients.Service
             var hashPassword =PasswordHasher.HashPassword(patient.Password);
             patient.Password = hashPassword;
             patient.UserRole = UserRole.Patient;
+            patient.Enabled = false;
             var newPatient = await _unitOfWork.PatientRepository.CreateAsync(patient);
             await _unitOfWork.CompleteAsync();
             return newPatient;
@@ -36,6 +39,111 @@ namespace HospitalLibrary.Patients.Service
             var patient = await _unitOfWork.PatientRepository.GetByIdAsync(id);
             await _unitOfWork.CompleteAsync();
             return patient;
+        }
+        
+        public async Task<int> GetFemalePatient()
+        {
+            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            int counter = 0;
+            foreach (var p in patients)
+            {
+                if (p.Gender == Gender.FEMALE)
+                {
+                    ++counter;
+                }
+            }
+
+            return counter;
+        }
+        
+        public async Task<int> GetMalePatient()
+        {
+            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            int counter = 0;
+            foreach (var p in patients)
+            {
+                if (p.Gender == Gender.MALE)
+                {
+                    ++counter;
+                }
+            }
+
+            return counter;
+        }
+        
+        public async Task<int> GetOtherPatient()
+        {
+            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            int counter = 0;
+            foreach (var p in patients)
+            {
+                if (p.Gender == Gender.OTHER)
+                {
+                    ++counter;
+                }
+            }
+
+            return counter;
+        }
+
+        public async Task<int> GetPediatricGroup()
+        {
+            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            int counter = 0;
+            foreach (var p in patients)
+            {
+                if (p.Age >= 0 && p.Age <= 14)
+                {
+                    ++counter;
+                }
+            }
+
+            return counter;
+        }
+
+        public async Task<int> GetYoungGroup()
+        {
+            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            int counter = 0;
+            foreach (var p in patients)
+            {
+                if (p.Age >= 15 && p.Age <= 47)
+                {
+                    ++counter;
+                }
+            }
+
+            return counter;
+        }
+        
+        public async Task<int> GetMiddleAgeGroup()
+        {
+            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            int counter = 0;
+            foreach (var p in patients)
+            {
+                if (p.Age >= 48 && p.Age <= 63)
+                {
+                    ++counter;
+                }
+            }
+
+            return counter;
+        }
+
+        public async Task<int> GetElderlyGroup()
+        {
+            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            int counter = 0;
+            foreach (var p in patients)
+            {
+                if (p.Age >= 64)
+                {
+                    ++counter;
+                }
+            }
+
+            return counter;
         }
     }
 }

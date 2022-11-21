@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
-using HospitalAPI.Dtos;
+﻿using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptions.Model;
-using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
+using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.sharedModel;
@@ -34,6 +32,10 @@ namespace HospitalAPI.Mapper
                 CreateMap<Address,AddressResponse>();
                 CreateMap<Room,RoomResponse>();
                 CreateMap<AppointmentRequest, Appointment>();
+                CreateMap<HolidayResponse, Holiday>();
+                CreateMap<Holiday,HolidayResponse>();
+                CreateMap<HolidayRequest, Holiday>();
+                CreateMap<Holiday,HolidayRequest>();
                 CreateMap<Appointment, AppointmentRequest>();
                 CreateMap<Appointment,AppointmentResponse>();
                 CreateMap<AppointmentResponse,Appointment>();
@@ -49,11 +51,19 @@ namespace HospitalAPI.Mapper
                 CreateMap<Building, BuildingResponse>();
                 CreateMap<FloorResponse, Floor>();
                 CreateMap<Floor, FloorResponse>();
+                CreateMap<RoomEquipmentResponse, RoomEquipment>();
+                CreateMap<RoomEquipment, RoomEquipmentResponse>();
                 CreateMap<FloorRequest, Floor>();
                 CreateMap<Floor, FloorRequest>();
+                CreateMap<RoomEquipmentRequest, RoomEquipment>();
+                CreateMap<RoomEquipment, RoomEquipmentRequest>();
                 CreateMap<BuildingRequest, Building>();
                 CreateMap<Building, BuildingRequest>();
-                CreateMap<BloodConsumationRequest, BloodConsumption>();
+                CreateMap<BloodConsumationRequest, BloodConsumptionCreateDto>();
+                CreateMap<PatientAdmissionRequest, PatientAdmission>();
+                CreateMap<PatientAdmission, PatientAdmissionRequest>();
+                CreateMap<PatientAdmissionResponse, PatientAdmission>();
+                CreateMap<PatientAdmission, PatientAdmissionResponse>();
             }
     }
     

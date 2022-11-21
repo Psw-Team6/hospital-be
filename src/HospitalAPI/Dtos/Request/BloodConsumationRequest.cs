@@ -8,7 +8,6 @@ namespace HospitalAPI.Dtos.Request
         public BloodType BloodType { get; set; }
         public int Amount { get; set; }
         public String Purpose { get; set; }
-        public Guid BloodUnitId { get; set; }
     }
     
 }

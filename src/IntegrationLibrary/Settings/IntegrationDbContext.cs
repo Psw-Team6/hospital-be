@@ -14,6 +14,8 @@ namespace IntegrationLibrary.Settings
         public DbSet<BloodBank.BloodBank> BloodBanks { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
 
+        public DbSet<NewsFromBloodBank.Model.NewsFromBloodBank> NewsFromBloodBank { get; set; }
+
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
