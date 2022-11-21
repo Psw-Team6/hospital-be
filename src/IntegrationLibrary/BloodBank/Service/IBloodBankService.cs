@@ -14,6 +14,7 @@ namespace IntegrationLibrary.BloodBank.Service
         void Create(BloodBank bloodBank);
         void Update(BloodBank bloodBank);
         void Delete(BloodBank bloodBank);
+        BloodBank Authenticate(string name, string password);
 
     }
 }

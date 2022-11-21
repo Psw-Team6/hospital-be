@@ -20,6 +20,16 @@ namespace IntegrationLibrary.Settings
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
+            BloodBank.BloodBank bloodBank = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "BloodBank",
+                ServerAddress = "localhost",
+                Email = "aas@gmail.com",
+                Password = "123",
+                ApiKey = "x"
+            };
+            modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);
         }
     }
 }

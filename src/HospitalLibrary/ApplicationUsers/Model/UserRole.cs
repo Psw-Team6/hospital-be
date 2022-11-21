@@ -4,6 +4,7 @@
     {
         Doctor=0,
         Manager=1,
-        Patient=2
+        Patient=2,
+        BloodBank=3
     }
 }
