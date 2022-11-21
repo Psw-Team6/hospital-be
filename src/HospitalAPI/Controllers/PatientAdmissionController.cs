@@ -69,10 +69,8 @@ namespace HospitalAPI.Controllers
         public async Task<ActionResult> DischargePatient([FromBody] DischargePatientAdmissionRequest patientAdmission)
         {
             var admission = _mapper.Map<PatientAdmission>(patientAdmission);
-            var result =  await _patientAdmissionService.DiscargePatient(admission);
+            var result =  await _patientAdmissionService.DischargePatient(admission);
             return result == false ? NotFound() : NoContent();
         }
-
-
     }
 }

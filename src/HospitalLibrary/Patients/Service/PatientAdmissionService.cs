@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
+using HospitalLibrary.CustomException;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.sharedModel;
@@ -76,11 +77,12 @@ namespace HospitalLibrary.Patients.Service
             return false;
         }
 
-        public async Task<Boolean> DiscargePatient(PatientAdmission admissionRequest)
+        public async Task<Boolean> DischargePatient(PatientAdmission admissionRequest)
         {
             var admission = await _unitOfWork.PatientAdmissionRepository.GetByIdAsync(admissionRequest.Id);
-            if (admission == null) return false;
-            admission.Update(admissionRequest.ReasonOfDischarge,admissionRequest.DateOfDischarge);
+            if (admission == null) throw new PatientAdmissionException("Patient admission not found!");
+            if (admission.DateOfDischarge != null) throw new PatientDischargeException("Patient is already discharged!");
+            admission.Update(admissionRequest.ReasonOfDischarge,DateTime.Now);
             await _unitOfWork.PatientAdmissionRepository.UpdateAsync(admission);
             await _unitOfWork.CompleteAsync();
             return true;
