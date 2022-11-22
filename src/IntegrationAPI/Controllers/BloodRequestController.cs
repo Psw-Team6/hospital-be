@@ -24,11 +24,16 @@ namespace IntegrationAPI.Controllers
         private readonly IBloodRequestService _bloodRequestService;
         private readonly IMapper _mapper;
 
-        public BloodRequestController(IBloodRequestService bloodRequestService, IMapper mapper)
+        /*public BloodRequestController(IBloodRequestService bloodRequestService, IMapper mapper)
         {
             _bloodRequestService = bloodRequestService;
             _mapper = mapper;
 
+        }*/
+
+        public BloodRequestController(IBloodRequestService bloodRequestService)
+        {
+            _bloodRequestService = bloodRequestService;
         }
 
         // GET: api/BloodRequest
@@ -36,6 +41,20 @@ namespace IntegrationAPI.Controllers
         public ActionResult GetAll()
         {
             return Ok(_bloodRequestService.GetAll());
+        }
+
+        // GET: api/BloodRequest
+        [HttpGet("pending")]
+        public ActionResult GetAllOnPending()
+        {
+            return Ok(_bloodRequestService.GetAllOnPending());
+        }
+
+        // GET: api/BloodRequest
+        [HttpGet("getFirst")]
+        public BloodRequest GetFirst()
+        {
+            return (BloodRequest)_bloodRequestService.GetFirst();
         }
 
         // POST api/BloodRequest
@@ -55,7 +74,21 @@ namespace IntegrationAPI.Controllers
 
         public ActionResult Update(BloodRequest bloodRequest)
         {
-            _bloodRequestService.Update(bloodRequest);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                _bloodRequestService.Update(bloodRequest);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
             return Ok(bloodRequest);
         }
     }

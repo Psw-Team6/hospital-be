@@ -33,6 +33,11 @@ namespace IntegrationLibrary.BloodRequests.Repository
             return _context.BloodRequests.ToList();
         }
 
+        public BloodRequest GetFirst()
+        {
+            return _context.BloodRequests.ToList().First();
+        }
+
         public BloodRequest GetById(Guid id)
         {
             throw new NotImplementedException();
@@ -49,6 +54,22 @@ namespace IntegrationLibrary.BloodRequests.Repository
             {
                 throw;
             }
+        }
+
+        public IEnumerable<BloodRequest> GetAllOnPending()
+        {
+            List<BloodRequest> all = (List<BloodRequest>)GetAll();
+            List<BloodRequest> allOnPending = new List<BloodRequest>();
+
+            foreach (BloodRequest req in all)
+            {
+                if (req.Status == Status.PENDING)
+                {
+                    allOnPending.Add(req);
+                }
+            }
+
+            return allOnPending;
         }
     }
 }

@@ -31,6 +31,11 @@ namespace IntegrationLibrary.BloodRequests.Service
             return _bloodRequestRepository.GetAll();
         }
 
+        public BloodRequest GetFirst()
+        {
+            return _bloodRequestRepository.GetFirst();
+        }
+
         public BloodRequest GetById(Guid id)
         {
             throw new NotImplementedException();
@@ -39,6 +44,11 @@ namespace IntegrationLibrary.BloodRequests.Service
         public void Update(BloodRequest request)
         {
             _bloodRequestRepository.Update(request);
+        }
+
+        public IEnumerable<BloodRequest> GetAllOnPending()
+        {
+            return _bloodRequestRepository.GetAllOnPending();
         }
     }
 }

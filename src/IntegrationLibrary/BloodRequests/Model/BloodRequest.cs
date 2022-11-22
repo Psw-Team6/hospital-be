@@ -16,5 +16,7 @@ namespace IntegrationLibrary.BloodRequests.Model
         public String DoctorUsername { get; set; } //treba da se promijeni na ulogovanog doktora
         public Status Status { get; set; }
         public String Comment { get; set; }
+
+
     }
 }
