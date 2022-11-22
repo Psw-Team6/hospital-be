@@ -1,26 +1,26 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
+using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.TreatmentReports.Model;
-using PdfSharpCore.Drawing;
-using PdfSharpCore.Drawing.Layout;
-using PdfSharpCore.Pdf;
 
 namespace HospitalLibrary.Patients.Service
 {
     public class PatientAdmissionService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly GeneratePdfReportService _reportService;
+        private readonly RoomBedService _bedService;
 
-        public PatientAdmissionService(IUnitOfWork unitOfWork)
+        public PatientAdmissionService(IUnitOfWork unitOfWork, GeneratePdfReportService reportService, RoomBedService bedService)
         {
             _unitOfWork = unitOfWork;
+            _reportService = reportService;
+            _bedService = bedService;
         }
 
         public async Task<object> GetAll()
@@ -59,10 +59,12 @@ namespace HospitalLibrary.Patients.Service
             await _unitOfWork.RoomBedRepository.UpdateAsync(bed);
             admission.SelectedBedId = bed.Id;
             admission.SelectedRoomId = room.Id;
-            TreatmentReport report = new TreatmentReport();
-            report.PatientId = admission.PatientId;
-            var newReport = await _unitOfWork.TreatmentReportRepository.CreateAsync(report);
             var newAdmission = await _unitOfWork.PatientAdmissionRepository.CreateAsync(admission);
+            TreatmentReport report = new TreatmentReport
+            {
+                PatientAdmissionId = newAdmission.Id
+            };
+            var newReport = await _unitOfWork.TreatmentReportRepository.CreateAsync(report);
             await _unitOfWork.CompleteAsync();
             return newAdmission;
         }
@@ -83,55 +85,26 @@ namespace HospitalLibrary.Patients.Service
         public async Task<Boolean> DischargePatient(PatientAdmission admissionRequest)
         {
             var admission = await _unitOfWork.PatientAdmissionRepository.GetByIdAsync(admissionRequest.Id);
-            if (admission == null) throw new PatientAdmissionException("Patient admission not found!");
-            if (admission.DateOfDischarge != null) throw new PatientDischargeException("Patient is already discharged!");
+            CheckDischargePatientRequest(admission);
             admission.Update(admissionRequest.ReasonOfDischarge,DateTime.Now);
-            await UpdateRoomAvailability(admission);
-            GeneratePdfReport(admission);
+            await _bedService.UpdateRoomAvailability(admission);
+            await CollectDataForGeneratingReport(admission);
             await _unitOfWork.PatientAdmissionRepository.UpdateAsync(admission);
             await _unitOfWork.CompleteAsync();
             return true;
         }
 
-        private async Task UpdateRoomAvailability(PatientAdmission admission)
+        private async Task CollectDataForGeneratingReport(PatientAdmission admission)
         {
-            var updateBed = await _unitOfWork.RoomBedRepository.GetByIdAsync(admission.SelectedBedId);
-            if (updateBed == null) throw new PatientAdmissionException("Bed doesn't exists!");
-            updateBed.Update(true);
-            await _unitOfWork.RoomBedRepository.UpdateAsync(updateBed);
-            await _unitOfWork.CompleteAsync();
+            var admissionReport = await _unitOfWork.PatientAdmissionRepository.GetPatientAdmissionByIdAsync(admission.Id);
+            var treatmentReport = await _unitOfWork.TreatmentReportRepository.FindByPatientAdmission(admission.Id);
+            _reportService.GeneratePdfReport(admissionReport, treatmentReport);
         }
 
-        private void GeneratePdfReport(PatientAdmission admission)
+        private static void CheckDischargePatientRequest(PatientAdmission admission)
         {
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            var document = new PdfDocument();
-            var page = document.AddPage();
-            var gfx = XGraphics.FromPdfPage(page);
-            var formatter = new XTextFormatter(gfx);
-            var layoutRectangle = new XRect(10, 10, page.Width, page.Height);
-            var font = new XFont("Verdana", 20, XFontStyle.Bold);
-            gfx.DrawString("Patient admission report", font, XBrushes.Black,
-                new XRect(0, 0, page.Width, page.Height), XStringFormats.Center);  
-            var secondPage = document.AddPage();
-            var gfxBody = XGraphics.FromPdfPage(secondPage);
-            var formatterBody = new XTextFormatter(gfxBody);
-            var layoutRectangleBody = new XRect(10, 10, page.Width, page.Height);
-            var fontBody = new XFont("Verdana", 14, XFontStyle.Regular);
-            formatterBody.DrawString(GenerateTextInPdf(admission), fontBody, XBrushes.Black,layoutRectangleBody);
-            var filename = "PDFDocument.pdf";
-            document.Save(filename);
-            Process.Start(new ProcessStartInfo(filename) { UseShellExecute = true });
-        }
-
-        private String GenerateTextInPdf(PatientAdmission patientAdmission)
-        {
-            var admission = _unitOfWork.PatientAdmissionRepository.GetPatientAdmissionByIdAsync(patientAdmission.Id);
-            var sb = new StringBuilder();
-            sb.AppendLine("Patient : " + admission.Result.Patient.Name + " " + admission.Result.Patient.Surname).AppendLine(Environment.NewLine);
-            sb.AppendLine("Reason of hospitalizing : " + admission.Result.Reason).AppendLine(Environment.NewLine);
-            sb.AppendLine("Reason of discharge : " + admission.Result.ReasonOfDischarge).AppendLine(Environment.NewLine);
-            return sb.ToString();
+            if (admission == null) throw new PatientAdmissionException("Patient admission not found!");
+            if (admission.DateOfDischarge != null) throw new PatientDischargeException("Patient is already discharged!");
         }
     }
 }

@@ -15,7 +15,6 @@ using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.TreatmentReports.Repository;
 using HospitalLibrary.TreatmentReports.Service;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HospitalAPI.Extensions
@@ -64,6 +63,7 @@ namespace HospitalAPI.Extensions
             services.AddScoped<TreatmentReportService>();
             services.AddScoped<ITreatmentReportRepository, TreatmentReportRepository>();
             services.AddScoped<RoomBedService>();
+            services.AddScoped<GeneratePdfReportService>();
             services.AddScoped<IRoomBedRepository, RoomBedRepository>();
         }
     }

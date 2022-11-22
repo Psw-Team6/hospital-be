@@ -14,10 +14,10 @@ namespace HospitalLibrary.Patients.Repository
         {
         }
 
-        public Task<PatientAdmission> GetPatientAdmissionByIdAsync(Guid id)
+        public async Task<PatientAdmission> GetPatientAdmissionByIdAsync(Guid id)
         {
-            return  Task.FromResult(DbSet.Include(x => x.Patient)
-                .FirstOrDefault(x => x.Id == id));
+            return await DbSet.Include(x => x.Patient)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }
