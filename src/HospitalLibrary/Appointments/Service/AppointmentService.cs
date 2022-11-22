@@ -32,6 +32,11 @@ namespace HospitalLibrary.Appointments.Service
             return await _unitOfWork.GetRepository<AppointmentRepository>().GetByIdAsync(id);
         }
         
+        public async Task<IEnumerable<Appointment>> GetAllByRoomId(Guid id)
+        {
+            return await _unitOfWork.GetRepository<AppointmentRepository>().GetAllAppointmentsForRoom(id);
+        }
+        
         public async Task<bool> CancelAppointment(Appointment appointment)
         {
             if (canCancleAppointment(appointment))

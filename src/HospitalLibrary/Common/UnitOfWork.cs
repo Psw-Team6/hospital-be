@@ -5,6 +5,7 @@ using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.BloodConsumptions.Repository;
 using HospitalLibrary.BloodUnits.Repository;
 using HospitalLibrary.Doctors.Repository;
+using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Patients.Repository;
@@ -35,9 +36,11 @@ namespace HospitalLibrary.Common
         private EquipmentRepository _equipmentRepository;
         private TreatmentReportRepository _treatmentReportRepository;
         private RoomBedRepository _roomBedRepository;
-
+        private EquipmentMovementAppointmentRepository _equipmentMovementAppointmentRepository;
         public IRoomBedRepository RoomBedRepository =>
             _roomBedRepository ??= new RoomBedRepository(_hospitalDbContext);
+
+
         public ITreatmentReportRepository TreatmentReportRepository =>
             _treatmentReportRepository ??= new TreatmentReportRepository(_hospitalDbContext);
         public IIEquipmentRepository EquipmentRepository =>
@@ -60,7 +63,9 @@ namespace HospitalLibrary.Common
         public IFeedbackRepository FeedbackRepository => _feedbackRepository ??= new FeedbackRepository(_hospitalDbContext);
         public  IPatientRepository PatientRepository => _patientRepository ??= new PatientRepository(_hospitalDbContext);
         public  IAppointmentRepository AppointmentRepository => _appointmentRepository ??= new AppointmentRepository(_hospitalDbContext);
-        
+        public  IEquipmentMovementAppointmentRepository EquipmentMovementAppointmentRepository => _equipmentMovementAppointmentRepository ??= new EquipmentMovementAppointmentRepository(_hospitalDbContext);
+
+
 
         public IWorkingSchueduleRepository WorkingSchueduleRepository =>
             _workingScheduleRepository ??= new WorkingScheduleRepository(_hospitalDbContext);
