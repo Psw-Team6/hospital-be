@@ -20,7 +20,7 @@ namespace HospitalLibrary.Patients.Service
 
         public async Task<object> GetAll()
         {
-            return (List<PatientAdmission>)await _unitOfWork.PatientAdmissionRepository.GetAllAsync();
+            return await _unitOfWork.PatientAdmissionRepository.GetAllPatientAdmissions();
         }
         
         public async Task<PatientAdmission> GetById(Guid id)

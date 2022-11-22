@@ -6,6 +6,7 @@ using HospitalLibrary.ApplicationUsers;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Holidays.Model;
+using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.sharedModel;
 
@@ -19,6 +20,7 @@ namespace HospitalLibrary.Doctors.Model
         public IEnumerable<Appointment> Appointments { get; set; }
         
         public IEnumerable<Holiday> Holidays { get; set; }
+        public IEnumerable<Patient> Patients { get; set; }
         public Room Room { get; set; }
         public Guid RoomId { get; set; }
         public Guid WorkingScheduleId { get; set; }

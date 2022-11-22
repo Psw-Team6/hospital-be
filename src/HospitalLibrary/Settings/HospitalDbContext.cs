@@ -552,7 +552,7 @@ namespace HospitalLibrary.Settings
             Doctor doctor1 = new()
             {
                 Id = Guid.NewGuid(),
-                SpecializationId = specializationDermatology.Id,
+                SpecializationId = specializationGeneral.Id,
                 AddressId = address.Id,
                 WorkingScheduleId = workingSchedule1.Id,
                 RoomId = room1.Id,

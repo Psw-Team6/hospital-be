@@ -32,6 +32,17 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<List<DoctorResponse>>(doctors);
            return Ok(result);
         }
+        
+        [HttpGet("General")]
+        [ProducesResponseType(typeof(List<DoctorResponse>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<DoctorResponse>>> GetAllGeneral()
+        {
+            var doctors = await _doctorService.GetAllGeneralWithRequirements();
+            var result = _mapper.Map<List<DoctorResponse>>(doctors);
+            return Ok(result);
+        }
+        
+        
         [HttpGet("username/{username}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
