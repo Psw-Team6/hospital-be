@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HospitalTest.Setup
+namespace IntegrationTest.Setup
 {
     public class TestDatabaseFactory<TStartup> : WebApplicationFactory<Startup>
     {
