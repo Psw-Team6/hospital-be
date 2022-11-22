@@ -26,8 +26,11 @@ namespace HospitalLibrary.Patients.Service
         public async Task<Patient> CreatePatient(Patient patient)
         {
             var hashPassword =PasswordHasher.HashPassword(patient.Password);
+            patient.Address =  await _unitOfWork.AddressRepository.CreateAsync(patient.Address);
+            patient.AddressId = patient.Address.Id;
             patient.Password = hashPassword;
             patient.UserRole = UserRole.Patient;
+            patient.Doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(patient.DoctorId);
             patient.Enabled = false;
             var newPatient = await _unitOfWork.PatientRepository.CreateAsync(patient);
             await _unitOfWork.CompleteAsync();
