@@ -9,9 +9,9 @@ namespace HospitalLibrary.TreatmentReports.DbConfiguration
         public void Configure(EntityTypeBuilder<TreatmentReport> builder)
         {
             _ = builder.HasKey(x => x.Id);
-            _ = builder.HasOne(report => report.Patient)
+            /*_ = builder.HasOne(report => report.PatientAdmission)
                 .WithMany(patient => patient.TreatmentReports)
-                .HasForeignKey(report => report.PatientId);
+                .HasForeignKey(report => report.PatientId);*/
         }
     }
 }
