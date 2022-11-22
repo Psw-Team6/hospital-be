@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
+using HospitalLibrary.CustomException;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
-using HospitalLibrary.sharedModel;
 using HospitalLibrary.TreatmentReports.Model;
 
 namespace HospitalLibrary.Patients.Service
@@ -51,20 +50,50 @@ namespace HospitalLibrary.Patients.Service
             {
                 return null;
             }
-
+            
             await _unitOfWork.RoomBedRepository.UpdateAsync(bed);
-            admission.SelectedBed = bed;
             admission.SelectedBedId = bed.Id;
-            admission.SelectedRoom = room;
             admission.SelectedRoomId = room.Id;
-            var patient = await _unitOfWork.PatientRepository.GetByIdAsync(admission.PatientId);
-            admission.Patient = patient;
             TreatmentReport report = new TreatmentReport();
             report.PatientId = admission.PatientId;
             var newReport = await _unitOfWork.TreatmentReportRepository.CreateAsync(report);
             var newAdmission = await _unitOfWork.PatientAdmissionRepository.CreateAsync(admission);
             await _unitOfWork.CompleteAsync();
             return newAdmission;
+        }
+
+        public async Task<Boolean> IsHospitalized(PatientAdmission admission)
+        {
+            List<PatientAdmission> patientAdmissions = (List<PatientAdmission>)await _unitOfWork.PatientAdmissionRepository.GetAllAsync();
+            foreach(var p in patientAdmissions)
+            {
+                if (p.PatientId.Equals(admission.PatientId) && p.DateOfDischarge == null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public async Task<Boolean> DischargePatient(PatientAdmission admissionRequest)
+        {
+            var admission = await _unitOfWork.PatientAdmissionRepository.GetByIdAsync(admissionRequest.Id);
+            if (admission == null) throw new PatientAdmissionException("Patient admission not found!");
+            if (admission.DateOfDischarge != null) throw new PatientDischargeException("Patient is already discharged!");
+            admission.Update(admissionRequest.ReasonOfDischarge,DateTime.Now);
+            await UpdateRoomAvailability(admission);
+            await _unitOfWork.PatientAdmissionRepository.UpdateAsync(admission);
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
+
+        private async Task UpdateRoomAvailability(PatientAdmission admission)
+        {
+            var updateBed = await _unitOfWork.RoomBedRepository.GetByIdAsync(admission.SelectedBedId);
+            if (updateBed == null) throw new PatientAdmissionException("Bed doesn't exists!");
+            updateBed.Update(true);
+            await _unitOfWork.RoomBedRepository.UpdateAsync(updateBed);
+            await _unitOfWork.CompleteAsync();
         }
     }
 }

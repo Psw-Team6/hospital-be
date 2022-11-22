@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using HospitalAPI.Extentsions;
+using HospitalAPI.Extensions;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +19,10 @@ namespace HospitalAPI.Infrastructure.Authorization
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var dbContext = context.HttpContext.RequestServices.GetRequiredService<HospitalDbContext>();
-            var username = context.HttpContext.User.GetUsername();
-            var user = dbContext.ApplicationUsers.SingleOrDefault(x => x.Username == username);
-            if (user == null || user.UserRole != _role)
+            //var dbContext = context.HttpContext.RequestServices.GetRequiredService<HospitalDbContext>();
+            var role = context.HttpContext.User.GetUserRole();
+            //var user = dbContext.ApplicationUsers.SingleOrDefault(x => x.Username == username);
+            if (role != _role.ToString())
             {
                 context.Result = new ForbidResult();
             }

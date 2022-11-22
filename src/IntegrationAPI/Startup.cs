@@ -1,6 +1,8 @@
 using IntegrationAPI.Mapper;
 using IntegrationLibrary.BloodBank.Repository;
 using IntegrationLibrary.BloodBank.Service;
+using IntegrationLibrary.NewsFromBloodBank.Repository;
+using IntegrationLibrary.NewsFromBloodBank.Service;
 using IntegrationLibrary.SendMail;
 using IntegrationLibrary.SendMail.Services;
 using IntegrationLibrary.Settings;
@@ -50,6 +52,8 @@ namespace IntegrationAPI
 
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
+            services.AddScoped<INewsFromBloodBankService, NewsFromBloodBankService>();
+            services.AddScoped<INewsFromBloodBankRepository, NewsFromBloodBankRepository>();
 
         }
 
@@ -66,7 +70,7 @@ namespace IntegrationAPI
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<IntegrationDbContext>();
-                //context?.Database.Migrate();
+                context?.Database.Migrate();
             }
             if (env.IsDevelopment())
             {

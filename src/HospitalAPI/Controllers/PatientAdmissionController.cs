@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
+using HospitalAPI.Infrastructure.Authorization;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Patients.Service;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +15,7 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    
+   //[HospitalAuthorization(UserRole.Doctor)]
     public class PatientAdmissionController : ControllerBase
     {
         private readonly PatientAdmissionService _patientAdmissionService;
@@ -46,9 +48,14 @@ namespace HospitalAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PatientAdmission>> CreateAdmission([FromBody] PatientAdmissionRequest patientAdmissionRequest)
+        public async Task<ActionResult<PatientAdmissionResponse>> CreateAdmission([FromBody] PatientAdmissionRequest patientAdmissionRequest)
         {
             var admission = _mapper.Map<PatientAdmission>(patientAdmissionRequest);
+            var isHospitalized = await _patientAdmissionService.IsHospitalized(admission);
+            if (isHospitalized)
+            {
+                return Forbid();
+            }
             var result = await _patientAdmissionService.CreateAdmission(admission);
             if (result == null)
             {
@@ -56,7 +63,14 @@ namespace HospitalAPI.Controllers
             }
             return CreatedAtAction(nameof(GetById), new {id = result.Id}, result);
         }
-        
-        
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> DischargePatient([FromBody] DischargePatientAdmissionRequest patientAdmission)
+        {
+            var admission = _mapper.Map<PatientAdmission>(patientAdmission);
+            var result =  await _patientAdmissionService.DischargePatient(admission);
+            return result == false ? NotFound() : NoContent();
+        }
     }
 }

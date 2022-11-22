@@ -5,7 +5,6 @@ using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodConsumptions.Service;
-using HospitalLibrary.BloodUnits.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
