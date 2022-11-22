@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
@@ -42,6 +43,18 @@ namespace HospitalAPI.Controllers
             var equipmentMovementAppointment = await _equipmentMovementAppointmentService.GetById(id);
             var result = _mapper.Map<EquipmentMovementAppointmentResponse>(equipmentMovementAppointment);
             return equipmentMovementAppointment == null ? NotFound() : Ok(result);
+        }
+        
+        
+        [HttpPost]
+        [ProducesResponseType(typeof(List<EquipmentMovementAppointmentResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<EquipmentMovementAppointmentResponse>>> GetAllAvailableAppointmentsForEquipmentMovement([FromBody]EquipmentMovementAppointmentRequest equipmentAppointmentsRequest)
+        {
+            var appointmentRequested = _mapper.Map<EquipmentMovementRequest>(equipmentAppointmentsRequest);
+            var appointments = await _equipmentMovementAppointmentService.GetAllAvailableAppointmentsForEquipmentMovement(appointmentRequested);
+            var result = _mapper.Map<List<EquipmentMovementAppointmentResponse>>(appointments);
+            return Ok(result);
         }
     }
 }
