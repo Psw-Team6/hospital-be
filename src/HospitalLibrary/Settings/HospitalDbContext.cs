@@ -11,6 +11,7 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Enums;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
+using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.sharedModel;
 using Microsoft.EntityFrameworkCore;
@@ -580,7 +581,11 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Patient,
-                Enabled = true
+                Enabled = true,
+                DoctorId = doctor1.Id,
+                Gender = Gender.MALE,
+                Age = 15,
+                BloodType = BloodType.ABpos
             };
             Patient patient2 = new()
             {
@@ -594,7 +599,11 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Patient,
-                Enabled = true
+                Enabled = true,
+                DoctorId = doctor1.Id,
+                Gender = Gender.MALE,
+                Age = 32,
+                BloodType = BloodType.Aneg
             };
             modelBuilder.Entity<Patient>().HasData(
                 patient1,patient2

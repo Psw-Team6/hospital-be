@@ -11,6 +11,7 @@ using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Settings;
+using HospitalLibrary.sharedModel.Repository;
 using HospitalLibrary.TreatmentReports.Repository;
 using HospitalLibrary.TreatmentReports.Service;
 
@@ -37,6 +38,10 @@ namespace HospitalLibrary.Common
         private TreatmentReportRepository _treatmentReportRepository;
         private RoomBedRepository _roomBedRepository;
         private EquipmentMovementAppointmentRepository _equipmentMovementAppointmentRepository;
+        private AddressRepository _addressRepository;
+
+        public IAddressRepository AddressRepository =>
+            _addressRepository ??= new AddressRepository(_hospitalDbContext);
         public IRoomBedRepository RoomBedRepository =>
             _roomBedRepository ??= new RoomBedRepository(_hospitalDbContext);
 
