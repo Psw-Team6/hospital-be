@@ -10,12 +10,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
+    [Route("api/v1/[controller]")]
+    [ApiController]
     public class EquipmentMovementAppointmentController:ControllerBase
     {
         private readonly EquipmentMovementAppointmentService _equipmentMovementAppointmentService;
         private readonly IMapper _mapper;
 
-        public SpecializationsController(EquipmentMovementAppointmentService equipmentMovementAppointmentService, IMapper mapper)
+        public EquipmentMovementAppointmentController(EquipmentMovementAppointmentService equipmentMovementAppointmentService, IMapper mapper)
         {
             _equipmentMovementAppointmentService = equipmentMovementAppointmentService;
             _mapper = mapper;
@@ -29,7 +31,7 @@ namespace HospitalAPI.Controllers
             var equipmentMovementAppointment = _mapper.Map<EquipmentMovementAppointment>(equipmentMovementDto);
             var equipmentMovementAppointmentCreated = await _equipmentMovementAppointmentService.Create(equipmentMovementAppointment);
             var result = _mapper.Map<EquipmentMovementAppointmentResponse>(equipmentMovementAppointmentCreated);
-            return CreatedAtAction(nameof(GetById), new { id = result.id }, result);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
         
         [HttpGet("{id}")]

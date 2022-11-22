@@ -5,6 +5,9 @@ using HospitalLibrary.BloodUnits.Service;
 using HospitalLibrary.Common;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
+using HospitalLibrary.EquipmentMovement.Model;
+using HospitalLibrary.EquipmentMovement.Repository;
+using HospitalLibrary.EquipmentMovement.Service;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Holidays.Repository;
@@ -65,6 +68,8 @@ namespace HospitalAPI.Extensions
             services.AddScoped<ITreatmentReportRepository, TreatmentReportRepository>();
             services.AddScoped<RoomBedService>();
             services.AddScoped<IRoomBedRepository, RoomBedRepository>();
+            services.AddScoped<EquipmentMovementAppointmentService>();
+            services.AddScoped<IEquipmentMovementAppointmentRepository, EquipmentMovementAppointmentRepository>();
         }
     }
 }
