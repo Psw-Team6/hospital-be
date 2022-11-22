@@ -52,7 +52,7 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<PatientResponse>(patient);
             return result == null ? NotFound() : Ok(result);
         }
-        
+
         [HttpGet("/api/v1/Patient-gender-female")]
         [ProducesResponseType( StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
