@@ -546,3 +546,6 @@ $RECYCLE.BIN/
 #JetBrains
 .DS_Store
 .idea
+src/IntegrationAPI/appsettings.json
+src/IntegrationAPI/appsettings.json
+src/IntegrationAPI/appsettings.json

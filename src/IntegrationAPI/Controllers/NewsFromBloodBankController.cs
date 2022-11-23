@@ -15,6 +15,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using IntegrationLibrary.NewsFromBloodBank.Service;
 using System.Collections.Generic;
 using IntegrationLibrary.NewsFromBloodBank.Model;
+using System.Linq;
 
 namespace IntegrationAPI.Controllers
 {
@@ -23,13 +24,14 @@ namespace IntegrationAPI.Controllers
     public class NewsFromBloodBankController : ControllerBase
     {
         private readonly INewsFromBloodBankService _newsService;
-        private readonly IMapper _mapper;
 
-        public NewsFromBloodBankController(INewsFromBloodBankService bloodBankService, IMapper mapper)
+        public NewsFromBloodBankController(INewsFromBloodBankService service)
         {
-            _newsService = bloodBankService;
-            _mapper = mapper;
-
+            _newsService = service;
+        }
+        [HttpGet("get-first")]
+        public NewsFromBloodBank GetFirst() {
+            return _newsService.GetAllOnHold().First();
         }
 
         [HttpGet]

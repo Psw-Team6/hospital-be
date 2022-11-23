@@ -62,6 +62,7 @@ namespace HospitalAPI
             services.AddTransient<ExceptionMiddleware>();
             
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
             services.AddMyDependencyGroup();
             services.AddHttpClient();
