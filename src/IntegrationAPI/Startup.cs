@@ -3,6 +3,8 @@ using IntegrationLibrary.BloodBank.Repository;
 using IntegrationLibrary.BloodBank.Service;
 using IntegrationLibrary.NewsFromBloodBank.Repository;
 using IntegrationLibrary.NewsFromBloodBank.Service;
+using IntegrationLibrary.BloodRequests.Repository;
+using IntegrationLibrary.BloodRequests.Service;
 using IntegrationLibrary.SendMail;
 using IntegrationLibrary.SendMail.Services;
 using IntegrationLibrary.Settings;
@@ -54,6 +56,8 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
             services.AddScoped<INewsFromBloodBankService, NewsFromBloodBankService>();
             services.AddScoped<INewsFromBloodBankRepository, NewsFromBloodBankRepository>();
+            services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
+            services.AddScoped<IBloodRequestService, BloodRequestService>();
 
         }
 
