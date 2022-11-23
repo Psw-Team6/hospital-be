@@ -82,8 +82,9 @@ namespace IntegrationTest.Integration
 
             //assert
             List<NewsFromBloodBank> newsList = dbContext.NewsFromBloodBank.ToList();
-            Assert.True(newsList.Last().title == "Testni naslov");
-            dbContext.NewsFromBloodBank.Remove(newsList.Last());
+            NewsFromBloodBank news = newsList.Last();
+            Assert.True(news.title == "Testni naslov");
+            dbContext.NewsFromBloodBank.Remove(news);
             dbContext.SaveChanges();
         }
 
@@ -106,8 +107,6 @@ namespace IntegrationTest.Integration
             //assert
             List<NewsFromBloodBank> newsList = dbContext.NewsFromBloodBank.ToList();
             Assert.True(newsList.Last().title != "Testni naslov");
-            dbContext.NewsFromBloodBank.Remove(newsList.Last());
-            dbContext.SaveChanges();
         }
 
     }

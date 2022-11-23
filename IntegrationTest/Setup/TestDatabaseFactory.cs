@@ -26,7 +26,7 @@ namespace IntegrationTest.Setup
         private static ServiceProvider BuildServiceProvider(IServiceCollection serviceCollection)
         {
             var desc = serviceCollection
-                .SingleOrDefault(d => d.ServiceType == typeof(IntegrationDbContext));
+                .SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<IntegrationDbContext>));
             serviceCollection.Remove(desc);
             serviceCollection.AddDbContext<IntegrationDbContext>(opt =>
             {
