@@ -7,6 +7,7 @@ using HospitalLibrary.Common;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.sharedModel;
+using Newtonsoft.Json.Serialization;
 
 namespace HospitalLibrary.Patients.Service
 {
@@ -42,12 +43,15 @@ namespace HospitalLibrary.Patients.Service
             patient.Password = hashPassword;
             patient.UserRole = UserRole.Patient;
             patient.CalculateAge();
-            List<Allergen> allergens = ((List<Allergen>)patient.Allergies);
+            List<Allergen> allergens = new List<Allergen>();
             foreach (var id in patient.AllergyIds)
             {
                 Guid newGuid = Guid.Parse(id);
-                //patient.Allergies.ToList().Add(await _unitOfWork.AllergenRepository.GetByIdAsync(newGuid));
+                
+                allergens.Add(await _unitOfWork.AllergenRepository.GetByIdAsync(newGuid));
+        
             }
+            patient.Allergies = allergens;
             patient.Doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(patient.DoctorId);
             patient.Enabled = false;
             var newPatient = await _unitOfWork.PatientRepository.CreateAsync(patient);
