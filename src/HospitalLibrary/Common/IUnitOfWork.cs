@@ -36,8 +36,8 @@ namespace HospitalLibrary.Common
         IIEquipmentRepository EquipmentRepository { get; }
         ITreatmentReportRepository TreatmentReportRepository { get; }
         IRoomBedRepository RoomBedRepository { get; }
-        
         IAddressRepository AddressRepository { get; }
+        IAllergenRepository AllergenRepository { get; }
 
         T GetRepository<T>() where T : class;
         Task CompleteAsync();

@@ -19,6 +19,7 @@ namespace HospitalLibrary.Common
     public class UnitOfWork:IUnitOfWork
     {
         private readonly HospitalDbContext _hospitalDbContext;
+        private AllergenRepository _allergenRepository;
         private SpecializationsRepository _specializationsRepository;
         private DoctorRepository _doctorRepository;
         private PatientRepository _patientRepository;
@@ -37,7 +38,10 @@ namespace HospitalLibrary.Common
         private TreatmentReportRepository _treatmentReportRepository;
         private RoomBedRepository _roomBedRepository;
         private AddressRepository _addressRepository;
+      
 
+        public IAllergenRepository AllergenRepository =>
+            _allergenRepository ??= new AllergenRepository(_hospitalDbContext);
         public IAddressRepository AddressRepository =>
             _addressRepository ??= new AddressRepository(_hospitalDbContext);
         public IRoomBedRepository RoomBedRepository =>
