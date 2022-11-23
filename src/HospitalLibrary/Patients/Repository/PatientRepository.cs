@@ -18,6 +18,8 @@ namespace HospitalLibrary.Patients.Repository
         {
             return await DbSet.Include(p => p.Address)
                 .Include(p => p.Feedbacks)
+                .Include(p=> p.Allergies)
+                .Include(p=> p.Doctor)
                 .ToListAsync();
         }
 
@@ -25,6 +27,8 @@ namespace HospitalLibrary.Patients.Repository
         {
             return await DbSet.Include(p => p.Address)
                 .Include(p => p.Feedbacks)
+                .Include(p=> p.Allergies)
+                .Include(p=> p.Doctor)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
     }

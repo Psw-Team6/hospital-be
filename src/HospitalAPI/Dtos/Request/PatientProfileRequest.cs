@@ -1,3 +1,4 @@
+using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.sharedModel;
@@ -15,5 +16,6 @@ namespace HospitalAPI.Dtos.Request
         public string Phone { get; set; }
         public Gender Gender { get; set; }
         public Doctor Doctor { get; set; }
+        public BloodType BloodType { get; set; }
     }
 }
