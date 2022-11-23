@@ -82,6 +82,11 @@ namespace HospitalLibrary.Patients.Service
             return false;
         }
 
+        public async Task<PatientAdmission> GetAdmissionWithPatientById(Guid id)
+        {
+            return await _unitOfWork.PatientAdmissionRepository.GetPatientAdmissionByIdAsync(id);
+        }
+
         public async Task<Boolean> DischargePatient(PatientAdmission admissionRequest)
         {
             var admission = await _unitOfWork.PatientAdmissionRepository.GetByIdAsync(admissionRequest.Id);
