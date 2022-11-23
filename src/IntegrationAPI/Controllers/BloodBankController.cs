@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using IntegrationAPI.Dtos.Response;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.Collections.Generic;
 
 namespace IntegrationAPI.Controllers
 {
@@ -35,6 +36,20 @@ namespace IntegrationAPI.Controllers
         public ActionResult GetAll()
         {
             return Ok(_bloodBankService.GetAll());
+        }
+
+        [HttpGet("bloodBankName",Name = "Get")]
+        public List<BloodBankName> GetBloodBankName()
+
+        {
+            List<BloodBank> BloodBanks = (List<BloodBank>)_bloodBankService.GetAll();
+            List<BloodBankName> bloodBankNames = new List<BloodBankName>();
+            for(int i=0; i< BloodBanks.Count; i++)
+            {
+                bloodBankNames.Add(new BloodBankName((BloodBanks[i].Name)));
+            }
+
+            return bloodBankNames;
         }
 
         // GET api/bloodbank/2
