@@ -43,11 +43,18 @@ namespace IntegrationAPI.Controllers
             return Ok(_bloodRequestService.GetAll());
         }
 
-        // GET: api/BloodRequest
+        // GET: api/BloodRequest/pending
         [HttpGet("pending")]
         public ActionResult GetAllOnPending()
         {
             return Ok(_bloodRequestService.GetAllOnPending());
+        }
+
+        // GET: api/BloodRequest/returned/Ilija
+        [HttpGet("returned/{username}")]
+        public ActionResult GetAllReturned(String username)
+        {
+            return Ok(_bloodRequestService.GetAllReturned(username));
         }
 
         // GET: api/BloodRequest

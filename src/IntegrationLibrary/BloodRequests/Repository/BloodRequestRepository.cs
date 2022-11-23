@@ -71,5 +71,21 @@ namespace IntegrationLibrary.BloodRequests.Repository
 
             return allOnPending;
         }
+
+        public IEnumerable<BloodRequest> GetAllReturned(string doctorUsername)
+        {
+            List<BloodRequest> all = (List<BloodRequest>)GetAll();
+            List<BloodRequest> allReturned = new List<BloodRequest>();
+
+            foreach (BloodRequest req in all)
+            {
+                if (req.Status == Status.RETURNED && req.DoctorUsername.Equals(doctorUsername))
+                {
+                    allReturned.Add(req);
+                }
+            }
+
+            return allReturned;
+        }
     }
 }

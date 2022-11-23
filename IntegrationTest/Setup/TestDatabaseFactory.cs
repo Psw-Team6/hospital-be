@@ -27,7 +27,7 @@ namespace IntegrationTest.Setup
         private static ServiceProvider BuildServiceProvider(IServiceCollection serviceCollection)
         {
             var desc = serviceCollection
-                .SingleOrDefault(d => d.ServiceType == typeof(IntegrationDbContext));
+                .SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<IntegrationDbContext>));
             serviceCollection.Remove(desc);
             serviceCollection.AddDbContext<IntegrationDbContext>(opt =>
             {
@@ -106,149 +106,12 @@ namespace IntegrationTest.Setup
                 Comment = ""
             };
 
-            BloodRequest request6 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.Bneg,
-                Amount = 20.0,
-                Reason = "Operacija",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-            BloodRequest request7 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.ABneg,
-                Amount = 10.0,
-                Reason = "SADDDDDDSAD",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
 
-            BloodRequest request8 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.Bneg,
-                Amount = 20.0,
-                Reason = "Operacija",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-            BloodRequest request9 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.ABneg,
-                Amount = 10.0,
-                Reason = "SADDDDDDSAD",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-
-            BloodRequest request10 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.Bneg,
-                Amount = 20.0,
-                Reason = "Operacija",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-            BloodRequest request11 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.ABneg,
-                Amount = 10.0,
-                Reason = "SADDDDDDSAD",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-
-            BloodRequest request12 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.Bneg,
-                Amount = 20.0,
-                Reason = "Operacija",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-
-            BloodRequest request13 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.ABneg,
-                Amount = 10.0,
-                Reason = "SADDDDDDSAD",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-
-            BloodRequest request14 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.Bneg,
-                Amount = 20.0,
-                Reason = "Operacija",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-            BloodRequest request15 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.ABneg,
-                Amount = 10.0,
-                Reason = "SADDDDDDSAD",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-
-            BloodRequest request16 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.Bneg,
-                Amount = 20.0,
-                Reason = "Operacija",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
             context.BloodRequests.Add(request1);
+            context.BloodRequests.Add(request2);
             context.BloodRequests.Add(request3);
             context.BloodRequests.Add(request4);
-            context.BloodRequests.Add(request5);
-            context.BloodRequests.Add(request6);
-            context.BloodRequests.Add(request7);
-            context.BloodRequests.Add(request8);
-            context.BloodRequests.Add(request9);
-            context.BloodRequests.Add(request10);
-            context.BloodRequests.Add(request11);
-            context.BloodRequests.Add(request12);
-            context.BloodRequests.Add(request13);
-            context.BloodRequests.Add(request14);
-            context.BloodRequests.Add(request15);
-            context.BloodRequests.Add(request16);
-            context.BloodRequests.Add(request2);
+
 
             context.SaveChanges();
         }

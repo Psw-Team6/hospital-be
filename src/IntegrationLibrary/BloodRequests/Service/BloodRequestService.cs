@@ -50,5 +50,10 @@ namespace IntegrationLibrary.BloodRequests.Service
         {
             return _bloodRequestRepository.GetAllOnPending();
         }
+
+        public IEnumerable<BloodRequest> GetAllReturned(string doctorUsername)
+        {
+            return _bloodRequestRepository.GetAllReturned(doctorUsername);
+        }
     }
 }
