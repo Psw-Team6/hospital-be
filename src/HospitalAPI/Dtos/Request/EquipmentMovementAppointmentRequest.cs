@@ -5,7 +5,7 @@ namespace HospitalAPI.Dtos.Request
 {
     public class EquipmentMovementAppointmentRequest
     {
-        public Guid Id { get; set; }
+        public Guid EquipmentId { get; set; }
         
         public int Amount { get; set; }
         

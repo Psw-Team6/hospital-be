@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
 using HospitalLibrary.EquipmentMovement.Model;
+using HospitalLibrary.sharedModel;
 
 namespace HospitalLibrary.EquipmentMovement.Service
 {
@@ -40,18 +41,23 @@ namespace HospitalLibrary.EquipmentMovement.Service
         {
             List<EquipmentMovementAppointment> potentialAppointments = new List<EquipmentMovementAppointment>();
             DateTime startOfMovement= equipmentAppointmentsRequest.DatesForSearch.From;
-            DateTime endOfMovement = equipmentAppointmentsRequest.DatesForSearch.From + equipmentAppointmentsRequest.DurationOfEquipmentMovementAppointment;
+            DateTime endOfMovement = startOfMovement + equipmentAppointmentsRequest.DurationOfEquipmentMovementAppointment;
             
             while(startOfMovement < equipmentAppointmentsRequest.DatesForSearch.To || endOfMovement < equipmentAppointmentsRequest.DatesForSearch.To)
             {
-                EquipmentMovementAppointment newEquipmentMovement = new EquipmentMovementAppointment();
-                newEquipmentMovement.DurationOfEquipmentMovementAppointment.From = startOfMovement;
-                newEquipmentMovement.DurationOfEquipmentMovementAppointment.To = startOfMovement +
-                    equipmentAppointmentsRequest.DurationOfEquipmentMovementAppointment;
-               
-                startOfMovement= equipmentAppointmentsRequest.DatesForSearch.From;
-                endOfMovement = equipmentAppointmentsRequest.DatesForSearch.From + equipmentAppointmentsRequest.DurationOfEquipmentMovementAppointment;
+                EquipmentMovementAppointment newEquipmentMovement = new EquipmentMovementAppointment
+                {
+                    DurationOfEquipmentMovementAppointment = new DateRange
+                    {
+                        From = startOfMovement,
+                        To = endOfMovement
+                    }
+                };
 
+                potentialAppointments.Add(newEquipmentMovement);
+                
+                startOfMovement += TimeSpan.FromMinutes(15);
+                endOfMovement = startOfMovement + equipmentAppointmentsRequest.DurationOfEquipmentMovementAppointment;
             }
 
             return potentialAppointments;

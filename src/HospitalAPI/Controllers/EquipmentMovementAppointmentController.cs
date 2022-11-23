@@ -27,7 +27,7 @@ namespace HospitalAPI.Controllers
         [HttpPost]
         [ProducesResponseType( StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<EquipmentMovementAppointmentResponse>> Create(EquipmentMovementAppointmentRequest equipmentMovementDto)
+        public async Task<ActionResult<EquipmentMovementAppointmentResponse>> Create(EquipmentMovementAppointmentResponse equipmentMovementDto)
         {
             var equipmentMovementAppointment = _mapper.Map<EquipmentMovementAppointment>(equipmentMovementDto);
             var equipmentMovementAppointmentCreated = await _equipmentMovementAppointmentService.Create(equipmentMovementAppointment);
@@ -46,13 +46,15 @@ namespace HospitalAPI.Controllers
         }
         
         
-        [HttpPost]
+        [HttpPost("getAvailable")]
         [ProducesResponseType(typeof(List<EquipmentMovementAppointmentResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<EquipmentMovementAppointmentResponse>>> GetAllAvailableAppointmentsForEquipmentMovement([FromBody]EquipmentMovementAppointmentRequest equipmentAppointmentsRequest)
         {
             var appointmentRequested = _mapper.Map<EquipmentMovementRequest>(equipmentAppointmentsRequest);
+            
             var appointments = await _equipmentMovementAppointmentService.GetAllAvailableAppointmentsForEquipmentMovement(appointmentRequested);
+            
             var result = _mapper.Map<List<EquipmentMovementAppointmentResponse>>(appointments);
             return Ok(result);
         }
