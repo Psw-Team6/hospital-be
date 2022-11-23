@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HospitalTest.Setup
+namespace IntegrationTest.Setup
 {
     public class TestDatabaseFactory<TStartup> : WebApplicationFactory<Startup>
     {
@@ -26,7 +26,7 @@ namespace HospitalTest.Setup
         private static ServiceProvider BuildServiceProvider(IServiceCollection serviceCollection)
         {
             var desc = serviceCollection
-                .SingleOrDefault(d => d.ServiceType == typeof(IntegrationDbContext));
+                .SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<IntegrationDbContext>));
             serviceCollection.Remove(desc);
             serviceCollection.AddDbContext<IntegrationDbContext>(opt =>
             {
