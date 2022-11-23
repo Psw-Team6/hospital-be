@@ -29,7 +29,7 @@ namespace IntegrationAPI.Controllers
         {
             _newsService = service;
         }
-
+        [HttpGet("get-first")]
         public NewsFromBloodBank GetFirst() {
             return _newsService.GetAllOnHold().First();
         }

@@ -73,6 +73,7 @@ namespace IntegrationAPI.Controllers
                 return BadRequest(ModelState);
             }
             _bloodRequestService.Create(bloodRequest);
+            //return CreatedAtAction("GetById", new { id = bloodRequest.Id }, bloodRequest);
             return StatusCode(201, null);
         }
 
