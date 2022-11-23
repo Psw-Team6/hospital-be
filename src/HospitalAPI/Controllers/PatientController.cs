@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
+using HospitalAPI.Infrastructure.Authorization;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Patients.Service;
 using Microsoft.AspNetCore.Http;
@@ -114,6 +116,17 @@ namespace HospitalAPI.Controllers
         {
             var patients = await _patientService.GetElderlyGroup();
             return Ok(patients);
+        }
+        [HttpGet("hospitalized-patients")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        /*[HospitalAuthorization(UserRole.Doctor)]*/
+        public async Task<ActionResult<IEnumerable<HospitalizedPatientResponse>>> GetAllHospitalizedPatients()
+        {
+            var hospitalizedPatients = await _patientService.GetAllHospitalizedPatients();
+            var result = _mapper.Map<IEnumerable<HospitalizedPatientResponse>>(hospitalizedPatients);
+            return result == null ? NotFound() : Ok(result);
+            
         }
     }
 }
