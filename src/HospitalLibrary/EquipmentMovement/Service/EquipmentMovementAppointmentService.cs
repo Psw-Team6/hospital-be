@@ -53,8 +53,10 @@ namespace HospitalLibrary.EquipmentMovement.Service
 
         public async  Task<List<EquipmentMovementAppointment>> GetAllAvailableAppointmentsForEquipmentMovement(EquipmentMovementRequest equipmentAppointmentsRequest)
         {
+            Console.WriteLine("POGODJEN!");
             if (await ValidateRequest(equipmentAppointmentsRequest) == false)
             {
+                Console.WriteLine("PUCA ZBOG OVOGA!");
                 return null;
             }
             
