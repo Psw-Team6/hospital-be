@@ -18,6 +18,7 @@ namespace HospitalLibrary.EquipmentMovement.Model
 
         public DateRange Duration { get; set; }
 
+        public Guid EquipmentId { get; set; }
         public string EquipmentName { get; set; }
     }
 }

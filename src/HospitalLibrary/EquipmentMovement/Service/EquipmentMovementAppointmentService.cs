@@ -7,6 +7,7 @@ using HospitalLibrary.Common;
 using HospitalLibrary.EquipmentMovement.Model;
 using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.sharedModel;
+using SendGrid.Helpers.Errors.Model;
 
 namespace HospitalLibrary.EquipmentMovement.Service
 {
@@ -34,6 +35,10 @@ namespace HospitalLibrary.EquipmentMovement.Service
 
         public async Task<EquipmentMovementAppointment> Create(EquipmentMovementAppointment equipmentMovementAppointment)
         {
+            if (await ValidateAppointment(equipmentMovementAppointment) == false)
+            {
+                return null;
+            }
             equipmentMovementAppointment.DestinationRoom = await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementAppointment.DestinationRoomId);
             equipmentMovementAppointment.OriginalRoom = await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementAppointment.OriginalRoomId);
 
@@ -45,6 +50,10 @@ namespace HospitalLibrary.EquipmentMovement.Service
 
         public async  Task<List<EquipmentMovementAppointment>> GetAllAvailableAppointmentsForEquipmentMovement(EquipmentMovementRequest equipmentAppointmentsRequest)
         {
+            if (await ValidateRequest(equipmentAppointmentsRequest) == false)
+            {
+                return null;
+            }
             List<EquipmentMovementAppointment> potentialAppointments = await GetAppointmentsForEvery15Min(equipmentAppointmentsRequest);
             potentialAppointments = await DeleteConflictsWithRoomAppointments(potentialAppointments, equipmentAppointmentsRequest.DestinationRoomId);
             potentialAppointments = await DeleteConflictsWithRoomAppointments(potentialAppointments, equipmentAppointmentsRequest.OriginalRoomId);
@@ -157,6 +166,37 @@ namespace HospitalLibrary.EquipmentMovement.Service
             }
 
             return listEquipmentAppointmentsRequest;
+        }
+
+        private async Task<bool> ValidateRequest(EquipmentMovementRequest equipmentMovementRequest)
+        {
+            if (!equipmentMovementRequest.DatesForSearch.IsValidRange())
+            {
+                return false;
+            }
+
+            if (equipmentMovementRequest.Amount <= 0)
+            {
+                return false;
+            }
+            
+            
+            return true;
+        }
+        
+        private async Task<bool> ValidateAppointment(EquipmentMovementAppointment equipmentMovementAppointment)
+        {
+            if (!equipmentMovementAppointment.Duration.IsValidRange())
+            {
+                return false;
+            }
+            
+            if (equipmentMovementAppointment.Amount <= 0)
+            {
+                return false;
+            }
+            
+            return true;
         }
     }
 }

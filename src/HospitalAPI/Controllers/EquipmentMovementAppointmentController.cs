@@ -32,6 +32,10 @@ namespace HospitalAPI.Controllers
             var equipmentMovementAppointment = _mapper.Map<EquipmentMovementAppointment>(equipmentMovementDto);
             var equipmentMovementAppointmentCreated = await _equipmentMovementAppointmentService.Create(equipmentMovementAppointment);
             var result = _mapper.Map<EquipmentMovementAppointmentResponse>(equipmentMovementAppointmentCreated);
+            if (result == null)
+            {
+                return BadRequest();
+            }
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
         
@@ -56,7 +60,7 @@ namespace HospitalAPI.Controllers
             var appointments = await _equipmentMovementAppointmentService.GetAllAvailableAppointmentsForEquipmentMovement(appointmentRequested);
             
             var result = _mapper.Map<List<EquipmentMovementAppointmentResponse>>(appointments);
-            return Ok(result);
+            return result == null ? BadRequest() : Ok(result);
         }
     }
 }

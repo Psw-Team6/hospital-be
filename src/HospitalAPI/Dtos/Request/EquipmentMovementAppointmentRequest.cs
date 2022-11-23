@@ -5,7 +5,6 @@ namespace HospitalAPI.Dtos.Request
 {
     public class EquipmentMovementAppointmentRequest
     {
-        public Guid EquipmentId { get; set; }
         
         public int Amount { get; set; }
         
@@ -16,6 +15,8 @@ namespace HospitalAPI.Dtos.Request
         public DateRange DatesForSearch { get; set; }
 
         public TimeSpan Duration{ get; set; }
+        
+        public Guid EquipmentId { get; set; }
         public string EquipmentName { get; set; }
     }
 }

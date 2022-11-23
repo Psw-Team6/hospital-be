@@ -31,8 +31,7 @@ namespace HospitalLibrary.Rooms.Repository
                 .Include(roomEquipment => roomEquipment.RoomEquipmentId)
                 .ToListAsync();
         }
-            
-       
+        
         
         public async Task<List<RoomEquipment>> GetAllEquipmentByRoomId(Guid roomId)
         {
