@@ -691,6 +691,7 @@ namespace HospitalLibrary.Settings
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
+                DateOfBirth = new DateTime(2007,10,12),
                 Gender = Gender.MALE,
                 Age = 15,
                 BloodType = BloodType.ABpos
@@ -709,6 +710,7 @@ namespace HospitalLibrary.Settings
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
+                DateOfBirth = new DateTime(1990,10,12),
                 Gender = Gender.MALE,
                 Age = 32,
                 BloodType = BloodType.Aneg

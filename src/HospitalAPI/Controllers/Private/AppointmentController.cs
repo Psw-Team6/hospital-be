@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
 using HospitalAPI.Infrastructure.Authorization;
 using HospitalLibrary.ApplicationUsers.Model;
-using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HospitalAPI.Controllers
+namespace HospitalAPI.Controllers.Private
 {
     [Route("api/v1/[controller]")]
     [ApiController]

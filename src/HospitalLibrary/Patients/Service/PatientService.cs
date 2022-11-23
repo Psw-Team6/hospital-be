@@ -6,6 +6,8 @@ using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.sharedModel;
+using Newtonsoft.Json.Serialization;
 
 namespace HospitalLibrary.Patients.Service
 {
@@ -22,6 +24,16 @@ namespace HospitalLibrary.Patients.Service
         {
             return (List<Patient>) await _unitOfWork.PatientRepository.GetAllPatients();
         }
+        
+        public async Task<Boolean> IsUniqueUsername(String username)
+        {
+            ApplicationUser user = await _unitOfWork.UserRepository.FindByUsername(username);
+            if (user == null)
+            {
+                return true;
+            }
+            return false;
+        }
 
         public async Task<Patient> CreatePatient(Patient patient)
         {
@@ -30,6 +42,16 @@ namespace HospitalLibrary.Patients.Service
             patient.AddressId = patient.Address.Id;
             patient.Password = hashPassword;
             patient.UserRole = UserRole.Patient;
+            patient.CalculateAge();
+            List<Allergen> allergens = new List<Allergen>();
+            foreach (var id in patient.AllergyIds)
+            {
+                Guid newGuid = Guid.Parse(id);
+                
+                allergens.Add(await _unitOfWork.AllergenRepository.GetByIdAsync(newGuid));
+        
+            }
+            patient.Allergies = allergens;
             patient.Doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(patient.DoctorId);
             patient.Enabled = false;
             var newPatient = await _unitOfWork.PatientRepository.CreateAsync(patient);

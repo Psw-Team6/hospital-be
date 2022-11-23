@@ -19,16 +19,23 @@ namespace HospitalLibrary.Patients.Model
     {
         public IEnumerable<Appointment> Appointments { get; set; }
         public IEnumerable<Feedback> Feedbacks { get; set; }
-        public IEnumerable<Allergen> Allergies { get; set; }
+        public List<Allergen> Allergies { get; set; }
         public IEnumerable<PatientAdmission> PatientAdmissions { get; set; }
        // public IEnumerable<TreatmentReport> TreatmentReports { get; set; }
+        public IEnumerable<string> AllergyIds;
 
         public Gender Gender { get; set; }
         public int Age { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public Doctor Doctor { get; set; }
         public Guid DoctorId { get; set; }
         public BloodType? BloodType { get; set; }
-        
+
+        public void CalculateAge()
+        {
+            DateTime today = DateTime.Now;
+            Age = DateOfBirth.Year - today.Year;
+        }
         
 
     }
