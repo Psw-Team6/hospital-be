@@ -65,6 +65,10 @@ namespace IntegrationLibrary.BloodBank.Service
             
         }
 
+        public BloodBank Authenticate(string name, string password)
+        {
+            return _bloodBankRepository.Authenticate(name, password);
+        }
         private String GenerateDummyPassword()
         {
             var key = new byte[8];

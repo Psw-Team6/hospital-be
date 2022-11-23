@@ -16,7 +16,7 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    // [HospitalAuthorization(UserRole.Doctor)]
+   // [HospitalAuthorization(UserRole.Doctor)]
     public class AppointmentController : ControllerBase
     {
         private readonly AppointmentService _appointmentService;
@@ -45,6 +45,15 @@ namespace HospitalAPI.Controllers
             var appointment = await _appointmentService.GetById(id);
             var result = _mapper.Map<AppointmentResponse>(appointment);
             return result == null ? NotFound() : Ok(result);
+        }
+        
+        [HttpGet("byRoom/{roomId:guid}")]
+        [ProducesResponseType(typeof(AppointmentResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<AppointmentResponse>>> GetByRoomId([FromRoute]Guid roomId)
+        {
+            var appointments = await _appointmentService.GetAllByRoomId(roomId);
+            return appointments == null ? NotFound() : Ok(appointments);
         }
         
         [HttpDelete("{id}")]

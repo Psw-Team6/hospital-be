@@ -8,6 +8,8 @@ using IntegrationAPI.ScheduleTask.Service;
 using IntegrationLibrary.PDFReports.Service;
 using IntegrationLibrary.NewsFromBloodBank.Repository;
 using IntegrationLibrary.NewsFromBloodBank.Service;
+using IntegrationLibrary.BloodRequests.Repository;
+using IntegrationLibrary.BloodRequests.Service;
 using IntegrationLibrary.SendMail;
 using IntegrationLibrary.SendMail.Services;
 using IntegrationLibrary.Settings;
@@ -70,6 +72,8 @@ namespace IntegrationAPI
             services.AddSingleton<IHostedService, GenerateAndSendReportTask>();
             services.AddScoped<INewsFromBloodBankService, NewsFromBloodBankService>();
             services.AddScoped<INewsFromBloodBankRepository, NewsFromBloodBankRepository>();
+            services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
+            services.AddScoped<IBloodRequestService, BloodRequestService>();
 
 
         }
@@ -87,7 +91,7 @@ namespace IntegrationAPI
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<IntegrationDbContext>();
-                //context?.Database.Migrate();
+                context?.Database.Migrate();
             }
             if (env.IsDevelopment())
             {

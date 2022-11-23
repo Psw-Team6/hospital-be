@@ -11,6 +11,7 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Enums;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
+using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.sharedModel;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Allergen> Allergens { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
         public DbSet<GRoom> GRooms { get; set; }
@@ -37,6 +39,7 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodConsumption> BloodConsumptions { get; set; }
         public DbSet<RoomEquipment> RoomEquipment { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
+       
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -136,6 +139,20 @@ namespace HospitalLibrary.Settings
             };
             modelBuilder.Entity<Address>().HasData(
                 address,address1,address2
+            );
+
+            Allergen allergen1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Paracetamol"
+            };
+            Allergen allergen2 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Brufen"
+            };
+            modelBuilder.Entity<Allergen>().HasData(
+                allergen1,allergen2
             );
             
             Building building1 = new()
@@ -371,7 +388,25 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 15,
                 EquipmentName = "SURGICAL_TABLES"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+               
+            };
+            
+            RoomEquipment roomEquipment11 = new()
+            {
+                RoomId = room1.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 5,
+                EquipmentName = "ANESTHESIA"
+               
+            };
+            
+            RoomEquipment roomEquipment111 = new()
+            {
+                RoomId = room1.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 13,
+                EquipmentName = "SYRINGE"
+               
             };
             
             RoomEquipment roomEquipment2 = new()
@@ -380,9 +415,17 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 10,
                 EquipmentName = "ANESTHESIA"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+                
             };
             
+            RoomEquipment roomEquipment22 = new()
+            {
+                RoomId = room2.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 5,
+                EquipmentName = "EKG_MACHINE"
+                
+            };
             
             RoomEquipment roomEquipment3 = new()
             {
@@ -390,27 +433,61 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 3,
                 EquipmentName = "EKG_MACHINE"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+                
             };
-            
+
+            RoomEquipment roomEquipment33 = new()
+            {
+                RoomId = room3.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 23,
+                EquipmentName = "SURGICAL_TABLES"
+                
+            };
             
             RoomEquipment roomEquipment4 = new()
             {
                 RoomId = room4.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
-                Amount = 1,
+                Amount = 11,
                 EquipmentName = "ANESTHESIA"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+                
             };
-           
             
+            RoomEquipment roomEquipment44 = new()
+            {
+                RoomId = room4.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 4,
+                EquipmentName = "BANDAGE"
+                
+            };
+
             RoomEquipment roomEquipment5 = new()
             {
                 RoomId = room5.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
-                Amount = 2,
+                Amount = 22,
                 EquipmentName = "EKG_MACHINE"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+               
+            };
+            
+            RoomEquipment roomEquipment55 = new()
+            {
+                RoomId = room5.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 6,
+                EquipmentName = "SYRINGE"
+               
+            };
+            
+            RoomEquipment roomEquipment555 = new()
+            {
+                RoomId = room5.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 15,
+                EquipmentName = "SURGICAL_TABLES"
+               
             };
            
             
@@ -418,9 +495,19 @@ namespace HospitalLibrary.Settings
             {
                 RoomId = room6.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
-                Amount = 4,
+                Amount = 14,
                 EquipmentName = "SURGICAL_TABLES"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+                
+            };
+            
+            
+            RoomEquipment roomEquipment66 = new()
+            {
+                RoomId = room6.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 7,
+                EquipmentName = "SYRINGE"
+                
             };
             
             
@@ -430,7 +517,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 6,
                 EquipmentName = "BANDAGE"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+                
             };
            
             
@@ -440,7 +527,17 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 3,
                 EquipmentName = "ANESTHESIA"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+                
+            };
+            
+            
+            RoomEquipment roomEquipment88 = new()
+            {
+                RoomId = room8.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 13,
+                EquipmentName = "BANDAGE"
+                
             };
            
             
@@ -450,7 +547,16 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 9,
                 EquipmentName = "SURGICAL_TABLES"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+                
+            };
+            
+            RoomEquipment roomEquipment99 = new()
+            {
+                RoomId = room9.Id, 
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 9,
+                EquipmentName = "ANESTHESIA"
+                
             };
             
             
@@ -459,7 +565,10 @@ namespace HospitalLibrary.Settings
             
             
             modelBuilder.Entity<RoomEquipment>().HasData(
-                roomEquipment1,roomEquipment2,roomEquipment3,roomEquipment4,roomEquipment5,roomEquipment6,roomEquipment7,roomEquipment8,roomEquipment9
+                roomEquipment1,roomEquipment2,roomEquipment3,roomEquipment4,roomEquipment5,roomEquipment6,roomEquipment7,roomEquipment8,roomEquipment9,
+                roomEquipment11,roomEquipment111,roomEquipment22,roomEquipment33,roomEquipment44,roomEquipment55,roomEquipment555,roomEquipment66,
+                roomEquipment88,roomEquipment99
+                
             );
             
             
@@ -551,7 +660,7 @@ namespace HospitalLibrary.Settings
             Doctor doctor1 = new()
             {
                 Id = Guid.NewGuid(),
-                SpecializationId = specializationDermatology.Id,
+                SpecializationId = specializationGeneral.Id,
                 AddressId = address.Id,
                 WorkingScheduleId = workingSchedule1.Id,
                 RoomId = room1.Id,
@@ -580,7 +689,11 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Patient,
-                Enabled = true
+                Enabled = true,
+                DoctorId = doctor1.Id,
+                Gender = Gender.MALE,
+                Age = 15,
+                BloodType = BloodType.ABpos
             };
             Patient patient2 = new()
             {
@@ -594,7 +707,11 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Patient,
-                Enabled = true
+                Enabled = true,
+                DoctorId = doctor1.Id,
+                Gender = Gender.MALE,
+                Age = 32,
+                BloodType = BloodType.Aneg
             };
             modelBuilder.Entity<Patient>().HasData(
                 patient1,patient2

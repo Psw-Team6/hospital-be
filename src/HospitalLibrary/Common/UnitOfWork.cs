@@ -5,11 +5,13 @@ using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.BloodConsumptions.Repository;
 using HospitalLibrary.BloodUnits.Repository;
 using HospitalLibrary.Doctors.Repository;
+using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Settings;
+using HospitalLibrary.sharedModel.Repository;
 using HospitalLibrary.TreatmentReports.Repository;
 using HospitalLibrary.TreatmentReports.Service;
 
@@ -18,6 +20,7 @@ namespace HospitalLibrary.Common
     public class UnitOfWork:IUnitOfWork
     {
         private readonly HospitalDbContext _hospitalDbContext;
+        private AllergenRepository _allergenRepository;
         private SpecializationsRepository _specializationsRepository;
         private DoctorRepository _doctorRepository;
         private PatientRepository _patientRepository;
@@ -35,9 +38,18 @@ namespace HospitalLibrary.Common
         private EquipmentRepository _equipmentRepository;
         private TreatmentReportRepository _treatmentReportRepository;
         private RoomBedRepository _roomBedRepository;
+        private EquipmentMovementAppointmentRepository _equipmentMovementAppointmentRepository;
+        private AddressRepository _addressRepository;
+      
 
+        public IAllergenRepository AllergenRepository =>
+            _allergenRepository ??= new AllergenRepository(_hospitalDbContext);
+        public IAddressRepository AddressRepository =>
+            _addressRepository ??= new AddressRepository(_hospitalDbContext);
         public IRoomBedRepository RoomBedRepository =>
             _roomBedRepository ??= new RoomBedRepository(_hospitalDbContext);
+
+
         public ITreatmentReportRepository TreatmentReportRepository =>
             _treatmentReportRepository ??= new TreatmentReportRepository(_hospitalDbContext);
         public IIEquipmentRepository EquipmentRepository =>
@@ -60,7 +72,9 @@ namespace HospitalLibrary.Common
         public IFeedbackRepository FeedbackRepository => _feedbackRepository ??= new FeedbackRepository(_hospitalDbContext);
         public  IPatientRepository PatientRepository => _patientRepository ??= new PatientRepository(_hospitalDbContext);
         public  IAppointmentRepository AppointmentRepository => _appointmentRepository ??= new AppointmentRepository(_hospitalDbContext);
-        
+        public  IEquipmentMovementAppointmentRepository EquipmentMovementAppointmentRepository => _equipmentMovementAppointmentRepository ??= new EquipmentMovementAppointmentRepository(_hospitalDbContext);
+
+
 
         public IWorkingSchueduleRepository WorkingSchueduleRepository =>
             _workingScheduleRepository ??= new WorkingScheduleRepository(_hospitalDbContext);

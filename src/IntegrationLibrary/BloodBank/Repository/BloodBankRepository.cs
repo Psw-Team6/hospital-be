@@ -27,6 +27,12 @@ namespace IntegrationLibrary.BloodBank.Repository
             _context.SaveChanges();
         }
 
+        public BloodBank Authenticate(string username, string password)
+        {
+            return _context.BloodBanks
+                .FirstOrDefault(bank => bank.Name == username && bank.Password == password);
+        }
+
         public IEnumerable<BloodBank> GetAll()
         {
             return _context.BloodBanks.ToList();

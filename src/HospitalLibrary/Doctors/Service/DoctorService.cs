@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalLibrary.ApplicationUsers.Model;
@@ -23,6 +26,42 @@ namespace HospitalLibrary.Doctors.Service
         {
             return await _unitOfWork.DoctorRepository.GetAllDoctors();
         }
+        
+        public async Task<List<Doctor>> GetAllGeneral()
+        {
+            return await _unitOfWork.DoctorRepository.GetAllDoctorsBySpecialization();
+        }
+
+        public async Task<List<Doctor>> GetAllGeneralWithRequirements()
+        {
+            List<Doctor> doctors = await GetAllGeneral();
+            List<Doctor> availableDoctors = new List<Doctor>();
+            int minimumPatients = await GetMinimumPatients();
+            foreach (var d in doctors)
+            {
+                if (d.Patients.ToArray().Length <= minimumPatients + 2)
+                {
+                    availableDoctors.Add(d);
+                }
+            }
+            return availableDoctors;
+        }
+
+        public async Task<int> GetMinimumPatients()
+        {
+            int minimum = 2000000;
+            List<Doctor> doctors = await GetAllGeneral();
+            foreach (var d in doctors)
+            {
+                if (d.Patients.ToArray().Length < minimum)
+                {
+                    minimum = d.Patients.ToArray().Length;
+                }
+            }
+            return minimum;
+        }
+
+      
 
         public async Task<Doctor> CreateDoctor(Doctor doctor)
         {

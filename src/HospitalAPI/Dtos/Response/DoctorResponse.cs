@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HospitalAPI.Dtos.Response
 {
@@ -14,5 +15,6 @@ namespace HospitalAPI.Dtos.Response
         public string Phone{ get; set; }
         public SpecializationResponse Specialization{ get; set; }
         public RoomResponse Room { get; set; }
+        public List<PatientResponseName> Patients { get; set; }
     }
 }

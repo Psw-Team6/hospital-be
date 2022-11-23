@@ -5,7 +5,6 @@ using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodConsumptions.Service;
-using HospitalLibrary.BloodUnits.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,7 +44,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("getDoctorConsumptions/{doctorId:Guid}")]
         [ProducesResponseType(typeof(List<BloodConsumption>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<BloodConsumption>>> GetByBloodBankName([FromRoute]Guid doctorId)
+        public async Task<ActionResult<List<BloodConsumption>>> GetDoctorConsumptions([FromRoute]Guid doctorId)
         {
             var result = await _bloodConsumptionService.GetByDoctorId(doctorId);
             return result == null ? NotFound() : Ok(result);

@@ -32,6 +32,14 @@ namespace HospitalAPI.Exceptions
             {
                 await BadRequestException(context, e);
             }
+            catch (PatientAdmissionException e)
+            {
+                await NotFoundException(context, e);
+            }
+            catch (PatientDischargeException e)
+            {
+                await BadRequestException(context, e);
+            }
         }
 
         private static async Task BadRequestException(HttpContext context, Exception e)
@@ -40,6 +48,19 @@ namespace HospitalAPI.Exceptions
             //Set response ContentType
             response.ContentType = "application/json";
             response.StatusCode = (int) HttpStatusCode.BadRequest;
+            var responseContent = new ResponseContent()
+            {
+                Error = e.Message
+            };
+            var jsonResult = JsonConvert.SerializeObject(responseContent);
+            await context.Response.WriteAsync(jsonResult);
+        }
+        private static async Task NotFoundException(HttpContext context, Exception e)
+        {
+            var response = context.Response;
+            //Set response ContentType
+            response.ContentType = "application/json";
+            response.StatusCode = (int) HttpStatusCode.NotFound;
             var responseContent = new ResponseContent()
             {
                 Error = e.Message

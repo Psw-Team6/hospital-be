@@ -38,7 +38,7 @@ namespace HospitalTest.Setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=HospitalTestDB;Username=hospital;Password=hospital123;";
+            return "Host=localhost;port=5432;Database=HospitalTestDB;Username=hospital;Password=hospital123;";
         }
         private static void InitializeDataBase(HospitalDbContext context)
         {

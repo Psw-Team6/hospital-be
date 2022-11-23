@@ -12,8 +12,6 @@ namespace HospitalAPI.Controllers.Private
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    
-    
     public class RoomEquipmentController:ControllerBase
     {
         
@@ -46,6 +44,16 @@ namespace HospitalAPI.Controllers.Private
         public async Task<ActionResult<List<RoomEquipmentResponse>>> GetAllEquipmentByRoomId([FromRoute]Guid roomId)
         {
             var result = await _equipmentService.GetAllEquipmentByRoomId(roomId);
+            return result == null ? NotFound() : Ok(result);
+        }
+        
+        [HttpGet("SearchEquipmentByName/{equipmentName}")]
+        [ProducesResponseType(typeof(List<RoomEquipmentResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<RoomEquipmentResponse>>> SearchEquipmentByName([FromRoute]string equipmentName) //Vamo stavi string Eq
+        {
+            // string equipmentName = Eq.Trim().ToLower();
+            var result = await _equipmentService.SearchEquipmentByName(equipmentName);
             return result == null ? NotFound() : Ok(result);
         }
         
