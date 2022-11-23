@@ -22,6 +22,9 @@ namespace HospitalLibrary.Doctors.DbConfiguration
             _ = builder.HasOne(doctor => doctor.Specialization)
                 .WithMany(specialization => specialization.Doctors)
                 .HasForeignKey(doctor => doctor.SpecializationId);
+            _ = builder.HasMany(doctor => doctor.Patients)
+                .WithOne(patient => patient.Doctor)
+                .HasForeignKey(patient => patient.DoctorId);
         }
     }
 }

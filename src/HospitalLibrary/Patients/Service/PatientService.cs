@@ -20,14 +20,17 @@ namespace HospitalLibrary.Patients.Service
 
         public async Task<object> GetAll()
         {
-            return (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            return (List<Patient>) await _unitOfWork.PatientRepository.GetAllPatients();
         }
 
         public async Task<Patient> CreatePatient(Patient patient)
         {
             var hashPassword =PasswordHasher.HashPassword(patient.Password);
+            patient.Address =  await _unitOfWork.AddressRepository.CreateAsync(patient.Address);
+            patient.AddressId = patient.Address.Id;
             patient.Password = hashPassword;
             patient.UserRole = UserRole.Patient;
+            patient.Doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(patient.DoctorId);
             patient.Enabled = false;
             var newPatient = await _unitOfWork.PatientRepository.CreateAsync(patient);
             await _unitOfWork.CompleteAsync();
@@ -36,7 +39,7 @@ namespace HospitalLibrary.Patients.Service
 
         public async Task<Patient> GetById(Guid id)
         {
-            var patient = await _unitOfWork.PatientRepository.GetByIdAsync(id);
+            var patient = await _unitOfWork.PatientRepository.GetPatientById(id);
             await _unitOfWork.CompleteAsync();
             return patient;
         }
@@ -133,7 +136,7 @@ namespace HospitalLibrary.Patients.Service
 
         public async Task<int> GetElderlyGroup()
         {
-            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
             int counter = 0;
             foreach (var p in patients)
             {

@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using HospitalLibrary.ApplicationUsers;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.BloodUnits.Model;
+using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.sharedModel;
@@ -17,12 +19,17 @@ namespace HospitalLibrary.Patients.Model
     {
         public IEnumerable<Appointment> Appointments { get; set; }
         public IEnumerable<Feedback> Feedbacks { get; set; }
-        public IEnumerable<Ingredient> Allergies { get; set; }
+        public IEnumerable<Allergen> Allergies { get; set; }
         public IEnumerable<PatientAdmission> PatientAdmissions { get; set; }
-        public IEnumerable<TreatmentReport> TreatmentReports { get; set; }
+       // public IEnumerable<TreatmentReport> TreatmentReports { get; set; }
 
         public Gender Gender { get; set; }
         public int Age { get; set; }
+        public Doctor Doctor { get; set; }
+        public Guid DoctorId { get; set; }
+        public BloodType? BloodType { get; set; }
+        
+        
 
     }
 }

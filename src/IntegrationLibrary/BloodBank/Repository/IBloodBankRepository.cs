@@ -13,6 +13,7 @@ namespace IntegrationLibrary.BloodBank.Repository
         BloodBank GetByName(String name);
         void Create(BloodBank bloodBank);
         void Update(BloodBank bloodBank);
-        void Delete(BloodBank bloodBank);
+        void Delete(BloodBank bloodBank); 
+        BloodBank Authenticate(string username, string password);
     }
 }

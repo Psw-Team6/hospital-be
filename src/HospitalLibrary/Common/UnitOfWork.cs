@@ -10,6 +10,7 @@ using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Settings;
+using HospitalLibrary.sharedModel.Repository;
 using HospitalLibrary.TreatmentReports.Repository;
 using HospitalLibrary.TreatmentReports.Service;
 
@@ -18,6 +19,7 @@ namespace HospitalLibrary.Common
     public class UnitOfWork:IUnitOfWork
     {
         private readonly HospitalDbContext _hospitalDbContext;
+        private AllergenRepository _allergenRepository;
         private SpecializationsRepository _specializationsRepository;
         private DoctorRepository _doctorRepository;
         private PatientRepository _patientRepository;
@@ -35,7 +37,13 @@ namespace HospitalLibrary.Common
         private EquipmentRepository _equipmentRepository;
         private TreatmentReportRepository _treatmentReportRepository;
         private RoomBedRepository _roomBedRepository;
+        private AddressRepository _addressRepository;
+      
 
+        public IAllergenRepository AllergenRepository =>
+            _allergenRepository ??= new AllergenRepository(_hospitalDbContext);
+        public IAddressRepository AddressRepository =>
+            _addressRepository ??= new AddressRepository(_hospitalDbContext);
         public IRoomBedRepository RoomBedRepository =>
             _roomBedRepository ??= new RoomBedRepository(_hospitalDbContext);
         public ITreatmentReportRepository TreatmentReportRepository =>

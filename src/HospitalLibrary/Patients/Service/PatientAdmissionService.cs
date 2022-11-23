@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
+using HospitalLibrary.CustomException;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.TreatmentReports.Model;
 
 namespace HospitalLibrary.Patients.Service
@@ -13,15 +13,19 @@ namespace HospitalLibrary.Patients.Service
     public class PatientAdmissionService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly GeneratePdfReportService _reportService;
+        private readonly RoomBedService _bedService;
 
-        public PatientAdmissionService(IUnitOfWork unitOfWork)
+        public PatientAdmissionService(IUnitOfWork unitOfWork, GeneratePdfReportService reportService, RoomBedService bedService)
         {
             _unitOfWork = unitOfWork;
+            _reportService = reportService;
+            _bedService = bedService;
         }
 
         public async Task<object> GetAll()
         {
-            return (List<PatientAdmission>)await _unitOfWork.PatientAdmissionRepository.GetAllAsync();
+            return await _unitOfWork.PatientAdmissionRepository.GetAllPatientAdmissions();
         }
         
         public async Task<PatientAdmission> GetById(Guid id)
@@ -51,20 +55,56 @@ namespace HospitalLibrary.Patients.Service
             {
                 return null;
             }
-
+            
             await _unitOfWork.RoomBedRepository.UpdateAsync(bed);
-            admission.SelectedBed = bed;
             admission.SelectedBedId = bed.Id;
-            admission.SelectedRoom = room;
             admission.SelectedRoomId = room.Id;
-            var patient = await _unitOfWork.PatientRepository.GetByIdAsync(admission.PatientId);
-            admission.Patient = patient;
-            TreatmentReport report = new TreatmentReport();
-            report.PatientId = admission.PatientId;
-            var newReport = await _unitOfWork.TreatmentReportRepository.CreateAsync(report);
             var newAdmission = await _unitOfWork.PatientAdmissionRepository.CreateAsync(admission);
+            TreatmentReport report = new TreatmentReport
+            {
+                PatientAdmissionId = newAdmission.Id
+            };
+            var newReport = await _unitOfWork.TreatmentReportRepository.CreateAsync(report);
             await _unitOfWork.CompleteAsync();
             return newAdmission;
+        }
+
+        public async Task<Boolean> IsHospitalized(PatientAdmission admission)
+        {
+            List<PatientAdmission> patientAdmissions = (List<PatientAdmission>)await _unitOfWork.PatientAdmissionRepository.GetAllAsync();
+            foreach(var p in patientAdmissions)
+            {
+                if (p.PatientId.Equals(admission.PatientId) && p.DateOfDischarge == null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public async Task<Boolean> DischargePatient(PatientAdmission admissionRequest)
+        {
+            var admission = await _unitOfWork.PatientAdmissionRepository.GetByIdAsync(admissionRequest.Id);
+            CheckDischargePatientRequest(admission);
+            admission.Update(admissionRequest.ReasonOfDischarge,DateTime.Now);
+            await _bedService.UpdateRoomAvailability(admission);
+            await CollectDataForGeneratingReport(admission);
+            await _unitOfWork.PatientAdmissionRepository.UpdateAsync(admission);
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
+
+        private async Task CollectDataForGeneratingReport(PatientAdmission admission)
+        {
+            var admissionReport = await _unitOfWork.PatientAdmissionRepository.GetPatientAdmissionByIdAsync(admission.Id);
+            var treatmentReport = await _unitOfWork.TreatmentReportRepository.FindByPatientAdmission(admission.Id);
+            _reportService.GeneratePdfReport(admissionReport, treatmentReport);
+        }
+
+        private static void CheckDischargePatientRequest(PatientAdmission admission)
+        {
+            if (admission == null) throw new PatientAdmissionException("Patient admission not found!");
+            if (admission.DateOfDischarge != null) throw new PatientDischargeException("Patient is already discharged!");
         }
     }
 }

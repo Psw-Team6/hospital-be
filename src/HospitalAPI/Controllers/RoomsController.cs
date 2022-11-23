@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
+using HospitalAPI.Infrastructure.Authorization;
+using HospitalLibrary.ApplicationUsers.Model;
 using Microsoft.AspNetCore.Http;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Rooms.Service;
@@ -13,6 +15,7 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [HospitalAuthorization(UserRole.Manager)]
     public class RoomsController : ControllerBase
     {
         private readonly RoomService _roomService;

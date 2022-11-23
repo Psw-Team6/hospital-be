@@ -11,6 +11,7 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Enums;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
+using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.sharedModel;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Allergen> Allergens { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
         public DbSet<GRoom> GRooms { get; set; }
@@ -37,6 +39,7 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodConsumption> BloodConsumptions { get; set; }
         public DbSet<RoomEquipment> RoomEquipment { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
+       
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -136,6 +139,20 @@ namespace HospitalLibrary.Settings
             };
             modelBuilder.Entity<Address>().HasData(
                 address,address1,address2
+            );
+
+            Allergen allergen1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Paracetamol"
+            };
+            Allergen allergen2 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Brufen"
+            };
+            modelBuilder.Entity<Allergen>().HasData(
+                allergen1,allergen2
             );
             
             Building building1 = new()
@@ -551,7 +568,7 @@ namespace HospitalLibrary.Settings
             Doctor doctor1 = new()
             {
                 Id = Guid.NewGuid(),
-                SpecializationId = specializationDermatology.Id,
+                SpecializationId = specializationGeneral.Id,
                 AddressId = address.Id,
                 WorkingScheduleId = workingSchedule1.Id,
                 RoomId = room1.Id,
@@ -580,7 +597,11 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Patient,
-                Enabled = true
+                Enabled = true,
+                DoctorId = doctor1.Id,
+                Gender = Gender.MALE,
+                Age = 15,
+                BloodType = BloodType.ABpos
             };
             Patient patient2 = new()
             {
@@ -594,7 +615,11 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Patient,
-                Enabled = true
+                Enabled = true,
+                DoctorId = doctor1.Id,
+                Gender = Gender.MALE,
+                Age = 32,
+                BloodType = BloodType.Aneg
             };
             modelBuilder.Entity<Patient>().HasData(
                 patient1,patient2

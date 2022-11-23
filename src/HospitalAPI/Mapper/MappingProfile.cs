@@ -61,9 +61,15 @@ namespace HospitalAPI.Mapper
                 CreateMap<Building, BuildingRequest>();
                 CreateMap<BloodConsumationRequest, BloodConsumptionCreateDto>();
                 CreateMap<PatientAdmissionRequest, PatientAdmission>();
-                CreateMap<PatientAdmission, PatientAdmissionRequest>();
-                CreateMap<PatientAdmissionResponse, PatientAdmission>();
                 CreateMap<PatientAdmission, PatientAdmissionResponse>();
+                CreateMap<PatientAdmissionResponse, PatientAdmission>();
+                CreateMap<PatientAdmission, PatientAdmissionRequest>();
+                CreateMap<DischargePatientAdmissionRequest, PatientAdmission>();
+                CreateMap<PatientProfileRequest, Patient>();
+                CreateMap<Patient, PatientProfileResponse>();
+                CreateMap<PatientProfileResponse, Patient>();
+                CreateMap<Patient, PatientProfileRequest>();
+                
             }
     }
     

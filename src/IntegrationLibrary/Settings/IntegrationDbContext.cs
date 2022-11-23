@@ -1,11 +1,7 @@
 ﻿using IntegrationLibrary.BloodRequests.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Settings
 {
@@ -21,8 +17,8 @@ namespace IntegrationLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            
 
+        
 
             //Start data for Blood requests
 
@@ -81,8 +77,19 @@ namespace IntegrationLibrary.Settings
                 request3,
                 request4
             );
-
             
+            base.OnModelCreating(modelBuilder);
+            BloodBank.BloodBank bloodBank = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "BloodBank",
+                ServerAddress = "localhost",
+                Email = "aas@gmail.com",
+                Password = "123",
+                ApiKey = "x"
+            };
+            modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);
+
         }
 
 
