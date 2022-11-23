@@ -10,9 +10,8 @@ namespace HospitalLibrary.EquipmentMovement.DbConfiguration
         public void Configure(EntityTypeBuilder<EquipmentMovementAppointment> builder)
         {
             _ = builder.HasKey(x => x.Id);
-            _ = builder.Property(x => x.Id)
-                .IsRequired();
-            
+            _ = builder.Property(x => x.Id);
+
         } 
     }
 }

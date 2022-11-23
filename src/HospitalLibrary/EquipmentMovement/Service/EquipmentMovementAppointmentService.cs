@@ -5,6 +5,7 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Common;
 using HospitalLibrary.EquipmentMovement.Model;
+using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.sharedModel;
 
 namespace HospitalLibrary.EquipmentMovement.Service
@@ -20,6 +21,11 @@ namespace HospitalLibrary.EquipmentMovement.Service
             _appointmentService = appointmentService;
         }
 
+        public async Task<List<EquipmentMovementAppointment>> GetAllByRoomId(Guid id)
+        {
+            return await _unitOfWork.GetRepository<EquipmentMovementAppointmentRepository>().GetAllMovementAppointmentsForRoom(id);
+        }
+        
         public async  Task<EquipmentMovementAppointment> GetById(Guid id)
         {
             var equipmentMovementAppointment = await _unitOfWork.EquipmentMovementAppointmentRepository.GetByIdAsync(id);
@@ -28,9 +34,13 @@ namespace HospitalLibrary.EquipmentMovement.Service
 
         public async Task<EquipmentMovementAppointment> Create(EquipmentMovementAppointment equipmentMovementAppointment)
         {
-            var equipmentMovementApp =await _unitOfWork.EquipmentMovementAppointmentRepository.CreateAsync(equipmentMovementAppointment);
+            equipmentMovementAppointment.DestinationRoom = await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementAppointment.DestinationRoomId);
+            equipmentMovementAppointment.OriginalRoom = await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementAppointment.OriginalRoomId);
+
+            var equipmentMovementAppointmentResult = await _unitOfWork.EquipmentMovementAppointmentRepository.CreateAsync(equipmentMovementAppointment);
+            
             await _unitOfWork.CompleteAsync();
-            return equipmentMovementApp;
+            return equipmentMovementAppointmentResult;
         }
 
         public async  Task<List<EquipmentMovementAppointment>> GetAllAvailableAppointmentsForEquipmentMovement(EquipmentMovementRequest equipmentAppointmentsRequest)
@@ -38,7 +48,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
             List<EquipmentMovementAppointment> potentialAppointments = await GetAppointmentsForEvery15Min(equipmentAppointmentsRequest);
             potentialAppointments = await DeleteConflictsWithRoomAppointments(potentialAppointments, equipmentAppointmentsRequest.DestinationRoomId);
             potentialAppointments = await DeleteConflictsWithRoomAppointments(potentialAppointments, equipmentAppointmentsRequest.OriginalRoomId);
-
+            potentialAppointments = await DeleteConflictsWithOtherMovementAppointments(potentialAppointments, equipmentAppointmentsRequest.OriginalRoomId);
             return potentialAppointments;
         }
 
@@ -89,12 +99,51 @@ namespace HospitalLibrary.EquipmentMovement.Service
                         >= alreadyMadeAppointment.Duration.From) 
                         &&  
                         (potentialAppointment.Duration.From 
-                        <= alreadyMadeAppointment.Duration.To))
+                        < alreadyMadeAppointment.Duration.To))
                     {
                         appointmentsToRemove.Add(potentialAppointment);
                         break;
                     }
-                    if ((potentialAppointment.Duration.To >= alreadyMadeAppointment.Duration.From) &&  (potentialAppointment.Duration.To <= alreadyMadeAppointment.Duration.To))
+                    if ((potentialAppointment.Duration.To >= alreadyMadeAppointment.Duration.From) &&  (potentialAppointment.Duration.To < alreadyMadeAppointment.Duration.To))
+                    {
+                        appointmentsToRemove.Add(potentialAppointment);
+                        break;
+                    }
+                }
+            }
+
+            foreach (var aptr in appointmentsToRemove)
+            {
+                listEquipmentAppointmentsRequest.Remove(aptr);
+            }
+
+            return listEquipmentAppointmentsRequest;
+        }
+        
+        private async Task<List<EquipmentMovementAppointment>> DeleteConflictsWithOtherMovementAppointments(List<EquipmentMovementAppointment> listEquipmentAppointmentsRequest,Guid roomId)
+        {
+            List<EquipmentMovementAppointment> appointments = await GetAllByRoomId(roomId);
+            List<EquipmentMovementAppointment> appointmentsToRemove = new List<EquipmentMovementAppointment>();
+
+            if (appointments == null)
+            {
+                return listEquipmentAppointmentsRequest;
+            }
+            foreach (var potentialAppointment in listEquipmentAppointmentsRequest)
+            {
+                foreach (var alreadyMadeAppointment in appointments)
+                {
+                    if ((potentialAppointment.Duration.From 
+                         >= alreadyMadeAppointment.Duration.From) 
+                        &&  
+                        (potentialAppointment.Duration.From 
+                         < alreadyMadeAppointment.Duration.To))
+                    {
+                        appointmentsToRemove.Add(potentialAppointment);
+                        break;
+                    }
+                    
+                    if ((potentialAppointment.Duration.To >= alreadyMadeAppointment.Duration.From) &&  (potentialAppointment.Duration.To < alreadyMadeAppointment.Duration.To))
                     {
                         appointmentsToRemove.Add(potentialAppointment);
                         break;
