@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-﻿using IntegrationLibrary.ConfigureGenerateAndSend.Model;
-=======
+using IntegrationLibrary.ConfigureGenerateAndSend.Model;
 ﻿using IntegrationLibrary.BloodRequests.Model;
->>>>>>> develop
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
