@@ -26,6 +26,11 @@ namespace HospitalLibrary.Rooms.Service
             return await _unitOfWork.EquipmentRepository.GetAllEquipmentByRoomId( roomId);
         }
         
+        public async Task<IEnumerable<RoomEquipment>> SearchEquipmentByName(string equipmentName)
+        {
+            return await _unitOfWork.EquipmentRepository.SearchEquipmentByName( equipmentName);
+        }
+        
         public async Task<RoomEquipment> AllEquipmentById(Guid roomEquipmentId)
         {
             return await _unitOfWork.GetRepository<EquipmentRepository>().GetByIdAsync(roomEquipmentId); 

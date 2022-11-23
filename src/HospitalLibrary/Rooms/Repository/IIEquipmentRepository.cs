@@ -13,5 +13,7 @@ namespace HospitalLibrary.Rooms.Repository
         Task<List<RoomEquipment>> GetAllEquipmentById(Guid roomEquipmentId);
         
         Task<List<RoomEquipment>> GetAllEquipmentByRoomId(Guid roomId);
+        
+        Task<List<RoomEquipment>> SearchEquipmentByName(string equipmentName);
     }
 }
