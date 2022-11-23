@@ -35,10 +35,15 @@ namespace HospitalAPI.Controllers
         
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<ActionResult<PatientResponse>> CreatePatient([FromBody] PatientRequest patientRequest)
         {
             var patient = _mapper.Map<Patient>(patientRequest);
+            var isUniqueUsername = await _patientService.IsUniqueUsername(patientRequest.Username);
+            if (!isUniqueUsername)
+            {
+                return Conflict();
+            }
             var result = await _patientService.CreatePatient(patient);
             return CreatedAtAction(nameof(GetById), new {id = result.Id}, result);
         }
