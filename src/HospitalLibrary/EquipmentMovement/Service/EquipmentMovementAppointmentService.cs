@@ -39,6 +39,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
         {
             if (await ValidateAppointment(equipmentMovementAppointment) == false)
             {
+                Console.WriteLine("PUCAM ZBOG OVOG SRANJA");
                 return null;
             }
             equipmentMovementAppointment.DestinationRoom = await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementAppointment.DestinationRoomId);
@@ -56,6 +57,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
             {
                 return null;
             }
+            
             List<EquipmentMovementAppointment> potentialAppointments = await GetAppointmentsForEvery15Min(equipmentAppointmentsRequest);
             potentialAppointments = await DeleteConflictsWithRoomAppointments(potentialAppointments, equipmentAppointmentsRequest.DestinationRoomId);
             potentialAppointments = await DeleteConflictsWithRoomAppointments(potentialAppointments, equipmentAppointmentsRequest.OriginalRoomId);
@@ -76,6 +78,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
                     DestinationRoomId = equipmentAppointmentsRequest.DestinationRoomId,
                     OriginalRoomId = equipmentAppointmentsRequest.OriginalRoomId,
                     EquipmentName = equipmentAppointmentsRequest.EquipmentName,
+                    EquipmentId = equipmentAppointmentsRequest.EquipmentId,
                     Amount = equipmentAppointmentsRequest.Amount,
                     Duration = new DateRange
                     {
@@ -177,7 +180,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
                 return false;
             }
 
-            if (!equipmentMovementRequest.DatesForSearch.IsBeforeDate())
+            if (equipmentMovementRequest.DatesForSearch.IsBeforeDate())
             {
                 return false;
             }
@@ -216,7 +219,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
                 return false;
             }
             
-            if (!equipmentMovementAppointment.Duration.IsBeforeDate())
+            if (equipmentMovementAppointment.Duration.IsBeforeDate())
             {
                 return false;
             }
