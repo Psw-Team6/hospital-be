@@ -13,6 +13,7 @@ namespace IntegrationAPI.Mapper
         public MappingProfile() {
             CreateMap<BloodBankRequest, BloodBank>();
             CreateMap<BloodBankName, BloodBank>();
+            CreateMap<ConfigureGenerateAndSendRequest, ConfigureGenerateAndSend>();
 
         }
 

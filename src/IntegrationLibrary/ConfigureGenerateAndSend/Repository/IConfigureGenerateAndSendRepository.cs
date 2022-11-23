@@ -14,5 +14,9 @@ namespace IntegrationLibrary.ConfigureGenerateAndSend.Repository
         IEnumerable<ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend> GetAll();
 
         void Update(ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configureGenerateAndSend);
+
+        void Delete(ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configureGenerateAndSend);
+
+        void Edit(ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configureGenerateAndSend);
     }
 }

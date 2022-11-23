@@ -36,7 +36,7 @@ namespace IntegrationAPI.ScheduleTask.Service
        
         
 
-        public void IsTimeForSending()
+        public void TimeForSending()
         {
             List<ConfigureGenerateAndSend> allDatesForSend = (List<ConfigureGenerateAndSend>)_configureGenerateAndSendRepository.GetAll();
             for (int i=0; i< allDatesForSend.Count; i++)
@@ -47,7 +47,7 @@ namespace IntegrationAPI.ScheduleTask.Service
 
                     _PDFReportController.sendReport(allDatesForSend[i].BloodBankName, calculateDate.DefinePeriodForSendingReports(allDatesForSend[i].GeneratePeriod));
                     _configureGenerateAndSendRepository.Update(allDatesForSend[i]);
-                    Console.WriteLine("Send message: "+ allDatesForSend[i].NextDateForSending);
+                    Console.WriteLine("Send message: "+ allDatesForSend[i].NextDateForSending +" to "+ allDatesForSend[i].BloodBankName);
 
                 }
             }

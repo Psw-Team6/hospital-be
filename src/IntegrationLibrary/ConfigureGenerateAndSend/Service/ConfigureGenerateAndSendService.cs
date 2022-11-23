@@ -25,6 +25,12 @@ namespace IntegrationLibrary.ConfigureGenerateAndSend.Service
         {
         }
 
+
+        public IEnumerable<ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend> GetAll()
+        {
+            return _configureGenerateAndSendRepository.GetAll();
+        }
+
         public void Create(ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configureGenerateAndSend)
         {
             if (configureGenerateAndSend.SendPeriod.Equals("EVERY_TWO_MINUT"))
@@ -56,6 +62,20 @@ namespace IntegrationLibrary.ConfigureGenerateAndSend.Service
                 configureGenerateAndSend.NextDateForSending = configureGenerateAndSend.NextDateForSending.AddDays(calculateDate.DefinePeriodForSendingReports(configureGenerateAndSend.SendPeriod));
             }
             _configureGenerateAndSendRepository.Update(configureGenerateAndSend);
+        }
+
+        public void Edit(ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configureGenerateAndSend)
+        {
+                configureGenerateAndSend.NextDateForSending = DateTime.Now;
+            _configureGenerateAndSendRepository.Edit(configureGenerateAndSend);
+
+        }
+
+
+
+        public void Delete(ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configuration)
+        {
+            _configureGenerateAndSendRepository.Delete(configuration);
         }
     }
 }

@@ -42,5 +42,17 @@ namespace IntegrationLibrary.ConfigureGenerateAndSend.Repository
         {
             return _context.ConfigureGenerateAndSend.ToList();
         }
+
+        public void Delete(ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configuration)
+        {
+            _context.ConfigureGenerateAndSend.Remove(configuration);
+            _context.SaveChanges();
+        }
+
+        void IConfigureGenerateAndSendRepository.Edit(Model.ConfigureGenerateAndSend configureGenerateAndSend)
+        {
+            _context.ConfigureGenerateAndSend.Add(configureGenerateAndSend);
+            _context.SaveChanges();
+        }
     }
 }

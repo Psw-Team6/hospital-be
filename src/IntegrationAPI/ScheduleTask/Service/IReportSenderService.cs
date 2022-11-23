@@ -8,7 +8,7 @@ namespace IntegrationAPI.ScheduleTask.Service
 {
     public interface IReportSenderService
     {
-        public void IsTimeForSending();
+        public void TimeForSending();
         public List<DateTime> GetAllDateForSend();
     }
 }

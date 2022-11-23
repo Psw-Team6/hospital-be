@@ -21,12 +21,12 @@ namespace IntegrationAPI.ScheduleTask
         public override async Task ProcessInScope(IServiceProvider scopeServiceProvider)
         {
             IReportSenderService reportSenderService = scopeServiceProvider.GetRequiredService<IReportSenderService>();
-            reportSenderService.IsTimeForSending();
+            reportSenderService.TimeForSending();
             Console.WriteLine("-------------------------");
             Console.WriteLine("SampleTask1 : " + DateTime.Now.ToString());
 
-            await Task.Run(() => {
-                return Task.CompletedTask;
+           await Task.Run(() => {
+            return Task.CompletedTask;
             });
         }
     }
