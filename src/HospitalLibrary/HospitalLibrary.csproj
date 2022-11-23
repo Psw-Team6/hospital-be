@@ -30,6 +30,7 @@
     <Folder Include="BloodConsumptions\Service" />
     <Folder Include="BloodUnits\Repository" />
     <Folder Include="BloodUnits\Service" />
+    <Folder Include="Migrations" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +49,7 @@
     <Compile Remove="Migrations\20221117140820_Initial.Designer.cs" />
     <Compile Remove="Migrations\20221117141010_Initial.cs" />
     <Compile Remove="Migrations\20221117141010_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221123145156_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
