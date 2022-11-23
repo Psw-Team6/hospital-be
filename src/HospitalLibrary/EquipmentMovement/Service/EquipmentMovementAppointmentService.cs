@@ -62,6 +62,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
             potentialAppointments = await DeleteConflictsWithRoomAppointments(potentialAppointments, equipmentAppointmentsRequest.DestinationRoomId);
             potentialAppointments = await DeleteConflictsWithRoomAppointments(potentialAppointments, equipmentAppointmentsRequest.OriginalRoomId);
             potentialAppointments = await DeleteConflictsWithOtherMovementAppointments(potentialAppointments, equipmentAppointmentsRequest.OriginalRoomId);
+            potentialAppointments.RemoveAll(x => potentialAppointments.IndexOf(x) > 19);
             return potentialAppointments;
         }
 
