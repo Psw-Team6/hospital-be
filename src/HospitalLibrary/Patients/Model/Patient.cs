@@ -21,7 +21,7 @@ namespace HospitalLibrary.Patients.Model
         public IEnumerable<Feedback> Feedbacks { get; set; }
         public IEnumerable<Allergen> Allergies { get; set; }
         public IEnumerable<PatientAdmission> PatientAdmissions { get; set; }
-        public IEnumerable<TreatmentReport> TreatmentReports { get; set; }
+       // public IEnumerable<TreatmentReport> TreatmentReports { get; set; }
 
         public Gender Gender { get; set; }
         public int Age { get; set; }

@@ -40,6 +40,7 @@ namespace HospitalLibrary.Common
         IEquipmentMovementAppointmentRepository EquipmentMovementAppointmentRepository { get; }
         
         IAddressRepository AddressRepository { get; }
+        IAllergenRepository AllergenRepository { get; }
 
         T GetRepository<T>() where T : class;
         Task CompleteAsync();
