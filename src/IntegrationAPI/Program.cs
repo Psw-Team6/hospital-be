@@ -1,21 +1,7 @@
-using IntegrationLibrary.NewsFromBloodBank.Model;
-using IntegrationLibrary.NewsFromBloodBank.Repository;
-using IntegrationLibrary.NewsFromBloodBank.Service;
 using IntegrationLibrary.RabbitMQService;
-using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Linq;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using System;
-using System.Configuration;
-using System.Data.Entity.Core.Objects;
-using System.Text;
-using System.Text.Json;
 
 namespace IntegrationAPI
 {
@@ -26,6 +12,7 @@ namespace IntegrationAPI
             //ListenForIntegrationEvents();
 
             CreateHostBuilder(args).Build().Run();
+   
         }
 
         /*private static void ListenForIntegrationEvents()

@@ -1,6 +1,11 @@
 using IntegrationAPI.Mapper;
 using IntegrationLibrary.BloodBank.Repository;
 using IntegrationLibrary.BloodBank.Service;
+using IntegrationLibrary.ConfigureGenerateAndSend.Repository;
+using IntegrationLibrary.ConfigureGenerateAndSend.Service;
+using IntegrationAPI.ScheduleTask;
+using IntegrationAPI.ScheduleTask.Service;
+using IntegrationLibrary.PDFReports.Service;
 using IntegrationLibrary.NewsFromBloodBank.Repository;
 using IntegrationLibrary.NewsFromBloodBank.Service;
 using IntegrationLibrary.BloodRequests.Repository;
@@ -16,6 +21,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using IntegrationAPI.ScheduleTask.Service;
+using IntegrationAPI.Controllers;
 
 namespace IntegrationAPI
 {
@@ -50,14 +57,24 @@ namespace IntegrationAPI
 
             services.AddScoped<IEmailService, EmailService>();
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
-
+           
 
             services.AddScoped<IBloodBankService, BloodBankService>();
+            services.AddScoped<PDFReportService>();
+            services.AddScoped<PDFReportController>();
+
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
+
+            services.AddScoped<IConfigureGenerateAndSendRepository, ConfigureGenerateAndSendRepository>();
+            services.AddScoped<IConfigureGenerateAndSendService, ConfigureGenerateAndSendService>();
+            services.AddScoped<IReportSenderService, ReportSenderService>();
+
+            services.AddSingleton<IHostedService, GenerateAndSendReportTask>();
             services.AddScoped<INewsFromBloodBankService, NewsFromBloodBankService>();
             services.AddScoped<INewsFromBloodBankRepository, NewsFromBloodBankRepository>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
             services.AddScoped<IBloodRequestService, BloodRequestService>();
+
 
         }
 

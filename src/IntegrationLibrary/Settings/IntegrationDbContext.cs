@@ -1,3 +1,4 @@
+using IntegrationLibrary.ConfigureGenerateAndSend.Model;
 ﻿using IntegrationLibrary.BloodRequests.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +9,11 @@ namespace IntegrationLibrary.Settings
     public class IntegrationDbContext: DbContext
     {
         public DbSet<BloodBank.BloodBank> BloodBanks { get; set; }
+
+        public DbSet<ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend> ConfigureGenerateAndSend { get; set; }
+
         public DbSet<BloodRequest> BloodRequests { get; set; }
+
 
         public DbSet<NewsFromBloodBank.Model.NewsFromBloodBank> NewsFromBloodBank { get; set; }
 
