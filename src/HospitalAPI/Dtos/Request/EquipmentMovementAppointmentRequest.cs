@@ -15,7 +15,7 @@ namespace HospitalAPI.Dtos.Request
 
         public DateRange DatesForSearch { get; set; }
 
-        public TimeSpan DurationOfEquipmentMovementAppointment{ get; set; }
+        public TimeSpan Duration{ get; set; }
         public string EquipmentName { get; set; }
     }
 }

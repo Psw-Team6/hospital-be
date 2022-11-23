@@ -9,7 +9,7 @@ using HospitalLibrary.CustomException;
 
 namespace HospitalLibrary.Appointments.Service
 {
-    public class AppointmentService
+    public class AppointmentService: IAppointmentService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailService _emailService;
@@ -32,7 +32,7 @@ namespace HospitalLibrary.Appointments.Service
             return await _unitOfWork.GetRepository<AppointmentRepository>().GetByIdAsync(id);
         }
         
-        public async Task<IEnumerable<Appointment>> GetAllByRoomId(Guid id)
+        public async Task<List<Appointment>> GetAllByRoomId(Guid id)
         {
             return await _unitOfWork.GetRepository<AppointmentRepository>().GetAllAppointmentsForRoom(id);
         }

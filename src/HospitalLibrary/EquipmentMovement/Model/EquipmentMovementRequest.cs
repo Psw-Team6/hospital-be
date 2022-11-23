@@ -18,7 +18,7 @@ namespace HospitalLibrary.EquipmentMovement.Model
 
         public DateRange DatesForSearch { get; set; }
 
-        public TimeSpan DurationOfEquipmentMovementAppointment{ get; set; }
+        public TimeSpan Duration{ get; set; }
         public string EquipmentName { get; set; }
     }
 }

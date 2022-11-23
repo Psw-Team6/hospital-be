@@ -22,7 +22,7 @@ namespace HospitalLibrary.Appointments.Repository
                 .ToListAsync();
         }
         
-        public async Task<IEnumerable<Appointment>> GetAllAppointmentsForRoom(Guid roomId)
+        public async Task<List<Appointment>> GetAllAppointmentsForRoom(Guid roomId)
         {
             return await DbSet.Where(x => x.Doctor.RoomId == roomId)
                 .ToListAsync();

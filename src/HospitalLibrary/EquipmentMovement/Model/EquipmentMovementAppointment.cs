@@ -16,7 +16,7 @@ namespace HospitalLibrary.EquipmentMovement.Model
         public Guid DestinationRoomId { get; set; }
         public Room DestinationRoom { get; set; }
 
-        public DateRange DurationOfEquipmentMovementAppointment { get; set; }
+        public DateRange Duration { get; set; }
 
         public string EquipmentName { get; set; }
     }

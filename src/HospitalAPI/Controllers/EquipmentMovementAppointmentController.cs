@@ -27,7 +27,7 @@ namespace HospitalAPI.Controllers
         [HttpPost]
         [ProducesResponseType( StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<EquipmentMovementAppointmentResponse>> Create(EquipmentMovementAppointmentResponse equipmentMovementDto)
+        public async Task<ActionResult<EquipmentMovementAppointmentResponse>> Create([FromBody] EquipmentMovementAppointmentResponse equipmentMovementDto)
         {
             var equipmentMovementAppointment = _mapper.Map<EquipmentMovementAppointment>(equipmentMovementDto);
             var equipmentMovementAppointmentCreated = await _equipmentMovementAppointmentService.Create(equipmentMovementAppointment);
