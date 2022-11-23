@@ -39,6 +39,14 @@ namespace HospitalLibrary.Rooms.Repository
             return await  DbSet.Where(roomEquipment => roomEquipment.RoomId == roomId)
                 .ToListAsync();
         }
+
+
+        public async Task<List<RoomEquipment>> SearchEquipmentByName(string equipmentName) //vamo stavi string Eq
+        {
+            //string equipmentName = Eq.Trim().ToLower();
+            return await DbSet.Where(roomEquipment => roomEquipment.EquipmentName == equipmentName)
+                .ToListAsync();
+        }
        
         
     }

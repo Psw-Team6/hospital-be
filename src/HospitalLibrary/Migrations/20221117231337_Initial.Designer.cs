@@ -3,15 +3,17 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221117231337_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,12 +101,12 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("391581db-24bb-4945-b5a8-2c469787b8a5"),
+                            Id = new Guid("d6df808c-4ae2-4cf8-8118-ff0f742aa6ed"),
                             AppointmentState = 0,
                             AppointmentType = 0,
-                            DoctorId = new Guid("91a28d09-3479-4ea8-afb0-df0e21ba2cf6"),
+                            DoctorId = new Guid("b97fa70a-c8fb-4830-b059-3a1e6f6e150c"),
                             Emergent = false,
-                            PatientId = new Guid("b43ef663-8391-479b-bfe7-a22633e579de")
+                            PatientId = new Guid("3a1ddf6a-9e14-41d5-8033-a2fd87c57f40")
                         });
                 });
 
@@ -138,20 +140,20 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d73585b3-762b-45e9-a9e7-1ff57c9854b0"),
+                            Id = new Guid("0d06615d-24b2-4c0b-9f05-b9f1ec21de06"),
                             Amount = 2,
-                            BloodUnitId = new Guid("d0a121bf-9796-41e6-8a4b-95ba0c7f4e02"),
+                            BloodUnitId = new Guid("dacad828-647c-4772-92ed-b5bd7483cbf2"),
                             Date = new DateTime(2022, 10, 27, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = new Guid("b6e74e3a-ba83-4a24-a021-eb555c4e0e18"),
+                            DoctorId = new Guid("2815a0cb-802a-4a52-b9aa-9a585f329318"),
                             Purpose = "operation"
                         },
                         new
                         {
-                            Id = new Guid("9b7f2f42-2a03-4530-8634-37a53d3df5a6"),
+                            Id = new Guid("25c6b0c5-48f7-4f7f-b8c7-450b45b9f4d3"),
                             Amount = 4,
-                            BloodUnitId = new Guid("d0a121bf-9796-41e6-8a4b-95ba0c7f4e02"),
+                            BloodUnitId = new Guid("dacad828-647c-4772-92ed-b5bd7483cbf2"),
                             Date = new DateTime(2022, 11, 14, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = new Guid("b6e74e3a-ba83-4a24-a021-eb555c4e0e18"),
+                            DoctorId = new Guid("2815a0cb-802a-4a52-b9aa-9a585f329318"),
                             Purpose = "operation"
                         });
                 });
@@ -178,21 +180,21 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d0a121bf-9796-41e6-8a4b-95ba0c7f4e02"),
+                            Id = new Guid("dacad828-647c-4772-92ed-b5bd7483cbf2"),
                             Amount = 7,
                             BloodBankName = "Moja Banka Krvi",
                             BloodType = 0
                         },
                         new
                         {
-                            Id = new Guid("63add8a0-74aa-4f10-9682-626ec2b60314"),
+                            Id = new Guid("ccd902b4-8d0e-4c7d-a20c-450a4b035481"),
                             Amount = 10,
                             BloodBankName = "Moja Banka Krvi",
                             BloodType = 7
                         },
                         new
                         {
-                            Id = new Guid("4e998610-bf46-4319-9d46-507c9bb4eebf"),
+                            Id = new Guid("96c84b2b-9e68-4b17-95e3-2c4fbf0ee89b"),
                             Amount = 1,
                             BloodBankName = "Moja Banka Krvi",
                             BloodType = 0
@@ -219,17 +221,17 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b6a6da6d-c16b-4f5c-a605-8d3c50db8012"),
+                            Id = new Guid("ce4d3d89-983b-4f5c-af5b-596ac2974272"),
                             Name = "Surgeon"
                         },
                         new
                         {
-                            Id = new Guid("6eb1790f-8dcf-45da-8856-811b1eb36c5c"),
+                            Id = new Guid("55e7b8b5-8b84-4a3a-80af-f2d9ed0d66dc"),
                             Name = "General"
                         },
                         new
                         {
-                            Id = new Guid("aac5cc66-5703-4504-a42b-a66a803755cc"),
+                            Id = new Guid("4527e5e2-567e-4a63-aa77-1c111e13493f"),
                             Name = "Dermatology"
                         });
                 });
@@ -247,11 +249,11 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8b24ac8c-1f5a-4d70-998c-bd21903490d8")
+                            Id = new Guid("8181d824-1935-4c20-950e-dd6a4a37cdc6")
                         },
                         new
                         {
-                            Id = new Guid("38f6c585-5610-4281-8821-f942b7cd38e5")
+                            Id = new Guid("89afee74-ae26-42c5-bb8b-036b61eab8de")
                         });
                 });
 
@@ -313,9 +315,9 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("56a77ceb-d784-4145-b0c6-0825c0e2422f"),
+                            Id = new Guid("4b5f2962-70aa-4036-a356-4cf931cc3925"),
                             Description = "I want to go to Paralia",
-                            DoctorId = new Guid("91a28d09-3479-4ea8-afb0-df0e21ba2cf6"),
+                            DoctorId = new Guid("b97fa70a-c8fb-4830-b059-3a1e6f6e150c"),
                             HolidayStatus = 0,
                             IsUrgent = false
                         });
@@ -446,12 +448,12 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("03fe81a8-1435-4a70-99f8-ba2679263912"),
+                            Id = new Guid("7b9afbea-d04c-4707-a364-dabb7b195628"),
                             Name = "Stara bolnica"
                         },
                         new
                         {
-                            Id = new Guid("a41c8d6e-95e3-40e0-a534-955faadb9e22"),
+                            Id = new Guid("f6e800c7-1a01-44a7-b0ea-a1d093d0fa03"),
                             Name = "Nova bolnica"
                         });
                 });
@@ -480,43 +482,43 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("78aa8b13-00fb-43fe-96ed-7d741748869a"),
-                            BuildingId = new Guid("03fe81a8-1435-4a70-99f8-ba2679263912"),
+                            Id = new Guid("2ae89f93-b06d-4f0e-904b-5aa83a967e9d"),
+                            BuildingId = new Guid("7b9afbea-d04c-4707-a364-dabb7b195628"),
                             FloorNumber = 0,
                             Name = "F0"
                         },
                         new
                         {
-                            Id = new Guid("52b39f8e-6fb9-4f95-8d6e-51bdacdbba72"),
-                            BuildingId = new Guid("03fe81a8-1435-4a70-99f8-ba2679263912"),
+                            Id = new Guid("b7201bdf-d8a4-4315-bfd4-01d14cf64891"),
+                            BuildingId = new Guid("7b9afbea-d04c-4707-a364-dabb7b195628"),
                             FloorNumber = 1,
                             Name = "F1"
                         },
                         new
                         {
-                            Id = new Guid("5ae1f7e6-c210-430f-a127-eaaf6ae71a8e"),
-                            BuildingId = new Guid("03fe81a8-1435-4a70-99f8-ba2679263912"),
+                            Id = new Guid("5af9244f-1dfd-4b36-95ca-470f9d7b38ea"),
+                            BuildingId = new Guid("7b9afbea-d04c-4707-a364-dabb7b195628"),
                             FloorNumber = 2,
                             Name = "F2"
                         },
                         new
                         {
-                            Id = new Guid("6d9190b7-3913-4e0c-8046-26d309395780"),
-                            BuildingId = new Guid("a41c8d6e-95e3-40e0-a534-955faadb9e22"),
+                            Id = new Guid("46e0961c-e953-41c9-a048-5be80b6cc2f9"),
+                            BuildingId = new Guid("f6e800c7-1a01-44a7-b0ea-a1d093d0fa03"),
                             FloorNumber = 0,
                             Name = "F0"
                         },
                         new
                         {
-                            Id = new Guid("b08efcfc-94e7-422c-be45-8941c2839818"),
-                            BuildingId = new Guid("a41c8d6e-95e3-40e0-a534-955faadb9e22"),
+                            Id = new Guid("8ecd130e-acb6-4917-8a4e-9e11ac247e44"),
+                            BuildingId = new Guid("f6e800c7-1a01-44a7-b0ea-a1d093d0fa03"),
                             FloorNumber = 1,
                             Name = "F1"
                         },
                         new
                         {
-                            Id = new Guid("3da5f820-07e0-4535-bc3a-3ff735d3bd32"),
-                            BuildingId = new Guid("a41c8d6e-95e3-40e0-a534-955faadb9e22"),
+                            Id = new Guid("496e165e-cc54-40c1-8eb0-b6e78795d32d"),
+                            BuildingId = new Guid("f6e800c7-1a01-44a7-b0ea-a1d093d0fa03"),
                             FloorNumber = 2,
                             Name = "F2"
                         });
@@ -550,83 +552,83 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2ce52375-c794-49bc-9d3c-aab0a91c5e43"),
+                            Id = new Guid("1c9a212c-4705-4153-b4a0-3d31d5e1da44"),
                             Lenght = 5,
                             PositionX = 0,
                             PositionY = 0,
-                            RoomId = new Guid("e378586b-0e58-4787-b60f-addf46ca4841"),
+                            RoomId = new Guid("6cfbd0a2-2497-48dc-bb0b-5a6687b45248"),
                             Width = 5
                         },
                         new
                         {
-                            Id = new Guid("496d7237-b91d-4829-b760-d768ee72ac33"),
+                            Id = new Guid("be470301-f79b-4790-893c-957b8d53f721"),
                             Lenght = 5,
                             PositionX = 5,
                             PositionY = 0,
-                            RoomId = new Guid("22e91613-89e8-444c-9c26-9e6f7002575e"),
+                            RoomId = new Guid("5c6569bd-1c80-4474-b8a2-6097bf378da3"),
                             Width = 5
                         },
                         new
                         {
-                            Id = new Guid("60426f01-6455-4016-9b01-c9b3cdf12ca2"),
+                            Id = new Guid("e1629d27-0441-4a23-b5a3-e35918ac8c45"),
                             Lenght = 5,
                             PositionX = 5,
                             PositionY = 0,
-                            RoomId = new Guid("d403f791-761b-49de-a806-fb84336ea34b"),
+                            RoomId = new Guid("aa786c08-8414-48f6-aa2c-6da66b8447be"),
                             Width = 5
                         },
                         new
                         {
-                            Id = new Guid("d3bc536e-07e8-4544-bac2-58ccc3435b71"),
+                            Id = new Guid("628ffccf-7cfb-4777-ba6c-eeac11cd1974"),
                             Lenght = 5,
                             PositionX = 5,
                             PositionY = 0,
-                            RoomId = new Guid("ff145d13-0ac5-455b-b2ac-1d56e6f73793"),
+                            RoomId = new Guid("50a962ab-6018-4aa9-9970-cbcdbf8e7258"),
                             Width = 5
                         },
                         new
                         {
-                            Id = new Guid("fd0b490a-0863-4b4d-870f-f5e5e7d38b9d"),
+                            Id = new Guid("14159572-df86-4636-9349-fd5b8d7a44b1"),
                             Lenght = 5,
                             PositionX = 5,
                             PositionY = 0,
-                            RoomId = new Guid("fd908bc1-7468-4c2e-b26e-eaefb3bd1860"),
+                            RoomId = new Guid("2b91b481-2e00-4c51-9b71-4a664cd32555"),
                             Width = 5
                         },
                         new
                         {
-                            Id = new Guid("aa2ff64f-c5c3-4638-beca-9fb54f4d3b15"),
+                            Id = new Guid("4aec24b3-ce66-4468-9bc0-2a8226cd1522"),
                             Lenght = 5,
                             PositionX = 5,
                             PositionY = 0,
-                            RoomId = new Guid("939f14e9-2fcd-4d0f-a421-314b0414b3c9"),
+                            RoomId = new Guid("063801b8-c262-4b78-a2f1-60398a273f08"),
                             Width = 5
                         },
                         new
                         {
-                            Id = new Guid("9046b0c7-0fef-43cf-8d9d-7fed0d6a1d11"),
+                            Id = new Guid("3c9048ed-8103-4ccc-98f1-a04f21d92fea"),
                             Lenght = 5,
                             PositionX = 5,
                             PositionY = 0,
-                            RoomId = new Guid("4d89d832-fd78-4e6e-8324-40a641aae220"),
+                            RoomId = new Guid("a448eff8-e77f-455b-bdd0-de2eb3311a93"),
                             Width = 5
                         },
                         new
                         {
-                            Id = new Guid("13fc5356-2606-495d-a965-1b593365cb17"),
+                            Id = new Guid("c094464f-6018-4c24-a702-591fd0026703"),
                             Lenght = 5,
                             PositionX = 5,
                             PositionY = 0,
-                            RoomId = new Guid("f49d8a92-b6f5-4bd8-8046-7a072058758b"),
+                            RoomId = new Guid("0fa16ca5-99f2-4720-b64d-5939cf7da387"),
                             Width = 5
                         },
                         new
                         {
-                            Id = new Guid("e129734f-503c-4f53-989b-de7c392f9552"),
+                            Id = new Guid("7417af34-ca11-4ea5-a124-4909bf873aa8"),
                             Lenght = 5,
                             PositionX = 5,
                             PositionY = 0,
-                            RoomId = new Guid("91288c2b-fa6c-4c3f-b999-94ca05509985"),
+                            RoomId = new Guid("8465468a-235a-4e1c-a783-fb267e5757b4"),
                             Width = 5
                         });
                 });
@@ -658,74 +660,74 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e378586b-0e58-4787-b60f-addf46ca4841"),
-                            BuildingId = new Guid("03fe81a8-1435-4a70-99f8-ba2679263912"),
-                            FloorId = new Guid("78aa8b13-00fb-43fe-96ed-7d741748869a"),
-                            GRoomId = new Guid("2ce52375-c794-49bc-9d3c-aab0a91c5e43"),
+                            Id = new Guid("6cfbd0a2-2497-48dc-bb0b-5a6687b45248"),
+                            BuildingId = new Guid("7b9afbea-d04c-4707-a364-dabb7b195628"),
+                            FloorId = new Guid("2ae89f93-b06d-4f0e-904b-5aa83a967e9d"),
+                            GRoomId = new Guid("1c9a212c-4705-4153-b4a0-3d31d5e1da44"),
                             Name = "A11"
                         },
                         new
                         {
-                            Id = new Guid("22e91613-89e8-444c-9c26-9e6f7002575e"),
-                            BuildingId = new Guid("03fe81a8-1435-4a70-99f8-ba2679263912"),
-                            FloorId = new Guid("78aa8b13-00fb-43fe-96ed-7d741748869a"),
-                            GRoomId = new Guid("496d7237-b91d-4829-b760-d768ee72ac33"),
+                            Id = new Guid("5c6569bd-1c80-4474-b8a2-6097bf378da3"),
+                            BuildingId = new Guid("7b9afbea-d04c-4707-a364-dabb7b195628"),
+                            FloorId = new Guid("2ae89f93-b06d-4f0e-904b-5aa83a967e9d"),
+                            GRoomId = new Guid("be470301-f79b-4790-893c-957b8d53f721"),
                             Name = "B11"
                         },
                         new
                         {
-                            Id = new Guid("d403f791-761b-49de-a806-fb84336ea34b"),
-                            BuildingId = new Guid("03fe81a8-1435-4a70-99f8-ba2679263912"),
-                            FloorId = new Guid("52b39f8e-6fb9-4f95-8d6e-51bdacdbba72"),
-                            GRoomId = new Guid("60426f01-6455-4016-9b01-c9b3cdf12ca2"),
+                            Id = new Guid("aa786c08-8414-48f6-aa2c-6da66b8447be"),
+                            BuildingId = new Guid("7b9afbea-d04c-4707-a364-dabb7b195628"),
+                            FloorId = new Guid("b7201bdf-d8a4-4315-bfd4-01d14cf64891"),
+                            GRoomId = new Guid("e1629d27-0441-4a23-b5a3-e35918ac8c45"),
                             Name = "A12"
                         },
                         new
                         {
-                            Id = new Guid("ff145d13-0ac5-455b-b2ac-1d56e6f73793"),
-                            BuildingId = new Guid("03fe81a8-1435-4a70-99f8-ba2679263912"),
-                            FloorId = new Guid("5ae1f7e6-c210-430f-a127-eaaf6ae71a8e"),
-                            GRoomId = new Guid("d3bc536e-07e8-4544-bac2-58ccc3435b71"),
+                            Id = new Guid("50a962ab-6018-4aa9-9970-cbcdbf8e7258"),
+                            BuildingId = new Guid("7b9afbea-d04c-4707-a364-dabb7b195628"),
+                            FloorId = new Guid("5af9244f-1dfd-4b36-95ca-470f9d7b38ea"),
+                            GRoomId = new Guid("628ffccf-7cfb-4777-ba6c-eeac11cd1974"),
                             Name = "A13"
                         },
                         new
                         {
-                            Id = new Guid("fd908bc1-7468-4c2e-b26e-eaefb3bd1860"),
-                            BuildingId = new Guid("a41c8d6e-95e3-40e0-a534-955faadb9e22"),
-                            FloorId = new Guid("6d9190b7-3913-4e0c-8046-26d309395780"),
-                            GRoomId = new Guid("fd0b490a-0863-4b4d-870f-f5e5e7d38b9d"),
+                            Id = new Guid("2b91b481-2e00-4c51-9b71-4a664cd32555"),
+                            BuildingId = new Guid("f6e800c7-1a01-44a7-b0ea-a1d093d0fa03"),
+                            FloorId = new Guid("46e0961c-e953-41c9-a048-5be80b6cc2f9"),
+                            GRoomId = new Guid("14159572-df86-4636-9349-fd5b8d7a44b1"),
                             Name = "A21"
                         },
                         new
                         {
-                            Id = new Guid("939f14e9-2fcd-4d0f-a421-314b0414b3c9"),
-                            BuildingId = new Guid("a41c8d6e-95e3-40e0-a534-955faadb9e22"),
-                            FloorId = new Guid("6d9190b7-3913-4e0c-8046-26d309395780"),
-                            GRoomId = new Guid("aa2ff64f-c5c3-4638-beca-9fb54f4d3b15"),
+                            Id = new Guid("063801b8-c262-4b78-a2f1-60398a273f08"),
+                            BuildingId = new Guid("f6e800c7-1a01-44a7-b0ea-a1d093d0fa03"),
+                            FloorId = new Guid("46e0961c-e953-41c9-a048-5be80b6cc2f9"),
+                            GRoomId = new Guid("4aec24b3-ce66-4468-9bc0-2a8226cd1522"),
                             Name = "B21"
                         },
                         new
                         {
-                            Id = new Guid("4d89d832-fd78-4e6e-8324-40a641aae220"),
-                            BuildingId = new Guid("a41c8d6e-95e3-40e0-a534-955faadb9e22"),
-                            FloorId = new Guid("b08efcfc-94e7-422c-be45-8941c2839818"),
-                            GRoomId = new Guid("9046b0c7-0fef-43cf-8d9d-7fed0d6a1d11"),
+                            Id = new Guid("a448eff8-e77f-455b-bdd0-de2eb3311a93"),
+                            BuildingId = new Guid("f6e800c7-1a01-44a7-b0ea-a1d093d0fa03"),
+                            FloorId = new Guid("8ecd130e-acb6-4917-8a4e-9e11ac247e44"),
+                            GRoomId = new Guid("3c9048ed-8103-4ccc-98f1-a04f21d92fea"),
                             Name = "A22"
                         },
                         new
                         {
-                            Id = new Guid("f49d8a92-b6f5-4bd8-8046-7a072058758b"),
-                            BuildingId = new Guid("a41c8d6e-95e3-40e0-a534-955faadb9e22"),
-                            FloorId = new Guid("3da5f820-07e0-4535-bc3a-3ff735d3bd32"),
-                            GRoomId = new Guid("13fc5356-2606-495d-a965-1b593365cb17"),
+                            Id = new Guid("0fa16ca5-99f2-4720-b64d-5939cf7da387"),
+                            BuildingId = new Guid("f6e800c7-1a01-44a7-b0ea-a1d093d0fa03"),
+                            FloorId = new Guid("496e165e-cc54-40c1-8eb0-b6e78795d32d"),
+                            GRoomId = new Guid("c094464f-6018-4c24-a702-591fd0026703"),
                             Name = "C23"
                         },
                         new
                         {
-                            Id = new Guid("91288c2b-fa6c-4c3f-b999-94ca05509985"),
-                            BuildingId = new Guid("a41c8d6e-95e3-40e0-a534-955faadb9e22"),
-                            FloorId = new Guid("3da5f820-07e0-4535-bc3a-3ff735d3bd32"),
-                            GRoomId = new Guid("e129734f-503c-4f53-989b-de7c392f9552"),
+                            Id = new Guid("8465468a-235a-4e1c-a783-fb267e5757b4"),
+                            BuildingId = new Guid("f6e800c7-1a01-44a7-b0ea-a1d093d0fa03"),
+                            FloorId = new Guid("496e165e-cc54-40c1-8eb0-b6e78795d32d"),
+                            GRoomId = new Guid("7417af34-ca11-4ea5-a124-4909bf873aa8"),
                             Name = "B23"
                         });
                 });
@@ -754,66 +756,66 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3bc44f69-b6c3-43bf-963f-af51a677b417"),
+                            Id = new Guid("cf7ca433-3128-47b6-a5ca-faacb1745f77"),
                             IsFree = true,
                             Number = "11A1",
-                            RoomId = new Guid("e378586b-0e58-4787-b60f-addf46ca4841")
+                            RoomId = new Guid("6cfbd0a2-2497-48dc-bb0b-5a6687b45248")
                         },
                         new
                         {
-                            Id = new Guid("289f1cc7-62a8-4238-a605-85b8563fc8e4"),
+                            Id = new Guid("169e25b6-1b65-4711-9a0f-09e4faecb68a"),
                             IsFree = true,
                             Number = "11A2",
-                            RoomId = new Guid("e378586b-0e58-4787-b60f-addf46ca4841")
+                            RoomId = new Guid("6cfbd0a2-2497-48dc-bb0b-5a6687b45248")
                         },
                         new
                         {
-                            Id = new Guid("fd59822c-9eba-4fb9-800e-4f54074d8b9d"),
+                            Id = new Guid("a881502b-9a85-439a-b6fc-10d2d2f1c845"),
                             IsFree = true,
                             Number = "11A3",
-                            RoomId = new Guid("e378586b-0e58-4787-b60f-addf46ca4841")
+                            RoomId = new Guid("6cfbd0a2-2497-48dc-bb0b-5a6687b45248")
                         },
                         new
                         {
-                            Id = new Guid("44eacfbb-fc6c-4390-8e80-278053b76a25"),
+                            Id = new Guid("3cb232a9-1004-4435-9b66-1bc160591e61"),
                             IsFree = true,
                             Number = "11A4",
-                            RoomId = new Guid("e378586b-0e58-4787-b60f-addf46ca4841")
+                            RoomId = new Guid("6cfbd0a2-2497-48dc-bb0b-5a6687b45248")
                         },
                         new
                         {
-                            Id = new Guid("288522de-1e59-43bd-b43f-ca752a507173"),
+                            Id = new Guid("3d7dae81-ce75-4aaa-8bdb-f0f5f95305ee"),
                             IsFree = true,
                             Number = "12A1",
-                            RoomId = new Guid("22e91613-89e8-444c-9c26-9e6f7002575e")
+                            RoomId = new Guid("5c6569bd-1c80-4474-b8a2-6097bf378da3")
                         },
                         new
                         {
-                            Id = new Guid("b989f413-49a6-4ece-96f5-7b7ab8d5aafa"),
+                            Id = new Guid("594a1c39-ad1a-470d-b1e8-33c8315c6c21"),
                             IsFree = true,
                             Number = "12A2",
-                            RoomId = new Guid("22e91613-89e8-444c-9c26-9e6f7002575e")
+                            RoomId = new Guid("5c6569bd-1c80-4474-b8a2-6097bf378da3")
                         },
                         new
                         {
-                            Id = new Guid("d10b46d0-f8bb-4161-aaee-9f14cb36410e"),
+                            Id = new Guid("908a97e2-5524-42ab-84c7-35aa62a8ec89"),
                             IsFree = true,
                             Number = "12A3",
-                            RoomId = new Guid("22e91613-89e8-444c-9c26-9e6f7002575e")
+                            RoomId = new Guid("5c6569bd-1c80-4474-b8a2-6097bf378da3")
                         },
                         new
                         {
-                            Id = new Guid("01c85776-1199-4ab8-a9f2-3877332cab28"),
+                            Id = new Guid("6d81c463-4833-4275-b0d7-7024adc9561e"),
                             IsFree = true,
                             Number = "12A4",
-                            RoomId = new Guid("22e91613-89e8-444c-9c26-9e6f7002575e")
+                            RoomId = new Guid("5c6569bd-1c80-4474-b8a2-6097bf378da3")
                         },
                         new
                         {
-                            Id = new Guid("e214496b-6e65-4e76-a257-2b00703512d7"),
+                            Id = new Guid("bb9fc22b-5317-4a99-b8ad-704d1a869e33"),
                             IsFree = true,
                             Number = "12A5",
-                            RoomId = new Guid("22e91613-89e8-444c-9c26-9e6f7002575e")
+                            RoomId = new Guid("5c6569bd-1c80-4474-b8a2-6097bf378da3")
                         });
                 });
 
@@ -841,122 +843,66 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            RoomEquipmentId = new Guid("60a21426-4d2a-48cc-908e-f1f580d5d47f"),
+                            RoomEquipmentId = new Guid("7d8ba5a4-108f-4ac1-86c1-e37e8c1feb64"),
                             Amount = 15,
                             EquipmentName = "SURGICAL_TABLES",
-                            RoomId = new Guid("e378586b-0e58-4787-b60f-addf46ca4841")
+                            RoomId = new Guid("6cfbd0a2-2497-48dc-bb0b-5a6687b45248")
                         },
                         new
                         {
-                            RoomEquipmentId = new Guid("57aabdc8-ce1d-473a-ad26-207137e7a8bf"),
+                            RoomEquipmentId = new Guid("fe4eedcf-c917-471f-842d-e1e017995309"),
                             Amount = 10,
                             EquipmentName = "ANESTHESIA",
-                            RoomId = new Guid("22e91613-89e8-444c-9c26-9e6f7002575e")
+                            RoomId = new Guid("5c6569bd-1c80-4474-b8a2-6097bf378da3")
                         },
                         new
                         {
-                            RoomEquipmentId = new Guid("05ae2467-cf31-4e74-91fe-6f88cc5243df"),
-                            Amount = 4,
-                            EquipmentName = "ANESTHESIA",
-                            RoomId = new Guid("d403f791-761b-49de-a806-fb84336ea34b")
+                            RoomEquipmentId = new Guid("955bee51-5148-4ffe-88cc-010585a1d7a5"),
+                            Amount = 3,
+                            EquipmentName = "EKG_MACHINE",
+                            RoomId = new Guid("aa786c08-8414-48f6-aa2c-6da66b8447be")
                         },
                         new
                         {
-                            RoomEquipmentId = new Guid("569d2ebe-1889-40ee-83af-9e9a76473ad6"),
+                            RoomEquipmentId = new Guid("cae43c2c-6183-4cc6-9f86-617e8f04cefd"),
                             Amount = 1,
                             EquipmentName = "ANESTHESIA",
-                            RoomId = new Guid("ff145d13-0ac5-455b-b2ac-1d56e6f73793")
+                            RoomId = new Guid("50a962ab-6018-4aa9-9970-cbcdbf8e7258")
                         },
                         new
                         {
-                            RoomEquipmentId = new Guid("733a7d7e-be25-41ba-97e1-762e874a2436"),
+                            RoomEquipmentId = new Guid("e3867ca6-3297-4114-95b4-ca90e7bbef4c"),
                             Amount = 2,
                             EquipmentName = "EKG_MACHINE",
-                            RoomId = new Guid("fd908bc1-7468-4c2e-b26e-eaefb3bd1860")
+                            RoomId = new Guid("2b91b481-2e00-4c51-9b71-4a664cd32555")
                         },
                         new
                         {
-                            RoomEquipmentId = new Guid("06ff4816-1d2a-4cd3-92bc-7fb548befc6d"),
+                            RoomEquipmentId = new Guid("379949ba-d6b0-4bd3-8a58-18a680b820ce"),
                             Amount = 4,
                             EquipmentName = "SURGICAL_TABLES",
-                            RoomId = new Guid("939f14e9-2fcd-4d0f-a421-314b0414b3c9")
+                            RoomId = new Guid("063801b8-c262-4b78-a2f1-60398a273f08")
                         },
                         new
                         {
-                            RoomEquipmentId = new Guid("3fa5aabb-0308-4203-ae8c-b3063a3c8965"),
+                            RoomEquipmentId = new Guid("42e62c45-eb68-4ab6-997b-9a55729922d4"),
                             Amount = 6,
                             EquipmentName = "BANDAGE",
-                            RoomId = new Guid("4d89d832-fd78-4e6e-8324-40a641aae220")
+                            RoomId = new Guid("a448eff8-e77f-455b-bdd0-de2eb3311a93")
                         },
                         new
                         {
-                            RoomEquipmentId = new Guid("b29e325c-d8ad-4145-bdb2-da2e358dfdbb"),
+                            RoomEquipmentId = new Guid("17f2cac1-8199-4dac-a8a7-2c4a6139570a"),
                             Amount = 3,
                             EquipmentName = "ANESTHESIA",
-                            RoomId = new Guid("f49d8a92-b6f5-4bd8-8046-7a072058758b")
+                            RoomId = new Guid("0fa16ca5-99f2-4720-b64d-5939cf7da387")
                         },
                         new
                         {
-                            RoomEquipmentId = new Guid("b66f1e46-f5db-496e-bb12-6778166d0a34"),
+                            RoomEquipmentId = new Guid("7e3ade0a-721b-44ad-826e-06891548710c"),
                             Amount = 9,
                             EquipmentName = "SURGICAL_TABLES",
-                            RoomId = new Guid("91288c2b-fa6c-4c3f-b999-94ca05509985")
-                        },
-                        new
-                        {
-                            RoomEquipmentId = new Guid("ed6e9607-e148-4e57-84dd-170d92d6b18e"),
-                            Amount = 8,
-                            EquipmentName = "EKG_MACHINE",
-                            RoomId = new Guid("e378586b-0e58-4787-b60f-addf46ca4841")
-                        },
-                        new
-                        {
-                            RoomEquipmentId = new Guid("971da5ae-29a2-48e9-b838-9e39e245f1ae"),
-                            Amount = 3,
-                            EquipmentName = "SYRINGE",
-                            RoomId = new Guid("e378586b-0e58-4787-b60f-addf46ca4841")
-                        },
-                        new
-                        {
-                            RoomEquipmentId = new Guid("b17d06f2-7ca9-4f4d-af52-e2338a18ce4c"),
-                            Amount = 3,
-                            EquipmentName = "EKG_MACHINE",
-                            RoomId = new Guid("d403f791-761b-49de-a806-fb84336ea34b")
-                        },
-                        new
-                        {
-                            RoomEquipmentId = new Guid("200a2c87-665b-4126-8ac5-811563566a25"),
-                            Amount = 15,
-                            EquipmentName = "BANDAGE",
-                            RoomId = new Guid("d403f791-761b-49de-a806-fb84336ea34b")
-                        },
-                        new
-                        {
-                            RoomEquipmentId = new Guid("54e245d7-2797-4b9f-bc99-e575c8113a2f"),
-                            Amount = 4,
-                            EquipmentName = "SYRINGE",
-                            RoomId = new Guid("91288c2b-fa6c-4c3f-b999-94ca05509985")
-                        },
-                        new
-                        {
-                            RoomEquipmentId = new Guid("27578e15-79d2-4ab7-842a-301884519cb1"),
-                            Amount = 14,
-                            EquipmentName = "BANDAGE",
-                            RoomId = new Guid("939f14e9-2fcd-4d0f-a421-314b0414b3c9")
-                        },
-                        new
-                        {
-                            RoomEquipmentId = new Guid("189eec9f-eced-4408-9407-0ec5247011e5"),
-                            Amount = 31,
-                            EquipmentName = "SYRINGE",
-                            RoomId = new Guid("ff145d13-0ac5-455b-b2ac-1d56e6f73793")
-                        },
-                        new
-                        {
-                            RoomEquipmentId = new Guid("b12a34d2-31e5-475b-9f23-4ca61ad9ba76"),
-                            Amount = 2,
-                            EquipmentName = "SURGICAL_TABLES",
-                            RoomId = new Guid("fd908bc1-7468-4c2e-b26e-eaefb3bd1860")
+                            RoomId = new Guid("8465468a-235a-4e1c-a783-fb267e5757b4")
                         });
                 });
 
@@ -1010,7 +956,7 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cb32f72f-1395-43a2-abf1-c2a99ef15ed9"),
+                            Id = new Guid("3fadd609-f7c4-47b7-8987-69d1b655f997"),
                             City = "Novi Sad",
                             Country = "Serbia",
                             Postcode = 21000,
@@ -1019,7 +965,7 @@ namespace HospitalLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("acd2a38d-f551-4d80-a607-af3e65e6392c"),
+                            Id = new Guid("d65d3b56-1d7d-43ef-ad07-6b475bee2fb2"),
                             City = "Novi Sad",
                             Country = "Serbia",
                             Postcode = 21000,
@@ -1028,7 +974,7 @@ namespace HospitalLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("82060ef5-c5f8-4ea6-a57d-f9042ebf2502"),
+                            Id = new Guid("56ce0cf0-258f-4472-af7f-f4f9b80ad14d"),
                             City = "Novi Sad",
                             Country = "Serbia",
                             Postcode = 21000,
@@ -1106,8 +1052,8 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b6e74e3a-ba83-4a24-a021-eb555c4e0e18"),
-                            AddressId = new Guid("acd2a38d-f551-4d80-a607-af3e65e6392c"),
+                            Id = new Guid("2815a0cb-802a-4a52-b9aa-9a585f329318"),
+                            AddressId = new Guid("d65d3b56-1d7d-43ef-ad07-6b475bee2fb2"),
                             Email = "DjordjeLopov@gmail.com",
                             Enabled = true,
                             Jmbg = "99999999",
@@ -1117,14 +1063,14 @@ namespace HospitalLibrary.Migrations
                             Surname = "Vuckovic",
                             UserRole = 0,
                             Username = "Tadjo",
-                            RoomId = new Guid("22e91613-89e8-444c-9c26-9e6f7002575e"),
-                            SpecializationId = new Guid("aac5cc66-5703-4504-a42b-a66a803755cc"),
-                            WorkingScheduleId = new Guid("8b24ac8c-1f5a-4d70-998c-bd21903490d8")
+                            RoomId = new Guid("5c6569bd-1c80-4474-b8a2-6097bf378da3"),
+                            SpecializationId = new Guid("4527e5e2-567e-4a63-aa77-1c111e13493f"),
+                            WorkingScheduleId = new Guid("8181d824-1935-4c20-950e-dd6a4a37cdc6")
                         },
                         new
                         {
-                            Id = new Guid("91a28d09-3479-4ea8-afb0-df0e21ba2cf6"),
-                            AddressId = new Guid("cb32f72f-1395-43a2-abf1-c2a99ef15ed9"),
+                            Id = new Guid("b97fa70a-c8fb-4830-b059-3a1e6f6e150c"),
+                            AddressId = new Guid("3fadd609-f7c4-47b7-8987-69d1b655f997"),
                             Email = "Cajons@gmail.com",
                             Enabled = true,
                             Jmbg = "99999999",
@@ -1134,9 +1080,9 @@ namespace HospitalLibrary.Migrations
                             Surname = "Maric",
                             UserRole = 0,
                             Username = "Ilija",
-                            RoomId = new Guid("e378586b-0e58-4787-b60f-addf46ca4841"),
-                            SpecializationId = new Guid("aac5cc66-5703-4504-a42b-a66a803755cc"),
-                            WorkingScheduleId = new Guid("8b24ac8c-1f5a-4d70-998c-bd21903490d8")
+                            RoomId = new Guid("6cfbd0a2-2497-48dc-bb0b-5a6687b45248"),
+                            SpecializationId = new Guid("4527e5e2-567e-4a63-aa77-1c111e13493f"),
+                            WorkingScheduleId = new Guid("8181d824-1935-4c20-950e-dd6a4a37cdc6")
                         });
                 });
 
@@ -1149,8 +1095,8 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a07dc5a8-9d10-46ed-8894-4644fd4d8c52"),
-                            AddressId = new Guid("82060ef5-c5f8-4ea6-a57d-f9042ebf2502"),
+                            Id = new Guid("ba1c3e93-a9c3-40ee-a028-1392329f6d61"),
+                            AddressId = new Guid("56ce0cf0-258f-4472-af7f-f4f9b80ad14d"),
                             Email = "psw.isa.mail@gmail.com",
                             Enabled = true,
                             Jmbg = "99999999",
@@ -1172,8 +1118,8 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b43ef663-8391-479b-bfe7-a22633e579de"),
-                            AddressId = new Guid("cb32f72f-1395-43a2-abf1-c2a99ef15ed9"),
+                            Id = new Guid("3a1ddf6a-9e14-41d5-8033-a2fd87c57f40"),
+                            AddressId = new Guid("3fadd609-f7c4-47b7-8987-69d1b655f997"),
                             Email = "psw.isa.mail@gmail.com",
                             Enabled = true,
                             Jmbg = "99999999",
@@ -1186,8 +1132,8 @@ namespace HospitalLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8a3b23e1-ccae-42eb-8297-0e3a4f2aed57"),
-                            AddressId = new Guid("82060ef5-c5f8-4ea6-a57d-f9042ebf2502"),
+                            Id = new Guid("f288843d-eea0-4f70-acaf-f0d8504e9dce"),
+                            AddressId = new Guid("56ce0cf0-258f-4472-af7f-f4f9b80ad14d"),
                             Email = "psw.isa.mail@gmail.com",
                             Enabled = true,
                             Jmbg = "99999999",
@@ -1246,7 +1192,7 @@ namespace HospitalLibrary.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    AppointmentId = new Guid("391581db-24bb-4945-b5a8-2c469787b8a5"),
+                                    AppointmentId = new Guid("d6df808c-4ae2-4cf8-8118-ff0f742aa6ed"),
                                     From = new DateTime(2023, 7, 27, 10, 0, 0, 0, DateTimeKind.Unspecified),
                                     To = new DateTime(2023, 7, 27, 10, 30, 0, 0, DateTimeKind.Unspecified)
                                 });
@@ -1295,13 +1241,13 @@ namespace HospitalLibrary.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    WorkingScheduleId = new Guid("8b24ac8c-1f5a-4d70-998c-bd21903490d8"),
+                                    WorkingScheduleId = new Guid("8181d824-1935-4c20-950e-dd6a4a37cdc6"),
                                     From = new DateTime(2022, 10, 27, 8, 0, 0, 0, DateTimeKind.Unspecified),
                                     To = new DateTime(2023, 12, 27, 14, 0, 0, 0, DateTimeKind.Unspecified)
                                 },
                                 new
                                 {
-                                    WorkingScheduleId = new Guid("38f6c585-5610-4281-8821-f942b7cd38e5"),
+                                    WorkingScheduleId = new Guid("89afee74-ae26-42c5-bb8b-036b61eab8de"),
                                     From = new DateTime(2022, 10, 27, 14, 0, 0, 0, DateTimeKind.Unspecified),
                                     To = new DateTime(2022, 10, 27, 22, 0, 0, 0, DateTimeKind.Unspecified)
                                 });
@@ -1330,13 +1276,13 @@ namespace HospitalLibrary.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    WorkingScheduleId = new Guid("8b24ac8c-1f5a-4d70-998c-bd21903490d8"),
+                                    WorkingScheduleId = new Guid("8181d824-1935-4c20-950e-dd6a4a37cdc6"),
                                     From = new DateTime(2022, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                                     To = new DateTime(2023, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified)
                                 },
                                 new
                                 {
-                                    WorkingScheduleId = new Guid("38f6c585-5610-4281-8821-f942b7cd38e5"),
+                                    WorkingScheduleId = new Guid("89afee74-ae26-42c5-bb8b-036b61eab8de"),
                                     From = new DateTime(2022, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                                     To = new DateTime(2023, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified)
                                 });
@@ -1387,7 +1333,7 @@ namespace HospitalLibrary.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    HolidayId = new Guid("56a77ceb-d784-4145-b0c6-0825c0e2422f"),
+                                    HolidayId = new Guid("4b5f2962-70aa-4036-a356-4cf931cc3925"),
                                     From = new DateTime(2022, 10, 27, 10, 0, 0, 0, DateTimeKind.Unspecified),
                                     To = new DateTime(2022, 10, 27, 10, 30, 0, 0, DateTimeKind.Unspecified)
                                 });

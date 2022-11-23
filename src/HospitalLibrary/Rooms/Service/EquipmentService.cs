@@ -23,14 +23,19 @@ namespace HospitalLibrary.Rooms.Service
         
         public async Task<IEnumerable<RoomEquipment>> GetAllEquipmentByRoomId(Guid roomId)
         {
-            return await _unitOfWork.EquipmentRepository.GetAllEquipmentByRoomId( roomId);
+            return await _unitOfWork.EquipmentRepository.GetAllEquipmentByRoomId(roomId);
+        }
+        
+        public async Task<IEnumerable<RoomEquipment>> SearchEquipmentByName(string equipmentName) //vamo stavi string Eq
+        {
+            //string equipmentName = Eq.Trim().ToLower();
+            return await _unitOfWork.EquipmentRepository.SearchEquipmentByName(equipmentName);
         }
         
         public async Task<RoomEquipment> AllEquipmentById(Guid roomEquipmentId)
         {
             return await _unitOfWork.GetRepository<EquipmentRepository>().GetByIdAsync(roomEquipmentId); 
-            //return await _unitOfWork.EquipmentRepository.GetByIdAsync(roomEquipmentId);
-         //   return await _unitOfWork.EquipmentRepository.GetAllEquipmentById( roomEquipmentId);
+           
         }
         
         

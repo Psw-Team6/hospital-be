@@ -23,4 +23,9 @@
     <ProjectReference Include="..\HospitalLibrary\HospitalLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Dtos\Request\HolidayRequest.cs" />
+    <Compile Remove="Dtos\Response\HolidayResponse.cs" />
+  </ItemGroup>
+
 </Project>

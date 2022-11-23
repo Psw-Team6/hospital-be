@@ -365,34 +365,64 @@ namespace HospitalLibrary.Settings
             );
 
 
+            
             RoomEquipment roomEquipment1 = new()
             {
                 RoomId = room1.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 15,
                 EquipmentName = "SURGICAL_TABLES"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+               
             };
             
+            RoomEquipment roomEquipment11 = new()
+            {
+                RoomId = room1.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 8,
+                EquipmentName = "EKG_MACHINE"
+               
+            };
+            
+            RoomEquipment roomEquipment111 = new()
+            {
+                RoomId = room1.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 3,
+                EquipmentName = "SYRINGE"
+            };
             RoomEquipment roomEquipment2 = new()
             {
                 RoomId = room2.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 10,
                 EquipmentName = "ANESTHESIA"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
             
-            
-            RoomEquipment roomEquipment3 = new()
+            RoomEquipment roomEquipment22 = new()
             {
                 RoomId = room3.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 3,
                 EquipmentName = "EKG_MACHINE"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
             
+            RoomEquipment roomEquipment3 = new()
+            {
+                RoomId = room3.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 4,
+                EquipmentName = "ANESTHESIA"
+            };
+            
+            
+            RoomEquipment roomEquipment33 = new()
+            {
+                RoomId = room3.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 15,
+                EquipmentName = "BANDAGE"
+            };
             
             RoomEquipment roomEquipment4 = new()
             {
@@ -400,19 +430,31 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 1,
                 EquipmentName = "ANESTHESIA"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
-           
             
+            RoomEquipment roomEquipment44 = new()
+            {
+                RoomId = room4.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 31,
+                EquipmentName = "SYRINGE"
+            };
+
             RoomEquipment roomEquipment5 = new()
             {
                 RoomId = room5.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 2,
                 EquipmentName = "EKG_MACHINE"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
-           
+            
+            RoomEquipment roomEquipment55 = new()
+            {
+                RoomId = room5.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 2,
+                EquipmentName = "SURGICAL_TABLES"
+            };
             
             RoomEquipment roomEquipment6 = new()
             {
@@ -420,47 +462,50 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 4,
                 EquipmentName = "SURGICAL_TABLES"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
-            
-            
+            RoomEquipment roomEquipment66 = new()
+            {
+                RoomId = room6.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 14,
+                EquipmentName = "BANDAGE"
+            };
             RoomEquipment roomEquipment7 = new()
             {
                 RoomId = room7.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 6,
                 EquipmentName = "BANDAGE"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
-           
-            
             RoomEquipment roomEquipment8 = new()
             {
                 RoomId = room8.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 3,
                 EquipmentName = "ANESTHESIA"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
-           
-            
             RoomEquipment roomEquipment9 = new()
             {
                 RoomId = room9.Id, 
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 9,
                 EquipmentName = "SURGICAL_TABLES"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+            };
+            RoomEquipment roomEquipment99 = new()
+            {
+                RoomId = room9.Id, 
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 4,
+                EquipmentName = "SYRINGE"
             };
             
             
-            //room9.Equipments.Add(roomEquipment9);
-            
-            
-            
             modelBuilder.Entity<RoomEquipment>().HasData(
-                roomEquipment1,roomEquipment2,roomEquipment3,roomEquipment4,roomEquipment5,roomEquipment6,roomEquipment7,roomEquipment8,roomEquipment9
+                roomEquipment1,roomEquipment2,roomEquipment3,roomEquipment4,roomEquipment5,roomEquipment6,roomEquipment7,roomEquipment8,roomEquipment9,
+                roomEquipment11,roomEquipment111,roomEquipment22,roomEquipment33,roomEquipment99,roomEquipment66,roomEquipment44,roomEquipment55
             );
+            
+            
             
             
             RoomBed room1Bed1 = new()

@@ -29,7 +29,12 @@
 
     <ItemGroup>
       <Folder Include="Integration" />
+      <Folder Include="ScheduleHolidayTests" />
       <Folder Include="ScheduleTest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="ScheduleHolidayTests\ScheduleHolidayTest.cs" />
     </ItemGroup>
 
 </Project>

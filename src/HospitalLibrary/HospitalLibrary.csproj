@@ -28,6 +28,7 @@
     <Folder Include="BloodUnits\Repository" />
     <Folder Include="BloodUnits\Service" />
     <Folder Include="Migrations" />
+    <Folder Include="Patients\Enums" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +47,26 @@
     <Compile Remove="Migrations\20221117140820_Initial.Designer.cs" />
     <Compile Remove="Migrations\20221117141010_Initial.cs" />
     <Compile Remove="Migrations\20221117141010_Initial.Designer.cs" />
+    <Compile Remove="BloodConsumptions\Model\BloodConsumptionCreateDto.cs" />
+    <Compile Remove="Patients\Enums\Gender.cs" />
+    <Compile Remove="Migrations\20221117171909_Initial.cs" />
+    <Compile Remove="Migrations\20221117171909_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221120083013_Initial.cs" />
+    <Compile Remove="Migrations\20221120083013_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221120075930_Initial.cs" />
+    <Compile Remove="Migrations\20221120075930_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221120074708_Initial.cs" />
+    <Compile Remove="Migrations\20221120074708_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221120082311_Initial.cs" />
+    <Compile Remove="Migrations\20221120082311_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221120081725_Initial.cs" />
+    <Compile Remove="Migrations\20221120081725_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221117231337_Initial.cs" />
+    <Compile Remove="Migrations\20221117231337_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221120153737_Initial.cs" />
+    <Compile Remove="Migrations\20221120153737_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20221120145856_Initial.cs" />
+    <Compile Remove="Migrations\20221120145856_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
