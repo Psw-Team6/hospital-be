@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Common;
+using HospitalLibrary.Enums;
 using HospitalLibrary.EquipmentMovement.Model;
 using HospitalLibrary.EquipmentMovement.Repository;
+using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.sharedModel;
 using SendGrid.Helpers.Errors.Model;
 
@@ -175,12 +177,35 @@ namespace HospitalLibrary.EquipmentMovement.Service
                 return false;
             }
 
-            if (equipmentMovementRequest.Amount <= 0)
+            if (!equipmentMovementRequest.DatesForSearch.IsBeforeDate())
             {
                 return false;
             }
             
-            
+            if (equipmentMovementRequest.Amount <= 0)
+            {
+                return false;
+            }
+
+            RoomEquipment foundEquipment = await _unitOfWork.EquipmentRepository.GetEquipmentById(equipmentMovementRequest.EquipmentId);
+
+            if (foundEquipment == null)
+            {
+                return false;
+            }
+
+            if (foundEquipment.Amount < equipmentMovementRequest.Amount)
+            {
+                return false;
+            }
+
+            Room foundDestinationRoom = await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementRequest.DestinationRoomId);
+            Room foundOriginRoom = await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementRequest.OriginalRoomId);
+
+            if (foundDestinationRoom == null || foundOriginRoom == null)
+            {
+                return false;
+            }
             return true;
         }
         
@@ -191,7 +216,32 @@ namespace HospitalLibrary.EquipmentMovement.Service
                 return false;
             }
             
+            if (!equipmentMovementAppointment.Duration.IsBeforeDate())
+            {
+                return false;
+            }
+            
             if (equipmentMovementAppointment.Amount <= 0)
+            {
+                return false;
+            }
+            
+            RoomEquipment foundEquipment = await _unitOfWork.EquipmentRepository.GetEquipmentById(equipmentMovementAppointment.EquipmentId);
+
+            if (foundEquipment == null)
+            {
+                return false;
+            }
+
+            if (foundEquipment.Amount < equipmentMovementAppointment.Amount)
+            {
+                return false;
+            }
+
+            Room foundDestinationRoom = await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementAppointment.DestinationRoomId);
+            Room foundOriginRoom = await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementAppointment.OriginalRoomId);
+
+            if (foundDestinationRoom == null || foundOriginRoom == null)
             {
                 return false;
             }

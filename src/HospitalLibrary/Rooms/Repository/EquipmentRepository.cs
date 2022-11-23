@@ -25,11 +25,10 @@ namespace HospitalLibrary.Rooms.Repository
             return await  DbSet.ToListAsync();
         }
             
-        public async Task<List<RoomEquipment>> GetAllEquipmentById(Guid roomEquipmentId) //ista fora kao kod blood consuptiona
+        public async Task<RoomEquipment> GetEquipmentById(Guid roomEquipmentId) //ista fora kao kod blood consuptiona
         {
-            return await DbSet.Where(roomEquipment => roomEquipment.RoomEquipmentId == roomEquipmentId)
-                .Include(roomEquipment => roomEquipment.RoomEquipmentId)
-                .ToListAsync();
+            return await DbSet.FirstOrDefaultAsync(roomEquipment => roomEquipment.RoomEquipmentId == roomEquipmentId);
+
         }
         
         
