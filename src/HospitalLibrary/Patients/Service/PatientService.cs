@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Common;
@@ -147,27 +147,6 @@ namespace HospitalLibrary.Patients.Service
             }
 
             return counter;
-        }
-
-        public async Task<IEnumerable<Patient>> GetAllHospitalizedPatients()
-        {
-            var hospitalizedPatients = await _unitOfWork.PatientRepository.GetAllHospitalizedPatientsAsync();
-            var currentHospitalizedPatients = new List<Patient>();
-            if (currentHospitalizedPatients == null)
-                throw new ArgumentNullException(nameof(currentHospitalizedPatients));
-            hospitalizedPatients.ToList()
-                .ForEach(patient =>
-                    {
-                        patient.PatientAdmissions.ToList().ForEach(admission =>
-                        {
-                            if (admission.DateOfDischarge == null)
-                            {
-                                currentHospitalizedPatients.Add(patient);
-                            }
-                        });
-                    }
-                );
-            return currentHospitalizedPatients;
         }
     }
 }

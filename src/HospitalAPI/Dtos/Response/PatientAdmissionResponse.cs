@@ -13,6 +13,7 @@ namespace HospitalAPI.Dtos.Response
         public RoomBed SelectedBed { get; set; }
         public DateTime DateOfAdmission { get; set; }
         public string Reason { get; set; }
-        public DateTime? DateOfDischarge { get; set; }
+        public DateTime DateOfDischarge { get; set; }
+        
     }
 }

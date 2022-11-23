@@ -72,14 +72,5 @@ namespace HospitalAPI.Controllers
             var result =  await _patientAdmissionService.DischargePatient(admission);
             return result == false ? NotFound() : NoContent();
         }
-        [HttpGet("admission/{id}")]
-        [ProducesResponseType( typeof(PatientAdmissionResponse),StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PatientAdmissionResponse>> GetByAdmissionIdAndIncludePatient([FromRoute] Guid id)
-        {
-            var admission = await _patientAdmissionService.GetAdmissionWithPatientById(id);
-            var result = _mapper.Map<PatientAdmissionResponse>(admission);
-            return result == null ? NotFound() : Ok(result);
-        }
     }
 }

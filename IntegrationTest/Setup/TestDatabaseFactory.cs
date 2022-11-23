@@ -2,7 +2,6 @@
 using System.Linq;
 using IntegrationAPI;
 using IntegrationLibrary.BloodBank;
-using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.NewsFromBloodBank.Model;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
@@ -38,81 +37,48 @@ namespace IntegrationTest.Setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=IntegrationTestDB;Username=postgres;Password=tamara;";
+            return "Host=localhost;Database=IntegrationTestDB;Username=postgres;Password=password;";
         }
         private static void InitializeDataBase(IntegrationDbContext context)
         {
-
             context.Database.EnsureCreated();
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE public.\"BloodRequests\";");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE public.\"BloodBanks\";");
 
-            BloodRequest request1 = new()
+            BloodBank bloodBank = new()
             {
                 Id = Guid.NewGuid(),
-                Type = BloodType.ABneg,
-                Amount = 10.0,
-                Reason = "SADDDDDDSAD",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
+                Name = "Vampir",
+                ServerAddress = "Vampir12345",
+                Email = "deki555@hotmail.com",
+                Password = "lpe+uKKi6XM=",
+                ApiKey = "NkwQR/sa7Rm97+S7/KQxqWl2nZhnWjzLX3dvHOTngEk="
             };
 
-            BloodRequest request2 = new()
+            context.BloodBanks.Add(bloodBank);
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE public.\"NewsFromBloodBank\";");
+            NewsFromBloodBank news1 = new()
             {
                 Id = Guid.NewGuid(),
-                Type = BloodType.Bneg,
-                Amount = 20.0,
-                Reason = "Operacija",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
+                title = "Dobrovoljno davanje krvi",
+                content = "Dodjite na dobrovoljno davanje krvi sutra.",
+                apiKey = "NkwQR/sa7Rm97+S7/KQxqWl2nZhnWjzLX3dvHOTngEk=",
+                newsStatus = IntegrationLibrary.Enums.NewsFromHospitalStatus.ON_HOLD,
+                base64image = "",
+                bloodBankName = "Vampir"
             };
 
-            BloodRequest request3 = new()
+            NewsFromBloodBank news2 = new()
             {
                 Id = Guid.NewGuid(),
-                Type = BloodType.ABneg,
-                Amount = 10.0,
-                Reason = "SADDDDDDSAD",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
+                title = "Dobrovoljno davanje krvi i besplatan pregled",
+                content = "Dodjite na dobrovoljno davanje krvi sutra, gdje dobijate i besplatan pregled.",
+                apiKey = "NkwQR/sa7Rm97+S7/KQxqWl2nZhnWjzLX3dvHOTngEk=",
+                newsStatus = IntegrationLibrary.Enums.NewsFromHospitalStatus.ACTIVE,
+                base64image = "",
+                bloodBankName = "Vampir"
             };
-
-            BloodRequest request4 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.Bneg,
-                Amount = 20.0,
-                Reason = "Operacija",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-
-            BloodRequest request5 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.ABneg,
-                Amount = 10.0,
-                Reason = "SADDDDDDSAD",
-                Date = new DateTime(),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-
-
-            context.BloodRequests.Add(request1);
-            context.BloodRequests.Add(request2);
-            context.BloodRequests.Add(request3);
-            context.BloodRequests.Add(request4);
-
-
+            context.NewsFromBloodBank.Add(news1);
+            context.NewsFromBloodBank.Add(news2);
             context.SaveChanges();
         }
         
