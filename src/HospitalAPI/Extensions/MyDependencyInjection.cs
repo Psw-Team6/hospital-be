@@ -13,6 +13,8 @@ using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Rooms.Service;
+using HospitalLibrary.sharedModel.Repository;
+using HospitalLibrary.sharedModel.Service;
 using HospitalLibrary.TreatmentReports.Repository;
 using HospitalLibrary.TreatmentReports.Service;
 using Microsoft.Extensions.DependencyInjection;
@@ -65,6 +67,8 @@ namespace HospitalAPI.Extensions
             services.AddScoped<RoomBedService>();
             services.AddScoped<GeneratePdfReportService>();
             services.AddScoped<IRoomBedRepository, RoomBedRepository>();
+            services.AddScoped<IAllergenRepository, AllergenRepository>();
+            services.AddScoped<AllergenService>();
         }
     }
 }

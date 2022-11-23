@@ -1,7 +1,7 @@
 ﻿using IntegrationAPI;
 using Xunit;
 
-namespace HospitalTest.Setup
+namespace IntegrationTest.Setup
 {
     public class BaseIntegrationTest: IClassFixture<TestDatabaseFactory<Startup>>
     {

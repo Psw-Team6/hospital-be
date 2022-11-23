@@ -28,6 +28,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Allergen> Allergens { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
         public DbSet<GRoom> GRooms { get; set; }
@@ -38,6 +39,7 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodConsumption> BloodConsumptions { get; set; }
         public DbSet<RoomEquipment> RoomEquipment { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
+       
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -137,6 +139,20 @@ namespace HospitalLibrary.Settings
             };
             modelBuilder.Entity<Address>().HasData(
                 address,address1,address2
+            );
+
+            Allergen allergen1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Paracetamol"
+            };
+            Allergen allergen2 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Brufen"
+            };
+            modelBuilder.Entity<Allergen>().HasData(
+                allergen1,allergen2
             );
             
             Building building1 = new()
@@ -552,7 +568,7 @@ namespace HospitalLibrary.Settings
             Doctor doctor1 = new()
             {
                 Id = Guid.NewGuid(),
-                SpecializationId = specializationDermatology.Id,
+                SpecializationId = specializationGeneral.Id,
                 AddressId = address.Id,
                 WorkingScheduleId = workingSchedule1.Id,
                 RoomId = room1.Id,

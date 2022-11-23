@@ -117,6 +117,7 @@ namespace HospitalAPI.Controllers
             var patients = await _patientService.GetElderlyGroup();
             return Ok(patients);
         }
+
         [HttpGet("hospitalized-patients")]
         [ProducesResponseType( StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -127,6 +128,17 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<IEnumerable<HospitalizedPatientResponse>>(hospitalizedPatients);
             return result == null ? NotFound() : Ok(result);
             
+
+        
+        [HttpGet("/api/v1/PatientProfile/{id}")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<PatientProfileResponse>> GetProfileById([FromRoute] Guid id)
+        {
+            var patient = await _patientService.GetById(id);
+            var result = _mapper.Map<PatientProfileResponse>(patient);
+            return result == null ? NotFound() : Ok(result);
+
         }
     }
 }

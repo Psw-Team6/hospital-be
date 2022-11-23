@@ -35,5 +35,13 @@ namespace HospitalLibrary.Doctors.Repository
         {
             return await DbSet.FirstOrDefaultAsync(doctor => doctor.Username == username);
         }
+
+        public async Task<List<Doctor>> GetAllDoctorsBySpecialization()
+        {
+            return await DbSet.Include(d => d.Specialization)
+                .Include(d => d.Patients)
+                .Where(d => d.Specialization.Name.Equals("General"))
+                .ToListAsync();
+        }
     }
 }
