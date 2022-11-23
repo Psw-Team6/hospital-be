@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
+using HospitalAPI.Infrastructure.Authorization;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Patients.Service;
 using Microsoft.AspNetCore.Http;
@@ -130,14 +132,15 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("/api/v1/PatientProfile/{id}")]
-            [ProducesResponseType(StatusCodes.Status200OK)]
-            [ProducesResponseType(StatusCodes.Status404NotFound)]
-            public async Task<ActionResult<PatientProfileResponse>> GetProfileById([FromRoute] Guid id)
-            {
-                var patient = await _patientService.GetById(id);
-                var result = _mapper.Map<PatientProfileResponse>(patient);
-                return result == null ? NotFound() : Ok(result);
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<PatientProfileResponse>> GetProfileById([FromRoute] Guid id)
+        {
+            var patient = await _patientService.GetById(id);
+            var result = _mapper.Map<PatientProfileResponse>(patient);
+            return result == null ? NotFound() : Ok(result);
 
-            }
         }
     }
+
+}

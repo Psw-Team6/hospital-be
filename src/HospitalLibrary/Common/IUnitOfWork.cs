@@ -5,6 +5,7 @@ using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.BloodConsumptions.Repository;
 using HospitalLibrary.BloodUnits.Repository;
 using HospitalLibrary.Doctors.Repository;
+using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Patients.Repository;
@@ -36,6 +37,8 @@ namespace HospitalLibrary.Common
         IIEquipmentRepository EquipmentRepository { get; }
         ITreatmentReportRepository TreatmentReportRepository { get; }
         IRoomBedRepository RoomBedRepository { get; }
+        IEquipmentMovementAppointmentRepository EquipmentMovementAppointmentRepository { get; }
+        
         IAddressRepository AddressRepository { get; }
         IAllergenRepository AllergenRepository { get; }
 
