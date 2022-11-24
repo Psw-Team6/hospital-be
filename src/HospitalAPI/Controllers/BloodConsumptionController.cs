@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
+using HospitalAPI.Infrastructure.Authorization;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodConsumptions.Service;
 using Microsoft.AspNetCore.Http;

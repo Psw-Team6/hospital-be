@@ -64,6 +64,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("/api/v1/Patient-gender-female")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HospitalAuthorization(UserRole.Manager)]
         public async Task<ActionResult<PatientResponse>> GetFemalePatient()
         {
             var patients = await _patientService.GetFemalePatient();
@@ -73,6 +74,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("/api/v1/Patient-gender-male")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HospitalAuthorization(UserRole.Manager)]
         public async Task<ActionResult<PatientResponse>> GetMalePatient()
         {
             var patients = await _patientService.GetMalePatient();
@@ -82,6 +84,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("/api/v1/Patient-gender-other")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HospitalAuthorization(UserRole.Manager)]
         public async Task<ActionResult<PatientResponse>> GetOtherPatient()
         {
             var patients = await _patientService.GetOtherPatient();
@@ -91,6 +94,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("/api/v1/Patient-pediatric-group")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HospitalAuthorization(UserRole.Manager)]
         public async Task<ActionResult<PatientResponse>> GetPediatricGroup()
         {
             var patients = await _patientService.GetPediatricGroup();
@@ -100,6 +104,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("/api/v1/Patient-young-group")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HospitalAuthorization(UserRole.Manager)]
         public async Task<ActionResult<PatientResponse>> GetYoungGroup()
         {
             var patients = await _patientService.GetYoungGroup();
@@ -109,6 +114,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("/api/v1/Patient-middle-age-group")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HospitalAuthorization(UserRole.Manager)]
         public async Task<ActionResult<PatientResponse>> GetMiddleAgeGroup()
         {
             var patients = await _patientService.GetMiddleAgeGroup();
@@ -118,6 +124,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("/api/v1/Patient-elderly-group")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HospitalAuthorization(UserRole.Manager)]
         public async Task<ActionResult<PatientResponse>> GetElderlyGroup()
         {
             var patients = await _patientService.GetElderlyGroup();
@@ -127,7 +134,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("hospitalized-patients")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        /*[HospitalAuthorization(UserRole.Doctor)]*/
+        [HospitalAuthorization(UserRole.Doctor)]
         public async Task<ActionResult<IEnumerable<HospitalizedPatientResponse>>> GetAllHospitalizedPatients()
         {
             var hospitalizedPatients = await _patientService.GetAllHospitalizedPatients();

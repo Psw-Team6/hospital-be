@@ -15,7 +15,7 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-   //[HospitalAuthorization(UserRole.Doctor)]
+    [HospitalAuthorization(UserRole.Doctor)]
     public class PatientAdmissionController : ControllerBase
     {
         private readonly PatientAdmissionService _patientAdmissionService;
@@ -66,6 +66,7 @@ namespace HospitalAPI.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> DischargePatient([FromBody] DischargePatientAdmissionRequest patientAdmission)
         {
             var admission = _mapper.Map<PatientAdmission>(patientAdmission);
