@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
@@ -32,7 +33,7 @@ namespace HospitalAPI.Controllers.Private
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<HolidayResponse>> ScheduleHoliday([FromBody] HolidayRequest holidayRequest)
         {
@@ -40,6 +41,17 @@ namespace HospitalAPI.Controllers.Private
             var holidayScheduled = await _holidayService.ScheduleHoliday(holiday);
             var result = _mapper.Map<HolidayResponse>(holidayScheduled);
             return CreatedAtAction("ScheduleHoliday", new {id = result.Id}, result);
+        }
+        
+        
+        [HttpGet("GetDoctorHolidays/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<HolidayResponse>>> GetDoctorHolidays([FromRoute]Guid id)
+        {
+            var holidays = await _holidayService.GetDoctorsHolidays(id);
+            var result = _mapper.Map<List<HolidayResponse>>(holidays);
+            return result == null ? NotFound() : Ok(result);
         }
 
     }
