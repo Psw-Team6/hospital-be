@@ -382,23 +382,19 @@ namespace HospitalLibrary.Settings
                 gRoom1,gRoom2,gRoom3,gRoom4,gRoom5,gRoom6,gRoom7,gRoom8,gRoom9
             );
 
-
             RoomEquipment roomEquipment1 = new()
             {
                 RoomId = room1.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 15,
                 EquipmentName = "SURGICAL_TABLES"
-               
             };
-            
             RoomEquipment roomEquipment11 = new()
             {
                 RoomId = room1.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 5,
                 EquipmentName = "ANESTHESIA"
-               
             };
             
             RoomEquipment roomEquipment111 = new()
@@ -407,52 +403,41 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 13,
                 EquipmentName = "SYRINGE"
-               
             };
-            
             RoomEquipment roomEquipment2 = new()
             {
                 RoomId = room2.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 10,
                 EquipmentName = "ANESTHESIA"
-                
             };
-            
             RoomEquipment roomEquipment22 = new()
             {
                 RoomId = room2.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 5,
                 EquipmentName = "EKG_MACHINE"
-                
             };
-            
             RoomEquipment roomEquipment3 = new()
             {
                 RoomId = room3.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 3,
                 EquipmentName = "EKG_MACHINE"
-                
             };
-
             RoomEquipment roomEquipment33 = new()
             {
                 RoomId = room3.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 23,
                 EquipmentName = "SURGICAL_TABLES"
-                
             };
-            
             RoomEquipment roomEquipment4 = new()
             {
                 RoomId = room4.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 11,
                 EquipmentName = "ANESTHESIA"
-                
             };
             
             RoomEquipment roomEquipment44 = new()
@@ -461,7 +446,6 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 4,
                 EquipmentName = "BANDAGE"
-                
             };
 
             RoomEquipment roomEquipment5 = new()
@@ -470,7 +454,6 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 22,
                 EquipmentName = "EKG_MACHINE"
-               
             };
             
             RoomEquipment roomEquipment55 = new()
@@ -479,7 +462,6 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 6,
                 EquipmentName = "SYRINGE"
-               
             };
             
             RoomEquipment roomEquipment555 = new()
@@ -488,9 +470,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 15,
                 EquipmentName = "SURGICAL_TABLES"
-               
             };
-           
             
             RoomEquipment roomEquipment6 = new()
             {
@@ -498,9 +478,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 14,
                 EquipmentName = "SURGICAL_TABLES"
-                
             };
-            
             
             RoomEquipment roomEquipment66 = new()
             {
@@ -508,9 +486,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 7,
                 EquipmentName = "SYRINGE"
-                
             };
-            
             
             RoomEquipment roomEquipment7 = new()
             {
@@ -518,9 +494,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 6,
                 EquipmentName = "BANDAGE"
-                
             };
-           
             
             RoomEquipment roomEquipment8 = new()
             {
@@ -528,9 +502,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 3,
                 EquipmentName = "ANESTHESIA"
-                
             };
-            
             
             RoomEquipment roomEquipment88 = new()
             {
@@ -538,9 +510,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 13,
                 EquipmentName = "BANDAGE"
-                
             };
-           
             
             RoomEquipment roomEquipment9 = new()
             {
@@ -548,7 +518,6 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 9,
                 EquipmentName = "SURGICAL_TABLES"
-                
             };
             
             RoomEquipment roomEquipment99 = new()
@@ -557,13 +526,9 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 9,
                 EquipmentName = "ANESTHESIA"
-                
             };
             
-            
             //room9.Equipments.Add(roomEquipment9);
-            
-            
             
             modelBuilder.Entity<RoomEquipment>().HasData(
                 roomEquipment1,roomEquipment2,roomEquipment3,roomEquipment4,roomEquipment5,roomEquipment6,roomEquipment7,roomEquipment8,roomEquipment9,

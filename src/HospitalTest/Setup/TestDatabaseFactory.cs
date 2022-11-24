@@ -149,6 +149,18 @@ namespace HospitalTest.Setup
                 Enabled = true
             };
             context.Managers.Add(manager);
+            
+            
+            RoomEquipment roomEquipment = new()
+            {
+                RoomId = room.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 111,
+                EquipmentName = "BANDAGE"
+            };
+            context.RoomEquipment.Add(roomEquipment);
+            
+            
             context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Patients\";");
             context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Doctors\";");
             context.Database.ExecuteSqlRaw("DELETE FROM  public.\"WorkingSchedules\";");
@@ -158,8 +170,8 @@ namespace HospitalTest.Setup
             context.Database.ExecuteSqlRaw("DELETE FROM public.\"Specializations\";");
             context.Database.ExecuteSqlRaw("DELETE FROM public.\"Addresses\";");
             context.Database.ExecuteSqlRaw("DELETE FROM public.\"Managers\";");
+            context.Database.ExecuteSqlRaw("DELETE FROM public.\"RoomEquipment\";");
             context.SaveChanges();
         }
-        
     }
 }

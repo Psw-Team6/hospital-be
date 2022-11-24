@@ -4,6 +4,7 @@ using HospitalAPI.Exceptions;
 using HospitalAPI.Extensions;
 using HospitalAPI.Infrastructure;
 using HospitalAPI.Mapper;
+using HospitalAPI.ScheduleTask;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.EquipmentMovement;

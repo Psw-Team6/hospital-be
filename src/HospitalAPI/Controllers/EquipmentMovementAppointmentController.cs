@@ -16,10 +16,10 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class EquipmentMovementAppointmentController:ControllerBase
     {
-        private readonly EquipmentMovementAppointmentService _equipmentMovementAppointmentService;
+        private readonly IEquipmentMovementAppointmentService _equipmentMovementAppointmentService;
         private readonly IMapper _mapper;
 
-        public EquipmentMovementAppointmentController(EquipmentMovementAppointmentService equipmentMovementAppointmentService, IMapper mapper)
+        public EquipmentMovementAppointmentController(IEquipmentMovementAppointmentService equipmentMovementAppointmentService, IMapper mapper)
         {
             _equipmentMovementAppointmentService = equipmentMovementAppointmentService;
             _mapper = mapper;

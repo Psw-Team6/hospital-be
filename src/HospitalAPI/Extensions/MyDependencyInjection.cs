@@ -80,7 +80,7 @@ namespace HospitalAPI.Extensions
             services.AddScoped<IGeneratePdfReportService,GeneratePdfReportService>();
             services.AddScoped<IRoomBedRepository, RoomBedRepository>();
             services.AddScoped<EquipmentMovementAppointmentService>();
-            services.AddScoped<IEquipmentMovementAppointmentRepository, EquipmentMovementAppointmentRepository>();
+            //services.AddScoped<IEquipmentMovementAppointmentRepository, EquipmentMovementAppointmentRepository>();
             services.AddScoped<IAllergenRepository, AllergenRepository>();
             services.AddScoped<AllergenService>();
         }
