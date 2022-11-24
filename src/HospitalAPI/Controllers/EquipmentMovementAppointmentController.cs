@@ -8,6 +8,7 @@ using HospitalLibrary.EquipmentMovement.Model;
 using HospitalLibrary.EquipmentMovement.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SendGrid.Helpers.Errors.Model;
 
 namespace HospitalAPI.Controllers
 {
@@ -36,6 +37,7 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest();
             }
+            
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
         
