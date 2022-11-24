@@ -95,6 +95,33 @@ namespace IntegrationLibrary.Settings
             };
             modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);
 
+
+
+            ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configuration1 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodBankName = "Moja Banka Krvi",
+                GeneratePeriod = "ONE_MONTH",
+                SendPeriod = "EVERY_TWO_MINUT",
+                NextDateForSending = DateTime.Now,
+
+            };
+            ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configuration2 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodBankName = "Nova banka",
+                GeneratePeriod = "TWO_MONTH",
+                SendPeriod = "ONE_MONTH",
+                NextDateForSending = DateTime.Now,
+            };
+
+            modelBuilder.Entity<ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend>().HasData(
+               configuration1,
+               configuration2
+            );
+
+            base.OnModelCreating(modelBuilder);
+
         }
 
 

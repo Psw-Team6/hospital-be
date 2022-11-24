@@ -24,5 +24,9 @@ namespace IntegrationLibrary.ConfigureGenerateAndSend.Model
             SendPeriod = sendPeriod;
             NextDateForSending = nextDateForSending;
         }
+
+        public ConfigureGenerateAndSend()
+        {
+        }
     }
 }
