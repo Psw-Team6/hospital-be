@@ -8,10 +8,13 @@ using Syncfusion.Pdf.Graphics;
 using Syncfusion.Drawing;
 using System.IO;
 using IntegrationLibrary.PDFReports.Model;
+using System.Net.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Json;
 
 namespace IntegrationLibrary.PDFReports.Service
 {
-    public class PDFReportService
+    public class PDFReportService : IPDFReportService
     {
         
         public byte[] CreateDocument(PDFReport report)
@@ -60,6 +63,41 @@ namespace IntegrationLibrary.PDFReports.Service
             return docBytes;
         }
 
-       
+        static HttpClient httpClient = new HttpClient();
+        public bool UploadPDF(string path, String bankName, int generatePeriod)
+        {
+            PDFReport report = new PDFReport(generatePeriod, bankName, GetConsumptions(bankName));
+            MultipartFormDataContent form = new MultipartFormDataContent();
+            byte[] paramFileBytes = CreateDocument(report);
+            form.Add(new StreamContent(new MemoryStream(paramFileBytes)), "file", report.bankName + ".pdf");
+            try
+            {
+                HttpResponseMessage response = httpClient.PostAsync(path, form).Result;
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return false;
+            }
+
+            return true;
+
+        }
+
+        public List<BloodConsumptionPDFReport> GetConsumptions (string bankName)
+        {
+            List<BloodConsumptionPDFReport> consumptions;
+            try
+            {
+                consumptions = httpClient.GetFromJsonAsync<List<BloodConsumptionPDFReport>>("http://localhost:5000/api/v1/BloodConsumption/getBankConsumptions/" + bankName).Result;
+            }
+            catch
+            {
+                return null;
+            }
+            
+            return consumptions;
+        }
+
+
     }
 }
