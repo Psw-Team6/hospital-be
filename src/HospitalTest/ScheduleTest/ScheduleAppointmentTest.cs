@@ -13,7 +13,7 @@ using HospitalLibrary.sharedModel;
 using Moq;
 using Xunit;
 
-namespace HospitalTest
+namespace HospitalTest.ScheduleTest
 {
     public class ScheduleAppointmentTest
     {
