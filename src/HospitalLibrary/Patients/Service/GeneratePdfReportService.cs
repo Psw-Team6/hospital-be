@@ -10,7 +10,7 @@ using PdfSharpCore.Pdf;
 
 namespace HospitalLibrary.Patients.Service
 {
-    public class GeneratePdfReportService
+    public class GeneratePdfReportService : IGeneratePdfReportService
     {
         public void GeneratePdfReport(PatientAdmission admission,TreatmentReport treatmentReport)
         {
@@ -32,7 +32,7 @@ namespace HospitalLibrary.Patients.Service
             Process.Start(new ProcessStartInfo(filename) { UseShellExecute = true });
         }
 
-        private  string GenerateTextInPdf(PatientAdmission patientAdmission,TreatmentReport treatmentReport)
+        public  string GenerateTextInPdf(PatientAdmission patientAdmission,TreatmentReport treatmentReport)
         {
            
             var sb = new StringBuilder();
