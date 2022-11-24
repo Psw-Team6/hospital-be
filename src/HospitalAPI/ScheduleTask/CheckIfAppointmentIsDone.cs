@@ -1,15 +1,17 @@
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
+using HospitalLibrary.EquipmentMovement;
 using HospitalLibrary.EquipmentMovement.Service;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HospitalLibrary.EquipmentMovement
+namespace HospitalAPI.ScheduleTask
 {
     public class CheckIfAppointmentIsDone: ScheduledProcessorHospital
     {
         public CheckIfAppointmentIsDone(IServiceScopeFactory serviceScopeFactory) : base(serviceScopeFactory)
         {
-
+            
         }
 
         protected override string Schedule => "*/1 * * * *"; // every 1 min 
@@ -19,12 +21,10 @@ namespace HospitalLibrary.EquipmentMovement
             Console.WriteLine("-------------------------");
             IEquipmentMovementAppointmentService reportSenderService = scopeServiceProvider.GetRequiredService<IEquipmentMovementAppointmentService>();
             
-            Console.WriteLine("PikulaTask1 : " + DateTime.Now.ToString());
-            reportSenderService.CheckAllAppointmentTimes();
+            Console.WriteLine("PikulaTask1 : " + DateTime.Now.ToString(CultureInfo.InvariantCulture));
+            await reportSenderService.CheckAllAppointmentTimes();
 
-            await Task.Run(() => {
-                return Task.CompletedTask;
-            });
+            await Task.Run(() => Task.CompletedTask);
         }
     }
 }
