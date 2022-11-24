@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using IntegrationAPI;
+using IntegrationAPI.Dtos.Request;
 using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.BloodRequests.Model;
+using IntegrationLibrary.ConfigureGenerateAndSend.Model;
 using IntegrationLibrary.NewsFromBloodBank.Model;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +40,7 @@ namespace IntegrationTest.Setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=IntegrationTestDB;Username=postgres;Password=tamara;";
+            return "Host=localhost;Database=IntegrationTestDB;Username=postgres;Password=password;";
         }
         private static void InitializeDataBase(IntegrationDbContext context)
         {
@@ -112,8 +114,82 @@ namespace IntegrationTest.Setup
             context.BloodRequests.Add(request3);
             context.BloodRequests.Add(request4);
 
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE public.\"BloodBanks\";");
 
+            BloodBank bloodBank = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Vampir",
+                ServerAddress = "Vampir12345",
+                Email = "deki555@hotmail.com",
+                Password = "lpe+uKKi6XM=",
+                ApiKey = "NkwQR/sa7Rm97+S7/KQxqWl2nZhnWjzLX3dvHOTngEk="
+            };
+
+            BloodBank bloodBank1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Moja Banka Krvi",
+                ServerAddress = "Vampir12345",
+                Email = "deki555@hotmail.com",
+                Password = "lpe+uKKi6XM=",
+                ApiKey = "NkwQR/sa7Rm97+S7/KQxqWl2nZhnWjzLX3dvHOTngEk="
+            };
+
+
+            context.BloodBanks.Add(bloodBank);
+            context.BloodBanks.Add(bloodBank1);
+
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE public.\"NewsFromBloodBank\";");
+            NewsFromBloodBank news1 = new()
+            {
+                Id = Guid.NewGuid(),
+                title = "Dobrovoljno davanje krvi",
+                content = "Dodjite na dobrovoljno davanje krvi sutra.",
+                apiKey = "NkwQR/sa7Rm97+S7/KQxqWl2nZhnWjzLX3dvHOTngEk=",
+                newsStatus = IntegrationLibrary.Enums.NewsFromHospitalStatus.ON_HOLD,
+                base64image = "",
+                bloodBankName = "Vampir"
+            };
+            NewsFromBloodBank news2 = new()
+            {
+                Id = Guid.NewGuid(),
+                title = "Dobrovoljno davanje krvi i besplatan pregled",
+                content = "Dodjite na dobrovoljno davanje krvi sutra, gdje dobijate i besplatan pregled.",
+                apiKey = "NkwQR/sa7Rm97+S7/KQxqWl2nZhnWjzLX3dvHOTngEk=",
+                newsStatus = IntegrationLibrary.Enums.NewsFromHospitalStatus.ACTIVE,
+                base64image = "",
+                bloodBankName = "Vampir"
+            };
+
+            context.NewsFromBloodBank.Add(news1);
+            context.NewsFromBloodBank.Add(news2);
             context.SaveChanges();
+
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE public.\"ConfigureGenerateAndSend\";");
+
+            ConfigureGenerateAndSend configuration1 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodBankName = "Moja Banka Krvi",
+                GeneratePeriod = "ONE_MONTH",
+                SendPeriod = "EVERY_TWO_MINUT",
+                NextDateForSending = DateTime.Now,
+
+            };
+             ConfigureGenerateAndSend configuration2 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodBankName = "Nova banka",
+                GeneratePeriod="TWO_MONTH",
+                SendPeriod="SIX_MONTH",
+                NextDateForSending = DateTime.Now,
+             };
+
+            context.ConfigureGenerateAndSend.Add(configuration1);
+            context.ConfigureGenerateAndSend.Add(configuration2);
+            context.SaveChanges();
+
         }
         
     }

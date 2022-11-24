@@ -1,3 +1,4 @@
+using IntegrationLibrary.ConfigureGenerateAndSend.Model;
 ﻿using IntegrationLibrary.BloodRequests.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +9,11 @@ namespace IntegrationLibrary.Settings
     public class IntegrationDbContext: DbContext
     {
         public DbSet<BloodBank.BloodBank> BloodBanks { get; set; }
+
+        public DbSet<ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend> ConfigureGenerateAndSend { get; set; }
+
         public DbSet<BloodRequest> BloodRequests { get; set; }
+
 
         public DbSet<NewsFromBloodBank.Model.NewsFromBloodBank> NewsFromBloodBank { get; set; }
 
@@ -89,6 +94,33 @@ namespace IntegrationLibrary.Settings
                 ApiKey = "x"
             };
             modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);
+
+
+
+            ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configuration1 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodBankName = "Moja Banka Krvi",
+                GeneratePeriod = "ONE_MONTH",
+                SendPeriod = "EVERY_TWO_MINUT",
+                NextDateForSending = DateTime.Now,
+
+            };
+            ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configuration2 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodBankName = "Nova banka",
+                GeneratePeriod = "TWO_MONTH",
+                SendPeriod = "ONE_MONTH",
+                NextDateForSending = DateTime.Now,
+            };
+
+            modelBuilder.Entity<ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend>().HasData(
+               configuration1,
+               configuration2
+            );
+
+            base.OnModelCreating(modelBuilder);
 
         }
 

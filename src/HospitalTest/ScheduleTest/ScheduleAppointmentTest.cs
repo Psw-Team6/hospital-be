@@ -13,7 +13,7 @@ using HospitalLibrary.sharedModel;
 using Moq;
 using Xunit;
 
-namespace HospitalTest
+namespace HospitalTest.ScheduleTest
 {
     public class ScheduleAppointmentTest
     {
@@ -27,6 +27,7 @@ namespace HospitalTest
             var mockEmailService = new Mock<IEmailService>();
 
             var patient1 = SeedDataPateint(out var appointment);
+            
             mockUnitOfWork.Setup(x => x.PatientRepository).Returns(mockPatientRepo.Object);
             mockUnitOfWork.Setup(x => x.PatientRepository
                     .GetByIdAsync(It.IsAny<Guid>()))
