@@ -39,12 +39,10 @@ namespace HospitalLibrary.EquipmentMovement.Service
         {
             if (await ValidateAppointment(equipmentMovementAppointment) == false)
             {
-                Console.WriteLine("PUCAM ZBOG OVOG SRANJA");
+                Console.WriteLine("PUKLO");
                 return null;
             }
-            equipmentMovementAppointment.DestinationRoom = await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementAppointment.DestinationRoomId);
-            equipmentMovementAppointment.OriginalRoom = await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementAppointment.OriginalRoomId);
-
+            
             var equipmentMovementAppointmentResult = await _unitOfWork.EquipmentMovementAppointmentRepository.CreateAsync(equipmentMovementAppointment);
             
             await _unitOfWork.CompleteAsync();
@@ -219,16 +217,19 @@ namespace HospitalLibrary.EquipmentMovement.Service
         {
             if (!equipmentMovementAppointment.Duration.IsValidRange())
             {
+                throw new BadRequestException("Request end is before start.");
                 return false;
             }
             
             if (equipmentMovementAppointment.Duration.IsBeforeDate())
             {
+                throw new BadRequestException("Request cant start before today!");
                 return false;
             }
             
             if (equipmentMovementAppointment.Amount <= 0)
             {
+                throw new BadRequestException("Equipment amount is negative!");
                 return false;
             }
             
@@ -236,19 +237,28 @@ namespace HospitalLibrary.EquipmentMovement.Service
 
             if (foundEquipment == null)
             {
+                throw new BadRequestException("Equipment not found!");
                 return false;
             }
 
             if (foundEquipment.Amount < equipmentMovementAppointment.Amount)
             {
+                throw new BadRequestException("Equipment amount to large!");
                 return false;
             }
 
             Room foundDestinationRoom = await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementAppointment.DestinationRoomId);
             Room foundOriginRoom = await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementAppointment.OriginalRoomId);
 
-            if (foundDestinationRoom == null || foundOriginRoom == null)
+            if (foundDestinationRoom == null)
             {
+                throw new BadRequestException("Destination room not found!");
+                return false;
+            }
+            
+            if (foundOriginRoom == null)
+            {
+                throw new BadRequestException("Origin room not found!");
                 return false;
             }
             
