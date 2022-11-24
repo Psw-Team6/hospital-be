@@ -43,6 +43,22 @@ namespace HospitalAPI.Controllers.Private
             return CreatedAtAction("ScheduleHoliday", new {id = result.Id}, result);
         }
         
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> CancelHoliday([FromRoute] Guid id)
+        {
+            var holiday = await _holidayService.GetById(id);
+            if (holiday == null)
+                return NotFound();
+            
+            if(await _holidayService.CancelHoliday(holiday) == false)
+                return BadRequest();
+            
+            return NoContent();
+        }
+        
         
         [HttpGet("GetDoctorHolidays/{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
