@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
@@ -24,6 +25,14 @@ namespace HospitalLibrary.Patients.Repository
         {
             return await DbSet.Include(x => x.Patient)
                 .FirstOrDefaultAsync(x => x.Id == id);
+        }
+        
+        public async Task<List<PatientAdmission>> GetAllHospitalized()
+        {
+            return await DbSet.Include(p => p.Patient)
+                .Include(p=>p.Patient.Allergies)
+                .Where(p=> p.DateOfDischarge == null)
+                .ToListAsync();
         }
     }
 }

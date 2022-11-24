@@ -8,7 +8,9 @@ using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Holidays.Repository;
+using HospitalLibrary.Medicines.Repository;
 using HospitalLibrary.Patients.Repository;
+using HospitalLibrary.Prescriptions.Repository;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Settings;
 using HospitalLibrary.sharedModel.Repository;
@@ -40,6 +42,8 @@ namespace HospitalLibrary.Common
         private RoomBedRepository _roomBedRepository;
         private EquipmentMovementAppointmentRepository _equipmentMovementAppointmentRepository;
         private AddressRepository _addressRepository;
+        private MedicineRepository _medicineRepository;
+        private BloodPrescriptionRepository _bloodPrescriptionRepository;
       
 
         public IAllergenRepository AllergenRepository =>
@@ -49,7 +53,11 @@ namespace HospitalLibrary.Common
         public IRoomBedRepository RoomBedRepository =>
             _roomBedRepository ??= new RoomBedRepository(_hospitalDbContext);
 
-
+        public IMedicineRepository MedicineRepository =>
+            _medicineRepository ??= new MedicineRepository(_hospitalDbContext);
+        public IBloodPrescriptionRepository BloodPrescriptionRepository =>
+            _bloodPrescriptionRepository ??= new BloodPrescriptionRepository(_hospitalDbContext);
+        
         public ITreatmentReportRepository TreatmentReportRepository =>
             _treatmentReportRepository ??= new TreatmentReportRepository(_hospitalDbContext);
         public IIEquipmentRepository EquipmentRepository =>

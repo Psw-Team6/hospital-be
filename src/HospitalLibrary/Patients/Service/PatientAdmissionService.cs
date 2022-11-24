@@ -111,5 +111,11 @@ namespace HospitalLibrary.Patients.Service
             if (admission == null) throw new PatientAdmissionException("Patient admission not found!");
             if (admission.DateOfDischarge != null) throw new PatientDischargeException("Patient is already discharged!");
         }
+        
+        public async Task<object> GetAllHospitalized()
+        {
+            return await _unitOfWork.PatientAdmissionRepository.GetAllHospitalized();
+        }
+        
     }
 }
