@@ -116,6 +116,46 @@ namespace HospitalAPI.Controllers
             return Ok(patients);
         }
         
+        [HttpGet("/api/v1/Doctors-by-pediatric-group")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Dictionary<string, DoctorStatisticsResponse>>> GetDoctorsByPediatricGroup()
+        {
+            var doctors = await _patientService.GetDoctorsByPediatricGroup();
+            var doctorsCount = await _patientService.CountOfDoctors(doctors);
+            return Ok(doctorsCount);
+        }
+        
+        [HttpGet("/api/v1/Doctors-by-young-group")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Dictionary<string, DoctorStatisticsResponse>>> GetDoctorsByYoungGroup()
+        {
+            var doctors = await _patientService.GetDoctorsByYoungGroup();
+            var doctorsCount = await _patientService.CountOfDoctors(doctors);
+            return Ok(doctorsCount);
+        }
+        
+        [HttpGet("/api/v1/Doctors-by-middle-age-group")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Dictionary<string, DoctorStatisticsResponse>>> GetDoctorsByMiddleAgeGroup()
+        {
+            var doctors = await _patientService.GetDoctorsByMiddleAgeGroup();
+            var doctorsCount = await _patientService.CountOfDoctors(doctors);
+            return Ok(doctorsCount);
+        }
+
+        [HttpGet("/api/v1/Doctors-by-elderly-group")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Dictionary<string, DoctorStatisticsResponse>>> GetDoctorsByElderlyGroup()
+        {
+            var doctors = await _patientService.GetDoctorsByElderlyGroup();
+            var doctorsCount = await _patientService.CountOfDoctors(doctors);
+            return Ok(doctorsCount);
+        }
+        
         [HttpGet("/api/v1/PatientProfile/{id}")]
         [ProducesResponseType( StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

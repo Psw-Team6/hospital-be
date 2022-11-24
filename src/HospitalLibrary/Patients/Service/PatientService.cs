@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Common;
+using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
 
@@ -12,10 +16,12 @@ namespace HospitalLibrary.Patients.Service
     public class PatientService
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public PatientService(IUnitOfWork unitOfWork)
+        private readonly DoctorService _doctorService;
+        
+        public PatientService(IUnitOfWork unitOfWork, DoctorService doctorService)
         {
             _unitOfWork = unitOfWork;
+            _doctorService = doctorService;
         }
 
         public async Task<object> GetAll()
@@ -148,5 +154,94 @@ namespace HospitalLibrary.Patients.Service
 
             return counter;
         }
+
+       public async Task<List<string>> GetDoctorsByPediatricGroup()
+        {
+            var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
+            List<string> doctorsList= new List<string>();
+            foreach (var p in patients)
+            {
+                if (p.Age >= 0 && p.Age <= 14)
+                {
+                    var doctor = _doctorService.GetById(p.DoctorId);
+                    doctorsList.Add(doctor.Result.Name);
+                }
+                
+            }
+            
+            return doctorsList;
+        }
+
+       public async Task<Dictionary<string, DoctorStatistics>> CountOfDoctors(List<string> doctors)
+       {
+           Dictionary<string, DoctorStatistics> favouriteDoctors = new Dictionary<string, DoctorStatistics>();
+           foreach (var doctorName in doctors)
+           {
+               if (favouriteDoctors.ContainsKey(doctorName))
+               {
+                   favouriteDoctors[doctorName].DoctorCount = ++favouriteDoctors[doctorName].DoctorCount;
+                   continue;
+               }
+               DoctorStatistics ds = new DoctorStatistics();
+               ds.DoctorCount = ++ds.DoctorCount;
+               favouriteDoctors.Add(doctorName, ds);
+           }
+
+           return favouriteDoctors;
+       }
+       
+       public async Task<List<string>> GetDoctorsByYoungGroup()
+       {
+           var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
+           List<string> doctorsList= new List<string>();
+           foreach (var p in patients)
+           {
+               if (p.Age >= 15 && p.Age <= 47)
+               {
+                   var doctor = _doctorService.GetById(p.DoctorId);
+                   doctorsList.Add(doctor.Result.Name);
+               }
+           }
+            
+            
+            
+           return doctorsList;
+       }
+       
+       public async Task<List<string>> GetDoctorsByMiddleAgeGroup()
+       {
+           var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
+           List<string> doctorsList= new List<string>();
+           foreach (var p in patients)
+           {
+               if (p.Age >= 48 && p.Age <= 63)
+               {
+                   var doctor = _doctorService.GetById(p.DoctorId);
+                   doctorsList.Add(doctor.Result.Name);
+               }
+           }
+            
+            
+            
+           return doctorsList;
+       }
+       
+       public async Task<List<string>> GetDoctorsByElderlyGroup()
+       {
+           var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
+           List<string> doctorsList= new List<string>();
+           foreach (var p in patients)
+           {
+               if (p.Age >= 64)
+               {
+                   var doctor = _doctorService.GetById(p.DoctorId);
+                   doctorsList.Add(doctor.Result.Name);
+               }
+           }
+            
+            
+            
+           return doctorsList;
+       }
     }
 }
