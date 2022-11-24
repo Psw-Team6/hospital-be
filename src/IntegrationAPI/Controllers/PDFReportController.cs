@@ -3,6 +3,7 @@ using AutoMapper.Internal.Mappers;
 using IntegrationAPI.Dtos.Response;
 using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.BloodBank.Service;
+using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.PDFReports.Model;
 using IntegrationLibrary.PDFReports.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -21,41 +22,57 @@ namespace IntegrationAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PDFReportController
+    public class PDFReportController: ControllerBase
     {
-        private readonly PDFReportService pDFReportService;
-        private readonly IMapper mapper;
+        private readonly IPDFReportService pDFReportService;
+  
         static HttpClient httpClient = new HttpClient();
-        public PDFReportController(PDFReportService pDFReportService, IMapper mapper)
+        public PDFReportController(IPDFReportService pDFReportService)
         {
             this.pDFReportService = pDFReportService;
-            this.mapper = mapper;
+   
         }
 
-
-        static async Task UploadPDF(string path, byte[] paramFileBytes, string bankName)
+       /* [HttpPost("uploadPDF")]
+        public  ActionResult UploadPDF(string path, byte[] paramFileBytes, string bankName)
         {
             MultipartFormDataContent form = new MultipartFormDataContent();
             form.Add(new StreamContent(new MemoryStream(paramFileBytes)), "file", bankName + ".pdf");
             try
             {
-                HttpResponseMessage response = await httpClient.PostAsync(path, form);
+                HttpResponseMessage response =  httpClient.PostAsync(path, form).Result;
             } catch (HttpRequestException httpEx)
             {
+                return BadRequest();
             }
-            
-           
 
-        }
+            return Ok();
+
+        }*/
 
         // POST api/pdfreport
         [HttpPost]
-        public async void sendReport(String bankName, int generatePeriod)
+        public  ActionResult sendReport(String bankName, int generatePeriod)
         {
+          /*  List<BloodConsumptionPDFReport> consumptions;
+            try
+            {
+                consumptions =  httpClient.GetFromJsonAsync<List<BloodConsumptionPDFReport>>("http://localhost:5000/api/v1/BloodConsumption/getBankConsumptions/" + bankName).Result;
+            } catch
+            {
+                return BadRequest();
+            }*/
 
-           var consumptions = await httpClient.GetFromJsonAsync<List<BloodConsumptionPDFReport>>("http://localhost:5000/api/v1/BloodConsumption/getBankConsumptions/" + bankName);
-           
-            await UploadPDF("http://localhost:8080/api/PDFReport/" + bankName, pDFReportService.CreateDocument(new PDFReport(generatePeriod, bankName, consumptions)), bankName);
+          try
+            {
+                pDFReportService.UploadPDF("http://localhost:8080/api/PDFReport/" + bankName,  bankName, generatePeriod);
+            } catch
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+
         }
 
 

@@ -125,5 +125,11 @@ namespace HospitalLibrary.Common
                 _disposed = true;
             }
         }
+
+        public void Dispose()
+        {
+            _hospitalDbContext?.Dispose();
+            GC.SuppressFinalize(this);
+        }
     }
 }

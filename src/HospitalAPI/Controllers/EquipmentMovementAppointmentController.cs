@@ -32,6 +32,7 @@ namespace HospitalAPI.Controllers
         {
             var equipmentMovementAppointment = _mapper.Map<EquipmentMovementAppointment>(equipmentMovementDto);
             var equipmentMovementAppointmentCreated = await _equipmentMovementAppointmentService.Create(equipmentMovementAppointment);
+            
             var result = _mapper.Map<EquipmentMovementAppointmentResponse>(equipmentMovementAppointmentCreated);
             if (result == null)
             {

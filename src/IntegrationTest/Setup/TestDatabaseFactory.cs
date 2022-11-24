@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using IntegrationAPI;
+using IntegrationAPI.Dtos.Request;
 using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.BloodRequests.Model;
+using IntegrationLibrary.ConfigureGenerateAndSend.Model;
 using IntegrationLibrary.NewsFromBloodBank.Model;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
@@ -123,7 +125,21 @@ namespace IntegrationTest.Setup
                 Password = "lpe+uKKi6XM=",
                 ApiKey = "NkwQR/sa7Rm97+S7/KQxqWl2nZhnWjzLX3dvHOTngEk="
             };
+
+            BloodBank bloodBank1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Moja Banka Krvi",
+                ServerAddress = "Vampir12345",
+                Email = "deki555@hotmail.com",
+                Password = "lpe+uKKi6XM=",
+                ApiKey = "NkwQR/sa7Rm97+S7/KQxqWl2nZhnWjzLX3dvHOTngEk="
+            };
+
+
             context.BloodBanks.Add(bloodBank);
+            context.BloodBanks.Add(bloodBank1);
+
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE public.\"NewsFromBloodBank\";");
             NewsFromBloodBank news1 = new()
             {
@@ -149,6 +165,31 @@ namespace IntegrationTest.Setup
             context.NewsFromBloodBank.Add(news1);
             context.NewsFromBloodBank.Add(news2);
             context.SaveChanges();
+
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE public.\"ConfigureGenerateAndSend\";");
+
+            ConfigureGenerateAndSend configuration1 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodBankName = "Moja Banka Krvi",
+                GeneratePeriod = "ONE_MONTH",
+                SendPeriod = "EVERY_TWO_MINUT",
+                NextDateForSending = DateTime.Now,
+
+            };
+             ConfigureGenerateAndSend configuration2 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodBankName = "Nova banka",
+                GeneratePeriod="TWO_MONTH",
+                SendPeriod="SIX_MONTH",
+                NextDateForSending = DateTime.Now,
+             };
+
+            context.ConfigureGenerateAndSend.Add(configuration1);
+            context.ConfigureGenerateAndSend.Add(configuration2);
+            context.SaveChanges();
+
         }
         
     }

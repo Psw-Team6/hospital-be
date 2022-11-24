@@ -60,7 +60,7 @@ namespace IntegrationAPI
            
 
             services.AddScoped<IBloodBankService, BloodBankService>();
-            services.AddScoped<PDFReportService>();
+            services.AddScoped<IPDFReportService,PDFReportService>();
             services.AddScoped<PDFReportController>();
 
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();

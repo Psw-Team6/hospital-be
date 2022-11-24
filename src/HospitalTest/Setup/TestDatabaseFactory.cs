@@ -2,7 +2,10 @@
 using System.Linq;
 using HospitalAPI;
 using HospitalLibrary.ApplicationUsers.Model;
+using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Managers;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Settings;
 using HospitalLibrary.sharedModel;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace HospitalTest.Setup
 {
-    public class TestDatabaseFactory<TStartup> : WebApplicationFactory<Startup>
+    public class TestDatabaseFactory : WebApplicationFactory<Startup>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -27,7 +30,7 @@ namespace HospitalTest.Setup
         private static ServiceProvider BuildServiceProvider(IServiceCollection serviceCollection)
         {
             var desc = serviceCollection
-                .SingleOrDefault(d => d.ServiceType == typeof(HospitalDbContext));
+                .SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<HospitalDbContext>));
             serviceCollection.Remove(desc);
             serviceCollection.AddDbContext<HospitalDbContext>(opt =>
             {
@@ -43,8 +46,13 @@ namespace HospitalTest.Setup
         private static void InitializeDataBase(HospitalDbContext context)
         {
             context.Database.EnsureCreated();
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Address\";");
-            
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Addresses\";");
+            Specialization specializationGeneral = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "GeneralGG"
+            };
+            context.Specializations.Add(specializationGeneral);
             Address address = new()
             {
                 Id = Guid.NewGuid(),
@@ -55,21 +63,101 @@ namespace HospitalTest.Setup
                 Postcode = 21000
             };
             context.Addresses.Add(address);
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\";");
+            WorkingSchedule workingSchedule = new()
+            {
+                Id = Guid.NewGuid(),
+                DayOfWork = new DateRange
+                {
+                    From = new DateTime(2022, 10, 27, 8, 0, 0),
+                    To = new DateTime(2023, 12, 27, 14, 0, 0)
+                },
+                ExpirationDate = new DateRange
+                {
+                    From = new DateTime(2022, 10, 27),
+                    To = new DateTime(2023, 12, 27)
+                }
+            };
+            context.WorkingSchedules.Add(workingSchedule);
+            Building building1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Stara bolnica"
+            };
+            context.Buildings.Add(building1);
+            Floor floor11 = new()
+            {
+                Id= Guid.NewGuid(),
+                Name = "F0",
+                FloorNumber = 0,
+                BuildingId = building1.Id
+            };
+            context.Floors.Add(floor11);
+            Room room = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor11.Id,
+                Name = "B63",
+                BuildingId = floor11.BuildingId
+            };
+            context.Rooms.Add(room);
+            Doctor doctor = new()
+            {
+                Id = Guid.NewGuid(),
+                SpecializationId = specializationGeneral.Id,
+                AddressId = address.Id,
+                WorkingScheduleId = workingSchedule.Id,
+                RoomId = room.Id,
+                Username = "Doctor",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Milan",
+                Surname = "Milic",
+                Email = "mm@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Doctor,
+                Enabled = true
+            };
+            context.Doctors.Add(doctor);
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\";");
             context.Patients.Add(new Patient
             {
                 Id = Guid.NewGuid(),
                 AddressId = address.Id,
-                Username = "Sale",
+                Username = "Patient",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
-                Name = "Sale",
+                Name = "Marko",
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com",
                 Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Patient,
-                Enabled = true
+                Enabled = true,
+                DoctorId = doctor.Id
             });
+            Manager manager = new ()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address.Id,
+                Username = "Manager",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Manager",
+                Surname = "Manger",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Manager,
+                Enabled = true
+            };
+            context.Managers.Add(manager);
+            context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Patients\";");
+            context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Doctors\";");
+            context.Database.ExecuteSqlRaw("DELETE FROM  public.\"WorkingSchedules\";");
+            context.Database.ExecuteSqlRaw("DELETE FROM public.\"Rooms\";");
+            context.Database.ExecuteSqlRaw("DELETE FROM public.\"Floors\";");
+            context.Database.ExecuteSqlRaw("DELETE FROM public.\"Buildings\";");
+            context.Database.ExecuteSqlRaw("DELETE FROM public.\"Specializations\";");
+            context.Database.ExecuteSqlRaw("DELETE FROM public.\"Addresses\";");
+            context.Database.ExecuteSqlRaw("DELETE FROM public.\"Managers\";");
             context.SaveChanges();
         }
         

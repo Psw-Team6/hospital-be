@@ -57,7 +57,7 @@ namespace HospitalAPI.Controllers
         {
             var bloodConsumptionDto = _mapper.Map<BloodConsumptionCreateDto>(request);
             bloodConsumptionDto.doctorId = doctorId;
-            var result = await _bloodConsumptionService.CreateConsumptions(bloodConsumptionDto, doctorId);
+            var result = await _bloodConsumptionService.CreateConsumptions(bloodConsumptionDto);
             return result == null ? BadRequest() : StatusCode(201, result);
         }
 

@@ -38,6 +38,12 @@ namespace HospitalLibrary.Rooms.Service
          //   return await _unitOfWork.EquipmentRepository.GetAllEquipmentById( roomEquipmentId);
         }
         
+        public async Task<bool> Update(RoomEquipment equipment)
+        {
+            await _unitOfWork.EquipmentRepository.UpdateAsync(equipment);
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
         
        
         

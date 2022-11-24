@@ -17,7 +17,7 @@ using HospitalLibrary.TreatmentReports.Repository;
 
 namespace HospitalLibrary.Common
 {
-    public interface IUnitOfWork : IAsyncDisposable
+    public interface IUnitOfWork : IDisposable,IAsyncDisposable
     {
         ISpecializationsRepository SpecializationsRepository { get; }
         IDoctorRepository DoctorRepository { get; }
