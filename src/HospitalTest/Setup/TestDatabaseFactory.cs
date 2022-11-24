@@ -160,6 +160,5 @@ namespace HospitalTest.Setup
             context.Database.ExecuteSqlRaw("DELETE FROM public.\"Managers\";");
             context.SaveChanges();
         }
-        
     }
 }
