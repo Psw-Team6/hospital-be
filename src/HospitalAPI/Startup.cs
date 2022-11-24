@@ -6,6 +6,8 @@ using HospitalAPI.Infrastructure;
 using HospitalAPI.Mapper;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.EquipmentMovement;
+using HospitalLibrary.EquipmentMovement.Service;
 using HospitalLibrary.Settings;
 using HospitalLibrary.sharedModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -61,6 +63,8 @@ namespace HospitalAPI
             });
             services.AddTransient<ExceptionMiddleware>();
             
+            services.AddScoped<IEquipmentMovementAppointmentService, EquipmentMovementAppointmentService>();
+            services.AddSingleton<IHostedService, CheckIfAppointmentIsDone>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
