@@ -34,32 +34,35 @@ namespace HospitalLibrary.BloodConsumptions.Service
         }
 
 
-        public async Task<List<BloodConsumption>> CreateConsumptions(BloodConsumptionCreateDto dto,Guid doctorId)
+        public async Task<List<BloodConsumption>> CreateConsumptions(BloodConsumptionCreateDto dto)
         {
             if (_unitOfWork.BloodUnitRepository.GetUnitsAmountByType(dto.BloodType).Result < dto.Amount)
                 return null;
+            
+            if (_unitOfWork.DoctorRepository.GetByIdAsync(dto.doctorId).Result == null)
+                return null;
 
             var results = new List<BloodConsumption>();
-            foreach (BloodUnit unit in BloodUnitsForConsumptions(dto).Result)
-                results.Add(CreateConsumption(unit,dto).Result);
+            foreach (BloodUnit unit in BloodUnitsForConsumptions(dto))
+                results.Add(CreateConsumption(unit, dto).Result);
             
             return await Task.Run(() =>results);
 
         }
         
-        private async Task<IEnumerable<BloodUnit>> BloodUnitsForConsumptions(BloodConsumptionCreateDto dto)
+        public List<BloodUnit> BloodUnitsForConsumptions(BloodConsumptionCreateDto dto)
         {
             var result = new List<BloodUnit>();
             var units = _unitOfWork.BloodUnitRepository.GetSortUnitsByType(dto.BloodType).Result.ToList();
-            while (AmountSumOfUnits(result) < dto.Amount)
+            while (SumAmountOfUnitsForConsumptions(result) < dto.Amount)
             {
                 result.Add(units[0]);
                 units.RemoveAt(0);
             }
-            return await Task.Run(() =>result);
+            return result;
         }
 
-        private int AmountSumOfUnits(List<BloodUnit> units)
+        private int SumAmountOfUnitsForConsumptions(List<BloodUnit> units)
         {
             var sum = 0;
             if (units != null)
