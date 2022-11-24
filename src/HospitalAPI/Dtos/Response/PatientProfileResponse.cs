@@ -19,8 +19,7 @@ namespace HospitalAPI.Dtos.Response
         public string Phone { get; set; }
         public Gender Gender { get; set; }
         public Doctor Doctor { get; set; }
-        public List<FeedbackResponse> Feedbacks { get; set; }
-        public List<Allergen>  Allergens { get; set; }
+        public List<Allergen> Allergies { get; set; }
         public BloodType BloodType { get; set; }
     }
 }

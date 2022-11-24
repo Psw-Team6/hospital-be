@@ -7,7 +7,7 @@ using HospitalLibrary.Rooms.Model;
 
 namespace HospitalLibrary.Rooms.Service
 {
-    public class RoomBedService
+    public class RoomBedService : IRoomBedService
     {
         private readonly IUnitOfWork _unitOfWork;
 

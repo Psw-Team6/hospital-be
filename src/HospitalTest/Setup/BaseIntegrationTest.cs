@@ -1,13 +1,12 @@
-﻿using HospitalAPI;
-using Xunit;
+﻿using Xunit;
 
 namespace HospitalTest.Setup
 {
-    public class BaseIntegrationTest: IClassFixture<TestDatabaseFactory<Startup>>
+    public class BaseIntegrationTest: IClassFixture<TestDatabaseFactory>
     {
-        protected TestDatabaseFactory<Startup> Factory { get; }
+        protected TestDatabaseFactory Factory { get; }
 
-        public BaseIntegrationTest(TestDatabaseFactory<Startup> factory)
+        public BaseIntegrationTest(TestDatabaseFactory factory)
         {
             Factory = factory;
         }
