@@ -22,6 +22,8 @@ namespace HospitalLibrary.Medicines.Service
             return await _unitOfWork.MedicineRepository.GetAllMedicine();
         }
         
+        
+        
         /*
         public async Task<List<Medicine>> GetAllByPatientId(Guid id)
         {
