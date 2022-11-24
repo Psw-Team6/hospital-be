@@ -19,7 +19,6 @@ namespace HospitalLibrary.EquipmentMovement.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAppointmentService _appointmentService;
-
         public EquipmentMovementAppointmentService(IUnitOfWork unitOfWork, IAppointmentService appointmentService)
         {
             _unitOfWork = unitOfWork;
@@ -28,7 +27,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
 
         public async Task<List<EquipmentMovementAppointment>> GetAllByRoomId(Guid id)
         {
-            return await _unitOfWork.GetRepository<EquipmentMovementAppointmentRepository>()
+            return await _unitOfWork.EquipmentMovementAppointmentRepository
                 .GetAllMovementAppointmentsForRoom(id);
         }
 
@@ -338,13 +337,14 @@ namespace HospitalLibrary.EquipmentMovement.Service
             return true;
         }
 
-        public async void CheckAllAppointmentTimes()
+        public async Task CheckAllAppointmentTimes()
         {
             IEnumerable<EquipmentMovementAppointment> allAppointments = await _unitOfWork.EquipmentMovementAppointmentRepository.GetAllAsync();
-            if(!allAppointments.Any())
+            var equipmentMovementAppointments = allAppointments as EquipmentMovementAppointment[] ?? allAppointments.ToArray();
+            if(!equipmentMovementAppointments.Any())
                 return;
             
-            foreach (var appointment in allAppointments)
+            foreach (var appointment in equipmentMovementAppointments)
             {
                 if (appointment.Duration.To < DateTime.Now)
                 {

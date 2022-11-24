@@ -4,6 +4,7 @@ using HospitalAPI.Exceptions;
 using HospitalAPI.Extensions;
 using HospitalAPI.Infrastructure;
 using HospitalAPI.Mapper;
+using HospitalAPI.ScheduleTask;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.EquipmentMovement;
@@ -99,11 +100,11 @@ namespace HospitalAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
-            // using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            // {
-            //     var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
-            //     context?.Database.Migrate();
-            // }
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
+                context?.Database.Migrate();
+            }
             
             if (env.IsDevelopment())
             {

@@ -81,5 +81,13 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<PatientAdmissionResponse>(admission);
             return result == null ? NotFound() : Ok(result);
         }
+        
+        [HttpGet("hospitalized")]
+        public async Task<ActionResult<IEnumerable<PatientAdmission>>> GetAllHospitalized()
+        {
+            var admissions = await _patientAdmissionService.GetAllHospitalized();
+            var result = _mapper.Map<IEnumerable<PatientAdmission>>(admissions);
+            return Ok(result);
+        }
     }
 }

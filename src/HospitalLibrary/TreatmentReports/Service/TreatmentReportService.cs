@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
 using HospitalLibrary.TreatmentReports.Model;
@@ -19,5 +20,11 @@ namespace HospitalLibrary.TreatmentReports.Service
             await _unitOfWork.CompleteAsync();
             return newReport;
         }
+
+        public async Task<TreatmentReport> GetByPatientAdmissionId(Guid admissionId)
+        {
+            return await _unitOfWork.TreatmentReportRepository.FindByPatientAdmission(admissionId);
+        }
+        
     }
 }
