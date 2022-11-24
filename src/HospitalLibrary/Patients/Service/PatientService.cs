@@ -53,7 +53,7 @@ namespace HospitalLibrary.Patients.Service
             }
             patient.Allergies = allergens;
             patient.Doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(patient.DoctorId);
-            patient.Enabled = false;
+            patient.Enabled = true;
             var newPatient = await _unitOfWork.PatientRepository.CreateAsync(patient);
             await _unitOfWork.CompleteAsync();
             return newPatient;
