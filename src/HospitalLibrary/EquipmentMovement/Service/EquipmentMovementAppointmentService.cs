@@ -94,7 +94,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
                 endOfMovement = startOfMovement + equipmentAppointmentsRequest.Duration;
             }
 
-            return potentialAppointments;
+            return await Task.FromResult(potentialAppointments);
         }
         
         private async Task<List<EquipmentMovementAppointment>> DeleteConflictsWithRoomAppointments(List<EquipmentMovementAppointment> listEquipmentAppointmentsRequest,Guid roomId)
