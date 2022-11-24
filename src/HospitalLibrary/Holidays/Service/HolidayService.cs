@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
@@ -104,6 +105,31 @@ namespace HospitalLibrary.Holidays.Service
 
             return true;
         }
+        
+        public async Task<List<Holiday>> GetDoctorsHolidays(Guid id)
+        {
+            var holidays = await _unitOfWork.GetRepository<HolidayRepository>().GetAllHolidaysForDoctor(id);
+            return holidays.ToList();
+        }
+        
+        public async Task<bool> CancelHoliday(Holiday holiday)
+        {
+            if (canCancleHoliday(holiday))
+            {
+                await _unitOfWork.GetRepository<HolidayRepository>().DeleteAsync(holiday);
+                await _unitOfWork.CompleteAsync();
+                return true;
+            }
+
+            return false;
+        }
+        private bool canCancleHoliday(Holiday holiday)
+        {
+            if(DateTime.Now.AddDays(1).CompareTo(holiday.DateRange.From) < 0)
+                return true;
+            return false;
+        }
+
 
         
 
