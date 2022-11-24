@@ -677,6 +677,11 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Doctor>().HasData(
                 doctor,doctor1
             );
+
+            List<Allergen> allergens = new List<Allergen>();
+            allergens.Add(allergen1);
+            allergens.Add(allergen2);
+
             Patient patient1 = new()
             {
                 Id = Guid.NewGuid(),
@@ -694,7 +699,8 @@ namespace HospitalLibrary.Settings
                 DateOfBirth = new DateTime(2007,10,12),
                 Gender = Gender.MALE,
                 Age = 15,
-                BloodType = BloodType.ABpos
+                BloodType = BloodType.ABpos,
+                Allergies = new List<Allergen>(),
             };
             Patient patient2 = new()
             {
@@ -713,7 +719,8 @@ namespace HospitalLibrary.Settings
                 DateOfBirth = new DateTime(1990,10,12),
                 Gender = Gender.MALE,
                 Age = 32,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                Allergies = new List<Allergen>()
             };
             modelBuilder.Entity<Patient>().HasData(
                 patient1,patient2
