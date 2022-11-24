@@ -68,8 +68,8 @@ namespace HospitalAPI.Extensions
             services.AddScoped<IPatientAdmissionRepository, PatientAdmissionRepository>();
             services.AddScoped<TreatmentReportService>();
             services.AddScoped<ITreatmentReportRepository, TreatmentReportRepository>();
-            services.AddScoped<RoomBedService>();
-            services.AddScoped<GeneratePdfReportService>();
+            services.AddScoped<IRoomBedService,RoomBedService>();
+            services.AddScoped<IGeneratePdfReportService,GeneratePdfReportService>();
             services.AddScoped<IRoomBedRepository, RoomBedRepository>();
             services.AddScoped<EquipmentMovementAppointmentService>();
             services.AddScoped<IEquipmentMovementAppointmentRepository, EquipmentMovementAppointmentRepository>();
