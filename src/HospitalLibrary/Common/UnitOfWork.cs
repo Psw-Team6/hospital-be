@@ -72,10 +72,9 @@ namespace HospitalLibrary.Common
         public IFeedbackRepository FeedbackRepository => _feedbackRepository ??= new FeedbackRepository(_hospitalDbContext);
         public  IPatientRepository PatientRepository => _patientRepository ??= new PatientRepository(_hospitalDbContext);
         public  IAppointmentRepository AppointmentRepository => _appointmentRepository ??= new AppointmentRepository(_hospitalDbContext);
-        public  IEquipmentMovementAppointmentRepository EquipmentMovementAppointmentRepository => _equipmentMovementAppointmentRepository ??= new EquipmentMovementAppointmentRepository(_hospitalDbContext);
-
-
-
+        public  IEquipmentMovementAppointmentRepository EquipmentMovementAppointmentRepository => 
+            _equipmentMovementAppointmentRepository ??= new EquipmentMovementAppointmentRepository(_hospitalDbContext);
+        
         public IWorkingSchueduleRepository WorkingSchueduleRepository =>
             _workingScheduleRepository ??= new WorkingScheduleRepository(_hospitalDbContext);
         private RoomRepository _roomRepository;
@@ -120,8 +119,10 @@ namespace HospitalLibrary.Common
 
         public void Dispose()
         {
+            if (_disposed) return;
             _hospitalDbContext?.Dispose();
             GC.SuppressFinalize(this);
+            _disposed = true;
         }
     }
 }
