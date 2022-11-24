@@ -42,9 +42,17 @@ namespace HospitalLibrary.EquipmentMovement.Service
         public async Task<EquipmentMovementAppointment> Create(
             EquipmentMovementAppointment equipmentMovementAppointment)
         {
-            if (await ValidateAppointment(equipmentMovementAppointment) == false)
+            try
             {
-                Console.WriteLine("PUKLO");
+                if (await ValidateAppointment(equipmentMovementAppointment) == false)
+                {
+                    Console.WriteLine("PUKLO");
+                    return null;
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
                 return null;
             }
 
@@ -71,10 +79,18 @@ namespace HospitalLibrary.EquipmentMovement.Service
             EquipmentMovementRequest equipmentAppointmentsRequest)
         {
             Console.WriteLine("POGODJEN!");
-            if (await ValidateRequest(equipmentAppointmentsRequest) == false)
+            try
             {
-                Console.WriteLine("PUCA ZBOG OVOGA!");
+                if (await ValidateRequest(equipmentAppointmentsRequest) == false)
+                {
+                    Console.WriteLine("PUCA ZBOG OVOGA!");
+                    return null;
+                }
+            }
+            catch
+            {
                 return null;
+                
             }
 
             List<EquipmentMovementAppointment> potentialAppointments =
@@ -210,16 +226,19 @@ namespace HospitalLibrary.EquipmentMovement.Service
         {
             if (!equipmentMovementRequest.DatesForSearch.IsValidRange())
             {
+                Console.WriteLine("Request end is before start.");
                 return false;
             }
 
-            if (equipmentMovementRequest.DatesForSearch.IsBeforeDate())
+            if ( equipmentMovementRequest.DatesForSearch.From.Date.Date < DateTime.Now.Date || equipmentMovementRequest.DatesForSearch.To.Date.Date < DateTime.Now)
             {
+                Console.WriteLine("Request cant start before today!");
                 return false;
             }
 
             if (equipmentMovementRequest.Amount <= 0)
             {
+                Console.WriteLine("Equipment amount is negative!");
                 return false;
             }
 
@@ -228,11 +247,13 @@ namespace HospitalLibrary.EquipmentMovement.Service
 
             if (foundEquipment == null)
             {
+                Console.WriteLine("Equipment not found!");
                 return false;
             }
 
             if (foundEquipment.Amount < equipmentMovementRequest.Amount)
             {
+                Console.WriteLine("Equipment amount too large!");
                 return false;
             }
 
@@ -241,8 +262,21 @@ namespace HospitalLibrary.EquipmentMovement.Service
             Room foundOriginRoom =
                 await _unitOfWork.RoomRepository.GetByIdAsync(equipmentMovementRequest.OriginalRoomId);
 
-            if (foundDestinationRoom == null || foundOriginRoom == null)
+            if (foundDestinationRoom == null)
             {
+                Console.WriteLine("Destination room not found!");
+                return false;
+            }
+
+            if (foundOriginRoom == null)
+            {
+                Console.WriteLine("Origin room not found!");
+                return false;
+            }
+
+            if (foundOriginRoom == foundDestinationRoom)
+            {
+                Console.WriteLine("Destination and origin room are same!");
                 return false;
             }
 
@@ -253,19 +287,19 @@ namespace HospitalLibrary.EquipmentMovement.Service
         {
             if (!equipmentMovementAppointment.Duration.IsValidRange())
             {
-                throw new BadRequestException("Request end is before start.");
+                Console.WriteLine("Request end is before start.");
                 return false;
             }
 
-            if (equipmentMovementAppointment.Duration.IsBeforeDate())
+            if (equipmentMovementAppointment.Duration.From.Date < DateTime.Now || equipmentMovementAppointment.Duration.To.Date < DateTime.Now)
             {
-                throw new BadRequestException("Request cant start before today!");
+                Console.WriteLine("Request cant start before today!");
                 return false;
             }
 
             if (equipmentMovementAppointment.Amount <= 0)
             {
-                throw new BadRequestException("Equipment amount is negative!");
+                Console.WriteLine("Equipment amount is negative!");
                 return false;
             }
 
@@ -274,13 +308,13 @@ namespace HospitalLibrary.EquipmentMovement.Service
 
             if (foundEquipment == null)
             {
-                throw new BadRequestException("Equipment not found!");
+                Console.WriteLine("Equipment not found!");
                 return false;
             }
 
             if (foundEquipment.Amount < equipmentMovementAppointment.Amount)
             {
-                throw new BadRequestException("Equipment amount to large!");
+                Console.WriteLine("Equipment amount too large!");
                 return false;
             }
 
@@ -291,13 +325,13 @@ namespace HospitalLibrary.EquipmentMovement.Service
 
             if (foundDestinationRoom == null)
             {
-                throw new BadRequestException("Destination room not found!");
+                Console.WriteLine("Destination room not found!");
                 return false;
             }
 
             if (foundOriginRoom == null)
             {
-                throw new BadRequestException("Origin room not found!");
+                Console.WriteLine("Origin room not found!");
                 return false;
             }
 

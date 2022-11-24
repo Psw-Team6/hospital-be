@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using HospitalLibrary.EquipmentMovement.Service;
-using IntegrationAPI.ScheduleTask.Service;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HospitalLibrary.EquipmentMovement
@@ -17,10 +16,11 @@ namespace HospitalLibrary.EquipmentMovement
 
         public override async Task ProcessInScope(IServiceProvider scopeServiceProvider)
         {
-            IEquipmentMovementAppointmentService reportSenderService = scopeServiceProvider.GetRequiredService<IEquipmentMovementAppointmentService>();
-            reportSenderService.CheckAllAppointmentTimes();
             Console.WriteLine("-------------------------");
+            IEquipmentMovementAppointmentService reportSenderService = scopeServiceProvider.GetRequiredService<IEquipmentMovementAppointmentService>();
+            
             Console.WriteLine("PikulaTask1 : " + DateTime.Now.ToString());
+            reportSenderService.CheckAllAppointmentTimes();
 
             await Task.Run(() => {
                 return Task.CompletedTask;
