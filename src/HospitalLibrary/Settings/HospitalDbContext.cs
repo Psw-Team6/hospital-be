@@ -659,11 +659,6 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Doctor>().HasData(
                 doctor,doctor1,doctor2
             );
-
-            modelBuilder.Entity<Doctor>().HasData(
-                doctor,doctor1
-            );
-
             List<Allergen> allergens = new List<Allergen>();
             allergens.Add(allergen1);
             allergens.Add(allergen2);
