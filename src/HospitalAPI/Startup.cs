@@ -105,7 +105,6 @@ namespace HospitalAPI
                 var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
                 context?.Database.Migrate();
             }
-            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

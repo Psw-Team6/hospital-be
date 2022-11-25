@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.Prescriptions.Model;
-using HospitalLibrary.TreatmentReports.Model;
 
 namespace HospitalLibrary.Prescriptions.Service
 {
