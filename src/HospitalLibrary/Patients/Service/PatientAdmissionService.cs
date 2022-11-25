@@ -13,10 +13,10 @@ namespace HospitalLibrary.Patients.Service
     public class PatientAdmissionService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly GeneratePdfReportService _reportService;
-        private readonly RoomBedService _bedService;
+        private readonly IGeneratePdfReportService _reportService;
+        private readonly IRoomBedService _bedService;
 
-        public PatientAdmissionService(IUnitOfWork unitOfWork, GeneratePdfReportService reportService, RoomBedService bedService)
+        public PatientAdmissionService(IUnitOfWork unitOfWork, IGeneratePdfReportService reportService, IRoomBedService bedService)
         {
             _unitOfWork = unitOfWork;
             _reportService = reportService;
@@ -82,6 +82,11 @@ namespace HospitalLibrary.Patients.Service
             return false;
         }
 
+        public async Task<PatientAdmission> GetAdmissionWithPatientById(Guid id)
+        {
+            return await _unitOfWork.PatientAdmissionRepository.GetPatientAdmissionByIdAsync(id);
+        }
+
         public async Task<Boolean> DischargePatient(PatientAdmission admissionRequest)
         {
             var admission = await _unitOfWork.PatientAdmissionRepository.GetByIdAsync(admissionRequest.Id);
@@ -98,6 +103,7 @@ namespace HospitalLibrary.Patients.Service
         {
             var admissionReport = await _unitOfWork.PatientAdmissionRepository.GetPatientAdmissionByIdAsync(admission.Id);
             var treatmentReport = await _unitOfWork.TreatmentReportRepository.FindByPatientAdmission(admission.Id);
+            if (treatmentReport == null) throw new TreatmentReportException("Treatment report not found!");
             _reportService.GeneratePdfReport(admissionReport, treatmentReport);
         }
 

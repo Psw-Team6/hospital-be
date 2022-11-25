@@ -381,65 +381,111 @@ namespace HospitalLibrary.Settings
                 gRoom1,gRoom2,gRoom3,gRoom4,gRoom5,gRoom6,gRoom7,gRoom8,gRoom9
             );
 
-
             RoomEquipment roomEquipment1 = new()
             {
                 RoomId = room1.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 15,
                 EquipmentName = "SURGICAL_TABLES"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
+            };
+            RoomEquipment roomEquipment11 = new()
+            {
+                RoomId = room1.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 5,
+                EquipmentName = "ANESTHESIA"
             };
             
+            RoomEquipment roomEquipment111 = new()
+            {
+                RoomId = room1.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 13,
+                EquipmentName = "SYRINGE"
+            };
             RoomEquipment roomEquipment2 = new()
             {
                 RoomId = room2.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 10,
                 EquipmentName = "ANESTHESIA"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
-            
-            
+            RoomEquipment roomEquipment22 = new()
+            {
+                RoomId = room2.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 5,
+                EquipmentName = "EKG_MACHINE"
+            };
             RoomEquipment roomEquipment3 = new()
             {
                 RoomId = room3.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 3,
                 EquipmentName = "EKG_MACHINE"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
-            
-            
+            RoomEquipment roomEquipment33 = new()
+            {
+                RoomId = room3.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 23,
+                EquipmentName = "SURGICAL_TABLES"
+            };
             RoomEquipment roomEquipment4 = new()
             {
                 RoomId = room4.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
-                Amount = 1,
+                Amount = 11,
                 EquipmentName = "ANESTHESIA"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
-           
             
+            RoomEquipment roomEquipment44 = new()
+            {
+                RoomId = room4.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 4,
+                EquipmentName = "BANDAGE"
+            };
+
             RoomEquipment roomEquipment5 = new()
             {
                 RoomId = room5.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
-                Amount = 2,
+                Amount = 22,
                 EquipmentName = "EKG_MACHINE"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
-           
+            
+            RoomEquipment roomEquipment55 = new()
+            {
+                RoomId = room5.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 6,
+                EquipmentName = "SYRINGE"
+            };
+            
+            RoomEquipment roomEquipment555 = new()
+            {
+                RoomId = room5.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 15,
+                EquipmentName = "SURGICAL_TABLES"
+            };
             
             RoomEquipment roomEquipment6 = new()
             {
                 RoomId = room6.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
-                Amount = 4,
+                Amount = 14,
                 EquipmentName = "SURGICAL_TABLES"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
             
+            RoomEquipment roomEquipment66 = new()
+            {
+                RoomId = room6.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 7,
+                EquipmentName = "SYRINGE"
+            };
             
             RoomEquipment roomEquipment7 = new()
             {
@@ -447,9 +493,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 6,
                 EquipmentName = "BANDAGE"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
-           
             
             RoomEquipment roomEquipment8 = new()
             {
@@ -457,9 +501,15 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 3,
                 EquipmentName = "ANESTHESIA"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
-           
+            
+            RoomEquipment roomEquipment88 = new()
+            {
+                RoomId = room8.Id,   
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 13,
+                EquipmentName = "BANDAGE"
+            };
             
             RoomEquipment roomEquipment9 = new()
             {
@@ -467,16 +517,23 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 9,
                 EquipmentName = "SURGICAL_TABLES"
-                //Equipment =new List<Equipment>()  NZM STO NECE LISTU ENUMA DA MI PRIHVATI
             };
             
+            RoomEquipment roomEquipment99 = new()
+            {
+                RoomId = room9.Id, 
+                RoomEquipmentId =Guid.NewGuid(),
+                Amount = 9,
+                EquipmentName = "ANESTHESIA"
+            };
             
             //room9.Equipments.Add(roomEquipment9);
             
-            
-            
             modelBuilder.Entity<RoomEquipment>().HasData(
-                roomEquipment1,roomEquipment2,roomEquipment3,roomEquipment4,roomEquipment5,roomEquipment6,roomEquipment7,roomEquipment8,roomEquipment9
+                roomEquipment1,roomEquipment2,roomEquipment3,roomEquipment4,roomEquipment5,roomEquipment6,roomEquipment7,roomEquipment8,roomEquipment9,
+                roomEquipment11,roomEquipment111,roomEquipment22,roomEquipment33,roomEquipment44,roomEquipment55,roomEquipment555,roomEquipment66,
+                roomEquipment88,roomEquipment99
+                
             );
             
             
@@ -602,6 +659,15 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Doctor>().HasData(
                 doctor,doctor1,doctor2
             );
+
+            modelBuilder.Entity<Doctor>().HasData(
+                doctor,doctor1
+            );
+
+            List<Allergen> allergens = new List<Allergen>();
+            allergens.Add(allergen1);
+            allergens.Add(allergen2);
+
             Patient patient1 = new()
             {
                 Id = Guid.NewGuid(),
@@ -616,9 +682,11 @@ namespace HospitalLibrary.Settings
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
+                DateOfBirth = new DateTime(2007,10,12),
                 Gender = Gender.MALE,
                 Age = 15,
-                BloodType = BloodType.ABpos
+                BloodType = BloodType.ABpos,
+                Allergies = new List<Allergen>(),
             };
             Patient patient2 = new()
             {
@@ -633,11 +701,14 @@ namespace HospitalLibrary.Settings
                 Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
-                DoctorId = doctor.Id,
+                DoctorId = doctor1.Id,
+                DateOfBirth = new DateTime(1990,10,12),
                 Gender = Gender.MALE,
                 Age = 32,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                Allergies = new List<Allergen>()
             };
+            
             Patient patient3 = new()
             {
                 Id = Guid.NewGuid(),
@@ -783,7 +854,7 @@ namespace HospitalLibrary.Settings
                 BloodType = BloodType.Aneg
             };
             modelBuilder.Entity<Patient>().HasData(
-                patient1,patient2,patient3, patient4, patient5,patient6,patient7,patient8,patient9,patient10
+                patient1,patient2,patient3, patient4, patient5, patient6,patient7,patient8,patient9,patient10
             );
             //password = 123
             Manager manager = new ()

@@ -20,9 +20,9 @@ namespace IntegrationLibrary.RabbitMQService
     {
         IConnection connection;
         IModel channel;
+        public RabbitMQService() { }
         public override Task StartAsync(CancellationToken cancellationToken)
         {/*
-
             var factory = new ConnectionFactory();
             var connection = factory.CreateConnection();
             var channel = connection.CreateModel();
@@ -61,6 +61,5 @@ namespace IntegrationLibrary.RabbitMQService
         {
             return Task.CompletedTask;
         }
-
     }
 }

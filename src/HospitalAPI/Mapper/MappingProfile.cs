@@ -4,6 +4,7 @@ using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.EquipmentMovement.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Patients.Model;
@@ -64,12 +65,17 @@ namespace HospitalAPI.Mapper
                 CreateMap<PatientAdmission, PatientAdmissionResponse>();
                 CreateMap<PatientAdmissionResponse, PatientAdmission>();
                 CreateMap<PatientAdmission, PatientAdmissionRequest>();
+                CreateMap<EquipmentMovementAppointmentResponse, EquipmentMovementAppointment>();
+                CreateMap<EquipmentMovementAppointment, EquipmentMovementAppointmentResponse>();
+                CreateMap<EquipmentMovementAppointmentRequest, EquipmentMovementRequest>();
+                CreateMap<EquipmentMovementRequest, EquipmentMovementAppointmentRequest>();
                 CreateMap<DischargePatientAdmissionRequest, PatientAdmission>();
+                CreateMap<Patient, HospitalizedPatientResponse>();
+                CreateMap<PatientAdmission, HospitalizePatientAdmissionResponse>();
                 CreateMap<PatientProfileRequest, Patient>();
                 CreateMap<Patient, PatientProfileResponse>();
                 CreateMap<PatientProfileResponse, Patient>();
                 CreateMap<Patient, PatientProfileRequest>();
-                
             }
     }
     

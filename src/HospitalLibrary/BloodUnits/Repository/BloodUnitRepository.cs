@@ -29,7 +29,7 @@ namespace HospitalLibrary.BloodUnits.Repository
         
         public async Task<int> GetUnitsAmountByType(BloodType bloodType)
         {
-            return DbSet.Where(x => x.BloodType == bloodType).Sum(i => i.Amount);
+            return await Task.FromResult(DbSet.Where(x => x.BloodType == bloodType).Sum(i => i.Amount));
         }
         
     }

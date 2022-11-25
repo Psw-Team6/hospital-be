@@ -2,14 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Common;
-using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.sharedModel;
 
 namespace HospitalLibrary.Patients.Service
 {
@@ -17,7 +16,7 @@ namespace HospitalLibrary.Patients.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly DoctorService _doctorService;
-        
+
         public PatientService(IUnitOfWork unitOfWork, DoctorService doctorService)
         {
             _unitOfWork = unitOfWork;
@@ -26,18 +25,40 @@ namespace HospitalLibrary.Patients.Service
 
         public async Task<object> GetAll()
         {
-            return (List<Patient>) await _unitOfWork.PatientRepository.GetAllPatients();
+            return (List<Patient>)await _unitOfWork.PatientRepository.GetAllPatients();
+        }
+
+        public async Task<Boolean> IsUniqueUsername(String username)
+        {
+            ApplicationUser user = await _unitOfWork.UserRepository.FindByUsername(username);
+            if (user == null)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<Patient> CreatePatient(Patient patient)
         {
-            var hashPassword =PasswordHasher.HashPassword(patient.Password);
-            patient.Address =  await _unitOfWork.AddressRepository.CreateAsync(patient.Address);
+            var hashPassword = PasswordHasher.HashPassword(patient.Password);
+            patient.Address = await _unitOfWork.AddressRepository.CreateAsync(patient.Address);
             patient.AddressId = patient.Address.Id;
             patient.Password = hashPassword;
             patient.UserRole = UserRole.Patient;
+            patient.CalculateAge();
+            List<Allergen> allergens = new List<Allergen>();
+            foreach (var id in patient.AllergyIds)
+            {
+                Guid newGuid = Guid.Parse(id);
+
+                allergens.Add(await _unitOfWork.AllergenRepository.GetByIdAsync(newGuid));
+
+            }
+
+            patient.Allergies = allergens;
             patient.Doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(patient.DoctorId);
-            patient.Enabled = false;
+            patient.Enabled = true;
             var newPatient = await _unitOfWork.PatientRepository.CreateAsync(patient);
             await _unitOfWork.CompleteAsync();
             return newPatient;
@@ -49,10 +70,10 @@ namespace HospitalLibrary.Patients.Service
             await _unitOfWork.CompleteAsync();
             return patient;
         }
-        
+
         public async Task<int> GetFemalePatient()
         {
-            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
             int counter = 0;
             foreach (var p in patients)
             {
@@ -64,10 +85,10 @@ namespace HospitalLibrary.Patients.Service
 
             return counter;
         }
-        
+
         public async Task<int> GetMalePatient()
         {
-            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
             int counter = 0;
             foreach (var p in patients)
             {
@@ -79,10 +100,10 @@ namespace HospitalLibrary.Patients.Service
 
             return counter;
         }
-        
+
         public async Task<int> GetOtherPatient()
         {
-            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
             int counter = 0;
             foreach (var p in patients)
             {
@@ -97,7 +118,7 @@ namespace HospitalLibrary.Patients.Service
 
         public async Task<int> GetPediatricGroup()
         {
-            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
             int counter = 0;
             foreach (var p in patients)
             {
@@ -112,7 +133,7 @@ namespace HospitalLibrary.Patients.Service
 
         public async Task<int> GetYoungGroup()
         {
-            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
             int counter = 0;
             foreach (var p in patients)
             {
@@ -124,10 +145,10 @@ namespace HospitalLibrary.Patients.Service
 
             return counter;
         }
-        
+
         public async Task<int> GetMiddleAgeGroup()
         {
-            var patients = (List<Patient>) await _unitOfWork.PatientRepository.GetAllAsync();
+            var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
             int counter = 0;
             foreach (var p in patients)
             {
@@ -155,10 +176,31 @@ namespace HospitalLibrary.Patients.Service
             return counter;
         }
 
-       public async Task<List<string>> GetDoctorsByPediatricGroup()
+        public async Task<IEnumerable<Patient>> GetAllHospitalizedPatients()
+        {
+            var hospitalizedPatients = await _unitOfWork.PatientRepository.GetAllHospitalizedPatientsAsync();
+            var currentHospitalizedPatients = new List<Patient>();
+            if (currentHospitalizedPatients == null)
+                throw new ArgumentNullException(nameof(currentHospitalizedPatients));
+            hospitalizedPatients.ToList()
+                .ForEach(patient =>
+                    {
+                        patient.PatientAdmissions.ToList().ForEach(admission =>
+                        {
+                            if (admission.DateOfDischarge == null)
+                            {
+                                currentHospitalizedPatients.Add(patient);
+                            }
+                        });
+                    }
+                );
+            return currentHospitalizedPatients;
+        }
+
+        public async Task<List<string>> GetDoctorsByPediatricGroup()
         {
             var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
-            List<string> doctorsList= new List<string>();
+            List<string> doctorsList = new List<string>();
             foreach (var p in patients)
             {
                 if (p.Age >= 0 && p.Age <= 14)
@@ -166,82 +208,80 @@ namespace HospitalLibrary.Patients.Service
                     var doctor = _doctorService.GetById(p.DoctorId);
                     doctorsList.Add(doctor.Result.Name);
                 }
-                
+
             }
-            
+
             return doctorsList;
         }
 
-       public async Task<Dictionary<string, DoctorStatistics>> CountOfDoctors(List<string> doctors)
-       {
-           Dictionary<string, DoctorStatistics> favouriteDoctors = new Dictionary<string, DoctorStatistics>();
-           foreach (var doctorName in doctors)
-           {
-               if (favouriteDoctors.ContainsKey(doctorName))
-               {
-                   favouriteDoctors[doctorName].DoctorCount = ++favouriteDoctors[doctorName].DoctorCount;
-                   continue;
-               }
-               DoctorStatistics ds = new DoctorStatistics();
-               ds.DoctorCount = ++ds.DoctorCount;
-               favouriteDoctors.Add(doctorName, ds);
-           }
+        public async Task<Dictionary<string, DoctorStatistics>> CountOfDoctors(List<string> doctors)
+        {
+            Dictionary<string, DoctorStatistics> favouriteDoctors = new Dictionary<string, DoctorStatistics>();
+            foreach (var doctorName in doctors)
+            {
+                if (favouriteDoctors.ContainsKey(doctorName))
+                {
+                    favouriteDoctors[doctorName].DoctorCount = ++favouriteDoctors[doctorName].DoctorCount;
+                    continue;
+                }
 
-           return favouriteDoctors;
-       }
-       
-       public async Task<List<string>> GetDoctorsByYoungGroup()
-       {
-           var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
-           List<string> doctorsList= new List<string>();
-           foreach (var p in patients)
-           {
-               if (p.Age >= 15 && p.Age <= 47)
-               {
-                   var doctor = _doctorService.GetById(p.DoctorId);
-                   doctorsList.Add(doctor.Result.Name);
-               }
-           }
-            
-            
-            
-           return doctorsList;
-       }
-       
-       public async Task<List<string>> GetDoctorsByMiddleAgeGroup()
-       {
-           var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
-           List<string> doctorsList= new List<string>();
-           foreach (var p in patients)
-           {
-               if (p.Age >= 48 && p.Age <= 63)
-               {
-                   var doctor = _doctorService.GetById(p.DoctorId);
-                   doctorsList.Add(doctor.Result.Name);
-               }
-           }
-            
-            
-            
-           return doctorsList;
-       }
-       
-       public async Task<List<string>> GetDoctorsByElderlyGroup()
-       {
-           var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
-           List<string> doctorsList= new List<string>();
-           foreach (var p in patients)
-           {
-               if (p.Age >= 64)
-               {
-                   var doctor = _doctorService.GetById(p.DoctorId);
-                   doctorsList.Add(doctor.Result.Name);
-               }
-           }
-            
-            
-            
-           return doctorsList;
-       }
+                DoctorStatistics ds = new DoctorStatistics();
+                ds.DoctorCount = ++ds.DoctorCount;
+                favouriteDoctors.Add(doctorName, ds);
+            }
+
+            return favouriteDoctors;
+        }
+
+        public async Task<List<string>> GetDoctorsByYoungGroup()
+        {
+            var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
+            List<string> doctorsList = new List<string>();
+            foreach (var p in patients)
+            {
+                if (p.Age >= 15 && p.Age <= 47)
+                {
+                    var doctor = _doctorService.GetById(p.DoctorId);
+                    doctorsList.Add(doctor.Result.Name);
+                }
+            }
+
+
+
+            return doctorsList;
+        }
+
+        public async Task<List<string>> GetDoctorsByMiddleAgeGroup()
+        {
+            var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
+            List<string> doctorsList = new List<string>();
+            foreach (var p in patients)
+            {
+                if (p.Age >= 48 && p.Age <= 63)
+                {
+                    var doctor = _doctorService.GetById(p.DoctorId);
+                    doctorsList.Add(doctor.Result.Name);
+                }
+            }
+
+
+
+            return doctorsList;
+        }
+
+        public async Task<List<string>> GetDoctorsByElderlyGroup()
+        {
+            var patients = (List<Patient>)await _unitOfWork.PatientRepository.GetAllAsync();
+            List<string> doctorsList = new List<string>();
+            foreach (var p in patients)
+            {
+                if (p.Age >= 64)
+                {
+                    var doctor = _doctorService.GetById(p.DoctorId);
+                    doctorsList.Add(doctor.Result.Name);
+                }
+            }
+            return doctorsList;
+        }
     }
 }

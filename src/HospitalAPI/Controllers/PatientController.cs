@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
+using HospitalAPI.Infrastructure.Authorization;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Patients.Service;
 using Microsoft.AspNetCore.Http;
@@ -39,6 +41,11 @@ namespace HospitalAPI.Controllers
         public async Task<ActionResult<PatientResponse>> CreatePatient([FromBody] PatientRequest patientRequest)
         {
             var patient = _mapper.Map<Patient>(patientRequest);
+            var isUniqueUsername = await _patientService.IsUniqueUsername(patientRequest.Username);
+            if (!isUniqueUsername)
+            {
+                return Conflict();
+            }
             var result = await _patientService.CreatePatient(patient);
             return CreatedAtAction(nameof(GetById), new {id = result.Id}, result);
         }
@@ -115,8 +122,30 @@ namespace HospitalAPI.Controllers
             var patients = await _patientService.GetElderlyGroup();
             return Ok(patients);
         }
+
+        [HttpGet("hospitalized-patients")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        /*[HospitalAuthorization(UserRole.Doctor)]*/
+        public async Task<ActionResult<IEnumerable<HospitalizedPatientResponse>>> GetAllHospitalizedPatients()
+        {
+            var hospitalizedPatients = await _patientService.GetAllHospitalizedPatients();
+            var result = _mapper.Map<IEnumerable<HospitalizedPatientResponse>>(hospitalizedPatients);
+            return result == null ? NotFound() : Ok(result);
+
+        }
+
+        [HttpGet("/api/v1/PatientProfile/{id}")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<PatientProfileResponse>> GetProfileById([FromRoute] Guid id)
+        {
+            var patient = await _patientService.GetById(id);
+            var result = _mapper.Map<PatientProfileResponse>(patient);
+            return result == null ? NotFound() : Ok(result);
+        }
         
-        [HttpGet("/api/v1/Doctors-by-pediatric-group")]
+         [HttpGet("/api/v1/Doctors-by-pediatric-group")]
         [ProducesResponseType( StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Dictionary<string, DoctorStatisticsResponse>>> GetDoctorsByPediatricGroup()
@@ -156,14 +185,6 @@ namespace HospitalAPI.Controllers
             return Ok(doctorsCount);
         }
         
-        [HttpGet("/api/v1/PatientProfile/{id}")]
-        [ProducesResponseType( StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PatientProfileResponse>> GetProfileById([FromRoute] Guid id)
-        {
-            var patient = await _patientService.GetById(id);
-            var result = _mapper.Map<PatientProfileResponse>(patient);
-            return result == null ? NotFound() : Ok(result);
-        }
+        
     }
 }
