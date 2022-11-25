@@ -9,7 +9,7 @@ namespace HospitalLibrary.Prescriptions.Model
     public class MedicinePrescription
     {
         public Guid Id { get; set; }
-        public IEnumerable<Medicine> Medicines { get; set; }
+        public Medicine Medicine { get; set; }
         public Guid MedicineId { get; set; }
         public Patient Patient { get; set; }
         public Guid PatientId { get; set; }
