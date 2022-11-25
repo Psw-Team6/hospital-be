@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
 using HospitalLibrary.Medicines.Model;
@@ -18,6 +20,11 @@ namespace HospitalLibrary.Medicines.Repository
         {
             return await DbSet
                 .ToListAsync();
+        }
+        
+        public async Task<int> GetAmountById(Guid id)
+        {
+            return await Task.FromResult(DbSet.Where(x => x.Id == id).Sum(i => i.Amount));
         }
     }
 }
