@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
@@ -9,5 +10,6 @@ namespace HospitalLibrary.Medicines.Repository
     public interface IMedicineRepository : IGenericRepository<Medicine>
     {
         Task<List<Medicine>> GetAllMedicine();
+        Task<int> GetAmountById(Guid id);
     }
 }

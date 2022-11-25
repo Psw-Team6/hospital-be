@@ -1,4 +1,5 @@
 using System;
+using HospitalAPI.Dtos.Response;
 
 namespace HospitalAPI.Dtos.Request
 {

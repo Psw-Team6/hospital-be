@@ -8,6 +8,7 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.EquipmentMovement.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Holidays.Model;
+using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Rooms.Model;
@@ -87,6 +88,10 @@ namespace HospitalAPI.Mapper
                 CreateMap<BloodUnit, BloodUnitDto>();
                 CreateMap<TreatmentReportIdResponse, TreatmentReport>();
                 CreateMap<TreatmentReport, TreatmentReportIdResponse>();
+                CreateMap<MedicinePrescriptionRequest, MedicinePrescription>();
+                CreateMap<MedicinePrescription, MedicinePrescriptionRequest>();
+                CreateMap<MedicineResponse, Medicine>();
+                CreateMap<Medicine, MedicineResponse>();
             }
     }
     
