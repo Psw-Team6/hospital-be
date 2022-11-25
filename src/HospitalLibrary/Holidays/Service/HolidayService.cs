@@ -264,7 +264,7 @@ namespace HospitalLibrary.Holidays.Service
 
             if (!holiday.DateRange.CheckAfterMonthDate())
             {
-                throw new DateRangeNotValid("Scheule your holiday at least one month earlier please.");
+                throw new DateRangeNotValid("Schedule your holiday at least 3 days earlier please.");
             }
         }
         

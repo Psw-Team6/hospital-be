@@ -11,6 +11,7 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Enums;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
+using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.sharedModel;
@@ -641,6 +642,23 @@ namespace HospitalLibrary.Settings
             };
             modelBuilder.Entity<Doctor>().HasData(
                 doctor,doctor1
+            );
+
+            Medicine medicine1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Brufen 300",
+                Amount = 30
+            };
+            
+            Medicine medicine2 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Aspirin",
+                Amount = 1
+            };
+            modelBuilder.Entity<Medicine>().HasData(
+                medicine1,medicine2
             );
 
             List<Allergen> allergens = new List<Allergen>();
