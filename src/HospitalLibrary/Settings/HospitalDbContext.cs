@@ -640,8 +640,26 @@ namespace HospitalLibrary.Settings
                 UserRole = UserRole.Doctor,
                 Enabled = true
             };
+            
+            Doctor doctor2 = new()
+            {
+                Id = Guid.NewGuid(),
+                SpecializationId = specializationGeneral.Id,
+                AddressId = address.Id,
+                WorkingScheduleId = workingSchedule1.Id,
+                RoomId = room7.Id,
+                Username = "Milos",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Milos",
+                Surname = "Milosevic",
+                Email = "Cajons@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Doctor,
+                Enabled = true
+            };
             modelBuilder.Entity<Doctor>().HasData(
-                doctor,doctor1
+                doctor,doctor1,doctor2
             );
 
             Medicine medicine1 = new()
@@ -705,8 +723,153 @@ namespace HospitalLibrary.Settings
                 BloodType = BloodType.Aneg,
                 Allergies = new List<Allergen>()
             };
+            
+            Patient patient3 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Nina",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Nina",
+                Surname = "Minic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor1.Id,
+                Gender = Gender.FEMALE,
+                Age = 5,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient4 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Mina",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Mina",
+                Surname = "Minic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor2.Id,
+                Gender = Gender.FEMALE,
+                Age = 9,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient5 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Nikola",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Nikola",
+                Surname = "Nikolic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor1.Id,
+                Gender = Gender.OTHER,
+                Age = 18,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient6 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Marko",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Marko",
+                Surname = "Markovic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor2.Id,
+                Gender = Gender.MALE,
+                Age = 65,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient7 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Manja",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Manja",
+                Surname = "Maric",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor2.Id,
+                Gender = Gender.FEMALE,
+                Age = 50,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient8 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Darko",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Darko",
+                Surname = "Darkovic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor.Id,
+                Gender = Gender.MALE,
+                Age = 70,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient9 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Filip",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Filip",
+                Surname = "Filipic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor.Id,
+                Gender = Gender.MALE,
+                Age = 56,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient10 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Tara",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Tara",
+                Surname = "Markovic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor2.Id,
+                Gender = Gender.FEMALE,
+                Age = 61,
+                BloodType = BloodType.Aneg
+            };
             modelBuilder.Entity<Patient>().HasData(
-                patient1,patient2
+                patient1,patient2,patient3, patient4, patient5, patient6,patient7,patient8,patient9,patient10
             );
             //password = 123
             Manager manager = new ()
