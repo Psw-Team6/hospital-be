@@ -42,6 +42,7 @@ namespace HospitalLibrary.Common
         ITreatmentReportRepository TreatmentReportRepository { get; }
         IRoomBedRepository RoomBedRepository { get; }
         IEquipmentMovementAppointmentRepository EquipmentMovementAppointmentRepository { get; }
+        IMedicinePrescriptionRepository MedicinePrescriptionRepository { get; }
         
         IAddressRepository AddressRepository { get; }
         IAllergenRepository AllergenRepository { get; }

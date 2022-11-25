@@ -44,10 +44,14 @@ namespace HospitalLibrary.Common
         private AddressRepository _addressRepository;
         private MedicineRepository _medicineRepository;
         private BloodPrescriptionRepository _bloodPrescriptionRepository;
+        private MedicinePrescriptionRepository _medicinePrescriptionRepository;
       
 
         public IAllergenRepository AllergenRepository =>
             _allergenRepository ??= new AllergenRepository(_hospitalDbContext);
+
+        public IMedicinePrescriptionRepository MedicinePrescriptionRepository =>
+            _medicinePrescriptionRepository ??= new MedicinePrescriptionRepository(_hospitalDbContext);
         public IAddressRepository AddressRepository =>
             _addressRepository ??= new AddressRepository(_hospitalDbContext);
         public IRoomBedRepository RoomBedRepository =>

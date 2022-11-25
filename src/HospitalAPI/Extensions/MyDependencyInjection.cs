@@ -13,10 +13,12 @@ using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Holidays.Service;
+using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Medicines.Repository;
 using HospitalLibrary.Medicines.Service;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
+using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Prescriptions.Repository;
 using HospitalLibrary.Prescriptions.Service;
 using HospitalLibrary.Rooms.Repository;
@@ -83,6 +85,8 @@ namespace HospitalAPI.Extensions
             //services.AddScoped<IEquipmentMovementAppointmentRepository, EquipmentMovementAppointmentRepository>();
             services.AddScoped<IAllergenRepository, AllergenRepository>();
             services.AddScoped<AllergenService>();
+            services.AddScoped<IMedicinePrescriptionRepository, MedicinePrescriptionRepository>();
+            services.AddScoped<MedicinePrescriptionService>();
         }
     }
 }
