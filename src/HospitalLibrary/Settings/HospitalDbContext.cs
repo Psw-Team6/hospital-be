@@ -11,6 +11,7 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Enums;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
+using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.sharedModel;
@@ -381,23 +382,19 @@ namespace HospitalLibrary.Settings
                 gRoom1,gRoom2,gRoom3,gRoom4,gRoom5,gRoom6,gRoom7,gRoom8,gRoom9
             );
 
-
             RoomEquipment roomEquipment1 = new()
             {
                 RoomId = room1.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 15,
                 EquipmentName = "SURGICAL_TABLES"
-               
             };
-            
             RoomEquipment roomEquipment11 = new()
             {
                 RoomId = room1.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 5,
                 EquipmentName = "ANESTHESIA"
-               
             };
             
             RoomEquipment roomEquipment111 = new()
@@ -406,52 +403,41 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 13,
                 EquipmentName = "SYRINGE"
-               
             };
-            
             RoomEquipment roomEquipment2 = new()
             {
                 RoomId = room2.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 10,
                 EquipmentName = "ANESTHESIA"
-                
             };
-            
             RoomEquipment roomEquipment22 = new()
             {
                 RoomId = room2.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 5,
                 EquipmentName = "EKG_MACHINE"
-                
             };
-            
             RoomEquipment roomEquipment3 = new()
             {
                 RoomId = room3.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 3,
                 EquipmentName = "EKG_MACHINE"
-                
             };
-
             RoomEquipment roomEquipment33 = new()
             {
                 RoomId = room3.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 23,
                 EquipmentName = "SURGICAL_TABLES"
-                
             };
-            
             RoomEquipment roomEquipment4 = new()
             {
                 RoomId = room4.Id,   
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 11,
                 EquipmentName = "ANESTHESIA"
-                
             };
             
             RoomEquipment roomEquipment44 = new()
@@ -460,7 +446,6 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 4,
                 EquipmentName = "BANDAGE"
-                
             };
 
             RoomEquipment roomEquipment5 = new()
@@ -469,7 +454,6 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 22,
                 EquipmentName = "EKG_MACHINE"
-               
             };
             
             RoomEquipment roomEquipment55 = new()
@@ -478,7 +462,6 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 6,
                 EquipmentName = "SYRINGE"
-               
             };
             
             RoomEquipment roomEquipment555 = new()
@@ -487,9 +470,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 15,
                 EquipmentName = "SURGICAL_TABLES"
-               
             };
-           
             
             RoomEquipment roomEquipment6 = new()
             {
@@ -497,9 +478,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 14,
                 EquipmentName = "SURGICAL_TABLES"
-                
             };
-            
             
             RoomEquipment roomEquipment66 = new()
             {
@@ -507,9 +486,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 7,
                 EquipmentName = "SYRINGE"
-                
             };
-            
             
             RoomEquipment roomEquipment7 = new()
             {
@@ -517,9 +494,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 6,
                 EquipmentName = "BANDAGE"
-                
             };
-           
             
             RoomEquipment roomEquipment8 = new()
             {
@@ -527,9 +502,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 3,
                 EquipmentName = "ANESTHESIA"
-                
             };
-            
             
             RoomEquipment roomEquipment88 = new()
             {
@@ -537,9 +510,7 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 13,
                 EquipmentName = "BANDAGE"
-                
             };
-           
             
             RoomEquipment roomEquipment9 = new()
             {
@@ -547,7 +518,6 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 9,
                 EquipmentName = "SURGICAL_TABLES"
-                
             };
             
             RoomEquipment roomEquipment99 = new()
@@ -556,13 +526,9 @@ namespace HospitalLibrary.Settings
                 RoomEquipmentId =Guid.NewGuid(),
                 Amount = 9,
                 EquipmentName = "ANESTHESIA"
-                
             };
             
-            
             //room9.Equipments.Add(roomEquipment9);
-            
-            
             
             modelBuilder.Entity<RoomEquipment>().HasData(
                 roomEquipment1,roomEquipment2,roomEquipment3,roomEquipment4,roomEquipment5,roomEquipment6,roomEquipment7,roomEquipment8,roomEquipment9,
@@ -674,8 +640,43 @@ namespace HospitalLibrary.Settings
                 UserRole = UserRole.Doctor,
                 Enabled = true
             };
+            
+            Doctor doctor2 = new()
+            {
+                Id = Guid.NewGuid(),
+                SpecializationId = specializationGeneral.Id,
+                AddressId = address.Id,
+                WorkingScheduleId = workingSchedule1.Id,
+                RoomId = room7.Id,
+                Username = "Milos",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Milos",
+                Surname = "Milosevic",
+                Email = "Cajons@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Doctor,
+                Enabled = true
+            };
             modelBuilder.Entity<Doctor>().HasData(
-                doctor,doctor1
+                doctor,doctor1,doctor2
+            );
+
+            Medicine medicine1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Brufen 300",
+                Amount = 30
+            };
+            
+            Medicine medicine2 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Aspirin",
+                Amount = 1
+            };
+            modelBuilder.Entity<Medicine>().HasData(
+                medicine1,medicine2
             );
 
             List<Allergen> allergens = new List<Allergen>();
@@ -722,8 +723,153 @@ namespace HospitalLibrary.Settings
                 BloodType = BloodType.Aneg,
                 Allergies = new List<Allergen>()
             };
+            
+            Patient patient3 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Nina",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Nina",
+                Surname = "Minic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor1.Id,
+                Gender = Gender.FEMALE,
+                Age = 5,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient4 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Mina",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Mina",
+                Surname = "Minic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor2.Id,
+                Gender = Gender.FEMALE,
+                Age = 9,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient5 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Nikola",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Nikola",
+                Surname = "Nikolic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor1.Id,
+                Gender = Gender.OTHER,
+                Age = 18,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient6 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Marko",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Marko",
+                Surname = "Markovic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor2.Id,
+                Gender = Gender.MALE,
+                Age = 65,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient7 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Manja",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Manja",
+                Surname = "Maric",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor2.Id,
+                Gender = Gender.FEMALE,
+                Age = 50,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient8 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Darko",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Darko",
+                Surname = "Darkovic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor.Id,
+                Gender = Gender.MALE,
+                Age = 70,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient9 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Filip",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Filip",
+                Surname = "Filipic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor.Id,
+                Gender = Gender.MALE,
+                Age = 56,
+                BloodType = BloodType.Aneg
+            };
+            Patient patient10 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "Tara",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Tara",
+                Surname = "Markovic",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor2.Id,
+                Gender = Gender.FEMALE,
+                Age = 61,
+                BloodType = BloodType.Aneg
+            };
             modelBuilder.Entity<Patient>().HasData(
-                patient1,patient2
+                patient1,patient2,patient3, patient4, patient5, patient6,patient7,patient8,patient9,patient10
             );
             //password = 123
             Manager manager = new ()

@@ -21,6 +21,8 @@ namespace HospitalLibrary.CustomException
         public DoctorException(string message, Exception innerException) : base(message, innerException)
         {
         }
+        
+        
     }
 
     public class DoctorNotExist : DoctorException
@@ -35,4 +37,7 @@ namespace HospitalLibrary.CustomException
         {
         }
     }
+
+   
+    
 }

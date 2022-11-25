@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
+using HospitalAPI.Infrastructure.Authorization;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodConsumptions.Service;
 using Microsoft.AspNetCore.Http;
@@ -57,7 +59,7 @@ namespace HospitalAPI.Controllers
         {
             var bloodConsumptionDto = _mapper.Map<BloodConsumptionCreateDto>(request);
             bloodConsumptionDto.doctorId = doctorId;
-            var result = await _bloodConsumptionService.CreateConsumptions(bloodConsumptionDto, doctorId);
+            var result = await _bloodConsumptionService.CreateConsumptions(bloodConsumptionDto);
             return result == null ? BadRequest() : StatusCode(201, result);
         }
 

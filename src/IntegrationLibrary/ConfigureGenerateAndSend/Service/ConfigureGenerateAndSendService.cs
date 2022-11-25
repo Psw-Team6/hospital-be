@@ -33,6 +33,7 @@ namespace IntegrationLibrary.ConfigureGenerateAndSend.Service
 
         public void Create(ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configureGenerateAndSend)
         {
+
             if (configureGenerateAndSend.SendPeriod.Equals("EVERY_TWO_MINUT"))
             {
                 DateTime currentTime = DateTime.Now;
@@ -66,7 +67,7 @@ namespace IntegrationLibrary.ConfigureGenerateAndSend.Service
 
         public void Edit(ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configureGenerateAndSend)
         {
-                configureGenerateAndSend.NextDateForSending = DateTime.Now;
+             configureGenerateAndSend.NextDateForSending = DateTime.Now;
             _configureGenerateAndSendRepository.Edit(configureGenerateAndSend);
 
         }

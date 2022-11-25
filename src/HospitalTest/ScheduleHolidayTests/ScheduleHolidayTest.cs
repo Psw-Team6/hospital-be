@@ -40,12 +40,28 @@ namespace HospitalTest.ScheduleHolidayTests
         }
 
         [Fact]
-        public async Task Schedule_holiday_invalid_date()
+        public async Task Schedule_holiday_date_range_not_valid()
         {
             var holiday = CreateMockNotValidDate(out var holidayService);
             Func<Task> act = () => holidayService.ScheduleHoliday(holiday);
             var ex = await Assert.ThrowsAsync<DateRangeException>(act);
             Assert.Equal("Date range is not valid",ex.Message);
+        }
+        [Fact]
+        public async Task Schedule_holiday_select_upcoming_date()
+        {
+            var holiday = CreateMockNotValidDatePast(out var holidayService);
+            Func<Task> act = () => holidayService.ScheduleHoliday(holiday);
+            var ex = await Assert.ThrowsAsync<DateRangeNotValid>(act);
+            Assert.Equal("Please select upcoming date",ex.Message);
+        }
+        
+        [Fact]
+        public async Task Schedule_holiday_sucsess()
+        {
+            var holiday = CreateMockHolidazValid(out var holidayService);
+            Func<Task> act = () => holidayService.ScheduleHoliday(holiday);
+            Assert.NotNull(act);
         }
 
         [Fact]
@@ -238,6 +254,42 @@ namespace HospitalTest.ScheduleHolidayTests
             {
                 From = new DateTime(2023, 10, 27, 15, 0, 0),
                 To = new DateTime(2023, 10, 27, 13, 15, 0)
+            };
+            mockUnitOfWork.Setup(x => x.DoctorRepository).Returns(mockDoctorRepo.Object);
+            mockUnitOfWork.Setup(x => x.DoctorRepository
+                    .GetByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(() => doctor1);
+            holidayService = new HolidayService(mockUnitOfWork.Object);
+            return holiday;
+        }
+        
+        private static Holiday CreateMockNotValidDatePast(out HolidayService holidayService)
+        {
+            var mockDoctorRepo = new Mock<IDoctorRepository>();
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            var doctor1 = SeedDataDoctor(out Holiday holiday);
+            holiday.DateRange = new DateRange
+            {
+                From = new DateTime(2021, 10, 27, 15, 0, 0),
+                To = new DateTime(2021, 10, 27, 16, 15, 0)
+            };
+            mockUnitOfWork.Setup(x => x.DoctorRepository).Returns(mockDoctorRepo.Object);
+            mockUnitOfWork.Setup(x => x.DoctorRepository
+                    .GetByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(() => doctor1);
+            holidayService = new HolidayService(mockUnitOfWork.Object);
+            return holiday;
+        }
+        
+        private static Holiday CreateMockHolidazValid(out HolidayService holidayService)
+        {
+            var mockDoctorRepo = new Mock<IDoctorRepository>();
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            var doctor1 = SeedDataDoctor(out Holiday holiday);
+            holiday.DateRange = new DateRange
+            {
+                From = new DateTime(2024, 10, 27, 15, 0, 0),
+                To = new DateTime(2024, 10, 27, 16, 15, 0)
             };
             mockUnitOfWork.Setup(x => x.DoctorRepository).Returns(mockDoctorRepo.Object);
             mockUnitOfWork.Setup(x => x.DoctorRepository

@@ -4,8 +4,11 @@ using HospitalAPI.Exceptions;
 using HospitalAPI.Extensions;
 using HospitalAPI.Infrastructure;
 using HospitalAPI.Mapper;
+using HospitalAPI.ScheduleTask;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.EquipmentMovement;
+using HospitalLibrary.EquipmentMovement.Service;
 using HospitalLibrary.Settings;
 using HospitalLibrary.sharedModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -61,6 +64,8 @@ namespace HospitalAPI
             });
             services.AddTransient<ExceptionMiddleware>();
             
+            services.AddScoped<IEquipmentMovementAppointmentService, EquipmentMovementAppointmentService>();
+            services.AddSingleton<IHostedService, CheckIfAppointmentIsDone>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
@@ -95,12 +100,11 @@ namespace HospitalAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
-            // using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            // {
-            //     var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
-            //     context?.Database.Migrate();
-            // }
-            
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
+                context?.Database.Migrate();
+            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
