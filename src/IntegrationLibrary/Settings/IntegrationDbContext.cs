@@ -3,6 +3,8 @@ using IntegrationLibrary.ConfigureGenerateAndSend.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
+using IntegrationLibrary.BloodSubscription.Model;
+using System.Collections.Generic;
 
 namespace IntegrationLibrary.Settings
 {
@@ -13,6 +15,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend> ConfigureGenerateAndSend { get; set; }
 
         public DbSet<BloodRequest> BloodRequests { get; set; }
+        public DbSet<MounthlyBloodSubscription> BloodSubscriptions { get; set; }
 
 
         public DbSet<NewsFromBloodBank.Model.NewsFromBloodBank> NewsFromBloodBank { get; set; }
@@ -23,7 +26,14 @@ namespace IntegrationLibrary.Settings
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-        
+            modelBuilder.Entity<AmountOfBloodType>(eb => { 
+                eb.HasNoKey();
+            });
+
+            modelBuilder.Entity<MounthlyBloodSubscription>()
+                    .Property(b => b.amountOfBloodTypes)
+                    .HasColumnType("jsonb");
+
 
             //Start data for Blood requests
 
@@ -95,7 +105,14 @@ namespace IntegrationLibrary.Settings
             };
             modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);
 
-
+            MounthlyBloodSubscription bSub = new()
+            {
+                id = Guid.NewGuid(),
+                bloodBankId = bloodBank.Id,
+                dateAndTimeOfSubscription = DateTime.Now,
+                amountOfBloodTypes = new List<AmountOfBloodType>() { new AmountOfBloodType(BloodType.Apos, 5)}
+            };
+            modelBuilder.Entity<MounthlyBloodSubscription>().HasData(bSub);
 
             ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configuration1 = new()
             {
