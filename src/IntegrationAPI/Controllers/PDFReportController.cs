@@ -1,22 +1,7 @@
-﻿using AutoMapper;
-using AutoMapper.Internal.Mappers;
-using IntegrationAPI.Dtos.Response;
-using IntegrationLibrary.BloodBank;
-using IntegrationLibrary.BloodBank.Service;
-using IntegrationLibrary.BloodRequests.Model;
-using IntegrationLibrary.PDFReports.Model;
-using IntegrationLibrary.PDFReports.Service;
+﻿using IntegrationLibrary.PDFReports.Service;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using Newtonsoft.Json;
-using SendGrid;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
 
 namespace IntegrationAPI.Controllers
 {
@@ -74,7 +59,5 @@ namespace IntegrationAPI.Controllers
             return Ok();
 
         }
-
-
     }
 }

@@ -11,5 +11,6 @@ namespace HospitalLibrary.Patients.Repository
     {
         Task<List<PatientAdmission>> GetAllPatientAdmissions(); 
         Task<PatientAdmission> GetPatientAdmissionByIdAsync(Guid id);
+        Task<List<PatientAdmission>> GetAllHospitalized(); 
     }
 }

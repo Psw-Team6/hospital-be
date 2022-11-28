@@ -89,6 +89,8 @@ namespace HospitalLibrary.Patients.Service
 
         public async Task<Boolean> DischargePatient(PatientAdmission admissionRequest)
         {
+            if (admissionRequest.ReasonOfDischarge == null)
+                throw new PatientDischargeException("You must enter a reason of discharge!");
             var admission = await _unitOfWork.PatientAdmissionRepository.GetByIdAsync(admissionRequest.Id);
             CheckDischargePatientRequest(admission);
             admission.Update(admissionRequest.ReasonOfDischarge,DateTime.Now);
@@ -112,5 +114,11 @@ namespace HospitalLibrary.Patients.Service
             if (admission == null) throw new PatientAdmissionException("Patient admission not found!");
             if (admission.DateOfDischarge != null) throw new PatientDischargeException("Patient is already discharged!");
         }
+        
+        public async Task<object> GetAllHospitalized()
+        {
+            return await _unitOfWork.PatientAdmissionRepository.GetAllHospitalized();
+        }
+        
     }
 }

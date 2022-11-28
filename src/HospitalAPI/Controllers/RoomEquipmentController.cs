@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Response;
+using HospitalAPI.Infrastructure.Authorization;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Rooms.Service;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +14,7 @@ namespace HospitalAPI.Controllers.Private
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [HospitalAuthorization(UserRole.Manager)]
     public class RoomEquipmentController:ControllerBase
     {
         

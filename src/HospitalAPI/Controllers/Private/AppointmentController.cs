@@ -13,7 +13,7 @@ namespace HospitalAPI.Controllers.Private
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-   // [HospitalAuthorization(UserRole.Doctor)]
+    [HospitalAuthorization(UserRole.Doctor)]
     public class AppointmentController : ControllerBase
     {
         private readonly AppointmentService _appointmentService;

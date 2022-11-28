@@ -13,8 +13,14 @@ using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Holidays.Service;
+using HospitalLibrary.Medicines.Model;
+using HospitalLibrary.Medicines.Repository;
+using HospitalLibrary.Medicines.Service;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
+using HospitalLibrary.Prescriptions.Model;
+using HospitalLibrary.Prescriptions.Repository;
+using HospitalLibrary.Prescriptions.Service;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.sharedModel.Repository;
@@ -66,6 +72,10 @@ namespace HospitalAPI.Extensions
             services.AddScoped<IIEquipmentRepository, EquipmentRepository>();
             services.AddScoped<PatientAdmissionService>();
             services.AddScoped<IPatientAdmissionRepository, PatientAdmissionRepository>();
+            services.AddScoped<MedicineService>();
+            services.AddScoped<IMedicineRepository, MedicineRepository>();
+            services.AddScoped<BloodPrescriptionService>();
+            services.AddScoped<IBloodPrescriptionRepository, BloodPrescriptionRepository>();
             services.AddScoped<TreatmentReportService>();
             services.AddScoped<ITreatmentReportRepository, TreatmentReportRepository>();
             services.AddScoped<IRoomBedService,RoomBedService>();
@@ -75,6 +85,8 @@ namespace HospitalAPI.Extensions
             //services.AddScoped<IEquipmentMovementAppointmentRepository, EquipmentMovementAppointmentRepository>();
             services.AddScoped<IAllergenRepository, AllergenRepository>();
             services.AddScoped<AllergenService>();
+            services.AddScoped<IMedicinePrescriptionRepository, MedicinePrescriptionRepository>();
+            services.AddScoped<MedicinePrescriptionService>();
         }
     }
 }

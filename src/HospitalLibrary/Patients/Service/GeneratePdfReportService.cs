@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.TreatmentReports.Model;
 using PdfSharpCore.Drawing;
@@ -43,17 +44,49 @@ namespace HospitalLibrary.Patients.Service
             {        
                 sb.Append("Medicine prescriptions : ");
                 treatmentReport.MedicinePrescriptions.ToList().ForEach(x => sb.Append(x.Description + ", "));
-                sb.Remove(sb.Length - 1, 1);
+                sb.Remove(sb.Length - 2, 1);
                 sb.AppendLine(Environment.NewLine);
             }  
             if (treatmentReport.BloodPrescriptions.Any())
             {        
                 sb.Append("Blood prescriptions : ");
-                treatmentReport.BloodPrescriptions.ToList().ForEach(x => sb.Append(x.Description + ", "));
-                sb.Remove(sb.Length - 1, 1);
+                treatmentReport.BloodPrescriptions.ToList().ForEach(x => sb.Append(BloodTypeToString(x.BloodType) +"( " + x.Amount + " )" + ", "));
+                sb.Remove(sb.Length - 2, 1);
                 sb.AppendLine(Environment.NewLine);
             }
             return sb.ToString();
+        }
+
+        private string BloodTypeToString(BloodType type)
+        {
+            if (type == BloodType.Aneg)
+            {
+                return "A-";
+
+            }
+            else if (type == BloodType.Apos)
+            {
+                return "A+";
+
+            }
+            else if (type == BloodType.Bneg)
+            {
+                return "B-"; 
+            }
+            else if (type == BloodType.Bpos)
+            {
+                return "B+"; 
+            }else if (type == BloodType.Oneg)
+            {
+                return "0-"; 
+            }else if (type == BloodType.Opos)
+            {
+                return "0+"; 
+            }else if (type == BloodType.ABneg)
+            {
+                return "AB-"; 
+            }
+            return "AB+"; 
         }
     }
 }
