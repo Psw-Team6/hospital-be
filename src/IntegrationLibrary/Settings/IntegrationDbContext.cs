@@ -105,15 +105,6 @@ namespace IntegrationLibrary.Settings
             };
             modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);
 
-            MounthlyBloodSubscription bSub = new()
-            {
-                id = Guid.NewGuid(),
-                bloodBankId = bloodBank.Id,
-                dateAndTimeOfSubscription = DateTime.Now,
-                amountOfBloodTypes = new List<AmountOfBloodType>() { new AmountOfBloodType(BloodType.Apos, 5)}
-            };
-            modelBuilder.Entity<MounthlyBloodSubscription>().HasData(bSub);
-
             ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configuration1 = new()
             {
                 Id = Guid.NewGuid(),

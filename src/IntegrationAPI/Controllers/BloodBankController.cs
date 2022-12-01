@@ -106,6 +106,21 @@ namespace IntegrationAPI.Controllers
             return CreatedAtAction("GetById", new { id = bloodBank.Id }, bloodBank);
         }
 
+        // GET api/bloodbank/BankaKrvi
+        [HttpGet("findByAPIKey/{ApiKey}")]
+        public ActionResult GetByAPIKey(String ApiKey)
+        {
+            var bloodBank = _bloodBankService.GetByAPIKey(ApiKey);
+            if (bloodBank == null)
+            {
+                return Ok(null);
+            }
+
+            return Ok(bloodBank);
+        }
+
+
+
         // PUT api/bloodbank/2
         [HttpPut("{id}")]
         public ActionResult Update(Guid id, BloodBank bloodBank)

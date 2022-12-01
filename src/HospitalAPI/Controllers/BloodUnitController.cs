@@ -29,6 +29,23 @@ namespace HospitalAPI.Controllers
             var units = await _bloodUnitService.GetUnitsGroupByType();
             return Ok(units);
         }
-        
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> Update([FromBody] BloodUnit bu)
+        {
+            var result = await _bloodUnitService.Update(bu);
+            return result == false ? NotFound() : NoContent();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<BloodUnit>> CreateBloodUnit([FromBody] BloodUnit bu)
+        {
+            var result = await _bloodUnitService.Create(bu);
+            return CreatedAtAction(nameof(CreateBloodUnit), new { id = result.Id }, result);
+        }
     }
 }

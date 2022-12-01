@@ -77,5 +77,10 @@ namespace IntegrationLibrary.BloodBank.Service
             return Convert.ToBase64String(key);
 
         }
+
+        public BloodBank GetByAPIKey(string APIKey)
+        {
+            return _bloodBankRepository.GetByAPIKey(APIKey);
+        }
     }
 }

@@ -13,6 +13,11 @@ using Newtonsoft.Json.Converters;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using IntegrationLibrary.NewsFromBloodBank.Model;
+using IntegrationLibrary.RabbitMQPublisher;
+using System.Net.Http;
+using IntegrationLibrary.PDFReports.Model;
+using System.Net.Http.Json;
+using IntegrationLibrary.BloodSubscription.Model;
 
 namespace IntegrationLibrary.RabbitMQService
 {
@@ -22,6 +27,28 @@ namespace IntegrationLibrary.RabbitMQService
         IModel channel;
         public RabbitMQService() { }
         public override Task StartAsync(CancellationToken cancellationToken)
+        {
+
+            reciveNewsFromBloodBank(cancellationToken);
+
+            reciveResponseForBloodSubscription(cancellationToken);
+
+            return base.StartAsync(cancellationToken);
+        }
+
+        public override Task StopAsync(CancellationToken cancellationToken)
+        {/*
+            channel.Close();
+            connection.Close();*/
+            return base.StopAsync(cancellationToken);
+        }
+
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            return Task.CompletedTask;
+        }
+
+        private void reciveNewsFromBloodBank(CancellationToken cancellationToken)
         {/*
             var factory = new ConnectionFactory();
             var connection = factory.CreateConnection();
@@ -39,27 +66,88 @@ namespace IntegrationLibrary.RabbitMQService
 
                 NewsFromBloodBank.Model.NewsFromBloodBank data = Newtonsoft.Json.JsonConvert.DeserializeObject<NewsFromBloodBank.Model.NewsFromBloodBank>(message);
                 List<BloodBank.BloodBank> bbList = dbContext.BloodBanks.ToList();
-                foreach (BloodBank.BloodBank bb in bbList) {
-                    if (data.apiKey.Equals(bb.ApiKey)) {
+                foreach (BloodBank.BloodBank bb in bbList)
+                {
+                    if (data.apiKey.Equals(bb.ApiKey))
+                    {
                         dbContext.NewsFromBloodBank.Add(data);
                         dbContext.SaveChanges();
                     }
                 }
             };
             channel.BasicConsume(queue: "newsForHospital", autoAck: true, consumer: consumer);*/
-            return base.StartAsync(cancellationToken);
         }
 
-        public override Task StopAsync(CancellationToken cancellationToken)
-        {/*
-            channel.Close();
-            connection.Close();*/
-            return base.StopAsync(cancellationToken);
-        }
-
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        private void reciveResponseForBloodSubscription(CancellationToken cancellationToken)
         {
-            return Task.CompletedTask;
+            var factory = new ConnectionFactory();
+            var connection = factory.CreateConnection();
+            var channel = connection.CreateModel();
+            var consumer = new EventingBasicConsumer(channel);
+
+            var contextOptionsIntegration = new DbContextOptionsBuilder<IntegrationDbContext>().UseNpgsql("Host=localhost;Database=IntegrationDB;Username=postgres;Password=password;").Options;
+            var dbContextIntegration = new IntegrationDbContext(contextOptionsIntegration);
+
+            consumer.Received += (model, ea) =>
+            {
+
+                var body = ea.Body.ToArray();
+                var message = Encoding.UTF8.GetString(body);
+
+                MounthlyBloodSubscriptionResponse data = Newtonsoft.Json.JsonConvert.DeserializeObject<MounthlyBloodSubscriptionResponse>(message);
+                List<BloodBank.BloodBank> bbList = dbContextIntegration.BloodBanks.ToList();
+                foreach (BloodBank.BloodBank bb in bbList)
+                {
+                    if (data.APIKey.Equals(bb.ApiKey))
+                    {
+                        HttpClient httpClient = new HttpClient();
+                        //BloodBank.BloodBank bloodBank = httpClient.GetFromJsonAsync<BloodBank.BloodBank>("http://localhost:5001/api/BloodBank/findByAPIKey/" + data.APIKey).Result;
+                        List<BloodBank.BloodBank> bloodBanks = dbContextIntegration.BloodBanks.ToList();
+                        BloodBank.BloodBank bloodBank = getByApiKey(data.APIKey, bloodBanks);
+                        //List<BloodUnit> bloodUnits = getByBloodBankName(bloodBank.Name, httpClient);
+                        foreach (AmountOfBloodType aobt in data.bloodTypeAmountPair)
+                        {
+                            BloodUnit bloodUnit = new BloodUnit();
+                            bloodUnit.BloodType = (IntegrationLibrary.PDFReports.Model.BloodType)Enum.Parse(typeof(BloodType), aobt.bloodType.ToString());
+                            bloodUnit.Amount = aobt.amount;
+                            bloodUnit.Consumptions = null;
+                            bloodUnit.BloodBankName = bloodBank.Name;
+                            if (bloodUnit.Amount > 0)
+                            {
+                                httpClient.PostAsJsonAsync<BloodUnit>("http://localhost:5000/api/v1/BloodUnit", bloodUnit);
+                            }
+                        }
+                    }
+                }
+            };
+            channel.BasicConsume(queue: "responseBloodSubscription", autoAck: true, consumer: consumer);
+        }
+
+        /*
+        private List<BloodUnit> getByBloodBankName(String name, HttpClient httpClient) 
+        {
+            List<BloodUnit> bloodUnits = new List<BloodUnit>();
+            List<BloodUnit> allBloodUbits = httpClient.GetFromJsonAsync<List<BloodUnit>>("http://localhost:5000/api/v1/BloodUnit").Result;
+
+            foreach (BloodUnit bu in allBloodUbits) 
+            {
+                if (bu.BloodBankName.Equals(name)) 
+                {
+                    bloodUnits.Add(bu);
+                }
+            }
+            return bloodUnits;
+        }*/
+
+        private BloodBank.BloodBank getByApiKey(String apikey, List<BloodBank.BloodBank> bloodBanks) 
+        {
+            
+            foreach (BloodBank.BloodBank bb in bloodBanks) 
+            {
+                if (bb.ApiKey.Equals(apikey))
+                    return bb;
+            }
+            return null; 
         }
     }
 }
