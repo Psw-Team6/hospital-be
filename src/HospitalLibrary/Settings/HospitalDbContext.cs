@@ -886,8 +886,25 @@ namespace HospitalLibrary.Settings
                 UserRole = UserRole.Manager,
                 Enabled = true
             };
+            //modelBuilder.Entity<Manager>().HasData(
+            //    manager
+            //);
+            Manager manager1 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "ManagerBB",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Manager",
+                Surname = "Blood Bank",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.BloodBank,
+                Enabled = true
+            };
             modelBuilder.Entity<Manager>().HasData(
-                manager
+               manager, manager1
             );
             // PatientAdmission patientAdmission1 = new()
             // {

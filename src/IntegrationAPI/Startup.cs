@@ -23,6 +23,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using IntegrationAPI.ScheduleTask.Service;
 using IntegrationAPI.Controllers;
+using IntegrationLibrary.Tender.Service;
+using IntegrationLibrary.Tender.Repository;
 
 namespace IntegrationAPI
 {
@@ -57,8 +59,10 @@ namespace IntegrationAPI
 
             services.AddScoped<IEmailService, EmailService>();
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
-           
 
+            services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
+            services.AddScoped<IBloodUnitAmountRepository, BloodUnitAmountRepository>();
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IPDFReportService,PDFReportService>();
             services.AddScoped<PDFReportController>();

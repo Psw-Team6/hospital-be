@@ -1,5 +1,6 @@
 using IntegrationLibrary.ConfigureGenerateAndSend.Model;
 ﻿using IntegrationLibrary.BloodRequests.Model;
+using IntegrationLibrary.Tender.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
@@ -14,8 +15,10 @@ namespace IntegrationLibrary.Settings
 
         public DbSet<BloodRequest> BloodRequests { get; set; }
 
+        public DbSet<BloodUnitAmount> BloodUnitAmounts { get; set; }
 
         public DbSet<NewsFromBloodBank.Model.NewsFromBloodBank> NewsFromBloodBank { get; set; }
+        public DbSet<IntegrationLibrary.Tender.Model.Tender> Tenders { get; set; }
 
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
