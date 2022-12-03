@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
+using HospitalAPI.Infrastructure.Authorization;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Holidays.Service;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +15,7 @@ namespace HospitalAPI.Controllers.Private
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [HospitalAuthorization(UserRole.Doctor)]
     public class HolidayController : ControllerBase
     {
         private readonly HolidayService _holidayService;
@@ -58,7 +61,6 @@ namespace HospitalAPI.Controllers.Private
             
             return NoContent();
         }
-        
         
         [HttpGet("GetDoctorHolidays/{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

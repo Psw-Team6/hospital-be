@@ -90,7 +90,7 @@ namespace IntegrationLibrary.Settings
                 Name = "BloodBank",
                 ServerAddress = "localhost",
                 Email = "aas@gmail.com",
-                Password = "123",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
                 ApiKey = "x"
             };
             modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);

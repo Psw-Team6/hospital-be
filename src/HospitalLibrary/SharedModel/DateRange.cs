@@ -22,7 +22,7 @@ namespace HospitalLibrary.SharedModel
         
         public bool CheckAfterMonthDate()
         {
-            return From.Date.Date >= DateTime.Now.Date.AddMonths(1) && To.Date.Date >= DateTime.Now.Date.AddMonths(1);
+            return From.Date.Date >= DateTime.Now.Date.AddDays(3) && To.Date.Date >= DateTime.Now.Date.AddDays(3);
         }
 
         protected override bool EqualsCore(DateRange other)

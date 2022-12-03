@@ -4,16 +4,18 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
+using HospitalAPI.Infrastructure.Authorization;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.EquipmentMovement.Model;
 using HospitalLibrary.EquipmentMovement.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SendGrid.Helpers.Errors.Model;
 
 namespace HospitalAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [HospitalAuthorization(UserRole.Manager)]
     public class EquipmentMovementAppointmentController:ControllerBase
     {
         private readonly IEquipmentMovementAppointmentService _equipmentMovementAppointmentService;

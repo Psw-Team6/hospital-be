@@ -49,9 +49,9 @@ namespace HospitalTest.EquipmentMovementTest
                 .ReturnsAsync(() => null);
             var equipmentMovementAppointmentService = new EquipmentMovementAppointmentService(mockUnitOfWork.Object, mockAppointmentService.Object);
             
-            Func<Task> act =  () =>  equipmentMovementAppointmentService.Create(equipmentMovementAppointment);
-            var ex = await Assert.ThrowsAsync<BadRequestException>(act);
-            Assert.Equal("Destination room not found!", ex.Message);
+            var res =  await  equipmentMovementAppointmentService.Create(equipmentMovementAppointment);
+      
+            Assert.Null(res);
         }
         
         [Fact]
@@ -73,9 +73,9 @@ namespace HospitalTest.EquipmentMovementTest
                 .ReturnsAsync(() => null);
             var equipmentMovementAppointmentService = new EquipmentMovementAppointmentService(mockUnitOfWork.Object, mockAppointmentService.Object);
             
-            Func<Task> act =  () =>  equipmentMovementAppointmentService.Create(equipmentMovementAppointment);
-            var ex = await Assert.ThrowsAsync<BadRequestException>(act);
-            Assert.Equal("Equipment not found!", ex.Message);
+            var res =  await equipmentMovementAppointmentService.Create(equipmentMovementAppointment);
+            
+            Assert.Null(res);
         }
         [Fact]
         public async Task Schedule_equipment_movement_amount_negative_exist()
@@ -106,9 +106,9 @@ namespace HospitalTest.EquipmentMovementTest
                 .ReturnsAsync(() => null);
             var equipmentMovementAppointmentService = new EquipmentMovementAppointmentService(mockUnitOfWork.Object, mockAppointmentService.Object);
             
-            Func<Task> act =  () =>  equipmentMovementAppointmentService.Create(equipmentMovementAppointment);
-            var ex = await Assert.ThrowsAsync<BadRequestException>(act);
-            Assert.Equal("Equipment amount is negative!", ex.Message);
+            var res =  await equipmentMovementAppointmentService.Create(equipmentMovementAppointment);
+          
+            Assert.Null(res);
         }
         
         private readonly ITestOutputHelper _testOutputHelper;

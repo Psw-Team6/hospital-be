@@ -3,14 +3,18 @@ using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptions.Model;
+using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.EquipmentMovement.Model;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Holidays.Model;
+using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.SharedModel;
+using HospitalLibrary.TreatmentReports.Model;
 
 namespace HospitalAPI.Mapper
 {
@@ -78,6 +82,18 @@ namespace HospitalAPI.Mapper
                 CreateMap<PatientProfileResponse, Patient>();
                 CreateMap<Patient, PatientProfileRequest>();
                 CreateMap<Symptom, SymptomResponse>();
+                CreateMap<TreatmentReport, TreatmentReportBloodRequest>();
+                CreateMap<BloodPrescriptionRequest, BloodPrescription>();
+                CreateMap<BloodPrescription, BloodPrescriptionRequest>();
+                CreateMap<BloodUnitDto, BloodUnit>();
+                CreateMap<BloodUnit, BloodUnitDto>();
+                CreateMap<TreatmentReportIdResponse, TreatmentReport>();
+                CreateMap<TreatmentReport, TreatmentReportIdResponse>();
+                CreateMap<MedicinePrescriptionRequest, MedicinePrescription>();
+                CreateMap<MedicinePrescription, MedicinePrescriptionRequest>();
+                CreateMap<MedicineResponse, Medicine>();
+                CreateMap<Medicine, MedicineResponse>();
+
             }
     }
     
