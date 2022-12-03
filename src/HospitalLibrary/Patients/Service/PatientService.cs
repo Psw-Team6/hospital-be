@@ -8,7 +8,7 @@ using HospitalLibrary.Common;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Patients.Service
 {

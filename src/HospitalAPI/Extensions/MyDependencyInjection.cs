@@ -14,6 +14,8 @@ using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Holidays.Service;
+using HospitalLibrary.Medicines.Repository;
+using HospitalLibrary.Medicines.Service;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Prescriptions.Repository;
