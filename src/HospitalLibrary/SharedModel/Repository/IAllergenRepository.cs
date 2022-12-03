@@ -1,6 +1,6 @@
 using HospitalLibrary.Common;
 
-namespace HospitalLibrary.sharedModel.Repository
+namespace HospitalLibrary.SharedModel.Repository
 {
     public interface IAllergenRepository : IGenericRepository<Allergen>
     {

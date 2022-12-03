@@ -1,4 +1,4 @@
-namespace HospitalLibrary.sharedModel
+namespace HospitalLibrary.SharedModel
 {
     public class Email
     {

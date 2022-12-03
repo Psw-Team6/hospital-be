@@ -9,11 +9,12 @@ using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Enums;
+using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Settings
@@ -37,6 +38,8 @@ namespace HospitalLibrary.Settings
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<BloodConsumption> BloodConsumptions { get; set; }
+        public DbSet<Examination> Examinations { get; set; }
+        public DbSet<Symptom> Symptoms { get; set; }
         public DbSet<RoomEquipment> RoomEquipment { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
        

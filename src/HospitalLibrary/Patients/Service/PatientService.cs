@@ -6,7 +6,7 @@ using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Newtonsoft.Json.Serialization;
 
 namespace HospitalLibrary.Patients.Service

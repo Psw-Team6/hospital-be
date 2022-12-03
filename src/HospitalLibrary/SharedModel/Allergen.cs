@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Model;
 
-namespace HospitalLibrary.sharedModel
+namespace HospitalLibrary.SharedModel
 {
-    public class Ingredient
+    public class Allergen
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

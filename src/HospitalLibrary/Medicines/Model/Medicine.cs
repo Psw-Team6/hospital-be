@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Medicines.Model
 {

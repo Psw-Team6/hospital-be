@@ -9,6 +9,7 @@ using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.EquipmentMovement.Model;
 using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.EquipmentMovement.Service;
+using HospitalLibrary.Examinations.Service;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Holidays.Repository;
@@ -17,8 +18,8 @@ using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Rooms.Service;
-using HospitalLibrary.sharedModel.Repository;
-using HospitalLibrary.sharedModel.Service;
+using HospitalLibrary.SharedModel.Repository;
+using HospitalLibrary.SharedModel.Service;
 using HospitalLibrary.TreatmentReports.Repository;
 using HospitalLibrary.TreatmentReports.Service;
 using Microsoft.Extensions.DependencyInjection;
@@ -75,6 +76,7 @@ namespace HospitalAPI.Extensions
             //services.AddScoped<IEquipmentMovementAppointmentRepository, EquipmentMovementAppointmentRepository>();
             services.AddScoped<IAllergenRepository, AllergenRepository>();
             services.AddScoped<AllergenService>();
+            services.AddScoped<SymptomService>();
         }
     }
 }

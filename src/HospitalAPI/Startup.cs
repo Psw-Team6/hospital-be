@@ -10,7 +10,7 @@ using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.EquipmentMovement;
 using HospitalLibrary.EquipmentMovement.Service;
 using HospitalLibrary.Settings;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

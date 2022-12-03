@@ -9,7 +9,7 @@ using HospitalLibrary.Enums;
 using HospitalLibrary.EquipmentMovement.Model;
 using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.Rooms.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore.Update;
 using SendGrid.Helpers.Errors.Model;
 

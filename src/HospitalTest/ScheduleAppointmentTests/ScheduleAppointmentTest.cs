@@ -9,11 +9,11 @@ using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Rooms.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Moq;
 using Xunit;
 
-namespace HospitalTest.ScheduleTest
+namespace HospitalTest.ScheduleAppointmentTests
 {
     public class ScheduleAppointmentTest
     {
@@ -64,7 +64,7 @@ namespace HospitalTest.ScheduleTest
             var appointment = SetupNotWorkingAppointment(out var scheduleService);
             Func<Task> act = () => scheduleService.ScheduleAppointment(appointment);
             var ex = await Assert.ThrowsAsync<DoctorIsNotAvailable>(act);
-            Assert.Equal("You are  not available.Check your schedule.",ex.Message);
+            Assert.Equal("You are not available.Check your schedule.",ex.Message);
         }
 
         private static Appointment SetupNotWorkingAppointment(out ScheduleService scheduleService)
@@ -112,8 +112,8 @@ namespace HospitalTest.ScheduleTest
                 },
                 DayOfWork = new DateRange()
                 {
-                    From = new DateTime(2022, 10, 27, 8, 0, 0),
-                    To = new DateTime(2022, 10, 27, 14, 0, 0)
+                    From = new DateTime(2022, 12, 27, 8, 0, 0),
+                    To = new DateTime(2022, 12, 27, 14, 0, 0)
                 }
             };
             Doctor doctor1 = new()

@@ -1,9 +1,7 @@
-using System.Runtime.InteropServices.ComTypes;
-using HospitalLibrary.Patients.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace HospitalLibrary.sharedModel.dbConfiguration
+namespace HospitalLibrary.SharedModel.dbConfiguration
 {
     public class AllergenConfiguration : IEntityTypeConfiguration<Allergen>
     {

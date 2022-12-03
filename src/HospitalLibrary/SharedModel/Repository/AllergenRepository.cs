@@ -1,7 +1,7 @@
 using HospitalLibrary.Common;
 using HospitalLibrary.Settings;
 
-namespace HospitalLibrary.sharedModel.Repository
+namespace HospitalLibrary.SharedModel.Repository
 {
     public class AllergenRepository : GenericRepository<Allergen>, IAllergenRepository
     {

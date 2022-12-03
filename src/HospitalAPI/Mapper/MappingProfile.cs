@@ -5,11 +5,12 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.EquipmentMovement.Model;
+using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalAPI.Mapper
 {
@@ -76,6 +77,7 @@ namespace HospitalAPI.Mapper
                 CreateMap<Patient, PatientProfileResponse>();
                 CreateMap<PatientProfileResponse, Patient>();
                 CreateMap<Patient, PatientProfileRequest>();
+                CreateMap<Symptom, SymptomResponse>();
             }
     }
     

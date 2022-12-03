@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HospitalLibrary.Doctors.Model
@@ -15,7 +15,7 @@ namespace HospitalLibrary.Doctors.Model
 
         public bool IsExpired()
         {
-            return ExpirationDate.To < DateTime.Now;
+            return ExpirationDate.To > DateTime.Now;
         }
     }
 }

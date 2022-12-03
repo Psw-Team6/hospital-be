@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
 
-namespace HospitalLibrary.sharedModel.Service
+namespace HospitalLibrary.SharedModel.Service
 {
     public class AllergenService
     {

@@ -6,11 +6,12 @@ using HospitalLibrary.BloodConsumptions.Repository;
 using HospitalLibrary.BloodUnits.Repository;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.EquipmentMovement.Repository;
+using HospitalLibrary.Examinations.Repository;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Rooms.Repository;
-using HospitalLibrary.sharedModel.Repository;
+using HospitalLibrary.SharedModel.Repository;
 using HospitalLibrary.TreatmentReports.Repository;
 
 namespace HospitalLibrary.Common
@@ -41,6 +42,7 @@ namespace HospitalLibrary.Common
         
         IAddressRepository AddressRepository { get; }
         IAllergenRepository AllergenRepository { get; }
+        ISymptomRepository SymptomRepository { get; }
 
         T GetRepository<T>() where T : class;
         Task CompleteAsync();

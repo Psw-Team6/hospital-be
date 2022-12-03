@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace HospitalLibrary.sharedModel
+namespace HospitalLibrary.SharedModel
 {
     public class Address
     {

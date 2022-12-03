@@ -13,7 +13,7 @@ using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace HospitalTest.Integration
+namespace HospitalTest.LoginTests
 {
     public class LoginTests : BaseIntegrationTest
     {
