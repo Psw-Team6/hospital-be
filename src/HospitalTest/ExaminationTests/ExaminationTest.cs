@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Amqp.Types;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Examinations.Exceptions;
 using HospitalLibrary.Examinations.Model;
+using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.SharedModel;
 using Shouldly;
 using Xunit;
@@ -35,11 +37,19 @@ namespace HospitalTest.ExaminationTests
                 Description = "Polen"
             };
             var symptoms = new List<Symptom> {symptom};
+            var medicine = new Medicine
+            {
+                Name = "Brufen",
+                Amount = 0,
+            };
+            var medicines = new List<Medicine> {medicine};
+            var prescription = new ExaminationPrescription(medicines,"one gram per day");
+            var prescriptions = new List<ExaminationPrescription> {prescription};
             //Act
             try
             {
                 //Assert
-                var examination = new Examination(appointment, "aaa", symptoms);
+                var examination = new Examination(appointment, "aaa", symptoms,prescriptions);
             }
             catch (ExaminationInvalidDate e)
             {
@@ -69,11 +79,20 @@ namespace HospitalTest.ExaminationTests
                 Description = "Polen"
             };
             var symptoms = new List<Symptom> {symptom};
+            var medicine = new Medicine
+            {
+                Id = default,
+                Name = "Brufen",
+                Amount = 0,
+            };
+            var medicines = new List<Medicine> {medicine};
+            var prescription = new ExaminationPrescription(medicines,"one gram per day");
+            var prescriptions = new List<ExaminationPrescription> {prescription};
             //Act
             try
             {
                 //Assert
-                var examination = new Examination(appointment, "aaa", symptoms);
+                var examination = new Examination(appointment, "aaa", symptoms,prescriptions);
             }
             catch (AppointmentExaminationInvalidState e)
             {
@@ -104,8 +123,17 @@ namespace HospitalTest.ExaminationTests
                 Description = "Polen"
             };
             var symptoms = new List<Symptom> {symptom};
+            var medicine = new Medicine
+            {
+                Id = default,
+                Name = "Brufen",
+                Amount = 0,
+            };
+            var medicines = new List<Medicine> {medicine};
+            var prescription = new ExaminationPrescription(medicines,"one gram per day");
+            var prescriptions = new List<ExaminationPrescription> {prescription};
             //Act
-            var examination = new Examination(appointment, "aaa", symptoms);
+            var examination = new Examination(appointment, "aaa", symptoms,prescriptions);
             //Assert
             examination.ShouldNotBeNull();
         }

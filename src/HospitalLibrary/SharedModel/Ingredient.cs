@@ -10,7 +10,6 @@ namespace HospitalLibrary.SharedModel
         public Guid Id { get; set; }
         public string Name { get; set; }
         public IEnumerable<Medicine> Medicines { get; set; }
-        public IEnumerable<Patient> Patients { get; set; }
-        
+
     }
 }

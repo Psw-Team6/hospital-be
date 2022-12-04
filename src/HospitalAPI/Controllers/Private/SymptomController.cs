@@ -25,7 +25,7 @@ namespace HospitalAPI.Controllers.Private
         }
         [HttpGet]
         [ProducesResponseType( StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<SymptomResponse>>> GetAllAppointments()
+        public async Task<ActionResult<List<SymptomResponse>>> GetAllSymptoms()
         {
             var symptoms = await _symptomService.GetAllSymptoms();
             var response = _mapper.Map<List<SymptomResponse>>(symptoms);

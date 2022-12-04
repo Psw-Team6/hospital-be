@@ -93,6 +93,7 @@ namespace HospitalAPI.Mapper
                 CreateMap<MedicinePrescription, MedicinePrescriptionRequest>();
                 CreateMap<MedicineResponse, Medicine>();
                 CreateMap<Medicine, MedicineResponse>();
+                CreateMap<Medicine, MedicineExaminationResponse>();
 
             }
     }
