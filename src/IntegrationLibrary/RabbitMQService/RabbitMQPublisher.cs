@@ -74,11 +74,7 @@ namespace IntegrationLibrary.RabbitMQService
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.QueueDeclare(queue: "mounthlyBloodSubscription",
-                                     durable: false,
-                                     exclusive: false,
-                                     autoDelete: false,
-                                     arguments: null);
+                
 
                 var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject("pusi kurac mraleeeee"));
 
