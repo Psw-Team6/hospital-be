@@ -25,6 +25,10 @@ namespace HospitalLibrary.EquipmentMovement.Service
             _appointmentService = appointmentService;
         }
 
+        public async Task<List<EquipmentMovementAppointment>> GetAllMovementAppointmentByRoomId(Guid originalRoomId)
+        {
+            return await _unitOfWork.EquipmentMovementAppointmentRepository.GetAllMovementAppointmentByRoomId(originalRoomId);
+        }
         public async Task<List<EquipmentMovementAppointment>> GetAllByRoomId(Guid id)
         {
             return await _unitOfWork.EquipmentMovementAppointmentRepository
@@ -380,5 +384,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
                 }
             }
         }
+        
+        
     }
 }
