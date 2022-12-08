@@ -9,7 +9,8 @@ using HospitalLibrary.EquipmentMovement.Service;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.Settings;
-using HospitalLibrary.sharedModel;
+
+using HospitalLibrary.SharedModel;
 using Moq;
 using Xunit;
 using Xunit.Abstractions;
