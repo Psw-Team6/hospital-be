@@ -49,19 +49,24 @@ namespace IntegrationAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            List<ConfigureGenerateAndSend> configurations = _configureGenerateAndSendService.GetAll().ToList();
+            if (configureGenerateAndSend == null)
+                return BadRequest();
 
-            for (int i = 0; i < configurations.Count; i++)
+            if (IsNameEqual(configureGenerateAndSend))
+                return BadRequest();
+            
+            try
             {
-                if (configureGenerateAndSend.BloodBankName.Equals(configurations[i]))
-                {
-                    return BadRequest();
-                }
-
+                var configure = _mapper.Map<ConfigureGenerateAndSend>(configureGenerateAndSend);
+                _configureGenerateAndSendService.Create(configureGenerateAndSend);
             }
-            var configure = _mapper.Map<ConfigureGenerateAndSend>(configureGenerateAndSend);
-           _configureGenerateAndSendService.Create(configureGenerateAndSend);
-            return Ok();
+            catch
+            {
+                return BadRequest();
+            }
+
+            return new OkObjectResult(configureGenerateAndSend);
+
         }
 
         [HttpPost("edit")]
@@ -77,10 +82,8 @@ namespace IntegrationAPI.Controllers
                 List<ConfigureGenerateAndSend> configurations = _configureGenerateAndSendService.GetAll().ToList();
                 for(int i=0; i < configurations.Count; i++)
                 {
-                    if (configureGenerateAndSend.BloodBankName.Equals(configurations[i].BloodBankName))
-                    {
-                        _configureGenerateAndSendService.Delete(configurations[i]);
-                    }
+                    if (IsNameEqual(configureGenerateAndSend))
+                        _configureGenerateAndSendService.Delete(configurations[i]); 
                 }
 
                 var configure = _mapper.Map<ConfigureGenerateAndSend>(configureGenerateAndSend);
@@ -91,11 +94,22 @@ namespace IntegrationAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(configureGenerateAndSend);
+            return new  OkObjectResult(configureGenerateAndSend);
         }
 
 
+        public bool IsNameEqual(ConfigureGenerateAndSend configureGenerateAndSend)
+        {
+            List<ConfigureGenerateAndSend> configurations = _configureGenerateAndSendService.GetAll().ToList();
 
+            for (int i = 0; i < configurations.Count; i++)
+            {
+                if (configureGenerateAndSend.BloodBankName.Equals(configurations[i].BloodBankName))
+                    return true;
+            }
+
+            return false;
+        }
 
     }
 }
