@@ -58,6 +58,13 @@ namespace HospitalLibrary.Appointments.Service
             return appointments.ToList();
         }
         
+        public async Task<List<Appointment>> GetPatientAppointments(Guid id)
+        {
+            var appointments = await _unitOfWork.GetRepository<AppointmentRepository>().GetAllAppointmentsForPatient(id);
+            //var doctorAppointments = appointments.Where(x => x.DoctorId == id);
+            return appointments.ToList();
+        }
+        
         
         private bool canCancleAppointment(Appointment appointment)
         {
