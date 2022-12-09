@@ -6,6 +6,7 @@ using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
+using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +43,6 @@ namespace HospitalAPI.Controllers
             return Ok(result);
         }
         
-        
         [HttpGet("username/{username}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -51,6 +51,18 @@ namespace HospitalAPI.Controllers
             var doctor =  await _doctorService.GetByUsername(username);
             var result = _mapper.Map<DoctorResponse>(doctor);
             return result == null ? NotFound() : Ok(result);
+        }
+        
+        [ProducesResponseType(typeof(List<DateRange>), StatusCodes.Status200OK)]
+
+        [HttpPost("freeRanges/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<List<DateRange>>> GetFreeTimes([FromRoute]Guid id,[FromBody] DateRange span)
+        {
+            var spanes =  await _doctorService.generateFreeTimeSpans(span,id);
+            return Ok(spanes);
+
         }
         
         
