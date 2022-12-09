@@ -17,6 +17,7 @@ namespace HospitalLibrary.Appointments.Service
             _unitOfWork = unitOfWork;
             _emailService = emailService;
         }
+        
 
         public async Task<Appointment> ScheduleAppointment(Appointment appointment)
         {

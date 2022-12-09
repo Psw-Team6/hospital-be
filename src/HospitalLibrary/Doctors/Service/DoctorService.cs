@@ -6,10 +6,13 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalLibrary.ApplicationUsers.Model;
+using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Repository;
+using HospitalLibrary.Holidays.Model;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Doctors.Service
 {
@@ -30,6 +33,54 @@ namespace HospitalLibrary.Doctors.Service
         public async Task<List<Doctor>> GetAllGeneral()
         {
             return await _unitOfWork.DoctorRepository.GetAllDoctorsBySpecialization();
+        }
+
+
+        public async Task<IEnumerable<Appointment>> GetDoctorsAppointmentsInTimeSpan(DateRange span,Guid doctorId)
+        {
+            IEnumerable<Appointment> allAppointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForDoctor(doctorId);
+            IEnumerable<Appointment> filteredAppoontments = FiltertimespanAppointments(allAppointments, span);
+            return filteredAppoontments;
+        }
+        
+        public async Task<IEnumerable<Holiday>> GetDoctorsHolidaysInTimeSpan(DateRange span,Guid doctorId)
+        {
+            IEnumerable<Holiday> allHolidays = await _unitOfWork.HolidayRepository.GetAllHolidaysForDoctor(doctorId);
+            IEnumerable<Holiday> filteredHolidays = FiltertimespanHolidays(allHolidays, span);
+            return filteredHolidays;
+        }
+
+        public IEnumerable<Holiday> FiltertimespanHolidays(IEnumerable<Holiday> allHolidays, DateRange span)
+        {
+            IEnumerable<Holiday> filteredHolidays = new List<Holiday>();
+            foreach (var hol in allHolidays)
+            {
+                if (!CheckSpan(hol.DateRange, span))
+                {
+                    filteredHolidays.Append(hol);
+                }
+            }
+
+            return filteredHolidays;
+        }
+        
+        public IEnumerable<Appointment> FiltertimespanAppointments(IEnumerable<Appointment> allAppointments, DateRange span)
+        {
+            IEnumerable<Appointment> filteredAppontments = new List<Appointment>();
+            foreach (var app in allAppointments)
+            {
+                if (!CheckSpan(app.Duration, span))
+                {
+                    filteredAppontments.Append(app);
+                }
+            }
+
+            return filteredAppontments;
+        }
+        
+        private bool CheckSpan(DateRange scheduled, DateRange newSchedule)
+        {
+            return newSchedule.From > scheduled.To || newSchedule.To < scheduled.From;
         }
 
         public async Task<List<Doctor>> GetAllGeneralWithRequirements()

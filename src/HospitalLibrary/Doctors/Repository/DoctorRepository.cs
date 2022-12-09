@@ -43,5 +43,11 @@ namespace HospitalLibrary.Doctors.Repository
                 .Where(d => d.Specialization.Name.Equals("General"))
                 .ToListAsync();
         }
+
+        public async Task<List<Doctor>> GetBySpecificSpecialisation(Specialization specialization)
+        {
+            return await DbSet.Where(x => x.Specialization == specialization)
+                .ToListAsync();
+        }
     }
 }
