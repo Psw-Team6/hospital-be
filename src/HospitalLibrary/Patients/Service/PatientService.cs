@@ -230,7 +230,7 @@ namespace HospitalLibrary.Patients.Service
                 favouriteDoctors.Add(doctorName, ds);
             }
 
-            return favouriteDoctors;
+            return await Task.FromResult(favouriteDoctors);
         }
 
         public async Task<List<string>> GetDoctorsByYoungGroup()
