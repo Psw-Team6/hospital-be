@@ -214,6 +214,17 @@ namespace HospitalLibrary.Doctors.Service
 
             return doc;
         }
+        
+        public async Task<List<Doctor>> GetBySpecialisation(string specialisation)
+        {
+            var doc = await _unitOfWork.DoctorRepository.GetBySpecificSpecialisation(specialisation);
+            if (doc == null)
+            {
+                throw new DoctorNotExist("Doctors with this specialisation dont exist");
+            }
+
+            return doc;
+        }
 
         public async Task<Doctor> GetById(Guid id)
         {
