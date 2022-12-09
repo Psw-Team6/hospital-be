@@ -53,6 +53,16 @@ namespace HospitalAPI.Controllers
             return result == null ? NotFound() : Ok(result);
         }
         
+        [HttpGet("specialisation/{specialisation}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<DoctorResponse>> GetBySpecialisation([FromRoute]string specialisation)
+        {
+            var doctors =  await _doctorService.GetBySpecialisation(specialisation);
+            var result = _mapper.Map<List<DoctorResponse>>(doctors);
+            return result == null ? NotFound() : Ok(result);
+        }
+        
         [ProducesResponseType(typeof(List<DateRange>), StatusCodes.Status200OK)]
 
         [HttpPost("freeRanges/{id:guid}")]
