@@ -4,6 +4,7 @@ using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
+using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.EquipmentMovement.Model;
 using HospitalLibrary.Feedbacks.Model;
@@ -92,6 +93,8 @@ namespace HospitalAPI.Mapper
                 CreateMap<MedicinePrescription, MedicinePrescriptionRequest>();
                 CreateMap<MedicineResponse, Medicine>();
                 CreateMap<Medicine, MedicineResponse>();
+                CreateMap<Consilium, ConsiliumResponse>();
+                CreateMap<ConsiliumRequest, Consilium>();
             }
     }
     

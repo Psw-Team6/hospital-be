@@ -4,6 +4,7 @@ using HospitalLibrary.ApplicationUsers.Repository;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.BloodConsumptions.Repository;
 using HospitalLibrary.BloodUnits.Repository;
+using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.Feedbacks.Repository;
@@ -47,6 +48,7 @@ namespace HospitalLibrary.Common
         IAddressRepository AddressRepository { get; }
         IAllergenRepository AllergenRepository { get; }
         IMedicineRepository MedicineRepository { get; }
+        IConsiliumRepository ConsiliumRepository { get; }
 
         T GetRepository<T>() where T : class;
         Task CompleteAsync();
