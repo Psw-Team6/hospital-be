@@ -49,7 +49,7 @@ namespace HospitalLibrary.Doctors.Service
             {
                 DateTime newScheduleStart = startDate;
 
-                for (int i = 0; i < 15; i++)
+                for (int i = 0; i < 16; i++)
                 {
                     DateRange newScheduleRange = new DateRange();
                     newScheduleRange.From = newScheduleStart;
@@ -58,10 +58,11 @@ namespace HospitalLibrary.Doctors.Service
                     {
                         freeHours = freeHours.Append(newScheduleRange);
                     }
-                    newScheduleStart.AddMinutes(30);
+                    newScheduleStart = newScheduleStart.AddMinutes(30);
                 }
 
                 startDate =startDate.AddDays(1);
+                newScheduleStart = startDate;
             }
 
             return freeHours;
