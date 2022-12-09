@@ -52,7 +52,7 @@ namespace IntegrationAPI.Controllers
             if (configureGenerateAndSend == null)
                 return BadRequest();
 
-            if (IsNameEqual(configureGenerateAndSend))
+            if (_configureGenerateAndSendService.IsNameEqual(configureGenerateAndSend))
                 return BadRequest();
             
             try
@@ -82,7 +82,7 @@ namespace IntegrationAPI.Controllers
                 List<ConfigureGenerateAndSend> configurations = _configureGenerateAndSendService.GetAll().ToList();
                 for(int i=0; i < configurations.Count; i++)
                 {
-                    if (IsNameEqual(configureGenerateAndSend))
+                    if (_configureGenerateAndSendService.IsNameEqual(configureGenerateAndSend))
                         _configureGenerateAndSendService.Delete(configurations[i]); 
                 }
 
@@ -98,7 +98,7 @@ namespace IntegrationAPI.Controllers
         }
 
 
-        public bool IsNameEqual(ConfigureGenerateAndSend configureGenerateAndSend)
+        /*public bool IsNameEqual(ConfigureGenerateAndSend configureGenerateAndSend)
         {
             List<ConfigureGenerateAndSend> configurations = _configureGenerateAndSendService.GetAll().ToList();
 
@@ -109,7 +109,7 @@ namespace IntegrationAPI.Controllers
             }
 
             return false;
-        }
+        }*/
 
     }
 }

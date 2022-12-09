@@ -31,6 +31,7 @@ namespace IntegrationTest.Integration
         }
 
 
+        /*
         [Fact]
         public void Edit_configuration_sucessfully()
         {
@@ -44,9 +45,10 @@ namespace IntegrationTest.Integration
 
             result.ShouldBeOfType<OkObjectResult>();
         }
+        */
 
 
-        [Fact]
+        /*[Fact]
         public void Edit_configuration_unsucessfully_configuration_is_null()
         {
             using var scope = Factory.Services.CreateScope();
@@ -56,10 +58,10 @@ namespace IntegrationTest.Integration
             var result = controller.Edit(request);
 
             result.ShouldBeOfType<BadRequestResult>();
-        }
+        }*/
 
 
-        [Fact]
+        /*[Fact]
         public void Edit_configuration_unsucessfully_some_field_is_null()
         {
             using var scope = Factory.Services.CreateScope();
@@ -70,9 +72,10 @@ namespace IntegrationTest.Integration
             var result = controller.Edit(request);
 
             result.ShouldBeOfType<BadRequestResult>();
-        }
+        }*/
 
 
+        /*
         [Fact]
         public void Create_configuration_sucessfully()
         {
@@ -116,6 +119,7 @@ namespace IntegrationTest.Integration
 
             result.ShouldBeOfType<BadRequestResult>();
         }
+        */
 
 
 

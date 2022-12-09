@@ -8,15 +8,22 @@ namespace HospitalLibrary.Examinations.Model
 {
     public class Examination
     {
+        private IEnumerable<Symptom> _symptoms;
         public Guid Id { get; private set; }
-        public List<Symptom> Symptoms { get; private set; }
+
+        public IEnumerable<Symptom> Symptoms
+        {
+            get => _symptoms as ReadOnlyCollection<Symptom>;
+            private set => _symptoms = value;
+        }
+
         public Appointment Appointment { get; private set; }
         public string Anamnesis { get; private set;}
         public const string InvalidDateMessage = "Invalid examination date.";
         public const string InvalidAppointmentStateMessage = "Invalid appointment state.";
         public List<ExaminationPrescription> Prescriptions { get; private set; }
 
-        private void AddSymptoms(List<Symptom> symptoms)
+        private void AddSymptoms(IEnumerable<Symptom> symptoms)
         {
             Symptoms = symptoms;
         }
@@ -24,15 +31,7 @@ namespace HospitalLibrary.Examinations.Model
         {
             Prescriptions = prescriptions;
         }
-
-        public ReadOnlyCollection<Symptom> GetSymptoms()
-        {
-            var symptoms = Symptoms.AsReadOnly();
-            return symptoms;
-        }
-        
-
-        public Examination(Appointment appointment, string anamnesis,List<Symptom> symptoms,List<ExaminationPrescription> prescriptions)
+        public Examination(Appointment appointment, string anamnesis,IEnumerable<Symptom> symptoms,List<ExaminationPrescription> prescriptions)
         {
             Validate(appointment);
             Appointment = appointment;
@@ -41,10 +40,6 @@ namespace HospitalLibrary.Examinations.Model
             AddPrescription(prescriptions);
             Anamnesis = anamnesis;
         }
-        public Examination()
-        {
-        }
-
         private static void Validate(Appointment appointment)
         {
             if (!appointment.CanBeExamined())
@@ -57,5 +52,9 @@ namespace HospitalLibrary.Examinations.Model
                 throw new AppointmentExaminationInvalidState(InvalidAppointmentStateMessage);
             }
         }
+        public Examination()
+        {
+        }
+        
     }
 }
