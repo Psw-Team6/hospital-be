@@ -46,7 +46,6 @@ namespace HospitalLibrary.Examinations.Model
         public Examination(Appointment appointment, string anamnesis,IEnumerable<Symptom> symptoms,IEnumerable<ExaminationPrescription> prescriptions)
         {
             Appointment = appointment;
-            //Appointment.AppointmentState = AppointmentState.Finished;
             AddSymptoms(symptoms);
             AddPrescription(prescriptions);
             Anamnesis = anamnesis;

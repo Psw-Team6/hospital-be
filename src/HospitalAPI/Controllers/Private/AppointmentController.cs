@@ -13,7 +13,7 @@ namespace HospitalAPI.Controllers.Private
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [HospitalAuthorization(UserRole.Doctor)]
+    //[HospitalAuthorization(UserRole.Doctor)]
     public class AppointmentController : ControllerBase
     {
         private readonly AppointmentService _appointmentService;
@@ -75,6 +75,14 @@ namespace HospitalAPI.Controllers.Private
         public async Task<ActionResult<List<AppointmentResponse>>> GetDoctorAppointments([FromRoute]Guid id)
         {
             var appointments = await _appointmentService.GetDoctorAppointments(id);
+            var result = _mapper.Map<List<AppointmentResponse>>(appointments);
+            return result == null ? NotFound() : Ok(result);
+        }
+        [HttpGet("GetAppointmentsForExamination/{doctorId:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<AppointmentResponse>>> GetAppointmentsForExamination([FromRoute]Guid doctorId)
+        {
+            var appointments = await _appointmentService.GetAppointmentsForExamination(doctorId);
             var result = _mapper.Map<List<AppointmentResponse>>(appointments);
             return result == null ? NotFound() : Ok(result);
         }

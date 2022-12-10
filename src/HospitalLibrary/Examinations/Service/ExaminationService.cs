@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Medicines.Model;
@@ -22,6 +23,8 @@ namespace HospitalLibrary.Examinations.Service
             var prescriptions = await CreatePrescriptions(examination);
             var newExamination =
                 new Examination(app, examination.Anamnesis, symptoms, prescriptions);
+            newExamination.ValidateExamination();
+            app.AppointmentState = AppointmentState.Finished;
             await _unitOfWork.ExaminationRepository.CreateAsync(newExamination);
             await _unitOfWork.CompleteAsync();
             return newExamination;

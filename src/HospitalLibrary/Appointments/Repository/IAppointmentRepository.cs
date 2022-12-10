@@ -10,5 +10,6 @@ namespace HospitalLibrary.Appointments.Repository
     {
         Task<IEnumerable<Appointment>> GetAllAppointmentsForDoctor(Guid doctorId);
         Task<IEnumerable<Appointment>> GetAllAppointmentsForPatient(Guid patientId);
+        Task<List<Appointment>> GetAppointmentsForExamination(Guid doctorId);
     }
 }
