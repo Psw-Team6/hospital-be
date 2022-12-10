@@ -9,7 +9,7 @@ using HospitalLibrary.EquipmentMovement.Service;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.Settings;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Moq;
 using Xunit;
 using Xunit.Abstractions;
@@ -45,7 +45,11 @@ namespace HospitalTest.EquipmentMovementTest
                 Amount = 1,
                 OriginalRoomId = Guid.NewGuid(),
                 DestinationRoomId = Guid.NewGuid(),
-                Duration = new DateRange(),
+                Duration = new DateRange()
+                {
+                    From = new DateTime(2023, 12, 17, 15, 0, 0),
+                    To = new DateTime(2023, 12, 18, 15, 30, 0)
+                },
                 EquipmentName = Equipment.ANESTHESIA.ToString(),
                 // RoomId = room1.Id
             };
@@ -56,18 +60,20 @@ namespace HospitalTest.EquipmentMovementTest
             var movedEquipment2 = movedEquipment1;
             movedEquipment.DestinationRoomId = movedEquipment1.DestinationRoomId;
             
-           // var roomEquipment = roomEquipment1;  //skloni ovo posle 
-          //  roomEquipment.EquipmentName = roomEquipment1.EquipmentName;
+         
             
             mockUnitOfWork.Setup(uw => uw.EquipmentMovementAppointmentRepository).Returns(mockSearchRepo.Object);
-            //var equipmentService = new EquipmentService(mockUnitOfWork.Object);
+            
             var equipmentMovementService = new EquipmentMovementAppointmentService(mockUnitOfWork.Object,GetMovementByRoomId2.Object); 
                 
             Func<Task> act = () => equipmentMovementService.GetAllMovementAppointmentByRoomId(movedEquipment.OriginalRoomId);
+            Func<Task> act2 = () => equipmentMovementService.GetAllMovementAppointmentByRoomId(movedEquipment2.OriginalRoomId);
     
           
             _testOutputHelper.WriteLine(act.ToString());
+            _testOutputHelper.WriteLine(act2.ToString());
             Assert.NotNull(act);
+            Assert.NotNull(act2);
         }
         
         
