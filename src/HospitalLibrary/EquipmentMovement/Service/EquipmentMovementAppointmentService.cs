@@ -41,6 +41,15 @@ namespace HospitalLibrary.EquipmentMovement.Service
                 await _unitOfWork.EquipmentMovementAppointmentRepository.GetByIdAsync(id);
             return equipmentMovementAppointment;
         }
+        
+        public async Task<bool> DeleteById(Guid id)
+        {
+            var equipmentMovementAppointment = await _unitOfWork.EquipmentMovementAppointmentRepository.GetByIdAsync(id);
+            if (equipmentMovementAppointment == null) { return false; }
+            await _unitOfWork.EquipmentMovementAppointmentRepository.DeleteAsync(equipmentMovementAppointment);
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
 
         public async Task<EquipmentMovementAppointment> Create(
             EquipmentMovementAppointment equipmentMovementAppointment)
