@@ -87,6 +87,7 @@ namespace HospitalAPI.Extensions
             services.AddScoped<SymptomService>();
             services.AddScoped<IMedicinePrescriptionRepository, MedicinePrescriptionRepository>();
             services.AddScoped<MedicinePrescriptionService>();
+            services.AddScoped<ExaminationService>();
 
         }
     }

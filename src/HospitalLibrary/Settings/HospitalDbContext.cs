@@ -9,6 +9,7 @@ using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Enums;
+using HospitalLibrary.Examinations.DbConfig;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
@@ -43,6 +44,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Symptom> Symptoms { get; set; }
         public DbSet<RoomEquipment> RoomEquipment { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
+        //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
