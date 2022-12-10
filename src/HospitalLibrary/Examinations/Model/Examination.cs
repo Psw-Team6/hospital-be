@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Examinations.Exceptions;
 
@@ -8,54 +10,84 @@ namespace HospitalLibrary.Examinations.Model
 {
     public class Examination
     {
+        private IEnumerable<Symptom> _symptoms;
+        private IEnumerable<ExaminationPrescription> _examinationPrescriptions;
         public Guid Id { get; private set; }
-        public List<Symptom> Symptoms { get; private set; }
+
+        public IEnumerable<Symptom> Symptoms
+        {
+            get => _symptoms;
+            private set => _symptoms = value;
+        }
+
         public Appointment Appointment { get; private set; }
+        public Guid IdApp { get; private set; }
         public string Anamnesis { get; private set;}
         public const string InvalidDateMessage = "Invalid examination date.";
         public const string InvalidAppointmentStateMessage = "Invalid appointment state.";
-        public List<ExaminationPrescription> Prescriptions { get; private set; }
+        public const string InvalidPrescriptionsMessage = "One or more prescriptions is not valid.";
+        public const string InvalidAnamnesisMessage = "Anamnesis is not valid";
 
-        private void AddSymptoms(List<Symptom> symptoms)
+        public IEnumerable<ExaminationPrescription> Prescriptions
+        {
+            get=> _examinationPrescriptions; 
+            private set=> _examinationPrescriptions = value;
+        }
+
+        private void AddSymptoms(IEnumerable<Symptom> symptoms)
         {
             Symptoms = symptoms;
+            
         }
-        private void AddPrescription(List<ExaminationPrescription> prescriptions)
+        private void AddPrescription(IEnumerable<ExaminationPrescription> prescriptions)
         {
             Prescriptions = prescriptions;
         }
-
-        public ReadOnlyCollection<Symptom> GetSymptoms()
+        public Examination(Appointment appointment, string anamnesis,IEnumerable<Symptom> symptoms,IEnumerable<ExaminationPrescription> prescriptions)
         {
-            var symptoms = Symptoms.AsReadOnly();
-            return symptoms;
-        }
-        
-
-        public Examination(Appointment appointment, string anamnesis,List<Symptom> symptoms,List<ExaminationPrescription> prescriptions)
-        {
-            Validate(appointment);
             Appointment = appointment;
-            Appointment.AppointmentState = AppointmentState.Finished;
             AddSymptoms(symptoms);
             AddPrescription(prescriptions);
             Anamnesis = anamnesis;
         }
-        public Examination()
-        {
-        }
 
-        private static void Validate(Appointment appointment)
+        public void ValidateExamination()
         {
-            if (!appointment.CanBeExamined())
+            ValidateAppointment();
+            ValidatePrescriptions();
+            ValidateAnamnesis();
+        }
+        private  void ValidateAppointment()
+        {
+            if (!Appointment.CanBeExamined())
             {
                 throw new ExaminationInvalidDate(InvalidDateMessage);
             }
 
-            if (appointment.AppointmentState != AppointmentState.Pending)
+            if (Appointment.AppointmentState != AppointmentState.Pending)
             {
                 throw new AppointmentExaminationInvalidState(InvalidAppointmentStateMessage);
             }
         }
+
+        private void ValidatePrescriptions()
+        {
+            if (!_examinationPrescriptions.All(prescription => prescription.Validate()))
+            {
+                throw new ExaminationPrescriptionException(InvalidPrescriptionsMessage);
+            }
+        }
+
+        private void ValidateAnamnesis()
+        {
+            if (string.IsNullOrEmpty(Anamnesis))
+            {
+                throw new ExaminationInvalidAnamnesis(InvalidAnamnesisMessage);
+            }
+        }
+        public Examination()
+        {
+        }
+        
     }
 }

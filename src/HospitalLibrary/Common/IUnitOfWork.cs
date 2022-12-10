@@ -48,6 +48,8 @@ namespace HospitalLibrary.Common
         IMedicineRepository MedicineRepository { get; }
         ISymptomRepository SymptomRepository { get; }
         IBloodPrescriptionRepository BloodPrescriptionRepository { get; }
+        IExaminationRepository ExaminationRepository { get; }
+        IExaminationPrescriptionRepository ExaminationPrescriptionRepository { get; }
 
         T GetRepository<T>() where T : class;
         Task CompleteAsync();

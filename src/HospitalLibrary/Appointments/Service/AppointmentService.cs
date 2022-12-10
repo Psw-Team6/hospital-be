@@ -39,7 +39,7 @@ namespace HospitalLibrary.Appointments.Service
         
         public async Task<bool> CancelAppointment(Appointment appointment)
         {
-            if (canCancleAppointment(appointment))
+            if (CanCancleAppointment(appointment))
             {
                 appointment.Patient = await _unitOfWork.PatientRepository.GetByIdAsync(appointment.PatientId);
                 await _emailService.SendCancelAppointmentEmail(appointment);
@@ -59,12 +59,20 @@ namespace HospitalLibrary.Appointments.Service
         }
         
         
-        private bool canCancleAppointment(Appointment appointment)
+        private bool CanCancleAppointment(Appointment appointment)
         {
             if(DateTime.Now.AddDays(1).CompareTo(appointment.Duration.From) < 0)
                 return true;
             return false;
         }
-      
+
+        public async Task<List<Appointment>> GetAppointmentsForExamination(Guid doctorId)
+        {
+            var appointments=  await _unitOfWork.AppointmentRepository.GetAppointmentsForExamination(doctorId);
+            var sorted = appointments
+                .Where(app => app.AppointmentState == AppointmentState.Pending)
+                .OrderBy(x => x.Duration.From).ToList();
+            return sorted;
+        }
     }
 }

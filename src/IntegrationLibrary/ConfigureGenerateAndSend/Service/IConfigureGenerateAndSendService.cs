@@ -17,5 +17,6 @@ namespace IntegrationLibrary.ConfigureGenerateAndSend.Service
         public IEnumerable<ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend> GetAll();
 
         void Delete(ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configureGenerateAndSend);
+        bool IsNameEqual(ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configureGenerateAndSend);
     }
 }
