@@ -26,16 +26,7 @@ namespace HospitalAPI.Controllers
             _equipmentMovementAppointmentService = equipmentMovementAppointmentService;
             _mapper = mapper;
         }
-        /*
-        [HttpGet("GetAllMovementAppointmentByRoomId/{OriginalRoomId}")]
-        [ProducesResponseType(typeof(List<RoomEquipmentResponse>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<RoomEquipmentResponse>>> GetAllEquipmentByRoomId([FromRoute]Guid roomId)
-        {
-            var result = await _equipmentService.GetAllEquipmentByRoomId(roomId);
-            return result == null ? NotFound() : Ok(result);
-        }
-        */
+        
         [HttpGet("GetAllMovementAppointmentByRoomId/{roomId}")]
         [ProducesResponseType( StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -86,5 +77,19 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<List<EquipmentMovementAppointmentResponse>>(appointments);
             return result == null ? BadRequest() : Ok(result);
         }
+        
+        [HttpDelete ("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> DeleteById([FromRoute]Guid id)
+        {
+            var result = await _equipmentMovementAppointmentService.DeleteById(id);
+            return result ? NoContent() : NotFound();
+        }
+        
+        
+        
+        
+        
     }
 }
