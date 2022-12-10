@@ -56,7 +56,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("specialisation/{specialisation}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<DoctorResponse>> GetBySpecialisation([FromRoute]string specialisation)
+        public async Task<ActionResult<List<DoctorResponse>>> GetBySpecialisation([FromRoute]string specialisation)
         {
             var doctors =  await _doctorService.GetBySpecialisation(specialisation);
             var result = _mapper.Map<List<DoctorResponse>>(doctors);
