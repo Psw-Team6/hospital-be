@@ -45,7 +45,7 @@ namespace HospitalLibrary.Doctors.Service
             int startScheduleMin = doctorsSchedule.DayOfWork.From.Minute;
             
             DateTime startDate = new DateTime(selectedDateSpan.From.Year,selectedDateSpan.From.Month,selectedDateSpan.From.Day,startScheduleHour,startScheduleMin,0);
-            while (startDate< endDate)
+            while (startDate<= endDate)
             {
                 DateTime newScheduleStart = startDate;
 
@@ -73,8 +73,8 @@ namespace HospitalLibrary.Doctors.Service
         {
             foreach (var range in busyHours)
             {
-                if (!CheckDocotrsAvailabilityByDate(range, newSschedule) ||
-                    !CheckDocotrsAvailabilityByTime(range, newSschedule))
+                if (!CheckDocotrsAvailabilityByDate(range, newSschedule) &&
+                    !CheckDocotrsAvailabilityByHours(range, newSschedule) && !CheckDocotrsAvailabilityByMinutes(range,newSschedule))
                 {
                     return false;
                 }
@@ -87,9 +87,13 @@ namespace HospitalLibrary.Doctors.Service
         {
             return newSchedule.From.Date > scheduled.To.Date || newSchedule.To.Date < scheduled.From.Date;
         }
-        private bool CheckDocotrsAvailabilityByTime(DateRange scheduled, DateRange newSchedule)
+        private bool CheckDocotrsAvailabilityByHours(DateRange scheduled, DateRange newSchedule)
         {
-            return newSchedule.From.Hour > scheduled.To.Hour || newSchedule.To.Hour < scheduled.From.Hour;
+            return (newSchedule.From.Hour > scheduled.To.Hour || newSchedule.To.Hour < scheduled.From.Hour) ;
+        }
+        private bool CheckDocotrsAvailabilityByMinutes(DateRange scheduled, DateRange newSchedule)
+        {
+            return (newSchedule.From.Minute >= scheduled.To.Minute || newSchedule.To.Minute <= scheduled.From.Minute) ;
         }
         public async Task<IEnumerable<DateRange>> getBusyHours(DateRange selectedDateSpan, Guid doctorId)
         {
@@ -98,11 +102,11 @@ namespace HospitalLibrary.Doctors.Service
             IEnumerable<DateRange> busyHours = new List<DateRange>();
             foreach (var app in appointments)
             {
-                busyHours.Append(app.Duration);
+               busyHours =  busyHours.Append(app.Duration);
             }
             foreach (var app in holidays)
             {
-                busyHours.Append(app.DateRange);
+                busyHours = busyHours.Append(app.DateRange);
             }
 
             return busyHours;
@@ -114,7 +118,7 @@ namespace HospitalLibrary.Doctors.Service
             IEnumerable<Appointment> allAppointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForDoctor(doctorId);
             IEnumerable<Appointment> filteredAppoontments = FiltertimespanAppointments(allAppointments, span);
             
-            return filteredAppoontments;
+            return allAppointments;
         }
         
         public async Task<IEnumerable<Holiday>> GetDoctorsHolidaysInTimeSpan(DateRange span,Guid doctorId)
@@ -126,7 +130,7 @@ namespace HospitalLibrary.Doctors.Service
             {
                 holidayDates.Append(app.DateRange);
             }
-            return filteredHolidays;
+            return allHolidays;
         }
 
         public IEnumerable<Holiday> FiltertimespanHolidays(IEnumerable<Holiday> allHolidays, DateRange span)
