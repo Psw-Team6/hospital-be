@@ -17,7 +17,7 @@ namespace HospitalLibrary.Examinations.Model
         public IEnumerable<Symptom> Symptoms
         {
             get => _symptoms;
-            private set => _symptoms = value;
+            set => _symptoms = value;
         }
 
         public Appointment Appointment { get; private set; }
@@ -30,8 +30,8 @@ namespace HospitalLibrary.Examinations.Model
 
         public IEnumerable<ExaminationPrescription> Prescriptions
         {
-            get=> _examinationPrescriptions; 
-            private set=> _examinationPrescriptions = value;
+            get=> _examinationPrescriptions;
+            set=> _examinationPrescriptions = value;
         }
 
         private void AddSymptoms(IEnumerable<Symptom> symptoms)
