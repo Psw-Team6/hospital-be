@@ -9,6 +9,7 @@ using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Enums;
+using HospitalLibrary.Examinations.DbConfig;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
@@ -43,6 +44,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Symptom> Symptoms { get; set; }
         public DbSet<RoomEquipment> RoomEquipment { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
+        //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
@@ -913,6 +915,64 @@ namespace HospitalLibrary.Settings
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
+            Appointment appointment1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment2 = new()
+            {
+                Id = Guid.NewGuid(),
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment3 = new()
+            {
+                Id = Guid.NewGuid(),
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            modelBuilder.Entity<Appointment>()
+                .OwnsOne(app => app.Duration)
+                .HasData(
+                    new
+                    {
+                        AppointmentId = appointment.Id,
+                        From = new DateTime(2023, 7, 27, 10, 0, 0),
+                        To = new DateTime(2023, 7, 27, 10, 30, 0)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment1.Id,
+                        From = DateTime.Now,
+                        To = DateTime.Now.AddMinutes(30)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment2.Id,
+                        From = DateTime.Now.AddMinutes(30+15),
+                        To = DateTime.Now.AddMinutes(60+15)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment3.Id,
+                        From = DateTime.Now.AddMinutes(60+30),
+                        To = DateTime.Now.AddMinutes(90+30)
+                    }
+                );
+            modelBuilder.Entity<Appointment>().HasData(
+                appointment,appointment1,appointment2,appointment3
+            );
 
             Holiday holiday1 = new()
             {
@@ -934,20 +994,6 @@ namespace HospitalLibrary.Settings
                     }
                     );
             modelBuilder.Entity<Holiday>().HasData(holiday1);
-
-            modelBuilder.Entity<Appointment>()
-                .OwnsOne(app => app.Duration)
-                .HasData(
-                    new
-                    {
-                        AppointmentId = appointment.Id,
-                        From = new DateTime(2023, 7, 27, 10, 0, 0),
-                        To = new DateTime(2023, 7, 27, 10, 30, 0)
-                    }
-                );
-            modelBuilder.Entity<Appointment>().HasData(
-                appointment
-            );
 
             BloodUnit unit1 = new()
             {

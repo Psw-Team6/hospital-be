@@ -17,5 +17,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
             EquipmentMovementRequest equipmentAppointmentsRequest);
         
         public Task<List<EquipmentMovementAppointment>> GetAllMovementAppointmentByRoomId(Guid originalRoomId);
+        
+        public Task<bool> DeleteById(Guid id);
     }
 }

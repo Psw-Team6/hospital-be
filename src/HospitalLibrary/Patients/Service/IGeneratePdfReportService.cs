@@ -1,4 +1,6 @@
-﻿using HospitalLibrary.Patients.Model;
+﻿using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Examinations.Model;
+using HospitalLibrary.Patients.Model;
 using HospitalLibrary.TreatmentReports.Model;
 
 namespace HospitalLibrary.Patients.Service
@@ -7,5 +9,6 @@ namespace HospitalLibrary.Patients.Service
     {
         void GeneratePdfReport(PatientAdmission admission, TreatmentReport treatmentReport);
         string GenerateTextInPdf(PatientAdmission patientAdmission, TreatmentReport treatmentReport);
+        byte[] GetAppointmentPdfReport(Examination examination);
     }
 }
