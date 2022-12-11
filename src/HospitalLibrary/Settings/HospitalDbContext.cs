@@ -44,10 +44,6 @@ namespace HospitalLibrary.Settings
         public DbSet<Symptom> Symptoms { get; set; }
         public DbSet<RoomEquipment> RoomEquipment { get; set; }
         public DbSet<Consilium> Consiliums { get; set; }
-        public DbSet<Holiday> Holidays
-        {
-            get; set; 
-        }
         public DbSet<Holiday> Holidays { get; set; }
         //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
