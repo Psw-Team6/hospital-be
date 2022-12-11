@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
 using HospitalAPI.Infrastructure.Authorization;
 using HospitalLibrary.ApplicationUsers.Model;
+using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -78,6 +80,7 @@ namespace HospitalAPI.Controllers.Private
             var result = _mapper.Map<List<AppointmentResponse>>(appointments);
             return result == null ? NotFound() : Ok(result);
         }
+
         [HttpGet("GetAppointmentsForExamination/{doctorId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<AppointmentResponse>>> GetAppointmentsForExamination([FromRoute]Guid doctorId)
@@ -85,6 +88,15 @@ namespace HospitalAPI.Controllers.Private
             var appointments = await _appointmentService.GetAppointmentsForExamination(doctorId);
             var result = _mapper.Map<List<AppointmentResponse>>(appointments);
             return result == null ? NotFound() : Ok(result);
+        }
+        [HttpPost("GetAppointmentPdfReport/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAppointmentPdfReport([FromRoute]Guid id, [FromBody]AppointmentReportPdfRequest request)
+        {
+            var options = _mapper.Map<AppointmentReportPdfOptions>(request);
+            var result = _appointmentService.GetAppointmentPdfReport(id,options).Result;
+            return result == null ? NotFound() : File(result, "application/pdf", "appointmentReportPdf");
         }
     }
 }
