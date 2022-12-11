@@ -4,6 +4,7 @@ using HospitalLibrary.ApplicationUsers.Repository;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.BloodConsumptions.Repository;
 using HospitalLibrary.BloodUnits.Repository;
+using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.Examinations.Repository;
@@ -46,12 +47,14 @@ namespace HospitalLibrary.Common
         private BloodPrescriptionRepository _bloodPrescriptionRepository;
         private MedicinePrescriptionRepository _medicinePrescriptionRepository;
         private SymptomRepository _symptomRepository;
+        private ConsiliumRepository _consiliumRepository;
         private ExaminationRepository _examinationRepository;
         private ExaminationPrescriptionRepository _examinationPrescriptionRepository;
-      
-
+        
         public IAllergenRepository AllergenRepository =>
             _allergenRepository ??= new AllergenRepository(_hospitalDbContext);
+        public IConsiliumRepository ConsiliumRepository =>
+            _consiliumRepository ??= new ConsiliumRepository(_hospitalDbContext);
 
         public IMedicinePrescriptionRepository MedicinePrescriptionRepository =>
             _medicinePrescriptionRepository ??= new MedicinePrescriptionRepository(_hospitalDbContext);

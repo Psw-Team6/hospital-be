@@ -4,6 +4,7 @@ using HospitalLibrary.ApplicationUsers.Repository;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.BloodConsumptions.Repository;
 using HospitalLibrary.BloodUnits.Repository;
+using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.Examinations.Repository;
@@ -24,7 +25,6 @@ namespace HospitalLibrary.Common
         IDoctorRepository DoctorRepository { get; }
         IPatientRepository PatientRepository { get; }
         IAppointmentRepository AppointmentRepository { get; }
-
         IHolidayRepository HolidayRepository { get; }
         IFeedbackRepository FeedbackRepository { get; }
         IWorkingSchueduleRepository WorkingSchueduleRepository { get; }
@@ -48,9 +48,9 @@ namespace HospitalLibrary.Common
         IMedicineRepository MedicineRepository { get; }
         ISymptomRepository SymptomRepository { get; }
         IBloodPrescriptionRepository BloodPrescriptionRepository { get; }
+        IConsiliumRepository ConsiliumRepository { get; }
         IExaminationRepository ExaminationRepository { get; }
         IExaminationPrescriptionRepository ExaminationPrescriptionRepository { get; }
-
         T GetRepository<T>() where T : class;
         Task CompleteAsync();
     }

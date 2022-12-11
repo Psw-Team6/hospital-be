@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using AutoMapper;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
+using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Repository;
@@ -30,7 +28,7 @@ namespace HospitalLibrary.Doctors.Service
             return await _unitOfWork.DoctorRepository.GetAllDoctors();
         }
         
-        public async Task<List<Doctor>> GetAllGeneral()
+        private async Task<List<Doctor>> GetAllGeneral()
         {
             return await _unitOfWork.DoctorRepository.GetAllDoctorsBySpecialization();
         }
@@ -177,7 +175,7 @@ namespace HospitalLibrary.Doctors.Service
             return availableDoctors;
         }
 
-        public async Task<int> GetMinimumPatients()
+        private async Task<int> GetMinimumPatients()
         {
             int minimum = 2000000;
             List<Doctor> doctors = await GetAllGeneral();
@@ -190,9 +188,6 @@ namespace HospitalLibrary.Doctors.Service
             }
             return minimum;
         }
-
-      
-
         public async Task<Doctor> CreateDoctor(Doctor doctor)
         {
             var password = PasswordHasher.HashPassword(doctor.Password);
@@ -203,6 +198,17 @@ namespace HospitalLibrary.Doctors.Service
             await _unitOfWork.CompleteAsync();
             return newDoctor;
         }
+        public async Task<List<Doctor>> GetDoctorsForConsilium(Consilium consilium)
+        {
+            var doctors = new List<Doctor>();
+            foreach (var doctor in consilium.Doctors)
+            {
+                var doc = await _unitOfWork.DoctorRepository.GetAllDoctorsBySIdAsync(doctor.Id);
+                doctors.Add(doc);
+            }
+            return doctors;
+        }
+      
 
         public async Task<Doctor> GetByUsername(string username)
         {
@@ -240,6 +246,21 @@ namespace HospitalLibrary.Doctors.Service
             await _unitOfWork.DoctorRepository.DeleteAsync(doctor);
             await _unitOfWork.CompleteAsync();
             return true;
+        }
+        public async Task<List<Doctor>> GetDoctorsBySpecializations(IEnumerable<Specialization> specializations)
+        {
+            var doctors = new List<Doctor>();
+            foreach (var spec in specializations)
+            {
+                var doctorList = await _unitOfWork.DoctorRepository.GetDoctorsBySpecialization(spec.Id);
+                doctors.AddRange(doctorList);
+            }
+            return doctors;
+        }
+
+        public async Task<IEnumerable<Doctor>> GetDoctorsBySpecialization(Guid specId)
+        {
+            return await _unitOfWork.DoctorRepository.GetDoctorsBySpecialization(specId);
         }
     }
 }

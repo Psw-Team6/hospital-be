@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Security.Principal;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
+using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Enums;
 using HospitalLibrary.Examinations.DbConfig;
@@ -43,6 +43,11 @@ namespace HospitalLibrary.Settings
         public DbSet<Examination> Examinations { get; set; }
         public DbSet<Symptom> Symptoms { get; set; }
         public DbSet<RoomEquipment> RoomEquipment { get; set; }
+        public DbSet<Consilium> Consiliums { get; set; }
+        public DbSet<Holiday> Holidays
+        {
+            get; set; 
+        }
         public DbSet<Holiday> Holidays { get; set; }
         //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
@@ -230,7 +235,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 FloorId = floor11.Id,
                 Name = "A11",
-                BuildingId = floor11.BuildingId
+                BuildingId = floor11.BuildingId,
+                Type = RoomType.EXAMINATION
             };
             
             GRoom gRoom1 = new()
@@ -248,7 +254,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 FloorId = floor11.Id,
                 Name = "B11",
-                BuildingId = floor11.BuildingId
+                BuildingId = floor11.BuildingId,
+                Type = RoomType.EXAMINATION
             };
             GRoom gRoom2 = new()
             {
@@ -265,7 +272,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 FloorId = floor12.Id,
                 Name = "A12",
-                BuildingId = floor12.BuildingId
+                BuildingId = floor12.BuildingId,
+                Type = RoomType.EXAMINATION
             };
             GRoom gRoom3 = new()
             {
@@ -282,7 +290,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 FloorId = floor13.Id,
                 Name = "A13",
-                BuildingId = floor13.BuildingId
+                BuildingId = floor13.BuildingId,
+                Type = RoomType.EXAMINATION
             };
             GRoom gRoom4 = new()
             {
@@ -299,7 +308,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 FloorId = floor21.Id,
                 Name = "A21",
-                BuildingId = floor21.BuildingId
+                BuildingId = floor21.BuildingId,
+                Type = RoomType.MEETING_ROOM
             };
             GRoom gRoom5 = new()
             {
@@ -316,7 +326,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 FloorId = floor21.Id,
                 Name = "B21",
-                BuildingId = floor21.BuildingId
+                BuildingId = floor21.BuildingId,
+                Type = RoomType.MEETING_ROOM
             };
             
             GRoom gRoom6 = new()
@@ -334,7 +345,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 Name = "A22",
                 FloorId = floor22.Id,
-                BuildingId = floor22.BuildingId
+                BuildingId = floor22.BuildingId,
+                Type = RoomType.MEETING_ROOM
             };
             GRoom gRoom7 = new()
             {
@@ -351,7 +363,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 Name = "C23",
                 FloorId = floor23.Id,
-                BuildingId = floor23.BuildingId
+                BuildingId = floor23.BuildingId,
+                Type = RoomType.MEETING_ROOM
             };
             GRoom gRoom8 = new()
             {
@@ -368,7 +381,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 Name = "B23",
                 FloorId = floor23.Id,
-                BuildingId = floor23.BuildingId
+                BuildingId = floor23.BuildingId,
+                Type = RoomType.MEETING_ROOM
             };
             GRoom gRoom9 = new()
             {
