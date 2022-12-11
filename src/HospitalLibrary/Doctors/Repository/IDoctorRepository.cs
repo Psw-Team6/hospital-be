@@ -13,5 +13,7 @@ namespace HospitalLibrary.Doctors.Repository
         Task<Doctor> GetByUsername(string username);
         Task<List<Doctor>> GetAllDoctorsBySpecialization();
 
+        Task<List<Doctor>> GetBySpecificSpecialisation(String specialization);
+
     }
 }

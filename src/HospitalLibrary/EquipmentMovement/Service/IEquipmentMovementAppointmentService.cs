@@ -10,9 +10,14 @@ namespace HospitalLibrary.EquipmentMovement.Service
         public Task CheckAllAppointmentTimes();
         public Task<EquipmentMovementAppointment> GetById(Guid id);
         public Task<List<EquipmentMovementAppointment>> GetAllByRoomId(Guid id);
+        
         public Task<EquipmentMovementAppointment> Create(EquipmentMovementAppointment equipmentMovementAppointment);
 
         public Task<List<EquipmentMovementAppointment>> GetAllAvailableAppointmentsForEquipmentMovement(
             EquipmentMovementRequest equipmentAppointmentsRequest);
+        
+        public Task<List<EquipmentMovementAppointment>> GetAllMovementAppointmentByRoomId(Guid originalRoomId);
+        
+        public Task<bool> DeleteById(Guid id);
     }
 }

@@ -7,7 +7,7 @@ using HospitalLibrary.Managers;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Settings;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;

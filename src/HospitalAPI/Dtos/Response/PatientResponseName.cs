@@ -1,5 +1,4 @@
 using System;
-using HospitalLibrary.sharedModel;
 
 namespace HospitalAPI.Dtos.Response
 {

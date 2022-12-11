@@ -9,7 +9,7 @@ using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Patients.Enums;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using HospitalLibrary.TreatmentReports.Model;
 
 namespace HospitalLibrary.Patients.Model

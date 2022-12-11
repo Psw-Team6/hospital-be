@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using HospitalAPI.Dtos.Response;
 using HospitalLibrary.BloodUnits.Model;
 using HospitalLibrary.Patients.Enums;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalAPI.Dtos.Request
 {

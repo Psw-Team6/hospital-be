@@ -8,7 +8,7 @@ using HospitalLibrary.Common;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Patients.Service
 {
@@ -230,7 +230,7 @@ namespace HospitalLibrary.Patients.Service
                 favouriteDoctors.Add(doctorName, ds);
             }
 
-            return favouriteDoctors;
+            return await Task.FromResult(favouriteDoctors);
         }
 
         public async Task<List<string>> GetDoctorsByYoungGroup()

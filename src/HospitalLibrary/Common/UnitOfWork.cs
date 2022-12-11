@@ -6,6 +6,7 @@ using HospitalLibrary.BloodConsumptions.Repository;
 using HospitalLibrary.BloodUnits.Repository;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.EquipmentMovement.Repository;
+using HospitalLibrary.Examinations.Repository;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Medicines.Repository;
@@ -13,9 +14,8 @@ using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Prescriptions.Repository;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Settings;
-using HospitalLibrary.sharedModel.Repository;
+using HospitalLibrary.SharedModel.Repository;
 using HospitalLibrary.TreatmentReports.Repository;
-using HospitalLibrary.TreatmentReports.Service;
 
 namespace HospitalLibrary.Common
 {
@@ -45,6 +45,9 @@ namespace HospitalLibrary.Common
         private MedicineRepository _medicineRepository;
         private BloodPrescriptionRepository _bloodPrescriptionRepository;
         private MedicinePrescriptionRepository _medicinePrescriptionRepository;
+        private SymptomRepository _symptomRepository;
+        private ExaminationRepository _examinationRepository;
+        private ExaminationPrescriptionRepository _examinationPrescriptionRepository;
       
 
         public IAllergenRepository AllergenRepository =>
@@ -59,9 +62,19 @@ namespace HospitalLibrary.Common
 
         public IMedicineRepository MedicineRepository =>
             _medicineRepository ??= new MedicineRepository(_hospitalDbContext);
+
+        public ISymptomRepository SymptomRepository =>
+            _symptomRepository ??= new SymptomRepository(_hospitalDbContext);
+
         public IBloodPrescriptionRepository BloodPrescriptionRepository =>
             _bloodPrescriptionRepository ??= new BloodPrescriptionRepository(_hospitalDbContext);
-        
+
+        public IExaminationRepository ExaminationRepository =>
+            _examinationRepository ??= new ExaminationRepository(_hospitalDbContext);
+
+        public IExaminationPrescriptionRepository ExaminationPrescriptionRepository =>
+            _examinationPrescriptionRepository ??= new ExaminationPrescriptionRepository(_hospitalDbContext);
+
         public ITreatmentReportRepository TreatmentReportRepository =>
             _treatmentReportRepository ??= new TreatmentReportRepository(_hospitalDbContext);
         public IIEquipmentRepository EquipmentRepository =>
