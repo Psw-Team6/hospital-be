@@ -17,5 +17,7 @@ namespace IntegrationLibrary.BloodRequests.Service
         void Update(BloodRequest request);
         void Delete(BloodRequest request);
         BloodRequest GetFirst();
+        bool IfOnDemandRequest(BloodRequest request);
+        void sendScheduledRequest();
     }
 }

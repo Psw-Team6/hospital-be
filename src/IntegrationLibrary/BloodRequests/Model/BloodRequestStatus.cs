@@ -11,7 +11,8 @@ namespace IntegrationLibrary.BloodRequests.Model
         APPPROVED,
         REJECTED,
         PENDING,
-        RETURNED
+        RETURNED,
+        SENT
 
     }
 }

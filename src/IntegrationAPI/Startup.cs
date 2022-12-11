@@ -23,6 +23,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using IntegrationAPI.ScheduleTask.Service;
 using IntegrationAPI.Controllers;
+using IntegrationLibrary.HTTP;
 
 namespace IntegrationAPI
 {
@@ -73,8 +74,8 @@ namespace IntegrationAPI
             services.AddScoped<INewsFromBloodBankService, NewsFromBloodBankService>();
             services.AddScoped<INewsFromBloodBankRepository, NewsFromBloodBankRepository>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
-            services.AddScoped<IBloodRequestService, BloodRequestService>();
-
+            services.AddTransient<IBloodRequestService, BloodRequestService>();
+            services.AddTransient<IHttpService, HttpService>();
 
         }
 

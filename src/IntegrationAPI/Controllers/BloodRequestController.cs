@@ -14,6 +14,9 @@ using IntegrationAPI.Dtos.Response;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using IntegrationLibrary.BloodRequests.Service;
 using IntegrationLibrary.BloodRequests.Model;
+using IntegrationLibrary.HTTP;
+using BloodSupplyResponse = IntegrationLibrary.BloodRequests.Model.BloodSupplyResponse;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IntegrationAPI.Controllers
 {
@@ -22,18 +25,21 @@ namespace IntegrationAPI.Controllers
     public class BloodRequestController : ControllerBase
     {
         private readonly IBloodRequestService _bloodRequestService;
+        private readonly IBloodBankService _bloodBankService;
+        private readonly IHttpService _httpService;
         private readonly IMapper _mapper;
-
-        /*public BloodRequestController(IBloodRequestService bloodRequestService, IMapper mapper)
-        {
-            _bloodRequestService = bloodRequestService;
-            _mapper = mapper;
-
-        }*/
 
         public BloodRequestController(IBloodRequestService bloodRequestService)
         {
             _bloodRequestService = bloodRequestService;
+
+        }
+        [ActivatorUtilitiesConstructor]
+        public BloodRequestController(IBloodRequestService bloodRequestService, IBloodBankService bloodBankService, IHttpService httpService)
+        {
+            _bloodRequestService = bloodRequestService;
+            _bloodBankService = bloodBankService;
+            _httpService = httpService;
         }
 
         // GET: api/BloodRequest
@@ -99,5 +105,47 @@ namespace IntegrationAPI.Controllers
 
             return Ok(bloodRequest);
         }
+
+        //GET api/bloodbank/bloodSupply/A/8
+        [HttpPut("sendBloodRequest/{bloodBankName}")]
+        public async Task<BloodSupplyResponse> sendBloodRequest(BloodRequest bloodRequest, String bloodBankName)
+        {
+
+            if (!_bloodRequestService.IfOnDemandRequest(bloodRequest))
+            {
+                //Schedule send
+                BloodBank bloodBank = _bloodBankService.GetByName(bloodBankName);
+                bloodRequest.Status = Status.APPPROVED;
+                bloodRequest.BloodBankId = bloodBank.Id;
+                Update(bloodRequest);
+
+                return null;
+            }
+            else
+            {
+                BloodBank bloodBank = _bloodBankService.GetByName(bloodBankName);
+                bloodRequest.Status = Status.SENT;
+                bloodRequest.BloodBankId = bloodBank.Id;
+                Update(bloodRequest);
+
+                if (!ModelState.IsValid)
+                {
+                    return null;
+                }
+
+                try
+                {
+                    //ON-DEMAND
+                    return await _httpService.GetProductAsync(bloodBank?.ServerAddress + "blood/" + bloodBankName + "/" + bloodRequest.Type + '/' + bloodRequest.Amount);
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+            
+        }
+
+
     }
 }
