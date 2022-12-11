@@ -1,13 +1,12 @@
 ﻿using HospitalLibrary.ApplicationUsers.Service;
-using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.BloodConsumptions.Service;
 using HospitalLibrary.BloodUnits.Service;
 using HospitalLibrary.Common;
+using HospitalLibrary.Consiliums.Repository;
+using HospitalLibrary.Consiliums.Service;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
-using HospitalLibrary.EquipmentMovement.Model;
-using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.EquipmentMovement.Service;
 using HospitalLibrary.Examinations.Service;
 using HospitalLibrary.Feedbacks.Repository;
@@ -81,12 +80,13 @@ namespace HospitalAPI.Extensions
             services.AddScoped<IGeneratePdfReportService,GeneratePdfReportService>();
             services.AddScoped<IRoomBedRepository, RoomBedRepository>();
             services.AddScoped<EquipmentMovementAppointmentService>();
-            //services.AddScoped<IEquipmentMovementAppointmentRepository, EquipmentMovementAppointmentRepository>();
             services.AddScoped<IAllergenRepository, AllergenRepository>();
             services.AddScoped<AllergenService>();
             services.AddScoped<SymptomService>();
             services.AddScoped<IMedicinePrescriptionRepository, MedicinePrescriptionRepository>();
             services.AddScoped<MedicinePrescriptionService>();
+            services.AddScoped<ConsiliumService>();
+            services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
 
         }
     }

@@ -7,7 +7,6 @@ using HospitalAPI.Mapper;
 using HospitalAPI.ScheduleTask;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Appointments.Service;
-using HospitalLibrary.EquipmentMovement;
 using HospitalLibrary.EquipmentMovement.Service;
 using HospitalLibrary.Settings;
 using HospitalLibrary.SharedModel;
@@ -54,10 +53,10 @@ namespace HospitalAPI
             services.AddControllers()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
           
-            services.AddOpenApiDocument(options =>
+            /*services.AddOpenApiDocument(options =>
             {
                 options.SchemaNameGenerator = new CustomSwaggerSchemaNameGenerator();
-            });
+            });*/
             services.AddSwaggerGen(c =>
             {
                 c.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
@@ -108,10 +107,10 @@ namespace HospitalAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-               //app.UseSwagger(); 
-              app.UseOpenApi();
-              app.UseSwaggerUi3();
-              app.UseReDoc();
+              app.UseSwagger(); 
+              /*app.UseOpenApi();
+              app.UseSwaggerUi3();*/
+             // app.UseReDoc();
               app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1")); //ODKOMENTARIOSAO
             }
 

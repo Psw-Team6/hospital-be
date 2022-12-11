@@ -4,10 +4,10 @@ using HospitalLibrary.SharedModel;
 
 namespace HospitalAPI.Dtos.Request
 {
-    public class ConsiliumRequest
+    public class ConsiliumSpecializationRequest
     {
         public string Theme { get; set; }
-        public IEnumerable<DoctorConsiliumResponse> Doctors { get; set; }
+        public IEnumerable<SpecializationResponse> Specializations { get; set; }
         public TimeRange TimeRange { get; set; }
     }
 }

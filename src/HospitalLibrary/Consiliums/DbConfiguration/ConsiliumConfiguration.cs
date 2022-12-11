@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Consiliums.Model;
+using HospitalLibrary.Doctors.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,8 +10,8 @@ namespace HospitalLibrary.Consiliums.DbConfiguration
        
         public void Configure(EntityTypeBuilder<Consilium> builder)
         {
-            _ = builder.HasMany(consilium => consilium.Doctors)
-                .WithMany(doctor=> doctor.Consiliums);
+            builder.HasMany(c => c.Doctors)
+                .WithMany(doctor => doctor.Consiliums);
         }
     }
 }

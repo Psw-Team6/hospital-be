@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalAPI.Dtos.Response
 {
@@ -9,6 +9,7 @@ namespace HospitalAPI.Dtos.Response
         public Guid Id { get; set; }
         public string Theme { get; set; }
         public IEnumerable<DoctorResponse> Doctors { get; set; }
-        public DateRange DateRange { get; set; }
+        public TimeRange TimeRange { get; set; }
+        public RoomBasicResponse Room { get; set; }
     }
 }
