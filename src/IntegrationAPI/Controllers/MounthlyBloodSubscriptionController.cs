@@ -18,6 +18,7 @@ using IntegrationLibrary.BloodSubscription.Service;
 using IntegrationLibrary.BloodSubscription.Model;
 using IntegrationLibrary.RabbitMQPublisher;
 using IntegrationLibrary.RabbitMQService;
+using IntegrationLibrary.RabbitMQService.RabbitMQProducer;
 
 namespace IntegrationAPI.Controllers
 {
@@ -53,7 +54,10 @@ namespace IntegrationAPI.Controllers
             bSupResponse.dateAndTimeOfSubscription = mounthlyBloodSubscription.dateAndTimeOfSubscription;
             bSupResponse.bloodTypeAmountPair = mounthlyBloodSubscription.amountOfBloodTypes;
 
-            RabbitMQPublisher.SendBloodSubscription(bSupResponse);
+            RabbitMQProducer producer = new RabbitMQProducer();
+            producer.SendMessage(bSupResponse);
+
+            //RabbitMQPublisher.SendBloodSubscription(bSupResponse);
 
             _supService.Create(mounthlyBloodSubscription);
             return CreatedAtAction("GetById", new { id = mounthlyBloodSubscription.id }, mounthlyBloodSubscription);

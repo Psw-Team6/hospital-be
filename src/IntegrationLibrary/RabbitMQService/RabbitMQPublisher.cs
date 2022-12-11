@@ -76,7 +76,7 @@ namespace IntegrationLibrary.RabbitMQService
             {
                 
 
-                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject("pusi kurac mraleeeee"));
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject("hghjfjfjfe"));
 
                 channel.BasicPublish(exchange: "",
                                      routingKey: "mounthlyBloodSubscription",

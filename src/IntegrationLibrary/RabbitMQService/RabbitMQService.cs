@@ -78,8 +78,8 @@ namespace IntegrationLibrary.RabbitMQService
                     }
                 };
                 channel.BasicConsume(queue: "newsForHospital", autoAck: true, consumer: consumer);
-            }
-            catch (RabbitMQ.Client.Exceptions.OperationInterruptedException e) {
+            }//RabbitMQ.Client.Exceptions.OperationInterruptedException
+            catch (Exception e) {
                 
             }
             
@@ -87,6 +87,8 @@ namespace IntegrationLibrary.RabbitMQService
 
         private void reciveResponseForBloodSubscription(CancellationToken cancellationToken)
         {
+            try
+            {
                 var factory = new ConnectionFactory();
                 var connection = factory.CreateConnection();
                 var channel = connection.CreateModel();
@@ -139,7 +141,10 @@ namespace IntegrationLibrary.RabbitMQService
                     }
                 };
                 channel.BasicConsume(queue: "responseBloodSubscription", autoAck: true, consumer: consumer);
-            
+            }
+            catch (Exception e) 
+            {  
+            }
         }
 
         private BloodBank.BloodBank getByApiKey(String apikey, List<BloodBank.BloodBank> bloodBanks) 
