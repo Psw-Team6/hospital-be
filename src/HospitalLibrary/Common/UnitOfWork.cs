@@ -48,7 +48,8 @@ namespace HospitalLibrary.Common
         private MedicinePrescriptionRepository _medicinePrescriptionRepository;
         private SymptomRepository _symptomRepository;
         private ConsiliumRepository _consiliumRepository;
-      
+        private ExaminationRepository _examinationRepository;
+        private ExaminationPrescriptionRepository _examinationPrescriptionRepository;
         
         public IAllergenRepository AllergenRepository =>
             _allergenRepository ??= new AllergenRepository(_hospitalDbContext);
@@ -70,7 +71,13 @@ namespace HospitalLibrary.Common
 
         public IBloodPrescriptionRepository BloodPrescriptionRepository =>
             _bloodPrescriptionRepository ??= new BloodPrescriptionRepository(_hospitalDbContext);
-        
+
+        public IExaminationRepository ExaminationRepository =>
+            _examinationRepository ??= new ExaminationRepository(_hospitalDbContext);
+
+        public IExaminationPrescriptionRepository ExaminationPrescriptionRepository =>
+            _examinationPrescriptionRepository ??= new ExaminationPrescriptionRepository(_hospitalDbContext);
+
         public ITreatmentReportRepository TreatmentReportRepository =>
             _treatmentReportRepository ??= new TreatmentReportRepository(_hospitalDbContext);
         public IIEquipmentRepository EquipmentRepository =>

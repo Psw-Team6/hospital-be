@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.ApplicationUsers.Model;
+using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Doctors.Repository;
+using HospitalLibrary.Holidays.Model;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Doctors.Service
 {
@@ -27,6 +31,133 @@ namespace HospitalLibrary.Doctors.Service
         private async Task<List<Doctor>> GetAllGeneral()
         {
             return await _unitOfWork.DoctorRepository.GetAllDoctorsBySpecialization();
+        }
+
+        public async Task<IEnumerable<DateRange>> generateFreeTimeSpans(DateRange selectedDateSpan, Guid doctorId)
+        {
+            IEnumerable<DateRange> busyHours = await getBusyHours(selectedDateSpan, doctorId);
+            IEnumerable<DateRange> freeHours = new List<DateRange>();
+            DateTime endDate = selectedDateSpan.To;
+            WorkingSchedule doctorsSchedule = await _unitOfWork.DoctorRepository.GetDoctorWorkingSchedule(doctorId);
+            int startScheduleHour = doctorsSchedule.DayOfWork.From.Hour;
+            int startScheduleMin = doctorsSchedule.DayOfWork.From.Minute;
+            
+            DateTime startDate = new DateTime(selectedDateSpan.From.Year,selectedDateSpan.From.Month,selectedDateSpan.From.Day,startScheduleHour,startScheduleMin,0);
+            while (startDate< endDate)
+            {
+                DateTime newScheduleStart = startDate;
+
+                for (int i = 0; i < 16; i++)
+                {
+                    DateRange newScheduleRange = new DateRange();
+                    newScheduleRange.From = newScheduleStart;
+                    newScheduleRange.To = newScheduleStart.AddMinutes(30);
+                    if (checkHolidayAndAppointmentAvailability(busyHours, newScheduleRange))
+                    {
+                        freeHours = freeHours.Append(newScheduleRange);
+                    }
+                    newScheduleStart = newScheduleStart.AddMinutes(30);
+                }
+
+                startDate =startDate.AddDays(1);
+                newScheduleStart = startDate;
+            }
+
+            return freeHours;
+
+        }
+
+        public bool checkHolidayAndAppointmentAvailability(IEnumerable<DateRange> busyHours, DateRange newSschedule)
+        {
+            foreach (var range in busyHours)
+            {
+                if (!CheckDocotrsAvailabilityByDate(range, newSschedule) ||
+                    !CheckDocotrsAvailabilityByTime(range, newSschedule))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool CheckDocotrsAvailabilityByDate(DateRange scheduled, DateRange newSchedule)
+        {
+            return newSchedule.From.Date > scheduled.To.Date || newSchedule.To.Date < scheduled.From.Date;
+        }
+        private bool CheckDocotrsAvailabilityByTime(DateRange scheduled, DateRange newSchedule)
+        {
+            return newSchedule.From.Hour > scheduled.To.Hour || newSchedule.To.Hour < scheduled.From.Hour;
+        }
+        public async Task<IEnumerable<DateRange>> getBusyHours(DateRange selectedDateSpan, Guid doctorId)
+        {
+            IEnumerable<Appointment> appointments = await GetDoctorsAppointmentsInTimeSpan(selectedDateSpan, doctorId);
+            IEnumerable<Holiday> holidays = await GetDoctorsHolidaysInTimeSpan(selectedDateSpan, doctorId);
+            IEnumerable<DateRange> busyHours = new List<DateRange>();
+            foreach (var app in appointments)
+            {
+                busyHours.Append(app.Duration);
+            }
+            foreach (var app in holidays)
+            {
+                busyHours.Append(app.DateRange);
+            }
+
+            return busyHours;
+
+        }
+
+        public async Task<IEnumerable<Appointment>> GetDoctorsAppointmentsInTimeSpan(DateRange span,Guid doctorId)
+        {
+            IEnumerable<Appointment> allAppointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForDoctor(doctorId);
+            IEnumerable<Appointment> filteredAppoontments = FiltertimespanAppointments(allAppointments, span);
+            
+            return filteredAppoontments;
+        }
+        
+        public async Task<IEnumerable<Holiday>> GetDoctorsHolidaysInTimeSpan(DateRange span,Guid doctorId)
+        {
+            IEnumerable<DateRange> holidayDates = new List<DateRange>();
+            IEnumerable<Holiday> allHolidays = await _unitOfWork.HolidayRepository.GetAllHolidaysForDoctor(doctorId);
+            IEnumerable<Holiday> filteredHolidays = FiltertimespanHolidays(allHolidays, span);
+            foreach (var app in filteredHolidays)
+            {
+                holidayDates.Append(app.DateRange);
+            }
+            return filteredHolidays;
+        }
+
+        public IEnumerable<Holiday> FiltertimespanHolidays(IEnumerable<Holiday> allHolidays, DateRange span)
+        {
+            IEnumerable<Holiday> filteredHolidays = new List<Holiday>();
+            foreach (var hol in allHolidays)
+            {
+                if (!CheckSpan(hol.DateRange, span))
+                {
+                    filteredHolidays.Append(hol);
+                }
+            }
+
+            return filteredHolidays;
+        }
+        
+        public IEnumerable<Appointment> FiltertimespanAppointments(IEnumerable<Appointment> allAppointments, DateRange span)
+        {
+            IEnumerable<Appointment> filteredAppontments = new List<Appointment>();
+            foreach (var app in allAppointments)
+            {
+                if (!CheckSpan(app.Duration, span))
+                {
+                    filteredAppontments.Append(app);
+                }
+            }
+
+            return filteredAppontments;
+        }
+        
+        private bool CheckSpan(DateRange scheduled, DateRange newSchedule)
+        {
+            return newSchedule.From > scheduled.To || newSchedule.To < scheduled.From;
         }
 
         public async Task<List<Doctor>> GetAllGeneralWithRequirements()
@@ -85,6 +216,17 @@ namespace HospitalLibrary.Doctors.Service
             if (doc == null)
             {
                 throw new DoctorNotExist("Doctor not exist");
+            }
+
+            return doc;
+        }
+        
+        public async Task<List<Doctor>> GetBySpecialisation(string specialisation)
+        {
+            var doc = await _unitOfWork.DoctorRepository.GetBySpecificSpecialisation(specialisation);
+            if (doc == null)
+            {
+                throw new DoctorNotExist("Doctors with this specialisation dont exist");
             }
 
             return doc;

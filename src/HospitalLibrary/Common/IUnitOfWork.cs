@@ -25,7 +25,6 @@ namespace HospitalLibrary.Common
         IDoctorRepository DoctorRepository { get; }
         IPatientRepository PatientRepository { get; }
         IAppointmentRepository AppointmentRepository { get; }
-
         IHolidayRepository HolidayRepository { get; }
         IFeedbackRepository FeedbackRepository { get; }
         IWorkingSchueduleRepository WorkingSchueduleRepository { get; }
@@ -50,7 +49,8 @@ namespace HospitalLibrary.Common
         ISymptomRepository SymptomRepository { get; }
         IBloodPrescriptionRepository BloodPrescriptionRepository { get; }
         IConsiliumRepository ConsiliumRepository { get; }
-
+        IExaminationRepository ExaminationRepository { get; }
+        IExaminationPrescriptionRepository ExaminationPrescriptionRepository { get; }
         T GetRepository<T>() where T : class;
         Task CompleteAsync();
     }

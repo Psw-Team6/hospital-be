@@ -45,7 +45,7 @@ namespace HospitalAPI.Mapper
                 CreateMap<Holiday,HolidayRequest>();
                 CreateMap<Appointment, AppointmentRequest>();
                 CreateMap<Appointment,AppointmentResponse>();
-                CreateMap<AppointmentResponse,Appointment>();
+                CreateMap<AppointmentResponse, Appointment>();
                 CreateMap<WorkingScheduleRequest,WorkingSchedule>();
                 CreateMap<FeedbackResponse, Feedback>();
                 CreateMap<Feedback, FeedbackRequest>();
@@ -83,6 +83,7 @@ namespace HospitalAPI.Mapper
                 CreateMap<PatientProfileResponse, Patient>();
                 CreateMap<Patient, PatientProfileRequest>();
                 CreateMap<Symptom, SymptomResponse>();
+                CreateMap<SymptomResponse, Symptom>();
                 CreateMap<TreatmentReport, TreatmentReportBloodRequest>();
                 CreateMap<BloodPrescriptionRequest, BloodPrescription>();
                 CreateMap<BloodPrescription, BloodPrescriptionRequest>();
@@ -100,7 +101,12 @@ namespace HospitalAPI.Mapper
                 CreateMap<DoctorConsiliumResponse, Doctor>();
                 CreateMap<ConsiliumSpecializationRequest, Consilium>();
                 CreateMap<Room, RoomBasicResponse>();
-
+                CreateMap<MedicineExaminationResponse, Medicine>();
+                CreateMap<ExaminationRequest, Examination>();
+                CreateMap<Examination, ExaminationRequest>();
+                CreateMap<ExaminationPrescriptionRequest, ExaminationPrescription>();
+                CreateMap<ExaminationPrescription, ExaminationPrescriptionRequest>();
+                CreateMap<AppointmentReportPdfRequest, AppointmentReportPdfOptions>();
             }
     }
     

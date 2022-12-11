@@ -14,8 +14,10 @@ namespace HospitalLibrary.Examinations.DbConfig
                 .WithMany(x => x.Examinations);
             _ = builder.Property(x => x.Anamnesis);
             _ = builder
-                .HasMany(x => x.Prescriptions).WithOne(x => x.Examination)
-                .HasForeignKey(x => x.ExaminationId);
+                .HasMany(x => x.Prescriptions)
+                .WithOne();
+                
+            _ = builder.Ignore(x => x.IdApp);
         }
     }
 }
