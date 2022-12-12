@@ -11,6 +11,7 @@ namespace IntegrationLibrary.BloodBank.Service
         IEnumerable<BloodBank> GetAll();
         BloodBank GetById(Guid id);
         BloodBank GetByName(String name);
+        BloodBank GetByAPIKey(String APIKey);
         void Create(BloodBank bloodBank);
         void Update(BloodBank bloodBank);
         void Delete(BloodBank bloodBank);

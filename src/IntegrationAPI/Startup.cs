@@ -24,6 +24,8 @@ using Microsoft.OpenApi.Models;
 using IntegrationAPI.ScheduleTask.Service;
 using IntegrationAPI.Controllers;
 using IntegrationLibrary.HTTP;
+using IntegrationLibrary.BloodSubscription.Service;
+using IntegrationLibrary.BloodSubscription.Repository;
 
 namespace IntegrationAPI
 {
@@ -76,7 +78,9 @@ namespace IntegrationAPI
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
             services.AddTransient<IBloodRequestService, BloodRequestService>();
             services.AddTransient<IHttpService, HttpService>();
-
+            services.AddScoped<IBloodRequestService, BloodRequestService>();
+            services.AddScoped<IBloodSubscriptionService, BloodSubscriptionService>();
+            services.AddScoped<IMounthlyBloodSubscriptionRepository, MounthlyBloodSubscriptionRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

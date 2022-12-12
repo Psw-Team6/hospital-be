@@ -41,6 +41,13 @@ namespace IntegrationAPI.Controllers
             return Ok(news);
         }
 
+        [HttpGet("getAllForBloodSubscription")]
+        public ActionResult GetAllForBloodSubscription()
+        {
+            IEnumerable<NewsFromBloodBank> news = _newsService.GetAllForBloodSubscription();
+            return Ok(news);
+        }
+
         [HttpPut("{id}")]
         public ActionResult Update(Guid id, NewsFromBloodBank newsFromBloodBank)
         {
