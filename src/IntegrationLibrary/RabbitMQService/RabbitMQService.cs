@@ -37,9 +37,9 @@ namespace IntegrationLibrary.RabbitMQService
         }
 
         public override Task StopAsync(CancellationToken cancellationToken)
-        {/*
+        {
             channel.Close();
-            connection.Close();*/
+            connection.Close();
             return base.StopAsync(cancellationToken);
         }
 
