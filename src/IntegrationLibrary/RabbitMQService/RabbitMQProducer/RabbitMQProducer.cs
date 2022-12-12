@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿using Newtonsoft.Json;
+using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,13 @@ namespace IntegrationLibrary.RabbitMQService.RabbitMQProducer
             var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
 
-            //channel.QueueDeclare("responseBloodSubscription", exclusive: false);
+            channel.QueueDeclare("mounthlyBloodSubscription", exclusive: false);
 
-            //var json = JsonConvert.SerializeObject(message);
-            var json = "asdasdasd"; 
+            
+            var govno = "asdasdasd";
+            var json = JsonConvert.SerializeObject(govno);
             var body = Encoding.UTF8.GetBytes(json);
-            channel.BasicPublish(exchange: "", routingKey: "responseBloodSubscription", basicProperties: null, body: body);
+            channel.BasicPublish(exchange: "", routingKey: "mounthlyBloodSubscription", basicProperties: null, body: body);
         }
     }
 }

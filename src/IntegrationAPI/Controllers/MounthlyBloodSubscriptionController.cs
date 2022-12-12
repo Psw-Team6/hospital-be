@@ -55,9 +55,9 @@ namespace IntegrationAPI.Controllers
             bSupResponse.bloodTypeAmountPair = mounthlyBloodSubscription.amountOfBloodTypes;
 
             RabbitMQProducer producer = new RabbitMQProducer();
-            producer.SendMessage(bSupResponse);
+            //producer.SendMessage(bSupResponse);
 
-            //RabbitMQPublisher.SendBloodSubscription(bSupResponse);
+            RabbitMQPublisher.SendBloodSubscription(bSupResponse);
 
             _supService.Create(mounthlyBloodSubscription);
             return CreatedAtAction("GetById", new { id = mounthlyBloodSubscription.id }, mounthlyBloodSubscription);

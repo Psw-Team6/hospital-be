@@ -74,12 +74,12 @@ namespace IntegrationLibrary.RabbitMQService
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                
 
-                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject("hghjfjfjfe"));
+
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bSub));
 
                 channel.BasicPublish(exchange: "",
-                                     routingKey: "mounthlyBloodSubscription",
+                                     routingKey: "newsForHospital",
                                      basicProperties: null,
                                      body: body);
             }
