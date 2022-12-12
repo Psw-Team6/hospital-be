@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using AutoMapper;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
+using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Repository;
@@ -30,7 +28,7 @@ namespace HospitalLibrary.Doctors.Service
             return await _unitOfWork.DoctorRepository.GetAllDoctors();
         }
         
-        public async Task<List<Doctor>> GetAllGeneral()
+        private async Task<List<Doctor>> GetAllGeneral()
         {
             return await _unitOfWork.DoctorRepository.GetAllDoctorsBySpecialization();
         }
@@ -45,7 +43,7 @@ namespace HospitalLibrary.Doctors.Service
             int startScheduleMin = doctorsSchedule.DayOfWork.From.Minute;
             
             DateTime startDate = new DateTime(selectedDateSpan.From.Year,selectedDateSpan.From.Month,selectedDateSpan.From.Day,startScheduleHour,startScheduleMin,0);
-            while (startDate< endDate)
+            while (startDate<= endDate)
             {
                 DateTime newScheduleStart = startDate;
 
@@ -73,8 +71,8 @@ namespace HospitalLibrary.Doctors.Service
         {
             foreach (var range in busyHours)
             {
-                if (!CheckDocotrsAvailabilityByDate(range, newSschedule) ||
-                    !CheckDocotrsAvailabilityByTime(range, newSschedule))
+                if (!CheckDocotrsAvailabilityByDate(range, newSschedule) &&
+                    !CheckDocotrsAvailabilityByHours(range, newSschedule) && !CheckDocotrsAvailabilityByMinutes(range,newSschedule))
                 {
                     return false;
                 }
@@ -87,9 +85,13 @@ namespace HospitalLibrary.Doctors.Service
         {
             return newSchedule.From.Date > scheduled.To.Date || newSchedule.To.Date < scheduled.From.Date;
         }
-        private bool CheckDocotrsAvailabilityByTime(DateRange scheduled, DateRange newSchedule)
+        private bool CheckDocotrsAvailabilityByHours(DateRange scheduled, DateRange newSchedule)
         {
-            return newSchedule.From.Hour > scheduled.To.Hour || newSchedule.To.Hour < scheduled.From.Hour;
+            return (newSchedule.From.Hour > scheduled.To.Hour || newSchedule.To.Hour < scheduled.From.Hour) ;
+        }
+        private bool CheckDocotrsAvailabilityByMinutes(DateRange scheduled, DateRange newSchedule)
+        {
+            return (newSchedule.From.Minute >= scheduled.To.Minute || newSchedule.To.Minute <= scheduled.From.Minute) ;
         }
         public async Task<IEnumerable<DateRange>> getBusyHours(DateRange selectedDateSpan, Guid doctorId)
         {
@@ -98,11 +100,11 @@ namespace HospitalLibrary.Doctors.Service
             IEnumerable<DateRange> busyHours = new List<DateRange>();
             foreach (var app in appointments)
             {
-                busyHours.Append(app.Duration);
+               busyHours =  busyHours.Append(app.Duration);
             }
             foreach (var app in holidays)
             {
-                busyHours.Append(app.DateRange);
+                busyHours = busyHours.Append(app.DateRange);
             }
 
             return busyHours;
@@ -114,7 +116,7 @@ namespace HospitalLibrary.Doctors.Service
             IEnumerable<Appointment> allAppointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForDoctor(doctorId);
             IEnumerable<Appointment> filteredAppoontments = FiltertimespanAppointments(allAppointments, span);
             
-            return filteredAppoontments;
+            return allAppointments;
         }
         
         public async Task<IEnumerable<Holiday>> GetDoctorsHolidaysInTimeSpan(DateRange span,Guid doctorId)
@@ -126,7 +128,7 @@ namespace HospitalLibrary.Doctors.Service
             {
                 holidayDates.Append(app.DateRange);
             }
-            return filteredHolidays;
+            return allHolidays;
         }
 
         public IEnumerable<Holiday> FiltertimespanHolidays(IEnumerable<Holiday> allHolidays, DateRange span)
@@ -177,7 +179,7 @@ namespace HospitalLibrary.Doctors.Service
             return availableDoctors;
         }
 
-        public async Task<int> GetMinimumPatients()
+        private async Task<int> GetMinimumPatients()
         {
             int minimum = 2000000;
             List<Doctor> doctors = await GetAllGeneral();
@@ -190,9 +192,6 @@ namespace HospitalLibrary.Doctors.Service
             }
             return minimum;
         }
-
-      
-
         public async Task<Doctor> CreateDoctor(Doctor doctor)
         {
             var password = PasswordHasher.HashPassword(doctor.Password);
@@ -203,6 +202,17 @@ namespace HospitalLibrary.Doctors.Service
             await _unitOfWork.CompleteAsync();
             return newDoctor;
         }
+        public async Task<List<Doctor>> GetDoctorsForConsilium(Consilium consilium)
+        {
+            var doctors = new List<Doctor>();
+            foreach (var doctor in consilium.Doctors)
+            {
+                var doc = await _unitOfWork.DoctorRepository.GetAllDoctorsBySIdAsync(doctor.Id);
+                doctors.Add(doc);
+            }
+            return doctors;
+        }
+      
 
         public async Task<Doctor> GetByUsername(string username)
         {
@@ -240,6 +250,21 @@ namespace HospitalLibrary.Doctors.Service
             await _unitOfWork.DoctorRepository.DeleteAsync(doctor);
             await _unitOfWork.CompleteAsync();
             return true;
+        }
+        public async Task<List<Doctor>> GetDoctorsBySpecializations(IEnumerable<Specialization> specializations)
+        {
+            var doctors = new List<Doctor>();
+            foreach (var spec in specializations)
+            {
+                var doctorList = await _unitOfWork.DoctorRepository.GetDoctorsBySpecialization(spec.Id);
+                doctors.AddRange(doctorList);
+            }
+            return doctors;
+        }
+
+        public async Task<IEnumerable<Doctor>> GetDoctorsBySpecialization(Guid specId)
+        {
+            return await _unitOfWork.DoctorRepository.GetDoctorsBySpecialization(specId);
         }
     }
 }

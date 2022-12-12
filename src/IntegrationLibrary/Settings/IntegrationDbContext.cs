@@ -14,7 +14,6 @@ namespace IntegrationLibrary.Settings
 
         public DbSet<BloodRequest> BloodRequests { get; set; }
 
-
         public DbSet<NewsFromBloodBank.Model.NewsFromBloodBank> NewsFromBloodBank { get; set; }
 
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
@@ -22,66 +21,6 @@ namespace IntegrationLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-        
-
-            //Start data for Blood requests
-
-            BloodRequest request1 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.ABneg,
-                Amount = 10.0,
-                Reason = "Operacija",
-                Date = new DateTime(2022,12,10),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-
-            BloodRequest request2 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.Bneg,
-                Amount = 20.0,
-                Reason = "Transfuzija",
-                Date = new DateTime(2022, 12, 20),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-
-            BloodRequest request3 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.Apos,
-                Amount = 20.0,
-                Reason = "Transfuzija",
-                Date = new DateTime(2023, 1, 20),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-
-
-            BloodRequest request4 = new()
-            {
-                Id = Guid.NewGuid(),
-                Type = BloodType.Opos,
-                Amount = 5.0,
-                Reason = "Zalihe",
-                Date = new DateTime(2023, 1, 20),
-                DoctorUsername = "Ilija",
-                Status = Status.PENDING,
-                Comment = ""
-            };
-
-            modelBuilder.Entity<BloodRequest>().HasData(
-                request1,
-                request2,
-                request3,
-                request4
-            );
             
             base.OnModelCreating(modelBuilder);
             BloodBank.BloodBank bloodBank = new()
@@ -94,6 +33,70 @@ namespace IntegrationLibrary.Settings
                 ApiKey = "x"
             };
             modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);
+
+
+
+            //Start data for Blood requests
+
+            BloodRequest request1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Type = BloodType.ABneg,
+                Amount = 10.0,
+                Reason = "Operacija",
+                Date = new DateTime(2022, 12, 10),
+                DoctorUsername = "Ilija",
+                Status = Status.PENDING,
+                Comment = "",
+                BloodBankId = bloodBank.Id
+            };
+
+            BloodRequest request2 = new()
+            {
+                Id = Guid.NewGuid(),
+                Type = BloodType.Bneg,
+                Amount = 20.0,
+                Reason = "Transfuzija",
+                Date = new DateTime(2022, 12, 20),
+                DoctorUsername = "Ilija",
+                Status = Status.PENDING,
+                Comment = "",
+                BloodBankId = bloodBank.Id
+            };
+
+            BloodRequest request3 = new()
+            {
+                Id = Guid.NewGuid(),
+                Type = BloodType.Apos,
+                Amount = 20.0,
+                Reason = "Transfuzija",
+                Date = new DateTime(2023, 1, 20),
+                DoctorUsername = "Ilija",
+                Status = Status.PENDING,
+                Comment = "",
+                BloodBankId = bloodBank.Id
+            };
+
+
+            BloodRequest request4 = new()
+            {
+                Id = Guid.NewGuid(),
+                Type = BloodType.Opos,
+                Amount = 5.0,
+                Reason = "Zalihe",
+                Date = new DateTime(2023, 1, 20),
+                DoctorUsername = "Ilija",
+                Status = Status.PENDING,
+                Comment = "",
+                BloodBankId = bloodBank.Id
+            };
+
+            modelBuilder.Entity<BloodRequest>().HasData(
+                request1,
+                request2,
+                request3,
+                request4
+            );
 
 
 

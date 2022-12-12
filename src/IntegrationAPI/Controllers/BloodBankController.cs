@@ -11,9 +11,11 @@ using System.Net.Http;
 using System.Net.Security;
 using System.Threading;
 using System.Threading.Tasks;
-using IntegrationAPI.Dtos.Response;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Collections.Generic;
+using IntegrationLibrary.HTTP;
+using IntegrationLibrary.BloodRequests.Model;
+using IntegrationAPI.Dtos.Response;
 
 namespace IntegrationAPI.Controllers
 {
@@ -22,13 +24,14 @@ namespace IntegrationAPI.Controllers
     public class BloodBankController: ControllerBase
     {
         private readonly IBloodBankService _bloodBankService;
+        private readonly IHttpService _httpService;
         private readonly IMapper _mapper;
 
-        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper)
+        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper, IHttpService httpService)
         {
             _bloodBankService = bloodBankService;
             _mapper = mapper;
-
+            _httpService = httpService;
         }
 
         // GET: api/bloodbank
@@ -148,40 +151,10 @@ namespace IntegrationAPI.Controllers
 
         //GET api/bloodbank/bloodSupply/A/8
         [HttpGet("bloodSupply/{bloodType}/{quantity}")]
-        public async Task<BloodSupplyResponse> GetBBSupplyByTypeAndQuantity(String bloodType, String quantity)
+        public async Task<IntegrationLibrary.BloodRequests.Model.BloodSupplyResponse> GetBBSupplyByTypeAndQuantity(String bloodType, String quantity)
         {
-            return await GetProductAsync("http://localhost:8080/api/blood/bloodType/" + bloodType +'/'+ quantity);
+            return await _httpService.GetProductAsync("http://localhost:8080/api/blood/bloodType/" + bloodType +'/'+ quantity);
         }
-
-        static HttpClient client = new HttpClient();
-
-
-        static async Task<BloodSupplyResponse> GetProductAsync(string path)
-        {
-            BloodSupplyResponse bloodSupplyResponse = new BloodSupplyResponse(false, 0);
-
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(path);
-                bloodSupplyResponse.StatusCode = (int)response.StatusCode;
-                bloodSupplyResponse.Response= Boolean.Parse(await response.Content.ReadAsStringAsync());
-            } catch (HttpRequestException httpEx)
-            {
-                if (httpEx.StatusCode.HasValue)
-                {
-                    bloodSupplyResponse.StatusCode = (int)httpEx.StatusCode;
-                }
-                else
-                {
-                    if (httpEx.Message.Contains("No connection could be made because the target machine actively refused it."))
-                        bloodSupplyResponse.StatusCode = 500;
-
-                }
-
-            }         
-            return bloodSupplyResponse;
-        }
-
 
     }
 }

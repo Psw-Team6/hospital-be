@@ -77,5 +77,6 @@ namespace IntegrationLibrary.BloodBank.Service
             return Convert.ToBase64String(key);
 
         }
+
     }
 }
