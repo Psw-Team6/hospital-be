@@ -54,5 +54,9 @@ namespace IntegrationLibrary.NewsFromBloodBank.Service
             _newsFromBloodBankRepository.Update(news);
         }
 
+        public IEnumerable<Model.NewsFromBloodBank> GetAllForBloodSubscription()
+        {
+            return _newsFromBloodBankRepository.GetAllForBloodSubscription();
+        }
     }
 }

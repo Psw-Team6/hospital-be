@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.NewsFromBloodBank.Model;
 using Newtonsoft.Json;
+using IntegrationLibrary.RabbitMQPublisher;
 
 namespace IntegrationLibrary.RabbitMQService
 {
@@ -59,6 +60,23 @@ namespace IntegrationLibrary.RabbitMQService
                 };
 
                 var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(news));
+
+                channel.BasicPublish(exchange: "",
+                                     routingKey: "newsForHospital",
+                                     basicProperties: null,
+                                     body: body);
+            }
+        }
+
+        public static void SendBloodSubscription(MounthlyBloodSubscriptionResponse bSub)
+        {
+            var factory = new ConnectionFactory() { HostName = "localhost", UserName = "guest", Password = "guest" };
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+
+
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bSub));
 
                 channel.BasicPublish(exchange: "",
                                      routingKey: "newsForHospital",

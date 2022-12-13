@@ -21,26 +21,36 @@ namespace IntegrationLibrary.PDFReports.Service
         {
             PdfDocument document = new PdfDocument();
 
+
+
             //Set the page size.
             document.PageSettings.Size = PdfPageSize.A4;
+
+
 
             //Add a page to the document.
             PdfPage page = document.Pages.Add();
 
+
+
             //Create PDF graphics for the page.
             PdfGraphics graphics = page.Graphics;
+
+
 
             //Set the font.
             DateTime endDate = DateTime.Now;
             DateTime startDate = endDate.AddDays(-report.generatePeriod);
 
+
+
             //Draw the text.
-            graphics.DrawString("Report", new PdfStandardFont(PdfFontFamily.Helvetica, 20), PdfBrushes.Black, new Syncfusion.Drawing.PointF(150,0));
-            graphics.DrawString(report.bankName, new PdfStandardFont(PdfFontFamily.Helvetica, 20), PdfBrushes.Black, new Syncfusion.Drawing.PointF(150, 50));          
+            graphics.DrawString("Report", new PdfStandardFont(PdfFontFamily.Helvetica, 20), PdfBrushes.Black, new Syncfusion.Drawing.PointF(150, 0));
+            graphics.DrawString(report.bankName, new PdfStandardFont(PdfFontFamily.Helvetica, 20), PdfBrushes.Black, new Syncfusion.Drawing.PointF(150, 50));
             graphics.DrawString("Report from: " + startDate.ToShortDateString() + " to: " + endDate.ToShortDateString(), new PdfStandardFont(PdfFontFamily.Helvetica, 10), PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 150));
             if (report.bloodConsumptions == null)
             {
-                graphics.DrawString("No consumption.", new PdfStandardFont(PdfFontFamily.Helvetica, 10), PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 200));
+                graphics.DrawString("No Consumption", new PdfStandardFont(PdfFontFamily.Helvetica, 10), PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 200));
             }
             else
             {
@@ -53,19 +63,20 @@ namespace IntegrationLibrary.PDFReports.Service
                 graphics.DrawString("AB+: " + report.GetBloodConsumptionsAmountForPeriod(startDate, endDate, BloodType.ABpos), new PdfStandardFont(PdfFontFamily.Helvetica, 10), PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 500));
                 graphics.DrawString("O-: " + report.GetBloodConsumptionsAmountForPeriod(startDate, endDate, BloodType.Oneg), new PdfStandardFont(PdfFontFamily.Helvetica, 10), PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 550));
                 graphics.DrawString("O+: " + report.GetBloodConsumptionsAmountForPeriod(startDate, endDate, BloodType.Opos), new PdfStandardFont(PdfFontFamily.Helvetica, 10), PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 600));
-            }//Create file stream.
-           // using (FileStream outputFileStream = new FileStream(Path.GetFullPath(@"../../../Output.pdf"), FileMode.Create, FileAccess.ReadWrite))
-          //  {
-                //Save the PDF document to file stream.
-          //      document.Save(outputFileStream);
-        //    }
-  
+            }
+            //Create file stream.
+            // using (FileStream outputFileStream = new FileStream(Path.GetFullPath(@"../../../Output.pdf"), FileMode.Create, FileAccess.ReadWrite))
+            //  {
+            //Save the PDF document to file stream.
+            //      document.Save(outputFileStream);
+            //    }
+
             MemoryStream stream = new MemoryStream();
             document.Save(stream);
             //Close the document.
             document.Close(true);
             byte[] docBytes = stream.ToArray();
-          
+
             return docBytes;
         }
 

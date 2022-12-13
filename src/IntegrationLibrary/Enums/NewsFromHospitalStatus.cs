@@ -10,6 +10,8 @@ namespace IntegrationLibrary.Enums
     {
         ON_HOLD = 0,
         ACTIVE = 1,
-        REFUSED = 2
+        REFUSED = 2,
+        BLOOD_SUBSCRIPTION = 3,
+        READ = 4
     }
 }

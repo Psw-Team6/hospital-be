@@ -4,6 +4,8 @@ using IntegrationLibrary.Tender.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
+using IntegrationLibrary.BloodSubscription.Model;
+using System.Collections.Generic;
 
 namespace IntegrationLibrary.Settings
 {
@@ -14,6 +16,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend> ConfigureGenerateAndSend { get; set; }
 
         public DbSet<BloodRequest> BloodRequests { get; set; }
+        public DbSet<MounthlyBloodSubscription> BloodSubscriptions { get; set; }
 
         public DbSet<BloodUnitAmount> BloodUnitAmounts { get; set; }
 
@@ -25,19 +28,14 @@ namespace IntegrationLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            
-            base.OnModelCreating(modelBuilder);
-            BloodBank.BloodBank bloodBank = new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "BloodBank",
-                ServerAddress = "localhost",
-                Email = "aas@gmail.com",
-                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
-                ApiKey = "x"
-            };
-            modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);
 
+            modelBuilder.Entity<AmountOfBloodType>(eb => { 
+                eb.HasNoKey();
+            });
+
+            modelBuilder.Entity<MounthlyBloodSubscription>()
+                    .Property(b => b.amountOfBloodTypes)
+                    .HasColumnType("jsonb");
 
 
             //Start data for Blood requests
@@ -48,11 +46,10 @@ namespace IntegrationLibrary.Settings
                 Type = BloodType.ABneg,
                 Amount = 10.0,
                 Reason = "Operacija",
-                Date = new DateTime(2022, 12, 10),
+                Date = new DateTime(2022,12,10),
                 DoctorUsername = "Ilija",
                 Status = Status.PENDING,
-                Comment = "",
-                BloodBankId = bloodBank.Id
+                Comment = ""
             };
 
             BloodRequest request2 = new()
@@ -64,8 +61,7 @@ namespace IntegrationLibrary.Settings
                 Date = new DateTime(2022, 12, 20),
                 DoctorUsername = "Ilija",
                 Status = Status.PENDING,
-                Comment = "",
-                BloodBankId = bloodBank.Id
+                Comment = ""
             };
 
             BloodRequest request3 = new()
@@ -77,8 +73,7 @@ namespace IntegrationLibrary.Settings
                 Date = new DateTime(2023, 1, 20),
                 DoctorUsername = "Ilija",
                 Status = Status.PENDING,
-                Comment = "",
-                BloodBankId = bloodBank.Id
+                Comment = ""
             };
 
 
@@ -91,8 +86,7 @@ namespace IntegrationLibrary.Settings
                 Date = new DateTime(2023, 1, 20),
                 DoctorUsername = "Ilija",
                 Status = Status.PENDING,
-                Comment = "",
-                BloodBankId = bloodBank.Id
+                Comment = ""
             };
 
             modelBuilder.Entity<BloodRequest>().HasData(
@@ -101,8 +95,18 @@ namespace IntegrationLibrary.Settings
                 request3,
                 request4
             );
-
-
+            
+            base.OnModelCreating(modelBuilder);
+            BloodBank.BloodBank bloodBank = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "BloodBank",
+                ServerAddress = "localhost",
+                Email = "aas@gmail.com",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                ApiKey = "x"
+            };
+            modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);
 
             ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configuration1 = new()
             {
