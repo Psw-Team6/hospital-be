@@ -35,6 +35,7 @@ namespace HospitalLibrary.Doctors.Service
 
         public async Task<IEnumerable<DateRange>> generateFreeTimeSpans(DateRange selectedDateSpan, Guid doctorId)
         {
+            Boolean found = false;
             IEnumerable<DateRange> busyHours = await getBusyHours(selectedDateSpan, doctorId);
             IEnumerable<DateRange> freeHours = new List<DateRange>();
             DateTime endDate = selectedDateSpan.To;
@@ -54,6 +55,7 @@ namespace HospitalLibrary.Doctors.Service
                     newScheduleRange.To = newScheduleStart.AddMinutes(30);
                     if (checkHolidayAndAppointmentAvailability(busyHours, newScheduleRange))
                     {
+                        found = true;
                         freeHours = freeHours.Append(newScheduleRange);
                     }
                     newScheduleStart = newScheduleStart.AddMinutes(30);
@@ -61,6 +63,12 @@ namespace HospitalLibrary.Doctors.Service
 
                 startDate =startDate.AddDays(1);
                 newScheduleStart = startDate;
+            }
+
+            if (!found)
+            {
+                throw new DoctorIsNotAvailable("No free appointments found for doctor in that period.");
+
             }
 
             return freeHours;
@@ -76,11 +84,25 @@ namespace HospitalLibrary.Doctors.Service
                 {
                     return false;
                 }
+
+                if (!CheckDocotrsAvailabilityByDateHoliday(range, newSschedule))
+                {
+                    return false;
+                }
             }
 
             return true;
         }
 
+        private bool CheckDocotrsAvailabilityByDateHoliday(DateRange scheduled, DateRange newSchedule)
+        {
+            if (newSchedule.From.Date >= scheduled.From.Date && newSchedule.To.Date <= scheduled.To.Date)
+            {
+                return false;
+            }
+
+            return true;
+        }
         private bool CheckDocotrsAvailabilityByDate(DateRange scheduled, DateRange newSchedule)
         {
             return newSchedule.From.Date > scheduled.To.Date || newSchedule.To.Date < scheduled.From.Date;
@@ -114,7 +136,6 @@ namespace HospitalLibrary.Doctors.Service
         public async Task<IEnumerable<Appointment>> GetDoctorsAppointmentsInTimeSpan(DateRange span,Guid doctorId)
         {
             IEnumerable<Appointment> allAppointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsForDoctor(doctorId);
-            IEnumerable<Appointment> filteredAppoontments = FiltertimespanAppointments(allAppointments, span);
             
             return allAppointments;
         }
