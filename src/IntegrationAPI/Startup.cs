@@ -1,3 +1,4 @@
+using System.Text;
 using IntegrationAPI.Mapper;
 using IntegrationLibrary.BloodBank.Repository;
 using IntegrationLibrary.BloodBank.Service;
@@ -26,6 +27,8 @@ using IntegrationAPI.Controllers;
 using IntegrationLibrary.HTTP;
 using IntegrationLibrary.BloodSubscription.Service;
 using IntegrationLibrary.BloodSubscription.Repository;
+using IntegrationLibrary.Tender.Service;
+using IntegrationLibrary.Tender.Repository;
 
 namespace IntegrationAPI
 {
@@ -48,10 +51,14 @@ namespace IntegrationAPI
             services.AddMvc(options =>
             {
                 options.EnableEndpointRouting = false;
-            });
+            })
 
+#pragma warning restore CS0618
 
-            services.AddControllers();
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
@@ -60,8 +67,10 @@ namespace IntegrationAPI
 
             services.AddScoped<IEmailService, EmailService>();
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
-           
 
+            services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
+            services.AddScoped<IBloodUnitAmountRepository, BloodUnitAmountRepository>();
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IPDFReportService,PDFReportService>();
             services.AddScoped<PDFReportController>();
