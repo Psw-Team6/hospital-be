@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Tender.Repository;
+﻿using IntegrationLibrary.Tender.Model;
+using IntegrationLibrary.Tender.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace IntegrationLibrary.Tender.Service
         {
             tenderRepository.Delete(tender);
         }
-        public IEnumerable<Model.Tender> GetAll()
+        public async Task<List<Model.Tender>> GetAll()
         {
-            return tenderRepository.GetAll();
+            return await tenderRepository.GetAll();
         }
         public Model.Tender GetById(Guid id)
         {
@@ -38,5 +39,8 @@ namespace IntegrationLibrary.Tender.Service
         {
             tenderRepository.Update(tender);
         }
+
+       
+        
     }
 }

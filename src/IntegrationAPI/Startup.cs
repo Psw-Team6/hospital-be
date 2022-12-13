@@ -1,3 +1,4 @@
+using System.Text;
 using IntegrationAPI.Mapper;
 using IntegrationLibrary.BloodBank.Repository;
 using IntegrationLibrary.BloodBank.Service;
@@ -47,10 +48,14 @@ namespace IntegrationAPI
             services.AddMvc(options =>
             {
                 options.EnableEndpointRouting = false;
-            });
+            })
 
+#pragma warning restore CS0618
 
-            services.AddControllers();
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });

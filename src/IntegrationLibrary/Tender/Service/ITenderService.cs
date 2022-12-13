@@ -11,7 +11,7 @@ namespace IntegrationLibrary.Tender.Service
         public void Create(Model.Tender tender);
         public void Update(Model.Tender tender);
         public void Delete(Model.Tender tender);
-        public IEnumerable<Model.Tender> GetAll();
+        public Task<List<Model.Tender>> GetAll();
         public Model.Tender GetById(Guid id);
 
     }
