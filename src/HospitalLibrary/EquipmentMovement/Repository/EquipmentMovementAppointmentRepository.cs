@@ -22,5 +22,12 @@ namespace HospitalLibrary.EquipmentMovement.Repository
             return await DbSet.Where(x => x.DestinationRoomId == id || x.OriginalRoomId == id)
                 .ToListAsync();
         }
+        
+        public async Task<List<EquipmentMovementAppointment>> GetAllMovementAppointmentByRoomId(Guid roomId)
+        {
+            return await DbSet.Where(equipmentMove => equipmentMove.OriginalRoomId == roomId || equipmentMove.DestinationRoomId == roomId )
+                   .ToListAsync();
+        }
+        
     }
 }

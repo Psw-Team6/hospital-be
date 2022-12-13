@@ -9,7 +9,7 @@ using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.EquipmentMovement.Service;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Rooms.Repository;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

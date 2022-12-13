@@ -13,7 +13,7 @@ using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Holidays.Service;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Moq;
 using Xunit;
 

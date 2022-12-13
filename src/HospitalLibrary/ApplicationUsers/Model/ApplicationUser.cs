@@ -1,5 +1,5 @@
 ﻿using System;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.ApplicationUsers.Model
 {

@@ -20,7 +20,48 @@ namespace HospitalTest.SearchEquipmentTests
     public class SearchEquipmentTest
     {
         
+        
+        private readonly ITestOutputHelper _testOutputHelper;
+        public SearchEquipmentTest(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
 
+        
+        [Fact]
+        public async Task Search_Succesfull()
+        {
+            var mockSearchRepo = new Mock<IIEquipmentRepository>();
+              var mockSearchService = new Mock<EquipmentService>();
+              var mockUnitOfWork = new Mock<IUnitOfWork>();
+            
+            
+            //var room1 = SeedDataRoomEquipment(out RoomEquipment roomEquipment);
+            
+            mockUnitOfWork.Setup(uw => uw.EquipmentRepository).Returns(mockSearchRepo.Object);
+            RoomEquipment roomEquipment1 = new RoomEquipment()
+            {
+                EquipmentName = Equipment.BANDAGE.ToString(),
+                Amount = 10,
+                RoomEquipmentId = Guid.NewGuid(),
+               // RoomId = room1.Id
+            };
+            var roomEquipment = roomEquipment1;  //skloni ovo posle 
+            roomEquipment.EquipmentName = roomEquipment1.EquipmentName;
+            
+            mockUnitOfWork.Setup(uw => uw.EquipmentRepository).Returns(mockSearchRepo.Object);
+            var equipmentService = new EquipmentService(mockUnitOfWork.Object);
+            
+              Func<Task> act = () => equipmentService.SearchEquipmentByName(roomEquipment.EquipmentName);
+            
+            _testOutputHelper.WriteLine(act.ToString());
+             Assert.NotNull(act);
+        }
+        
+        
+        
+        
+        /*
         [Fact]
         public async Task Search_equipment_doesnt_exist()
         {
@@ -66,43 +107,11 @@ namespace HospitalTest.SearchEquipmentTests
               Assert.Equal("Equipment does not exist.", ex.Message);
               
         }
-
-        private readonly ITestOutputHelper _testOutputHelper;
-        public SearchEquipmentTest(ITestOutputHelper testOutputHelper)
-        {
-            _testOutputHelper = testOutputHelper;
-        }
-
+*/
         
-        [Fact]
-        public async Task Search_Succesfull()
-        {
-            var mockSearchRepo = new Mock<IIEquipmentRepository>();
-              var mockSearchService = new Mock<EquipmentService>();
-              var mockUnitOfWork = new Mock<IUnitOfWork>();
-            
-            
-            //var room1 = SeedDataRoomEquipment(out RoomEquipment roomEquipment);
-            
-            mockUnitOfWork.Setup(uw => uw.EquipmentRepository).Returns(mockSearchRepo.Object);
-            RoomEquipment roomEquipment1 = new RoomEquipment()
-            {
-                EquipmentName = Equipment.BANDAGE.ToString(),
-                Amount = 10,
-                RoomEquipmentId = Guid.NewGuid(),
-               // RoomId = room1.Id
-            };
-            var roomEquipment = roomEquipment1;  //skloni ovo posle 
-            roomEquipment.EquipmentName = roomEquipment1.EquipmentName;
-            
-            mockUnitOfWork.Setup(uw => uw.EquipmentRepository).Returns(mockSearchRepo.Object);
-            var equipmentService = new EquipmentService(mockUnitOfWork.Object);
-            
-              Func<Task> act = () => equipmentService.SearchEquipmentByName(roomEquipment.EquipmentName);
-            
-            _testOutputHelper.WriteLine(act.ToString());
-             Assert.NotNull(act);
-        }
+        
+        
+        
         
         
         /*

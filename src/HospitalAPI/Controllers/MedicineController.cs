@@ -32,5 +32,13 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<List<Medicine>>(medicines);
             return Ok(result);
         }
+        [HttpGet("Examination")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<MedicineExaminationResponse>>> GetAllForExamination()
+        {
+            var medicines = await _medicineService.GetAllByPatientId();
+            var result = _mapper.Map<List<MedicineExaminationResponse>>(medicines);
+            return Ok(result);
+        }
     }
 }

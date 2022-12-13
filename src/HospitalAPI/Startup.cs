@@ -7,10 +7,9 @@ using HospitalAPI.Mapper;
 using HospitalAPI.ScheduleTask;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Appointments.Service;
-using HospitalLibrary.EquipmentMovement;
 using HospitalLibrary.EquipmentMovement.Service;
 using HospitalLibrary.Settings;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,7 +38,7 @@ namespace HospitalAPI
             options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")!));
             services.Configure<EmailOptions>(Configuration.GetSection(EmailOptions.SendGridEmail));
             services.AddAutoMapper(typeof(MappingProfile));
-            //services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+            services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters(); //OVU SI ODKOMENTRISAO
             services.AddMvc(options =>
                 {
                     options.EnableEndpointRouting = false;
@@ -107,12 +106,12 @@ namespace HospitalAPI
             }
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-              //  app.UseSwagger();
+                app.UseDeveloperExceptionPage(); 
+                /*app.UseSwagger();*/ 
               app.UseOpenApi();
               app.UseSwaggerUi3();
-              app.UseReDoc();
-              //  app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1"));
+             // app.UseReDoc();
+              app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1")); //ODKOMENTARIOSAO
             }
 
             app.UseRouting();

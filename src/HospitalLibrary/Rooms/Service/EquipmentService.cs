@@ -34,8 +34,7 @@ namespace HospitalLibrary.Rooms.Service
         public async Task<RoomEquipment> AllEquipmentById(Guid roomEquipmentId)
         {
             return await _unitOfWork.GetRepository<EquipmentRepository>().GetByIdAsync(roomEquipmentId); 
-            //return await _unitOfWork.EquipmentRepository.GetByIdAsync(roomEquipmentId);
-         //   return await _unitOfWork.EquipmentRepository.GetAllEquipmentById( roomEquipmentId);
+           
         }
         
         public async Task<bool> Update(RoomEquipment equipment)

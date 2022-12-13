@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Prescriptions.Model;
-using HospitalLibrary.sharedModel;
 
 namespace HospitalLibrary.TreatmentReports.Model
 {

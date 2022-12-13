@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using SendGrid;

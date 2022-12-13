@@ -1,6 +1,6 @@
 ﻿using System;
 using HospitalLibrary.Holidays.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalAPI.Dtos.Response
 {
