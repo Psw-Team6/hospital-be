@@ -48,6 +48,12 @@ namespace IntegrationLibrary.BloodBank.Repository
             return pom.FirstOrDefault();
         }
 
+        public BloodBank GetByAPIKey(String APIKey)
+        {
+            var pom = _context.BloodBanks.FromSqlRaw<BloodBank>("select * from public.\"BloodBanks\" where \"ApiKey\" =" + "'" + APIKey + "'");
+            return pom.FirstOrDefault();
+        }
+
 
         public void Update(BloodBank bloodBank)
         {

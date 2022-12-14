@@ -64,5 +64,10 @@ namespace IntegrationLibrary.NewsFromBloodBank.Repository
         {
             return _context.NewsFromBloodBank.Where(newFromBloodBank => newFromBloodBank.newsStatus == 0);
         }
+
+        public IEnumerable<Model.NewsFromBloodBank> GetAllForBloodSubscription()
+        {
+            return _context.NewsFromBloodBank.Where(newFromBloodBank => newFromBloodBank.newsStatus == NewsFromHospitalStatus.BLOOD_SUBSCRIPTION);
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace HospitalLibrary.Appointments.Service
             _unitOfWork = unitOfWork;
             _emailService = emailService;
         }
+        
 
         public async Task<Appointment> ScheduleAppointment(Appointment appointment)
         {
@@ -82,7 +83,7 @@ namespace HospitalLibrary.Appointments.Service
             var isAvailableSchedule = await IsDoctorWorking(appointment);
             if (!isAvailableSchedule)
             {
-                throw new DoctorIsNotAvailable("You are  not available.Check your schedule.");
+                throw new DoctorIsNotAvailable("You are not available.Check your schedule.");
             }
             var isAvailableAppointment = await CheckDoctorAvailabilityForAppointment(appointment);
             if (!isAvailableAppointment)
@@ -127,7 +128,7 @@ namespace HospitalLibrary.Appointments.Service
                 throw new DateRangeException("Date range is not valid");
             }
 
-            if (appointment.Duration.IsBeforeDate())
+            if (appointment.Duration.IsBeforeAndTodayDate())
             {
                 throw new DateRangeNotValid("Please select upcoming date");
             }

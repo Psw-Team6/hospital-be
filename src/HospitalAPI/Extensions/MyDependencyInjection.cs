@@ -1,30 +1,28 @@
 ﻿using HospitalLibrary.ApplicationUsers.Service;
-using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.BloodConsumptions.Service;
 using HospitalLibrary.BloodUnits.Service;
 using HospitalLibrary.Common;
+using HospitalLibrary.Consiliums.Repository;
+using HospitalLibrary.Consiliums.Service;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
-using HospitalLibrary.EquipmentMovement.Model;
-using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.EquipmentMovement.Service;
+using HospitalLibrary.Examinations.Service;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Holidays.Service;
-using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Medicines.Repository;
 using HospitalLibrary.Medicines.Service;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
-using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Prescriptions.Repository;
 using HospitalLibrary.Prescriptions.Service;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Rooms.Service;
-using HospitalLibrary.sharedModel.Repository;
-using HospitalLibrary.sharedModel.Service;
+using HospitalLibrary.SharedModel.Repository;
+using HospitalLibrary.SharedModel.Service;
 using HospitalLibrary.TreatmentReports.Repository;
 using HospitalLibrary.TreatmentReports.Service;
 using Microsoft.Extensions.DependencyInjection;
@@ -82,11 +80,16 @@ namespace HospitalAPI.Extensions
             services.AddScoped<IGeneratePdfReportService,GeneratePdfReportService>();
             services.AddScoped<IRoomBedRepository, RoomBedRepository>();
             services.AddScoped<EquipmentMovementAppointmentService>();
-            //services.AddScoped<IEquipmentMovementAppointmentRepository, EquipmentMovementAppointmentRepository>();
             services.AddScoped<IAllergenRepository, AllergenRepository>();
             services.AddScoped<AllergenService>();
+            services.AddScoped<SymptomService>();
             services.AddScoped<IMedicinePrescriptionRepository, MedicinePrescriptionRepository>();
             services.AddScoped<MedicinePrescriptionService>();
+            services.AddScoped<ConsiliumService>();
+            services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
+            services.AddScoped<ExaminationService>();
+
+
         }
     }
 }

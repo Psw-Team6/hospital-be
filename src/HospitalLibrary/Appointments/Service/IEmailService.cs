@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Appointments.Service
 {

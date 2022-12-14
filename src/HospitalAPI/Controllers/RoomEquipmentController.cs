@@ -14,7 +14,7 @@ namespace HospitalAPI.Controllers.Private
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [HospitalAuthorization(UserRole.Manager)]
+    //[HospitalAuthorization(UserRole.Manager)]
     public class RoomEquipmentController:ControllerBase
     {
         

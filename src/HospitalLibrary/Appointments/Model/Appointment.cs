@@ -1,7 +1,7 @@
 ﻿using System;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Appointments.Model
 {
@@ -16,6 +16,13 @@ namespace HospitalLibrary.Appointments.Model
         public AppointmentType AppointmentType { get; set; }
         public Doctor Doctor { get; set; }
         public AppointmentState AppointmentState { get; set; }
+
+        public bool CanBeExamined()
+        {
+            if (!Duration.IsValidRange()) return false;
+            return Duration.From.Date == DateTime.Now.Date && Duration.To.Date >= DateTime.Now.Date;
+        }
+        
         public bool IsDoctorConflicts(Appointment appointment)
         {
             return CheckDate(appointment) && CheckTimeOfDay(appointment);

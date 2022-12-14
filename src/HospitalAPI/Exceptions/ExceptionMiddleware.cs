@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using HospitalLibrary.CustomException;
+using HospitalLibrary.Examinations.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -43,6 +44,10 @@ namespace HospitalAPI.Exceptions
             catch (TreatmentReportException e)
             {
                 await NotFoundException(context, e);
+            }
+            catch (ExaminationException e)
+            {
+                await BadRequestException(context, e);
             }
         }
 

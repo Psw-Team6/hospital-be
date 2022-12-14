@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using HospitalLibrary.sharedModel;
-using HospitalLibrary.sharedModel.Service;
+using HospitalLibrary.SharedModel;
+using HospitalLibrary.SharedModel.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers

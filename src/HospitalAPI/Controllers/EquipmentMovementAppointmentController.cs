@@ -15,7 +15,7 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [HospitalAuthorization(UserRole.Manager)]
+   // [HospitalAuthorization(UserRole.Manager)]
     public class EquipmentMovementAppointmentController:ControllerBase
     {
         private readonly IEquipmentMovementAppointmentService _equipmentMovementAppointmentService;
@@ -25,6 +25,16 @@ namespace HospitalAPI.Controllers
         {
             _equipmentMovementAppointmentService = equipmentMovementAppointmentService;
             _mapper = mapper;
+        }
+        
+        [HttpGet("GetAllMovementAppointmentByRoomId/{roomId}")]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<EquipmentMovementAppointmentResponse>> GetAllMovementAppointmentByRoomId([FromRoute]Guid roomId)
+        {
+            var result = await _equipmentMovementAppointmentService.GetAllMovementAppointmentByRoomId(roomId);
+            return result == null ? NotFound() : Ok(result);
+           
         }
         
         [HttpPost]
@@ -67,5 +77,19 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<List<EquipmentMovementAppointmentResponse>>(appointments);
             return result == null ? BadRequest() : Ok(result);
         }
+        
+        [HttpDelete ("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> DeleteById([FromRoute]Guid id)
+        {
+            var result = await _equipmentMovementAppointmentService.DeleteById(id);
+            return result ? NoContent() : NotFound();
+        }
+        
+        
+        
+        
+        
     }
 }

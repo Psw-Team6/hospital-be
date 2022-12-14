@@ -4,15 +4,17 @@ using HospitalLibrary.ApplicationUsers.Repository;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.BloodConsumptions.Repository;
 using HospitalLibrary.BloodUnits.Repository;
+using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.EquipmentMovement.Repository;
+using HospitalLibrary.Examinations.Repository;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Medicines.Repository;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Prescriptions.Repository;
 using HospitalLibrary.Rooms.Repository;
-using HospitalLibrary.sharedModel.Repository;
+using HospitalLibrary.SharedModel.Repository;
 using HospitalLibrary.TreatmentReports.Repository;
 
 namespace HospitalLibrary.Common
@@ -23,7 +25,6 @@ namespace HospitalLibrary.Common
         IDoctorRepository DoctorRepository { get; }
         IPatientRepository PatientRepository { get; }
         IAppointmentRepository AppointmentRepository { get; }
-
         IHolidayRepository HolidayRepository { get; }
         IFeedbackRepository FeedbackRepository { get; }
         IWorkingSchueduleRepository WorkingSchueduleRepository { get; }
@@ -34,8 +35,6 @@ namespace HospitalLibrary.Common
         IApplicationUserRepository UserRepository { get; }
         IBloodUnitRepository BloodUnitRepository { get; }
         IBloodConsumptionRepository BloodConsumptionRepository { get; }
-        
-        IBloodPrescriptionRepository BloodPrescriptionRepository { get; }
         IPatientAdmissionRepository PatientAdmissionRepository { get; }
         
         IIEquipmentRepository EquipmentRepository { get; }
@@ -43,11 +42,15 @@ namespace HospitalLibrary.Common
         IRoomBedRepository RoomBedRepository { get; }
         IEquipmentMovementAppointmentRepository EquipmentMovementAppointmentRepository { get; }
         IMedicinePrescriptionRepository MedicinePrescriptionRepository { get; }
-        
+
         IAddressRepository AddressRepository { get; }
         IAllergenRepository AllergenRepository { get; }
         IMedicineRepository MedicineRepository { get; }
-
+        ISymptomRepository SymptomRepository { get; }
+        IBloodPrescriptionRepository BloodPrescriptionRepository { get; }
+        IConsiliumRepository ConsiliumRepository { get; }
+        IExaminationRepository ExaminationRepository { get; }
+        IExaminationPrescriptionRepository ExaminationPrescriptionRepository { get; }
         T GetRepository<T>() where T : class;
         Task CompleteAsync();
     }
