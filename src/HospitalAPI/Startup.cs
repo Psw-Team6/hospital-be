@@ -8,6 +8,7 @@ using HospitalAPI.ScheduleTask;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.EquipmentMovement.Service;
+using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.Settings;
 using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -62,7 +63,8 @@ namespace HospitalAPI
                 c.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
             });
             services.AddTransient<ExceptionMiddleware>();
-            
+            services.AddScoped<IRoomService, RoomService>();
+
             services.AddScoped<IEquipmentMovementAppointmentService, EquipmentMovementAppointmentService>();
             services.AddSingleton<IHostedService, CheckIfAppointmentIsDone>();
             services.AddScoped<IEmailService, EmailService>();
