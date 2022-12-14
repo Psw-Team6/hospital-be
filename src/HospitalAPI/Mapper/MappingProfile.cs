@@ -4,6 +4,7 @@ using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
+using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.EquipmentMovement.Model;
 using HospitalLibrary.Examinations.Model;
@@ -44,7 +45,7 @@ namespace HospitalAPI.Mapper
                 CreateMap<Holiday,HolidayRequest>();
                 CreateMap<Appointment, AppointmentRequest>();
                 CreateMap<Appointment,AppointmentResponse>();
-                CreateMap<AppointmentResponse,Appointment>();
+                CreateMap<AppointmentResponse, Appointment>();
                 CreateMap<WorkingScheduleRequest,WorkingSchedule>();
                 CreateMap<FeedbackResponse, Feedback>();
                 CreateMap<Feedback, FeedbackRequest>();
@@ -82,6 +83,7 @@ namespace HospitalAPI.Mapper
                 CreateMap<PatientProfileResponse, Patient>();
                 CreateMap<Patient, PatientProfileRequest>();
                 CreateMap<Symptom, SymptomResponse>();
+                CreateMap<SymptomResponse, Symptom>();
                 CreateMap<TreatmentReport, TreatmentReportBloodRequest>();
                 CreateMap<BloodPrescriptionRequest, BloodPrescription>();
                 CreateMap<BloodPrescription, BloodPrescriptionRequest>();
@@ -94,7 +96,17 @@ namespace HospitalAPI.Mapper
                 CreateMap<MedicineResponse, Medicine>();
                 CreateMap<Medicine, MedicineResponse>();
                 CreateMap<Medicine, MedicineExaminationResponse>();
-
+                CreateMap<Consilium, ConsiliumResponse>();
+                CreateMap<ConsiliumRequest, Consilium>();
+                CreateMap<DoctorConsiliumResponse, Doctor>();
+                CreateMap<ConsiliumSpecializationRequest, Consilium>();
+                CreateMap<Room, RoomBasicResponse>();
+                CreateMap<MedicineExaminationResponse, Medicine>();
+                CreateMap<ExaminationRequest, Examination>();
+                CreateMap<Examination, ExaminationRequest>();
+                CreateMap<ExaminationPrescriptionRequest, ExaminationPrescription>();
+                CreateMap<ExaminationPrescription, ExaminationPrescriptionRequest>();
+                CreateMap<AppointmentReportPdfRequest, AppointmentReportPdfOptions>();
             }
     }
     

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalLibrary.Common;
@@ -27,6 +28,17 @@ namespace HospitalLibrary.Doctors.Service
         {
             var specialization = await _unitOfWork.SpecializationsRepository.GetByIdAsync(id);
             return specialization;
+        }
+
+        public async Task<IEnumerable<Specialization>> GetSpecializations(IEnumerable<Specialization> specializations)
+        {
+            var specializationList =  new List<Specialization>();
+            foreach (var spec in specializations)
+            {
+                var specialization = await _unitOfWork.SpecializationsRepository.GetByIdAsync(spec.Id);
+                specializationList.Add(specialization);
+            }
+            return specializationList;
         }
 
         public async Task<bool> Update(Specialization specialization)

@@ -25,6 +25,10 @@ namespace HospitalLibrary.EquipmentMovement.Service
             _appointmentService = appointmentService;
         }
 
+        public async Task<List<EquipmentMovementAppointment>> GetAllMovementAppointmentByRoomId(Guid originalRoomId)
+        {
+            return await _unitOfWork.EquipmentMovementAppointmentRepository.GetAllMovementAppointmentByRoomId(originalRoomId);
+        }
         public async Task<List<EquipmentMovementAppointment>> GetAllByRoomId(Guid id)
         {
             return await _unitOfWork.EquipmentMovementAppointmentRepository
@@ -36,6 +40,15 @@ namespace HospitalLibrary.EquipmentMovement.Service
             var equipmentMovementAppointment =
                 await _unitOfWork.EquipmentMovementAppointmentRepository.GetByIdAsync(id);
             return equipmentMovementAppointment;
+        }
+        
+        public async Task<bool> DeleteById(Guid id)
+        {
+            var equipmentMovementAppointment = await _unitOfWork.EquipmentMovementAppointmentRepository.GetByIdAsync(id);
+            if (equipmentMovementAppointment == null) { return false; }
+            await _unitOfWork.EquipmentMovementAppointmentRepository.DeleteAsync(equipmentMovementAppointment);
+            await _unitOfWork.CompleteAsync();
+            return true;
         }
 
         public async Task<EquipmentMovementAppointment> Create(
@@ -380,5 +393,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
                 }
             }
         }
+        
+        
     }
 }

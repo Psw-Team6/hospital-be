@@ -15,7 +15,7 @@ namespace HospitalAPI.Controllers.Private
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [HospitalAuthorization(UserRole.Doctor)]
+    // [HospitalAuthorization(UserRole.Doctor)]
     public class HolidayController : ControllerBase
     {
         private readonly HolidayService _holidayService;

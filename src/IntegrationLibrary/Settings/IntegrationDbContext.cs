@@ -1,8 +1,15 @@
 using IntegrationLibrary.ConfigureGenerateAndSend.Model;
 ﻿using IntegrationLibrary.BloodRequests.Model;
+using IntegrationLibrary.Tender.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
+using IntegrationLibrary.BloodSubscription.Model;
+using System.Collections.Generic;
+using IntegrationLibrary.BloodBank;
+using System.Collections.Generic;
+using Amqp.Types;
+using System.Linq;
 
 namespace IntegrationLibrary.Settings
 {
@@ -13,9 +20,12 @@ namespace IntegrationLibrary.Settings
         public DbSet<ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend> ConfigureGenerateAndSend { get; set; }
 
         public DbSet<BloodRequest> BloodRequests { get; set; }
+        public DbSet<MounthlyBloodSubscription> BloodSubscriptions { get; set; }
 
+        public DbSet<BloodUnitAmount> BloodUnitAmounts { get; set; }
 
         public DbSet<NewsFromBloodBank.Model.NewsFromBloodBank> NewsFromBloodBank { get; set; }
+        public DbSet<IntegrationLibrary.Tender.Model.Tender> Tenders { get; set; }
 
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
@@ -23,7 +33,17 @@ namespace IntegrationLibrary.Settings
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-        
+            modelBuilder.Entity<AmountOfBloodType>(eb => { 
+                eb.HasNoKey();
+            });
+
+            modelBuilder.Entity<MounthlyBloodSubscription>()
+                    .Property(b => b.amountOfBloodTypes)
+                    .HasColumnType("jsonb");
+
+   
+            modelBuilder.Entity<IntegrationLibrary.Tender.Model.Tender>().Property(d => d.TenderOffer).HasColumnType("jsonb");
+
 
             //Start data for Blood requests
 
@@ -95,8 +115,6 @@ namespace IntegrationLibrary.Settings
             };
             modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);
 
-
-
             ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configuration1 = new()
             {
                 Id = Guid.NewGuid(),
@@ -119,6 +137,86 @@ namespace IntegrationLibrary.Settings
                configuration1,
                configuration2
             );
+
+
+
+            Tender.Model.Tender tender1 = new()
+            {
+                Id= Guid.NewGuid(),
+                HasDeadline = true,
+                DeadlineDate= DateTime.Now.AddDays(20),
+                PublishedDate= DateTime.Now,
+                Status=Enums.StatusTender.Open,
+              //  TenderOffer = TenderOffer1,
+            };
+            modelBuilder.Entity<Tender.Model.Tender>().HasData(tender1);
+
+            BloodUnitAmount bloodUnitAmount1 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.Apos,
+                Amount = 10,
+                TenderId = tender1.Id
+            };
+            BloodUnitAmount bloodUnitAmount2 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.Aneg,
+                Amount = 0,
+                TenderId = tender1.Id
+            };
+            BloodUnitAmount bloodUnitAmount3 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.Bpos,
+                Amount = 5,
+                TenderId = tender1.Id
+            };
+            BloodUnitAmount bloodUnitAmount4 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.Bneg,
+                Amount = 0,
+                TenderId = tender1.Id
+            };
+            BloodUnitAmount bloodUnitAmount5 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.ABpos,
+                Amount = 12,
+                TenderId = tender1.Id
+            };
+            BloodUnitAmount bloodUnitAmount6 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.ABneg,
+                Amount = 7,
+                TenderId = tender1.Id
+            };
+            BloodUnitAmount bloodUnitAmount7 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.Opos,
+                Amount = 10,
+                TenderId = tender1.Id
+            };
+            BloodUnitAmount bloodUnitAmount8 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.Oneg,
+                Amount = 0,
+                TenderId = tender1.Id
+            };
+            modelBuilder.Entity<BloodUnitAmount>().HasData(
+                bloodUnitAmount1,
+                bloodUnitAmount2,
+                bloodUnitAmount3,
+                bloodUnitAmount4,
+                bloodUnitAmount5,
+                bloodUnitAmount6,
+                bloodUnitAmount7,
+                bloodUnitAmount8);
+
 
             base.OnModelCreating(modelBuilder);
 

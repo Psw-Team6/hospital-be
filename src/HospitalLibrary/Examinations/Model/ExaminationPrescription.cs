@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HospitalLibrary.Examinations.Exceptions;
 using HospitalLibrary.Medicines.Model;
 
 namespace HospitalLibrary.Examinations.Model
@@ -10,8 +11,8 @@ namespace HospitalLibrary.Examinations.Model
         public string Usage { get; set; }
 
         public List<Medicine> Medicines { get; private set; }
-        public Examination Examination { get; set; }
-        public Guid ExaminationId { get; set; }
+        // public Examination Examination { get; set; }
+        // public Guid ExaminationId { get; set; }
 
         private void AddMedicines(List<Medicine> medicines)
         {
@@ -26,6 +27,11 @@ namespace HospitalLibrary.Examinations.Model
         {
             AddMedicines(medicines);
             Usage = usage;
+        }
+
+        public bool Validate()
+        {
+            return !string.IsNullOrEmpty(Usage);
         }
     }
 }
