@@ -36,6 +36,7 @@ namespace HospitalLibrary.Consiliums.Service
         {             
             var doctors = await _doctorService.GetDoctorsForConsilium(consilium);
             var meeting = new Consilium(consilium.Theme, doctors, consilium.TimeRange);
+            meeting.ValidateConsilium();
             var timeRange = FindTimeRangeForAllDoctors(meeting);
             var room = await FindAvailableMeetingRoom(timeRange);
             var createdConsilium = await CreatedConsilium(consilium, doctors, timeRange, room);
@@ -62,35 +63,26 @@ namespace HospitalLibrary.Consiliums.Service
         private async Task<Room> FindAvailableMeetingRoom(TimeRange timeRange)
         {
             var rooms = await _unitOfWork.RoomRepository.GetAllMeetingRooms();
-            var consiliums = await _unitOfWork.ConsiliumRepository.GetAllAsync();
+           
+           //Treba refaktorisati
             foreach (var room in rooms)
             {
-                var availableRoom = IsRoomAvailable(timeRange, consiliums, room);
+                var availableRoom =  await IsRoomAvailable(timeRange, room);
                 if (availableRoom)
                     return room;
             }
             return null;
         }
 
-        private static bool IsRoomAvailable(TimeRange timeRange, IEnumerable<Consilium> consiliums, Room room)
+        private async Task<bool> IsRoomAvailable(TimeRange timeRange, Room room)
         {
+            var consiliums = await _unitOfWork.ConsiliumRepository.GetAllAsync();
             foreach (var consilium in consiliums)
             {
                 if (consilium.IsConsiliumInRoom(room.Id, timeRange))
                     return false;
             }
             return true;
-        }
-
-        public async Task<List<Doctor>> GetDoctorsForConsilium(Consilium consilium)
-        {
-            var doctors = new List<Doctor>();
-            foreach (var doctor in consilium.Doctors)
-            {
-                var doc = await _unitOfWork.DoctorRepository.GetAllDoctorsBySIdAsync(doctor.Id);
-                doctors.Add(doc);
-            }
-            return doctors;
         }
 
         private TimeRange FindDateWhenDoctorsAreAvailable(Consilium consilium)
@@ -150,23 +142,24 @@ namespace HospitalLibrary.Consiliums.Service
             return true;
         }
 
-        public async Task<Consilium> ScheduleConsiliumSpecialization(Consilium consiliumRequest,IEnumerable<Specialization> specializations)
+        public async Task<Consilium> ScheduleConsiliumSpecialization(Consilium consiliumRequest,List<Specialization> specializations)
         {
             var doctors = await  _doctorService.GetDoctorsBySpecializations(specializations);
             var consilium = new Consilium(consiliumRequest.Theme, doctors, consiliumRequest.TimeRange);
+            consilium.ValidateConsilium();
             var timeRange = FindDateWhenDoctorsAreAvailable(consilium);
             if (timeRange == null)
             {
-                timeRange = FindTheBestTimeRange(specializations, consilium);
+                timeRange = FindTheBestTimeRange(specializations , consilium);
             }
             var room = await FindAvailableMeetingRoom(timeRange);
             var createConsilium = await CreatedConsilium(consilium, doctors, timeRange, room);
             return createConsilium;
         }
 
-        private TimeRange FindTheBestTimeRange(IEnumerable<Specialization> specializations, Consilium consilium)
+        private TimeRange FindTheBestTimeRange(List<Specialization> specializations , Consilium consilium)
         {
-            var dictionary = FindAllAvailableDoctorsAndAppointments(consilium, specializations);
+            var dictionary = FindAllAvailableDoctorsAndAppointments(consilium);
             dictionary = RemoveAppointmentsWithNoDoctors(dictionary, specializations);
             var newDictionary = FindTheBestAppointmnet(dictionary);
             var bestTime = newDictionary.Keys.Min();
@@ -181,16 +174,16 @@ namespace HospitalLibrary.Consiliums.Service
 
         private Dictionary<DateTime, List<Doctor>> FindTheBestAppointmnet(Dictionary<DateTime, List<Doctor>> dictionary)
         {
-            var maxDoctorNumber = 0;
-            var newDictionary = new Dictionary<DateTime, List<Doctor>>();
             var sortedDictionary = SortDictionaryByValueCountDesc(dictionary);
-            FindAppointmentsWithBiggestValue(dictionary, sortedDictionary, maxDoctorNumber, newDictionary);
-            return newDictionary;
+            return FindAppointmentsWithBiggestValue(dictionary, sortedDictionary);
         }
 
-        private static void FindAppointmentsWithBiggestValue(Dictionary<DateTime, List<Doctor>> dictionary, Dictionary<DateTime, List<Doctor>> sortedDictionary,
-            int maxDoctorNumber, Dictionary<DateTime, List<Doctor>> newDictionary)
+        private static Dictionary<DateTime, List<Doctor>> FindAppointmentsWithBiggestValue(Dictionary<DateTime, List<Doctor>> dictionary, Dictionary<DateTime, List<Doctor>> sortedDictionary)
         {
+            var newDictionary = new Dictionary<DateTime, List<Doctor>>();
+
+            var maxDoctorNumber = 0;
+
             foreach (var key in sortedDictionary.Keys)
             {
                 if (sortedDictionary[key].Count > maxDoctorNumber)
@@ -200,10 +193,9 @@ namespace HospitalLibrary.Consiliums.Service
                     continue;
                 }
                 if (maxDoctorNumber == sortedDictionary[key].Count)
-                {
                     newDictionary.Add(key, dictionary[key]);
-                }
             }
+            return newDictionary;
         }
 
         private static Dictionary<DateTime, List<Doctor>> SortDictionaryByValueCountDesc(Dictionary<DateTime, List<Doctor>> dictionary)
@@ -214,20 +206,21 @@ namespace HospitalLibrary.Consiliums.Service
             return sortedDictionary;
         }
 
-        private Dictionary<DateTime,List<Doctor>> RemoveAppointmentsWithNoDoctors(Dictionary<DateTime,List<Doctor>> dictionary, IEnumerable<Specialization> specializations)
+        private Dictionary<DateTime,List<Doctor>> RemoveAppointmentsWithNoDoctors(Dictionary<DateTime,List<Doctor>> dictionary, List<Specialization> specializations)
         {
             foreach (var key in dictionary.Keys)
-            {   var shouldRemove = false;
+            {  
                 var doctorsValue = dictionary[key];
-                shouldRemove = FindNotSuitableAppointments(specializations, doctorsValue, shouldRemove);
+                var shouldRemove = FindNotSuitableAppointments(specializations, doctorsValue);
                 if (shouldRemove)
                     dictionary.Remove(key);
             }
             return dictionary;
         }
 
-        private static bool FindNotSuitableAppointments(IEnumerable<Specialization> specializations, List<Doctor> doctorsValue, bool shouldRemove)
+        private static bool FindNotSuitableAppointments(IEnumerable<Specialization> specializations, List<Doctor> doctorsValue)
         {
+            var shouldRemove = false;
             foreach (var spec in specializations)
             {
                 var doctorsForSpec = doctorsValue.Where(doctor => doctor.Specialization.Id == spec.Id);
@@ -241,11 +234,9 @@ namespace HospitalLibrary.Consiliums.Service
             return shouldRemove;
         }
 
-        private Dictionary<DateTime, List<Doctor>> FindAllAvailableDoctorsAndAppointments(Consilium consilium,IEnumerable<Specialization> specializations)
+        private Dictionary<DateTime, List<Doctor>> FindAllAvailableDoctorsAndAppointments(Consilium consilium)
         {
             var startTime = InitializeStartAndEndTime(consilium, out var endTime);
-           
-            var dictionaryList = new List<Dictionary<DateTime, List<Doctor>>>();
             var dictionary = new Dictionary<DateTime, List<Doctor>>();
             while (startTime <= endTime)
             {

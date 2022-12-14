@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.SharedModel;
@@ -15,7 +17,31 @@ namespace HospitalLibrary.Consiliums.Model
         public IEnumerable<Doctor> Doctors { get; private set; }
         public TimeRange TimeRange { get; private set; }
         public Room Room { get; private set; }
-        /*public Guid RoomId { get; private set; }*/
+
+        private void ValidateTheme()
+        {
+            if (Theme is null or "")
+                throw new ThemeNotExist("Theme is not entered!");
+            
+        }
+
+        private void ValidateDoctors()
+        {
+            if (Doctors == null || Doctors.ToList().Any())
+                throw new ConsiliumDoctorsNotExist("There are no doctors!");
+        }   
+        private void ValidateRange()
+        {
+            if (TimeRange == null)
+                throw new TimeRangeException("Time range is null!");
+        }
+
+        public void ValidateConsilium()
+        {
+            ValidateTheme();
+            ValidateRange();
+            ValidateDoctors();
+        }
         public Consilium(string theme, IEnumerable<Doctor> doctors, TimeRange timeRange, Room room)
         {
             Theme = theme;
