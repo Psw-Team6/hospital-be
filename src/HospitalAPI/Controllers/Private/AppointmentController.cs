@@ -16,6 +16,7 @@ namespace HospitalAPI.Controllers.Private
     [Route("api/v1/[controller]")]
     [ApiController]
     //[HospitalAuthorization(UserRole.Doctor)]
+    //[HospitalAuthorization(UserRole.Patient)]
     public class AppointmentController : ControllerBase
     {
         private readonly AppointmentService _appointmentService;
@@ -80,15 +81,17 @@ namespace HospitalAPI.Controllers.Private
             var result = _mapper.Map<List<AppointmentResponse>>(appointments);
             return result == null ? NotFound() : Ok(result);
         }
-
-        [HttpGet("GetAppointmentsForExamination/{doctorId:guid}")]
+        
+        [HttpGet("GetPatientAppointments/{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<AppointmentResponse>>> GetAppointmentsForExamination([FromRoute]Guid doctorId)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<AppointmentResponse>>> GetPatientAppointments([FromRoute]Guid id)
         {
-            var appointments = await _appointmentService.GetAppointmentsForExamination(doctorId);
+            var appointments = await _appointmentService.GetPatientAppointments(id);
             var result = _mapper.Map<List<AppointmentResponse>>(appointments);
             return result == null ? NotFound() : Ok(result);
         }
+        
         [HttpPost("GetAppointmentPdfReport/{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -98,5 +101,15 @@ namespace HospitalAPI.Controllers.Private
             var result = _appointmentService.GetAppointmentPdfReport(id,options).Result;
             return result == null ? NotFound() : File(result, "application/pdf", "appointmentReportPdf");
         }
+        
+        [HttpGet("GetAppointmentsForExamination/{doctorId:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<AppointmentResponse>>> GetAppointmentsForExamination([FromRoute]Guid doctorId)
+        {
+            var appointments = await _appointmentService.GetAppointmentsForExamination(doctorId);
+            var result = _mapper.Map<List<AppointmentResponse>>(appointments);
+            return result == null ? NotFound() : Ok(result);
+        }
+
     }
 }
