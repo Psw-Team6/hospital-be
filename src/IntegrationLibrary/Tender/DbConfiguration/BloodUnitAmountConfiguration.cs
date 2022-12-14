@@ -13,7 +13,7 @@ namespace IntegrationLibrary.Tender.DbConfiguration
     {
         public void Configure(EntityTypeBuilder<BloodUnitAmount> builder)
         {
-            _ = builder.HasKey(x => x.Id);
+           //_ = builder.HasKey(x => x.Id);
         }
     }
 }

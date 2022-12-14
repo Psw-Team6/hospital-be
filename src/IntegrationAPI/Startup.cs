@@ -1,3 +1,4 @@
+using System.Text;
 using IntegrationAPI.Mapper;
 using IntegrationLibrary.BloodBank.Repository;
 using IntegrationLibrary.BloodBank.Service;
@@ -23,11 +24,19 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using IntegrationAPI.ScheduleTask.Service;
 using IntegrationAPI.Controllers;
+<<<<<<< HEAD
 using IntegrationLibrary.Tender.Service;
 using IntegrationLibrary.Tender.Repository;
 using IntegrationLibrary.HTTP;
 using IntegrationLibrary.BloodSubscription.Service;
 using IntegrationLibrary.BloodSubscription.Repository;
+=======
+using IntegrationLibrary.HTTP;
+using IntegrationLibrary.BloodSubscription.Service;
+using IntegrationLibrary.BloodSubscription.Repository;
+using IntegrationLibrary.Tender.Service;
+using IntegrationLibrary.Tender.Repository;
+>>>>>>> 34587da71ecd72bf1c5f8be79ffe9b02d1df840d
 
 namespace IntegrationAPI
 {
@@ -50,10 +59,14 @@ namespace IntegrationAPI
             services.AddMvc(options =>
             {
                 options.EnableEndpointRouting = false;
-            });
+            })
 
+#pragma warning restore CS0618
 
-            services.AddControllers();
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });

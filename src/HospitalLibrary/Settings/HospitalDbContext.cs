@@ -886,6 +886,24 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Patient>().HasData(
                 patient1,patient2,patient3, patient4, patient5, patient6,patient7,patient8,patient9,patient10
             );
+            ApplicationUser applicationUser = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "BloodBank",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Moja Banka Krvi",
+                Surname = "Moja Banka Krvi",
+                Email = "psw.isa.mail@gmail.com",
+                Jmbg = "99999999",
+                Phone = "+612222222",
+                UserRole = UserRole.BloodBankCenter,
+                Enabled = true
+            };
+            modelBuilder.Entity<ApplicationUser>().HasData(
+                applicationUser
+            );
+
             //password = 123
             Manager manager = new ()
             {

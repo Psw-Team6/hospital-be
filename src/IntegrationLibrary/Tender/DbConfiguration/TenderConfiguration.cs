@@ -16,6 +16,7 @@ namespace IntegrationLibrary.Tender.DbConfiguration
             _ = builder.HasMany(tender => tender.BloodUnitAmount)
         .WithOne(BloodUnitAmount => BloodUnitAmount.Tender)
         .HasForeignKey(BloodUnitAmount => BloodUnitAmount.TenderId);
+            
         }
     }
 }
