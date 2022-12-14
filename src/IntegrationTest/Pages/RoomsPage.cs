@@ -14,6 +14,7 @@ namespace IntegrationTest.Pages
         public const string URI = "http://localhost:4200/rooms";
 
         IWebElement bloodSupplyNav => driver.FindElement(By.XPath("/html/body/app-root/app-sidenav/div/ul/li[8]/a"));
+        IWebElement bloodBankNav => driver.FindElement(By.XPath("/html/body/app-root/app-sidenav/div/ul/li[9]/a"));
 
         public RoomsPage(IWebDriver driver)
         {
@@ -23,14 +24,28 @@ namespace IntegrationTest.Pages
         {
             return bloodSupplyNav.Displayed;
         }
+
+        public bool bloodBankNavDisplayed()
+        {
+            return bloodBankNav.Displayed;
+        }
         public void bloodSupplyNavClick()
         {
             bloodSupplyNav.Click();
+        }
+        public void bloodBankNavClick()
+        {
+            bloodBankNav.Click();
         }
         public void WaitForFormSubmit()
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe("http://localhost:4200/bloodBank"));
+        }
+        public void WaitForFormSubmitBloodBank()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe("http://localhost:4200/bloodBank/add"));
         }
     }
 }

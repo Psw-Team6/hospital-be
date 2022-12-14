@@ -1,4 +1,6 @@
 ﻿using IntegrationLibrary.SendMail.Services;
+using IntegrationTest.EndToEnd.CreateBloodBank.Pages;
+using IntegrationTest.Pages;
 using Moq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -15,6 +17,8 @@ namespace IntegrationTest.EndToEnd.CreateBloodBank.Tests
     {
         private readonly IWebDriver driver;
         private Pages.CreateBloodBankPage createBloodBankPage;
+        private LoginPage loginPage;
+        private RoomsPage roomsPage;
 
         public CreateBloodBankTests()
         {
@@ -29,6 +33,22 @@ namespace IntegrationTest.EndToEnd.CreateBloodBank.Tests
             options.AddArguments("--disable-notifications");    // disable notifications
 
             driver = new ChromeDriver(options);
+
+            loginPage = new LoginPage(driver);
+            loginPage.Navigate();
+            Assert.True(loginPage.LoginButtonDisplayed());
+            Assert.True(loginPage.UsernameInputDisplayed());
+            Assert.True(loginPage.PasswordInputDisplayed());
+
+            loginPage.InsertUsername("Manager");
+            loginPage.InsertPassword("123");
+            loginPage.SubmitForm();
+            loginPage.WaitForFormSubmit();
+
+            roomsPage = new RoomsPage(driver);
+            Assert.True(roomsPage.bloodBankNavDisplayed());
+            roomsPage.bloodBankNavClick();
+            roomsPage.WaitForFormSubmitBloodBank();
 
             createBloodBankPage = new Pages.CreateBloodBankPage(driver); 
 
@@ -53,6 +73,18 @@ namespace IntegrationTest.EndToEnd.CreateBloodBank.Tests
             createBloodBankPage.InsertEmail("deki555@hotmail.com");
             createBloodBankPage.SubmitForm();
             createBloodBankPage.WaitForFormSubmit();
+        }
+
+        [Fact]
+        public void TestInvalidEmailForm()
+        {
+            createBloodBankPage.InsertName("Banka krvi 1");                     // insert all values except price
+            createBloodBankPage.InsertServerAddress("adresa");
+            createBloodBankPage.InsertEmail("nevalidan unos mejla");
+            createBloodBankPage.ClickOnElementsCoordinates(driver, 200, 200);
+            createBloodBankPage.WaitForErrorMessage();
+            String error = createBloodBankPage.GetErrorMessage();
+            Assert.Equal(error, createBloodBankPage.getInvalidEmailMessage());
         }
     }
 }
