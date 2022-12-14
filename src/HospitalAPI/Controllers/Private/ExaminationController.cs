@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
@@ -33,6 +34,14 @@ namespace HospitalAPI.Controllers.Private
             var examination = _mapper.Map<Examination>(examinationRequest);
             var result = await _examinationService.CreateExamination(examination);
             return CreatedAtAction("CreateExamination", new {id = result.Id}, result);
+        }
+        
+        [HttpGet]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<Examination>>> GetAllExaminations()
+        {
+            var examinations = await _examinationService.GetAllExaminations();
+            return Ok(examinations);
         }
     }
 }
