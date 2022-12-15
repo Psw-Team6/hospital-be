@@ -9,5 +9,6 @@ namespace HospitalLibrary.Examinations.Repository
     public interface IExaminationRepository:IGenericRepository<Examination>
     {
         Task<Examination> GetExaminationByAppointment(Appointment appointment);
+        Task<IEnumerable<Examination>> GetAllExaminations();
     }
 }

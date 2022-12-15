@@ -21,5 +21,11 @@ namespace HospitalLibrary.Examinations.Repository
                 .Include(x => x.Prescriptions).
                 Include(x=> x.Symptoms).FirstAsync();
         }
+
+        public async Task<IEnumerable<Examination>> GetAllExaminations()
+        {
+            return await DbSet.Select(x => x).Include(x=>x.Appointment)
+                .Include(x => x.Prescriptions).Include(x => x.Symptoms).ToListAsync();
+        }
     }
 }

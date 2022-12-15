@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.Examinations.Model;
+using HospitalLibrary.Examinations.Repository;
 using HospitalLibrary.Medicines.Model;
 
 namespace HospitalLibrary.Examinations.Service
@@ -53,6 +54,11 @@ namespace HospitalLibrary.Examinations.Service
                 prescriptions.Add(examinationPrescription);
             }
             return prescriptions;
+        }
+
+        public async Task<IEnumerable<Examination>> GetAllExaminations()
+        {
+            return  await _unitOfWork.GetRepository<ExaminationRepository>().GetAllExaminations();
         }
     }
 }

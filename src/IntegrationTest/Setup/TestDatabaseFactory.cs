@@ -123,7 +123,7 @@ namespace IntegrationTest.Setup
                 ServerAddress = "Vampir12345",
                 Email = "deki555@hotmail.com",
                 Password = "lpe+uKKi6XM=",
-                ApiKey = "NkwQR/sa7Rm97+S7/KQxqWl2nZhnWjzLX3dvHOTngEk="
+                ApiKey = new IntegrationLibrary.BloodBank.Model.ApiKey()
             };
 
             BloodBank bloodBank1 = new()
@@ -133,7 +133,7 @@ namespace IntegrationTest.Setup
                 ServerAddress = "Vampir12345",
                 Email = "deki555@hotmail.com",
                 Password = "lpe+uKKi6XM=",
-                ApiKey = "NkwQR/sa7Rm97+S7/KQxqWl2nZhnWjzLX3dvHOTngEk="
+                ApiKey = new IntegrationLibrary.BloodBank.Model.ApiKey()
             };
 
 

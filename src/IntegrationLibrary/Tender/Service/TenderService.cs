@@ -11,10 +11,12 @@ namespace IntegrationLibrary.Tender.Service
     public class TenderService : ITenderService
     {
         private readonly ITenderRepository tenderRepository;
+        private readonly IBloodUnitAmountRepository amountRepository;
 
-        public TenderService(ITenderRepository tenderRepository)
+        public TenderService(ITenderRepository tenderRepository, IBloodUnitAmountRepository amountRepository)
         {
             this.tenderRepository = tenderRepository;
+            this.amountRepository = amountRepository;
         }
 
         public void Create (Model.Tender tender)
@@ -32,7 +34,10 @@ namespace IntegrationLibrary.Tender.Service
         }
         public Model.Tender GetById(Guid id)
         {
-            return tenderRepository.GetById(id);
+            Tender.Model.Tender tender = tenderRepository.GetById(id);
+            List<BloodUnitAmount> bloodUnitAmounts = (List<BloodUnitAmount>)amountRepository.GetAllByTenderId(tender.Id);
+            tender.BloodUnitAmount = bloodUnitAmounts;
+            return tender;
         }
 
         public void Update(Model.Tender tender)
