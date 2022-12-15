@@ -39,6 +39,7 @@ namespace HospitalLibrary.Common
         private BloodUnitRepository _bloodUnitRepository;
         private BloodConsumptionRepository _bloodConsumptionRepository;
         private PatientAdmissionRepository _patientAdmissionRepository;
+        private MaliciousPatientRepository _maliciousPatientRepository;
         private EquipmentRepository _equipmentRepository;
         private TreatmentReportRepository _treatmentReportRepository;
         private RoomBedRepository _roomBedRepository;
@@ -89,6 +90,8 @@ namespace HospitalLibrary.Common
             _equipmentRepository ??= new EquipmentRepository(_hospitalDbContext);
         public IPatientAdmissionRepository PatientAdmissionRepository =>
             _patientAdmissionRepository ??= new PatientAdmissionRepository(_hospitalDbContext);
+        public IMaliciousPatientRepository MaliciousPatientRepository =>
+            _maliciousPatientRepository ??= new MaliciousPatientRepository(_hospitalDbContext);
         public IBloodConsumptionRepository BloodConsumptionRepository =>
             _bloodConsumptionRepository ??= new BloodConsumptionRepository(_hospitalDbContext);
         public IBloodUnitRepository BloodUnitRepository =>

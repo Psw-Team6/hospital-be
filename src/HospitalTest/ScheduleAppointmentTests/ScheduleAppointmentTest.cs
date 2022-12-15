@@ -105,7 +105,7 @@ namespace HospitalTest.ScheduleAppointmentTests
             WorkingSchedule workingSchedule1 = new()
             {
                 Id = Guid.NewGuid(),
-                ExpirationDate = new DateRange
+                ExpirationDate = new NullableDateRange
                 {
                     From = new DateTime(2022, 10, 27),
                     To = new DateTime(2023, 1, 27)
@@ -218,7 +218,7 @@ namespace HospitalTest.ScheduleAppointmentTests
             WorkingSchedule workingSchedule1 = new()
             {
                 Id = Guid.NewGuid(),
-                ExpirationDate = new DateRange
+                ExpirationDate = new NullableDateRange
                 {
                     From = new DateTime(2022, 10, 27),
                     To = new DateTime(2023, 1, 27)
@@ -322,7 +322,7 @@ namespace HospitalTest.ScheduleAppointmentTests
             WorkingSchedule workingSchedule1 = new()
             {
                 Id = Guid.NewGuid(),
-                ExpirationDate = new DateRange
+                ExpirationDate = new NullableDateRange
                 {
                     From = new DateTime(2022, 10, 27),
                     To = new DateTime(2023, 1, 27)
@@ -419,7 +419,7 @@ namespace HospitalTest.ScheduleAppointmentTests
             WorkingSchedule workingSchedule1 = new()
             {
                 Id = Guid.NewGuid(),
-                ExpirationDate = new DateRange
+                ExpirationDate = new NullableDateRange
                 {
                     From = new DateTime(2022, 10, 27),
                     To = new DateTime(2023, 1, 27)

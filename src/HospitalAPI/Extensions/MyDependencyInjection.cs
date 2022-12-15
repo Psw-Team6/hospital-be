@@ -70,6 +70,8 @@ namespace HospitalAPI.Extensions
             services.AddScoped<IIEquipmentRepository, EquipmentRepository>();
             services.AddScoped<PatientAdmissionService>();
             services.AddScoped<IPatientAdmissionRepository, PatientAdmissionRepository>();
+            services.AddScoped<MaliciousPatientService>();
+            services.AddScoped<IMaliciousPatientRepository, MaliciousPatientRepository>();
             services.AddScoped<MedicineService>();
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<BloodPrescriptionService>();
