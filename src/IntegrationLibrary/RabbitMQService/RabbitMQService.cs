@@ -77,7 +77,7 @@ namespace IntegrationLibrary.RabbitMQService
                         List<BloodBank.BloodBank> bbList1 = dbContext.BloodBanks.ToList();
                         foreach (BloodBank.BloodBank bb in bbList1)
                         {
-                            if (data1.APIKey.Equals(bb.ApiKey))
+                            if (data1.APIKey.Equals(bb.ApiKey.Value))
                             {
                                 HttpClient httpClient = new HttpClient();
                                 //BloodBank.BloodBank bloodBank = httpClient.GetFromJsonAsync<BloodBank.BloodBank>("http://localhost:5001/api/BloodBank/findByAPIKey/" + data.APIKey).Result;
@@ -114,7 +114,7 @@ namespace IntegrationLibrary.RabbitMQService
                         List<BloodBank.BloodBank> bbList = dbContext.BloodBanks.ToList();
                         foreach (BloodBank.BloodBank bb in bbList)
                         {
-                            if (data.apiKey.Equals(bb.ApiKey))
+                            if (data.apiKey.Equals(bb.ApiKey.Value))
                             {
                                 dbContext.NewsFromBloodBank.Add(data);
                                 dbContext.SaveChanges();
@@ -196,7 +196,7 @@ namespace IntegrationLibrary.RabbitMQService
             
             foreach (BloodBank.BloodBank bb in bloodBanks) 
             {
-                if (bb.ApiKey.Equals(apikey))
+                if (bb.ApiKey.Value.Equals(apikey))
                     return bb;
             }
             return null; 

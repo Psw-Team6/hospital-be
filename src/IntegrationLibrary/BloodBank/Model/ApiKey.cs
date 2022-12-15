@@ -29,10 +29,5 @@ namespace IntegrationLibrary.BloodBank.Model
             return Convert.ToBase64String(key);
 
         }
-
-        public override bool Equals(object obj)
-        {
-            return Value.Equals(((ApiKey)obj).Value);
-        }
     }
 }
