@@ -59,6 +59,13 @@ namespace HospitalAPI.Controllers
                        Error = "Bad Credentials!"
                    });
                }
+               if (user.IsBlocked)
+               {
+                   return BadRequest(new ResponseContent()
+                   {
+                       Error = "User blocked!"
+                   });
+               }
            }
            if (user.UserRole is UserRole.Doctor or UserRole.Manager)
            {

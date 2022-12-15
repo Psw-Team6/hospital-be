@@ -71,7 +71,7 @@ namespace HospitalTest.Setup
                     From = new DateTime(2022, 10, 27, 8, 0, 0),
                     To = new DateTime(2023, 12, 27, 14, 0, 0)
                 },
-                ExpirationDate = new DateRange
+                ExpirationDate = new NullableDateRange
                 {
                     From = new DateTime(2022, 10, 27),
                     To = new DateTime(2023, 12, 27)
@@ -112,7 +112,6 @@ namespace HospitalTest.Setup
                 Name = "Milan",
                 Surname = "Milic",
                 Email = "mm@gmail.com",
-                Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Doctor,
                 Enabled = true
@@ -128,7 +127,6 @@ namespace HospitalTest.Setup
                 Name = "Marko",
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
@@ -143,7 +141,6 @@ namespace HospitalTest.Setup
                 Name = "Manager",
                 Surname = "Manger",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Manager,
                 Enabled = true
@@ -159,6 +156,48 @@ namespace HospitalTest.Setup
                 EquipmentName = "BANDAGE"
             };
             context.RoomEquipment.Add(roomEquipment);
+
+            RoomBed bed1 = new()
+            {
+                RoomId = room.Id,
+                IsFree = true,
+                Number = "12A1"
+            };
+            context.RoomBeds.Add(bed1);
+            
+            RoomBed bed2 = new()
+            {
+                RoomId = room.Id,
+                IsFree = false,
+                Number = "12A12"
+            };
+            context.RoomBeds.Add(bed2);
+
+            Patient pat1 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address.Id,
+                Username = "Patientss",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Marko",
+                Surname = "Lave",
+                Email = "psw.isa.mail@gmail.com",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor.Id
+            };
+
+            PatientAdmission pa1 = new()
+            {
+                PatientId = pat1.Id,
+                Reason = "bolestan",
+                DateOfAdmission = DateTime.Now,
+                SelectedBedId = bed2.Id,
+                SelectedRoomId = bed2.RoomId,
+                DateOfDischarge = null
+            };
+            context.PatientAdmissions.Add(pa1);
             
             
             context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Patients\";");

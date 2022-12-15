@@ -13,9 +13,10 @@ namespace HospitalLibrary.ApplicationUsers.Model
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        public string Jmbg{ get; set; }
+        public Jmbg Jmbg { get; set; }
         public string Phone{ get; set; }
         public UserRole UserRole { get; set; }
         public bool Enabled { get; set; }
+        public bool IsBlocked { get; set; }
     }
 }

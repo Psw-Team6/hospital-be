@@ -86,10 +86,5 @@ namespace HospitalAPI.Controllers
             var result = await _equipmentMovementAppointmentService.DeleteById(id);
             return result ? NoContent() : NotFound();
         }
-        
-        
-        
-        
-        
     }
 }

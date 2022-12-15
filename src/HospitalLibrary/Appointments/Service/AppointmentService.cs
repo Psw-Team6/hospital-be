@@ -29,6 +29,16 @@ namespace HospitalLibrary.Appointments.Service
             return appointments;
         }
         
+        public async Task<Appointment> CreateAppointment(Appointment appointment)
+        {
+            appointment.AppointmentState = 0;
+            appointment.AppointmentType = 0;
+            Console.WriteLine(appointment.PatientId.ToString());
+            var newAppointment = await _unitOfWork.AppointmentRepository.CreateAsync(appointment);
+            await _unitOfWork.CompleteAsync();
+            return newAppointment;
+        }
+        
 
         public async Task<Appointment> GetById(Guid id)
         {
@@ -45,7 +55,8 @@ namespace HospitalLibrary.Appointments.Service
             if (CanCancelAppointment(appointment))
             {
                 appointment.Patient = await _unitOfWork.PatientRepository.GetByIdAsync(appointment.PatientId);
-                await _emailService.SendCancelAppointmentEmail(appointment);
+                if (_emailService.SendCancelAppointmentEmail(appointment).Result == null)
+                    return false;
                 await _unitOfWork.GetRepository<AppointmentRepository>().DeleteAsync(appointment);
                 await _unitOfWork.CompleteAsync();
                 return true;

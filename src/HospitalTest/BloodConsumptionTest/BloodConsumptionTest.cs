@@ -95,65 +95,23 @@ namespace HospitalTest.BloodConsumptionTest
         private static List<BloodUnit> SeedUnitsData()
         {
             var list = new List<BloodUnit>();
-            
-            BloodUnit unit2 = new()
-            {
-                Id= unit2Id,
-                BloodType = BloodType.Aneg,
-                Amount = 5,
-                BloodBankName = "Moja Banka Krvi"
-                    
-            };
-            BloodUnit unit3 = new()
-            {
-                Id= unit3Id,
-                BloodType = BloodType.Aneg,
-                Amount = 5,
-                BloodBankName = "Moja Banka Krvi"
-                    
-            };
+
+            BloodUnit unit2 = new(unit2Id, BloodType.Aneg, 5, "Moja Banka Krvi");
+            BloodUnit unit3 = new(unit3Id, BloodType.Aneg, 5, "Moja Banka Krvi");
             list.Add(unit1);
             list.Add(unit2);
             list.Add(unit3);
             return list;
         }
         
-        static BloodUnit unit1 = new()
-        {
-            Id= unit1Id,
-            BloodType = BloodType.Aneg,
-            Amount = 7,
-            BloodBankName = "Moja Banka Krvi"
-                    
-        };
+        static BloodUnit unit1 = new(unit1Id,BloodType.Aneg,7,"Moja Banka Krvi");
 
         private static List<BloodUnit> SeedUnitsData1()
         {
             var list = new List<BloodUnit>();
-            BloodUnit unit1 = new()
-            {
-                Id= unit1Id,
-                BloodType = BloodType.Aneg,
-                Amount = 7,
-                BloodBankName = "Moja Banka Krvi"
-                    
-            };
-            BloodUnit unit2 = new()
-            {
-                Id= unit2Id,
-                BloodType = BloodType.Aneg,
-                Amount = 5,
-                BloodBankName = "Moja Banka Krvi"
-                    
-            };
-            BloodUnit unit3 = new()
-            {
-                Id= unit3Id,
-                BloodType = BloodType.Aneg,
-                Amount = 5,
-                BloodBankName = "Moja Banka Krvi"
-                    
-            };
+            BloodUnit unit1 = new(unit1Id, BloodType.Aneg, 7, "Moja Banka Krvi");
+            BloodUnit unit2 = new(unit2Id,BloodType.Aneg,5,"Moja Banka Krvi");
+            BloodUnit unit3 = new(unit3Id, BloodType.Aneg, 5, "Moja Banka Krvi");
             list.Add(unit1);
             list.Add(unit2);
             list.Add(unit3);
@@ -176,7 +134,6 @@ namespace HospitalTest.BloodConsumptionTest
             Name = "Ilija",
             Surname = "Maric",
             Email = "Cajons@gmail.com",
-            Jmbg = "99999999",
             Phone = "+612222222"
         };
         
@@ -191,14 +148,7 @@ namespace HospitalTest.BloodConsumptionTest
 
         public static BloodConsumption SeedConsumptionData()
         {
-            BloodUnit unit1 = new()
-            {
-                Id= unit1Id,
-                BloodType = BloodType.Aneg,
-                Amount = 7,
-                BloodBankName = "Moja Banka Krvi"
-                    
-            };
+            BloodUnit unit1 = new(unit1Id, BloodType.Aneg, 7, "Moja Banka Krvi");
             BloodConsumption consumption1 = new BloodConsumption()
             {
                 Id = consumptionId,

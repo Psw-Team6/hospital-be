@@ -14,6 +14,7 @@ namespace IntegrationLibrary.Tender.Model
         public DateTime DeadlineDate { get; set; }
         public DateTime PublishedDate { get; set; }
         public StatusTender Status { get; set; }
+        public TenderOffer Winner { get; set; }
         public IEnumerable<BloodUnitAmount> BloodUnitAmount { get; set; }
         public IEnumerable<TenderOffer> TenderOffer { get; set; }
 
