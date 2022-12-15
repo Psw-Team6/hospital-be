@@ -7,7 +7,6 @@ using AutoMapper;
 using HospitalAPI.Controllers;
 using HospitalAPI.Controllers.Private;
 using HospitalAPI.Dtos.Request;
-using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Examinations.Service;
 using HospitalLibrary.Medicines.Service;
 using HospitalTest.Setup;
