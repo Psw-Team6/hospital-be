@@ -33,6 +33,7 @@ namespace HospitalLibrary.Appointments.Service
         {
             appointment.AppointmentState = 0;
             appointment.AppointmentType = 0;
+            Console.WriteLine(appointment.PatientId.ToString());
             var newAppointment = await _unitOfWork.AppointmentRepository.CreateAsync(appointment);
             await _unitOfWork.CompleteAsync();
             return newAppointment;
