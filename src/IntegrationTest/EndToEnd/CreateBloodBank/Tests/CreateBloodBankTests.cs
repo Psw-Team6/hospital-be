@@ -73,6 +73,7 @@ namespace IntegrationTest.EndToEnd.CreateBloodBank.Tests
             createBloodBankPage.InsertEmail("deki555@hotmail.com");
             createBloodBankPage.SubmitForm();
             createBloodBankPage.WaitForFormSubmit();
+            Dispose();
         }
 
         [Fact]
@@ -85,6 +86,7 @@ namespace IntegrationTest.EndToEnd.CreateBloodBank.Tests
             createBloodBankPage.WaitForErrorMessage();
             String error = createBloodBankPage.GetErrorMessage();
             Assert.Equal(error, createBloodBankPage.getInvalidEmailMessage());
+            //Dispose();
         }
     }
 }
