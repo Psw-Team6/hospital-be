@@ -173,8 +173,7 @@ namespace HospitalTest.ForwardAppointmentTests
                 Password = "miki123",
                 Name = "Ilija",
                 Surname = "Maric",
-                Email = "Cajons@gmail.com",
-                Phone = "+612222222"
+                Email = "Cajons@gmail.com"
             };
             return doctor1;
         }

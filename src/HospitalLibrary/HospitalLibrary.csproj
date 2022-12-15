@@ -34,14 +34,12 @@
     <Folder Include="BloodConsumptions\Service" />
     <Folder Include="BloodUnits\Repository" />
     <Folder Include="BloodUnits\Service" />
-    <Folder Include="Migrations" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Enums\RoomEquipment.cs" />
     <Compile Remove="Rooms\Repository\IEquipmentRepository.cs" />
-    <Compile Remove="Migrations\HospitalDbContextModelSnapshot.cs" />
-    <Compile Remove="Migrations\20221209145930_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
