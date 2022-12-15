@@ -45,7 +45,8 @@ namespace HospitalLibrary.Appointments.Service
             if (CanCancelAppointment(appointment))
             {
                 appointment.Patient = await _unitOfWork.PatientRepository.GetByIdAsync(appointment.PatientId);
-                await _emailService.SendCancelAppointmentEmail(appointment);
+                if (_emailService.SendCancelAppointmentEmail(appointment).Result == null)
+                    return false;
                 await _unitOfWork.GetRepository<AppointmentRepository>().DeleteAsync(appointment);
                 await _unitOfWork.CompleteAsync();
                 return true;
@@ -57,6 +58,13 @@ namespace HospitalLibrary.Appointments.Service
         public async Task<List<Appointment>> GetDoctorAppointments(Guid id)
         {
             var appointments = await _unitOfWork.GetRepository<AppointmentRepository>().GetAllAppointmentsForDoctor(id);
+            //var doctorAppointments = appointments.Where(x => x.DoctorId == id);
+            return appointments.ToList();
+        }
+        
+        public async Task<List<Appointment>> GetPatientAppointments(Guid id)
+        {
+            var appointments = await _unitOfWork.GetRepository<AppointmentRepository>().GetAllAppointmentsForPatient(id);
             //var doctorAppointments = appointments.Where(x => x.DoctorId == id);
             return appointments.ToList();
         }
