@@ -24,19 +24,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using IntegrationAPI.ScheduleTask.Service;
 using IntegrationAPI.Controllers;
-<<<<<<< HEAD
 using IntegrationLibrary.Tender.Service;
 using IntegrationLibrary.Tender.Repository;
 using IntegrationLibrary.HTTP;
 using IntegrationLibrary.BloodSubscription.Service;
 using IntegrationLibrary.BloodSubscription.Repository;
-=======
-using IntegrationLibrary.HTTP;
-using IntegrationLibrary.BloodSubscription.Service;
-using IntegrationLibrary.BloodSubscription.Repository;
 using IntegrationLibrary.Tender.Service;
 using IntegrationLibrary.Tender.Repository;
->>>>>>> 34587da71ecd72bf1c5f8be79ffe9b02d1df840d
 
 namespace IntegrationAPI
 {

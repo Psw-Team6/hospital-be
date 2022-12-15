@@ -10,6 +10,7 @@ using IntegrationLibrary.BloodBank;
 using System.Collections.Generic;
 using Amqp.Types;
 using System.Linq;
+using IntegrationLibrary.BloodBank.Model;
 
 namespace IntegrationLibrary.Settings
 {
@@ -34,6 +35,9 @@ namespace IntegrationLibrary.Settings
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             modelBuilder.Entity<AmountOfBloodType>(eb => { 
+                eb.HasNoKey();
+            });
+            modelBuilder.Entity<TenderOffer>(eb => {
                 eb.HasNoKey();
             });
 
@@ -111,9 +115,12 @@ namespace IntegrationLibrary.Settings
                 ServerAddress = "localhost",
                 Email = "aas@gmail.com",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
-                ApiKey = "x"
+                
             };
             modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);
+
+            modelBuilder.Entity<BloodBank.BloodBank>().OwnsOne(x => x.ApiKey).HasData(
+                new { BloodBankId = bloodBank.Id, Value = new ApiKey().Value});
 
             ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configuration1 = new()
             {
@@ -142,14 +149,15 @@ namespace IntegrationLibrary.Settings
 
             Tender.Model.Tender tender1 = new()
             {
-                Id= Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 HasDeadline = true,
-                DeadlineDate= DateTime.Now.AddDays(20),
-                PublishedDate= DateTime.Now,
-                Status=Enums.StatusTender.Open,
+                DeadlineDate = DateTime.Now.AddDays(20),
+                PublishedDate = DateTime.Now,
+                Status = Enums.StatusTender.Open
               //  TenderOffer = TenderOffer1,
             };
             modelBuilder.Entity<Tender.Model.Tender>().HasData(tender1);
+            modelBuilder.Entity<IntegrationLibrary.Tender.Model.Tender>().Property(d => d.Winner).HasColumnType("jsonb");
 
             BloodUnitAmount bloodUnitAmount1 = new()
             {
