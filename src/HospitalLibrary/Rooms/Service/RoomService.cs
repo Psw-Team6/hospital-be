@@ -62,8 +62,8 @@ namespace HospitalLibrary.Rooms.Service
             newGroom.Id = groom1.Id;
             newGroom.PositionX = Math.Min(groom1.PositionX, groom2.PositionX);
             newGroom.PositionY = Math.Min(groom1.PositionY, groom2.PositionY);
-            newGroom.Lenght = Math.Max(groom1.PositionX + groom1.Lenght, groom2.PositionX + groom2.Lenght) - newGroom.PositionX;
-            newGroom.Width = Math.Max(groom1.PositionY + groom1.Width, groom2.PositionY + groom2.Width) - newGroom.PositionY;
+            newGroom.Lenght = Math.Max(groom1.PositionX + groom1.Width, groom2.PositionX + groom2.Width) - newGroom.PositionX;
+            newGroom.Width = Math.Max(groom1.PositionY + groom1.Lenght, groom2.PositionY + groom2.Lenght) - newGroom.PositionY;
             newRoom.GRoomId = newGroom.Id;
             Console.WriteLine("ROOM MERGING DATA FINISHED");
             
@@ -78,6 +78,7 @@ namespace HospitalLibrary.Rooms.Service
             Console.WriteLine("UPDATED GROOM AND ROOM");
             
             await _unitOfWork.CompleteAsync();
+            Console.WriteLine("COMPLETE ASYNC");
 
             return newRoom;
         }
@@ -109,6 +110,7 @@ namespace HospitalLibrary.Rooms.Service
             newGroom1.RoomId = newRoom1.Id;
             newGroom1.PositionX = originalGroom.PositionX;
             newGroom1.PositionY = originalGroom.PositionY;
+            
             if (originalGroom.Lenght >= 2)
             {
                 newGroom1.Lenght = originalGroom.Lenght / 2;
@@ -127,15 +129,18 @@ namespace HospitalLibrary.Rooms.Service
             newGroom2.Id = Guid.NewGuid();
             if (originalGroom.Lenght >= 2)
             {
-                newGroom2.Lenght = originalGroom.Lenght / 2;
+                Console.WriteLine("Delim drugu, original lenght:" +originalGroom.Lenght + "  newGrom1Len:"+newGroom1.Lenght);
+                newGroom2.Lenght = originalGroom.Lenght -  newGroom1.Lenght;
                 newGroom2.Width = originalGroom.Width;
-                newGroom2.PositionX = newGroom1.PositionX + newGroom1.Lenght;
-                newGroom2.PositionY = newGroom1.PositionY;
+                
+                newGroom2.PositionX = newGroom1.PositionX;
+                newGroom2.PositionY = newGroom1.PositionY + newGroom1.Lenght;
             }
             else
             {
                 newGroom2.Lenght = originalGroom.Lenght;
-                newGroom2.Width = originalGroom.Width / 2;
+                newGroom2.Width = originalGroom.Width - newGroom1.Width;
+                
                 newGroom2.PositionX = newGroom1.PositionX+ newGroom1.Width;
                 newGroom2.PositionY = newGroom1.PositionY ;
             }
