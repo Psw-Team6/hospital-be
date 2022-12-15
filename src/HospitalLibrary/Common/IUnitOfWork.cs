@@ -51,7 +51,10 @@ namespace HospitalLibrary.Common
         IConsiliumRepository ConsiliumRepository { get; }
         IExaminationRepository ExaminationRepository { get; }
         IExaminationPrescriptionRepository ExaminationPrescriptionRepository { get; }
+        IRoomMergingRepository RoomMergingRepository { get; }
+        IRoomSplitingRepository RoomSplitingRepository { get; }
         T GetRepository<T>() where T : class;
         Task CompleteAsync();
+        
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Common;
@@ -10,10 +9,7 @@ using HospitalLibrary.EquipmentMovement.Service;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.SharedModel;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
-using SendGrid.Helpers.Errors.Model;
 using Xunit;
 using Xunit.Abstractions;
 
