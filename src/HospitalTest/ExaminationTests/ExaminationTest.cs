@@ -15,8 +15,18 @@ namespace HospitalTest.ExaminationTests
 {
     public class ExaminationTest
     {
-        [Fact]
-        public void Invalid_examination_date()
+        public static readonly object[][] WrongDates =
+        {
+            new object[] { new DateTime(2023, 10, 27, 15, 0, 0), new DateTime(2023, 10, 27, 15, 15, 0)},
+            new object[] { new DateTime(2017, 2, 1), new DateTime(2018, 2, 28)},
+            new object[] { DateTime.Now.AddMinutes(130), DateTime.Now.AddMinutes(160)},
+            new object[] { DateTime.Now.AddMinutes(1000), DateTime.Now.AddMinutes(1020)},
+            new object[] { DateTime.Now.AddDays(-3), DateTime.Now.AddDays(-3).AddMinutes(30)},
+            new object[] { DateTime.Now.AddDays(-4), DateTime.Now.AddDays(-4).AddMinutes(-30)},
+        };
+
+        [Theory,MemberData(nameof(WrongDates))]
+        public void Invalid_examination_date(DateTime startDate, DateTime endDate)
         {
             //Arrange
             Appointment appointment = new()
@@ -27,9 +37,9 @@ namespace HospitalTest.ExaminationTests
                 AppointmentState = AppointmentState.Pending,
                 Duration = new DateRange
                 {
-                    From = new DateTime(2023, 10, 27, 15, 0, 0),
-                    To = new DateTime(2023, 10, 27, 15, 15, 0)
-                },
+                    From = startDate,
+                    To = endDate
+                }
             };
             Symptom symptom = new()
             {
@@ -49,11 +59,11 @@ namespace HospitalTest.ExaminationTests
             //Act
             try
             {
-                //Assert
                 examination.ValidateExamination();
             }
             catch (ExaminationInvalidDate e)
             {
+                //Assert
                 Assert.Equal(e.Message, Examination.InvalidDateMessage);
             }
 
@@ -70,8 +80,8 @@ namespace HospitalTest.ExaminationTests
                 AppointmentState = AppointmentState.Finished,
                 Duration = new DateRange
                 {
-                    From = DateTime.Now,
-                    To = DateTime.Now.AddMinutes(30)
+                    From = DateTime.Now.AddMinutes(-60),
+                    To = DateTime.Now.AddMinutes(-30)
                 },
             };
             Symptom symptom = new()
@@ -114,8 +124,8 @@ namespace HospitalTest.ExaminationTests
                 AppointmentState = AppointmentState.Pending,
                 Duration = new DateRange
                 {
-                    From = DateTime.Now,
-                    To = DateTime.Now.AddMinutes(30)
+                    From = DateTime.Now.AddMinutes(-60),
+                    To = DateTime.Now.AddMinutes(-30)
                 },
             };
             Symptom symptom = new()
@@ -157,8 +167,8 @@ namespace HospitalTest.ExaminationTests
                 AppointmentState = AppointmentState.Pending,
                 Duration = new DateRange
                 {
-                    From = DateTime.Now,
-                    To = DateTime.Now.AddMinutes(30)
+                    From = DateTime.Now.AddMinutes(-60),
+                    To = DateTime.Now.AddMinutes(-30)
                 },
             };
             Symptom symptom = new()
@@ -201,8 +211,8 @@ namespace HospitalTest.ExaminationTests
                 AppointmentState = AppointmentState.Pending,
                 Duration = new DateRange
                 {
-                    From = DateTime.Now,
-                    To = DateTime.Now.AddMinutes(30)
+                    From = DateTime.Now.AddMinutes(-60),
+                    To = DateTime.Now.AddMinutes(-30)
                 },
             };
             Symptom symptom = new()
@@ -222,6 +232,7 @@ namespace HospitalTest.ExaminationTests
             var prescriptions = new List<ExaminationPrescription> {prescription};
             //Act
             var examination = new Examination(appointment, "aaa", symptoms,prescriptions);
+            examination.ValidateExamination();
             //Assert
             examination.ShouldNotBeNull();
         }
