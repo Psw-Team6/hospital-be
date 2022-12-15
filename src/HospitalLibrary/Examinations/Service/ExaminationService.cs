@@ -58,7 +58,7 @@ namespace HospitalLibrary.Examinations.Service
 
         public async Task<IEnumerable<Examination>> GetAllExaminations()
         {
-            return  await _unitOfWork.GetRepository<ExaminationRepository>().GetAllAsync();
+            return  await _unitOfWork.GetRepository<ExaminationRepository>().GetAllExaminations();
         }
     }
 }
