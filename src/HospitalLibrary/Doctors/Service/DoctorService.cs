@@ -13,7 +13,7 @@ using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Doctors.Service
 {
-    public class DoctorService
+    public class DoctorService : IDoctorService
     {
         private readonly IUnitOfWork _unitOfWork;
 

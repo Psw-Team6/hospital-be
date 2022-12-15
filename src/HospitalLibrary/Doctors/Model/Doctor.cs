@@ -17,8 +17,7 @@ namespace HospitalLibrary.Doctors.Model
     {
         public Guid SpecializationId { get; set; }
         public Specialization Specialization{ get; set; }
-        public IEnumerable<Appointment> Appointments { get; set; }
-        
+        public List<Appointment> Appointments { get; set; }
         public IEnumerable<Holiday> Holidays { get; set; }
         public IEnumerable<Patient> Patients { get; set; }
         public Room Room { get; set; }
@@ -103,7 +102,7 @@ namespace HospitalLibrary.Doctors.Model
                    && dateRange.To.TimeOfDay <= WorkingSchedule.DayOfWork.To.TimeOfDay;
         }
 
-        public bool IsAvailable(DateTime startTime, int duration)
+        public virtual bool IsAvailable(DateTime startTime, int duration)
         {
             if (IsDoctorWorking(startTime, startTime.AddMinutes(duration)))
                 return false;

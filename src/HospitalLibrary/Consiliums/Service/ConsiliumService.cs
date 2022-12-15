@@ -12,12 +12,12 @@ using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Consiliums.Service
 {
-    public class ConsiliumService
+    public class ConsiliumService : IConsiliumService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly DoctorService _doctorService;
+        private readonly IDoctorService _doctorService;
 
-        public ConsiliumService(IUnitOfWork unitOfWork, DoctorService doctorService)
+        public ConsiliumService(IUnitOfWork unitOfWork, IDoctorService doctorService)
         {
             _unitOfWork = unitOfWork;
             _doctorService = doctorService;
@@ -36,6 +36,7 @@ namespace HospitalLibrary.Consiliums.Service
         {             
             var doctors = await _doctorService.GetDoctorsForConsilium(consilium);
             var meeting = new Consilium(consilium.Theme, doctors, consilium.TimeRange);
+            meeting.ValidateConsilium();
             var timeRange = FindTimeRangeForAllDoctors(meeting);
             var room = await FindAvailableMeetingRoom(timeRange);
             var createdConsilium = await CreatedConsilium(consilium, doctors, timeRange, room);
@@ -50,7 +51,7 @@ namespace HospitalLibrary.Consiliums.Service
             return createdConsilium;
         }
 
-        private TimeRange FindTimeRangeForAllDoctors(Consilium meeting)
+        public TimeRange FindTimeRangeForAllDoctors(Consilium meeting)
         {
             var timeRange = FindDateWhenDoctorsAreAvailable(meeting);
             if (timeRange == null)
@@ -59,7 +60,7 @@ namespace HospitalLibrary.Consiliums.Service
             return timeRange;
         }
 
-        private async Task<Room> FindAvailableMeetingRoom(TimeRange timeRange)
+        public async Task<Room> FindAvailableMeetingRoom(TimeRange timeRange)
         {
             var rooms = await _unitOfWork.RoomRepository.GetAllMeetingRooms();
             var consiliums = await _unitOfWork.ConsiliumRepository.GetAllAsync() as List<Consilium>;
@@ -82,7 +83,7 @@ namespace HospitalLibrary.Consiliums.Service
             return true;
         }
 
-        private TimeRange FindDateWhenDoctorsAreAvailable(Consilium consilium)
+        public TimeRange FindDateWhenDoctorsAreAvailable(Consilium consilium)
         {
             var startTime = InitializeStartAndEndTime(consilium, out var endTime);
             while (startTime < endTime)
@@ -146,6 +147,7 @@ namespace HospitalLibrary.Consiliums.Service
             if(!doctors.Any(d => d.Id != doctor.Id))
                 doctors.Add(doctor);
             var consilium = new Consilium(consiliumRequest.Theme, doctors, consiliumRequest.TimeRange);
+            consilium.ValidateConsilium();
             var  timeRange = FindTheBestTimeRange(specializations, consilium,doctor);
             var room = await FindAvailableMeetingRoom(timeRange);
             var createConsilium = await CreatedConsilium(consilium, doctors, timeRange, room);
@@ -233,7 +235,6 @@ namespace HospitalLibrary.Consiliums.Service
                     break;
                 }
             }
-
             return shouldRemove;
         }
 
