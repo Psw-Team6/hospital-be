@@ -18,6 +18,7 @@ namespace HospitalLibrary.Examinations.Repository
         public async Task<Examination> GetExaminationByAppointment(Appointment appointment)
         {
             return await DbSet.Where(x => x.Appointment == appointment)
+                .Include(x=>x.Appointment)
                 .Include(x => x.Prescriptions).
                 Include(x=> x.Symptoms).FirstAsync();
         }

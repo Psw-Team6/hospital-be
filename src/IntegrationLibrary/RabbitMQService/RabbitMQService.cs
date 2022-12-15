@@ -69,15 +69,15 @@ namespace IntegrationLibrary.RabbitMQService
                     MounthlyBloodSubscriptionResponse bs = Newtonsoft.Json.JsonConvert.DeserializeObject<MounthlyBloodSubscriptionResponse>(message);
                     NewsFromBloodBank.Model.NewsFromBloodBank data = Newtonsoft.Json.JsonConvert.DeserializeObject<NewsFromBloodBank.Model.NewsFromBloodBank>(message);
                     MounthlyBloodSubscriptionDTO data1 = Newtonsoft.Json.JsonConvert.DeserializeObject<MounthlyBloodSubscriptionDTO>(message);
-                   
 
-                        //hvata slucaj kada saljem odgovor na mjesecnu pretplatu za krv
+
+                    //hvata slucaj kada saljem odgovor na mjesecnu pretplatu za krv
                     if (data1.APIKey != null && data1.bloodTypeAmountPair != null && data1.messageForManager != null)
                     {
                         List<BloodBank.BloodBank> bbList1 = dbContext.BloodBanks.ToList();
                         foreach (BloodBank.BloodBank bb in bbList1)
                         {
-                            if (data1.APIKey.Equals(bb.ApiKey))
+                            if (data1.APIKey.Equals(bb.ApiKey.Value))
                             {
                                 HttpClient httpClient = new HttpClient();
                                 //BloodBank.BloodBank bloodBank = httpClient.GetFromJsonAsync<BloodBank.BloodBank>("http://localhost:5001/api/BloodBank/findByAPIKey/" + data.APIKey).Result;
@@ -97,25 +97,24 @@ namespace IntegrationLibrary.RabbitMQService
                                     }
                                 }
 
-                                NewsFromBloodBank.Model.NewsFromBloodBank news = new NewsFromBloodBank.Model.NewsFromBloodBank();
-                                news.title = "Mjesecna isporuka krvi";
-                                news.content = data1.messageForManager;
-                                news.apiKey = data1.APIKey;
-                                news.base64image = "";
-                                news.newsStatus = Enums.NewsFromHospitalStatus.BLOOD_SUBSCRIPTION;
-                                news.bloodBankName = bloodBank.Name;
+                                NewsFromBloodBank.Model.NewsFromBloodBank news = new NewsFromBloodBank.Model.NewsFromBloodBank("Mjesecna isporuka krvi", data1.messageForManager,
+                                                                                        data1.APIKey, Enums.NewsFromHospitalStatus.BLOOD_SUBSCRIPTION, "", bloodBank.Name);
 
                                 dbContext.NewsFromBloodBank.Add(news);
                                 dbContext.SaveChanges();
                             }
                         }
                     }
-                    else 
+                    else if (data.content == null) 
+                    {
+                        return;
+                    }
+                    else
                     {
                         List<BloodBank.BloodBank> bbList = dbContext.BloodBanks.ToList();
                         foreach (BloodBank.BloodBank bb in bbList)
                         {
-                            if (data.apiKey.Equals(bb.ApiKey))
+                            if (data.apiKey.Equals(bb.ApiKey.Value))
                             {
                                 dbContext.NewsFromBloodBank.Add(data);
                                 dbContext.SaveChanges();
@@ -197,7 +196,7 @@ namespace IntegrationLibrary.RabbitMQService
             
             foreach (BloodBank.BloodBank bb in bloodBanks) 
             {
-                if (bb.ApiKey.Equals(apikey))
+                if (bb.ApiKey.Value.Equals(apikey))
                     return bb;
             }
             return null; 
