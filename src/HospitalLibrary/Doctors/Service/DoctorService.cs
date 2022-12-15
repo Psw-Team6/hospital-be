@@ -36,7 +36,7 @@ namespace HospitalLibrary.Doctors.Service
         public async Task<IEnumerable<DateRange>> generateFreeTimeSpans(DateRange selectedDateSpan, Guid doctorId)
         {
             Boolean found = false;
-            await ValidateDateRange(selectedDateSpan, doctorId);
+            await Validate(selectedDateSpan, doctorId);
             IEnumerable<DateRange> busyHours = await getBusyHours(selectedDateSpan, doctorId);
             IEnumerable<DateRange> freeHours = new List<DateRange>();
             DateTime endDate = selectedDateSpan.To;
@@ -297,7 +297,7 @@ namespace HospitalLibrary.Doctors.Service
             return doctors;
         }
         
-        private async Task ValidateDateRange(DateRange range,Guid doctorID)
+        private async Task Validate(DateRange range,Guid doctorID)
         {
             CheckDateRange(range);
             await DoctorNotExist(doctorID);
