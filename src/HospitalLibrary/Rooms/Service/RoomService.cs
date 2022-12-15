@@ -53,8 +53,6 @@ namespace HospitalLibrary.Rooms.Service
             Room room2 = await GetById(room2Id);
             Room newRoom = new Room();
             newRoom = room1;
-            //TREBACE OVO VRV foreach (var room2Bed in room2.Beds) newRoom.Beds.Add(room2Bed);
-            
             GRoom newGroom = new GRoom();
             
             GRoom groom1 = await _unitOfWork.GRoomRepository.GetByIdAsync(room1.GRoomId);
@@ -137,7 +135,7 @@ namespace HospitalLibrary.Rooms.Service
             GRoom newGroom2 = new GRoom();
             newGroom2.RoomId = newRoom2.Id;
             newGroom2.Id = Guid.NewGuid();
-            if (originalGroom.Lenght > 2)
+            if (originalGroom.Lenght >= 2)
             {
                 newGroom2.Lenght = originalGroom.Lenght / 2;
                 newGroom2.Width = originalGroom.Width;
