@@ -62,8 +62,8 @@ namespace HospitalLibrary.Rooms.Service
             newGroom.Id = groom1.Id;
             newGroom.PositionX = Math.Min(groom1.PositionX, groom2.PositionX);
             newGroom.PositionY = Math.Min(groom1.PositionY, groom2.PositionY);
-            newGroom.Lenght = Math.Max(groom1.PositionX + groom1.Width, groom2.PositionX + groom2.Width) - newGroom.PositionX;
-            newGroom.Width = Math.Max(groom1.PositionY + groom1.Lenght, groom2.PositionY + groom2.Lenght) - newGroom.PositionY;
+            newGroom.Lenght =Math.Max(groom1.PositionY + groom1.Lenght, groom2.PositionY + groom2.Lenght) - newGroom.PositionY; 
+            newGroom.Width = Math.Max(groom1.PositionX + groom1.Width, groom2.PositionX + groom2.Width) - newGroom.PositionX;
             newRoom.GRoomId = newGroom.Id;
             Console.WriteLine("ROOM MERGING DATA FINISHED");
             
