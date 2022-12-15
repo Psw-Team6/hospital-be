@@ -33,6 +33,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Allergen> Allergens { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<MaliciousPatient> MaliciousPatients { get; set; }
         public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
         public DbSet<GRoom> GRooms { get; set; }
         public DbSet<RoomBed> RoomBeds { get; set; }
@@ -636,7 +637,8 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Doctor,
-                Enabled = true
+                Enabled = true,
+                IsBlocked = false
             };
             Doctor doctor1 = new()
             {
@@ -653,7 +655,8 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Doctor,
-                Enabled = true
+                Enabled = true,
+                IsBlocked = false
             };
             
             Doctor doctor2 = new()
@@ -671,7 +674,8 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Doctor,
-                Enabled = true
+                Enabled = true,
+                IsBlocked = false
             };
             modelBuilder.Entity<Doctor>().HasData(
                 doctor,doctor1,doctor2
@@ -717,6 +721,7 @@ namespace HospitalLibrary.Settings
                 Age = 15,
                 BloodType = BloodType.ABpos,
                 Allergies = new List<Allergen>(),
+                IsBlocked = false
             };
             Patient patient2 = new()
             {
@@ -736,7 +741,8 @@ namespace HospitalLibrary.Settings
                 Gender = Gender.MALE,
                 Age = 32,
                 BloodType = BloodType.Aneg,
-                Allergies = new List<Allergen>()
+                Allergies = new List<Allergen>(),
+                IsBlocked = false
             };
             
             Patient patient3 = new()
@@ -755,7 +761,8 @@ namespace HospitalLibrary.Settings
                 DoctorId = doctor1.Id,
                 Gender = Gender.FEMALE,
                 Age = 5,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient4 = new()
             {
@@ -773,7 +780,8 @@ namespace HospitalLibrary.Settings
                 DoctorId = doctor2.Id,
                 Gender = Gender.FEMALE,
                 Age = 9,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient5 = new()
             {
@@ -791,7 +799,8 @@ namespace HospitalLibrary.Settings
                 DoctorId = doctor1.Id,
                 Gender = Gender.OTHER,
                 Age = 18,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient6 = new()
             {
@@ -809,7 +818,8 @@ namespace HospitalLibrary.Settings
                 DoctorId = doctor2.Id,
                 Gender = Gender.MALE,
                 Age = 65,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient7 = new()
             {
@@ -827,7 +837,8 @@ namespace HospitalLibrary.Settings
                 DoctorId = doctor2.Id,
                 Gender = Gender.FEMALE,
                 Age = 50,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient8 = new()
             {
@@ -845,7 +856,8 @@ namespace HospitalLibrary.Settings
                 DoctorId = doctor.Id,
                 Gender = Gender.MALE,
                 Age = 70,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient9 = new()
             {
@@ -863,7 +875,8 @@ namespace HospitalLibrary.Settings
                 DoctorId = doctor.Id,
                 Gender = Gender.MALE,
                 Age = 56,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient10 = new()
             {
@@ -881,7 +894,8 @@ namespace HospitalLibrary.Settings
                 DoctorId = doctor2.Id,
                 Gender = Gender.FEMALE,
                 Age = 61,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             modelBuilder.Entity<Patient>().HasData(
                 patient1,patient2,patient3, patient4, patient5, patient6,patient7,patient8,patient9,patient10
@@ -898,7 +912,8 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.BloodBankCenter,
-                Enabled = true
+                Enabled = true,
+                IsBlocked = false
             };
             modelBuilder.Entity<ApplicationUser>().HasData(
                 applicationUser
@@ -917,7 +932,8 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Manager,
-                Enabled = true
+                Enabled = true,
+                IsBlocked = false
             };
             //modelBuilder.Entity<Manager>().HasData(
             //    manager
@@ -934,7 +950,8 @@ namespace HospitalLibrary.Settings
                 Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.BloodBank,
-                Enabled = true
+                Enabled = true,
+                IsBlocked = false
             };
             modelBuilder.Entity<Manager>().HasData(
                manager, manager1

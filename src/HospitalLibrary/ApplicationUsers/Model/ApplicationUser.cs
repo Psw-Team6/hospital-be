@@ -17,5 +17,6 @@ namespace HospitalLibrary.ApplicationUsers.Model
         public string Phone{ get; set; }
         public UserRole UserRole { get; set; }
         public bool Enabled { get; set; }
+        public bool IsBlocked { get; set; }
     }
 }
