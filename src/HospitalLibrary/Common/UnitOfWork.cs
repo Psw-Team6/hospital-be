@@ -51,8 +51,10 @@ namespace HospitalLibrary.Common
         private ConsiliumRepository _consiliumRepository;
         private ExaminationRepository _examinationRepository;
         private ExaminationPrescriptionRepository _examinationPrescriptionRepository;
+        private RoomRepository _roomRepository;
         private IRoomMergingRepository _roomMergingRepository;
         private IRoomSplitingRepository _roomSplitingRepository;
+        
         
         public IAllergenRepository AllergenRepository =>
             _allergenRepository ??= new AllergenRepository(_hospitalDbContext);
@@ -108,7 +110,7 @@ namespace HospitalLibrary.Common
         
         public IWorkingSchueduleRepository WorkingSchueduleRepository =>
             _workingScheduleRepository ??= new WorkingScheduleRepository(_hospitalDbContext);
-        private RoomRepository _roomRepository;
+ 
         public IRoomRepository RoomRepository => _roomRepository ??= new RoomRepository(_hospitalDbContext);
 
         public IApplicationUserRepository UserRepository =>

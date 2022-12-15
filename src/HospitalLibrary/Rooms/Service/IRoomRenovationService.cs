@@ -13,5 +13,6 @@ namespace HospitalLibrary.Rooms.Service
         public Task<RoomSpliting> CreateRoomSpliting(RoomSpliting roomSpliting);
         public Task<RoomSpliting> GetSplitingById(Guid id);
         public Task<RoomMerging> GetMergingById(Guid id);
+        public Task CheckIfRenovationFinished();
     }
 }

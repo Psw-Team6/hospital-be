@@ -84,7 +84,7 @@ namespace HospitalTest.RoomMergingTests
             
             var roomService = new RoomService(mockUnitOfWork.Object);
             
-            Func<Task> act =  () =>  roomService.MergeRooms(room1, room2);
+            Func<Task> act =  () =>  roomService.MergeRooms(room1.Id, room2.Id);
             
             _testOutputHelper.WriteLine(act.ToString());
             Assert.NotNull(act);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
@@ -13,11 +14,13 @@ namespace HospitalLibrary.Rooms.Service
     {
         
         private readonly IAppointmentService _appointmentService;
-        
+
+        private readonly IRoomService _roomService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public RoomRenovationService(IUnitOfWork unitOfWork, IAppointmentService appointmentService)
+        public RoomRenovationService(IRoomService roomService, IUnitOfWork unitOfWork, IAppointmentService appointmentService)
         {
+            _roomService = roomService;
             _unitOfWork = unitOfWork;
             _appointmentService = appointmentService;
         }
@@ -25,7 +28,7 @@ namespace HospitalLibrary.Rooms.Service
         {
             try
             {
-                if (await ValidateRoomMerging(roomMerging) == false)
+                if (await ValidateMergingRequest(roomMerging) == false)
                 {
                     Console.WriteLine("PUKLO");
                     return null;
@@ -48,7 +51,7 @@ namespace HospitalLibrary.Rooms.Service
         {
             try
             {
-                if (await ValidateRoomSpliting(roomSpliting) == false)
+                if (await ValidateSplitingRequest(roomSpliting) == false)
                 {
                     Console.WriteLine("PUKLO");
                     return null;
@@ -77,13 +80,41 @@ namespace HospitalLibrary.Rooms.Service
             throw new NotImplementedException();
         }
 
-        private async Task<bool> ValidateRoomMerging(RoomMerging roomMerging)
+        public async Task CheckIfRenovationFinished()
         {
-            throw new NotImplementedException();
-        }
-        private async Task<bool> ValidateRoomSpliting(RoomSpliting roomSpliting)
-        {
-            throw new NotImplementedException();
+            
+            IEnumerable<RoomMerging> allMergingAppointments = await _unitOfWork.RoomMergingRepository.GetAllAsync();
+            var allMergingAppointmentsArray = allMergingAppointments as RoomMerging[] ?? allMergingAppointments.ToArray();
+            if (allMergingAppointmentsArray.Any())
+            {
+
+                foreach (var appointment in allMergingAppointmentsArray)
+                {
+                    if (appointment.DateRangeOfMerging.To < DateTime.Now)
+                    {
+                        Console.WriteLine("MERGING ROOMS!");
+                        await _roomService.MergeRooms(appointment.Room1Id, appointment.Room2Id);
+                        await  _unitOfWork.RoomMergingRepository.DeleteAsync(appointment);
+                        await _unitOfWork.CompleteAsync();
+                    }
+                }
+            }
+
+            IEnumerable<RoomSpliting> allSplitingAppointments = await _unitOfWork.RoomSplitingRepository.GetAllAsync();
+            var allSplitingAppointmentsArray = allSplitingAppointments as RoomSpliting[] ?? allSplitingAppointments.ToArray();
+            if(!allSplitingAppointmentsArray.Any())
+                return;
+            
+            foreach (var appointment in allSplitingAppointmentsArray)
+            {
+                if (appointment.DatesForSearch.To < DateTime.Now)
+                {
+                    Console.WriteLine("SPLITING ROOMS!");
+                    await _roomService.SplitRoom(appointment.RoomId, appointment.newRoomName);
+                    await  _unitOfWork.RoomSplitingRepository.DeleteAsync(appointment);
+                    await _unitOfWork.CompleteAsync();
+                }
+            }
         }
 
         public async Task<List<RoomMerging>> GetAllAvailableAppointmentsForRoomMerging(RoomMerging roomMergingRequest)

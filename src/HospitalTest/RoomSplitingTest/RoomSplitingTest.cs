@@ -65,7 +65,7 @@ namespace HospitalTest.RoomSplitingTest
             
             var roomService = new RoomService(mockUnitOfWork.Object);
             
-            Func<Task> act =  () =>  roomService.SplitRoom(room1);
+            Func<Task> act =  () =>  roomService.SplitRoom(room1.Id, "Nova soba");
             
             _testOutputHelper.WriteLine(act.ToString());
             Assert.NotNull(act);
