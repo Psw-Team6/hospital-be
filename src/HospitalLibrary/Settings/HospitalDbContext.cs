@@ -46,6 +46,7 @@ namespace HospitalLibrary.Settings
         public DbSet<RoomEquipment> RoomEquipment { get; set; }
         public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
         //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
 
@@ -1016,20 +1017,20 @@ namespace HospitalLibrary.Settings
                     new
                     {
                         AppointmentId = appointment1.Id,
-                        From = DateTime.Now,
-                        To = DateTime.Now.AddMinutes(30)
+                        From = DateTime.Now.AddMinutes(-60),
+                        To = DateTime.Now.AddMinutes(-30)
                     },
                     new
                     {
                         AppointmentId = appointment2.Id,
-                        From = DateTime.Now.AddMinutes(30+15),
-                        To = DateTime.Now.AddMinutes(60+15)
+                        From = DateTime.Now.AddMinutes(-120),
+                        To = DateTime.Now.AddMinutes(-90)
                     },
                     new
                     {
                         AppointmentId = appointment3.Id,
-                        From = DateTime.Now.AddMinutes(60+30),
-                        To = DateTime.Now.AddMinutes(90+30)
+                        From = DateTime.Now.AddMinutes(-200),
+                        To = DateTime.Now.AddMinutes(-170)
                     }
                 );
             modelBuilder.Entity<Appointment>().HasData(

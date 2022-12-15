@@ -37,7 +37,7 @@ namespace HospitalLibrary.Appointments.Repository
         public async Task<List<Appointment>> GetAppointmentsForExamination(Guid doctorId)
         {
             return await DbSet.Where(x => x.DoctorId == doctorId)
-                .Where(x => x.Duration.From.Date == DateTime.Now.Date && x.Duration.To.Date == DateTime.Now.Date)
+                .Where(x => x.AppointmentState == AppointmentState.Pending && x.Duration.To < DateTime.Now.AddHours(2))
                 .Include(x => x.Duration).Include(x => x.Patient)
                 .ToListAsync();
         }
