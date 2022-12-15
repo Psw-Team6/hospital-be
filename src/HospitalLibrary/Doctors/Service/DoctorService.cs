@@ -27,7 +27,7 @@ namespace HospitalLibrary.Doctors.Service
         
         public async Task<IEnumerable<AppointmentSuggestion>> GetFreeTermsByDoctorPriority(AppointmentSuggestion appointmentSuggestion)
         {
-            IEnumerable<AppointmentSuggestion> sortedFreeTermsByTimeRangePriority = new List<AppointmentSuggestion>();
+            //IEnumerable<AppointmentSuggestion> sortedFreeTermsByTimeRangePriority = new List<AppointmentSuggestion>();
             List<AppointmentSuggestion> freeAppointments = new List<AppointmentSuggestion>();
             Doctor doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(appointmentSuggestion.DoctorId);
             try
@@ -41,6 +41,8 @@ namespace HospitalLibrary.Doctors.Service
                         AppointmentSuggestion suggestion = new AppointmentSuggestion();
                         suggestion.PatientId = appointmentSuggestion.PatientId;
                         suggestion.DoctorId = appointmentSuggestion.DoctorId;
+                        suggestion.DoctorName = doctor.Name;
+                        suggestion.DoctorSurname = doctor.Surname;
                         suggestion.Duration = term;
                         freeAppointments.Add(suggestion);
                     }
@@ -94,6 +96,8 @@ namespace HospitalLibrary.Doctors.Service
                             AppointmentSuggestion newTerm = new AppointmentSuggestion();
                             newTerm.Duration = newScheduleRange;
                             newTerm.DoctorId = dr.Id;
+                            newTerm.DoctorName = dr.Name;
+                            newTerm.DoctorSurname = dr.Surname;
                             freeTerms.Add(newTerm);
                         }
                         newScheduleStart = newScheduleStart.AddMinutes(30);

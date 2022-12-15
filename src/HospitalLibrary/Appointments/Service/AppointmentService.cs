@@ -29,6 +29,15 @@ namespace HospitalLibrary.Appointments.Service
             return appointments;
         }
         
+        public async Task<Appointment> CreateAppointment(Appointment appointment)
+        {
+            appointment.AppointmentState = 0;
+            appointment.AppointmentType = 0;
+            var newAppointment = await _unitOfWork.AppointmentRepository.CreateAsync(appointment);
+            await _unitOfWork.CompleteAsync();
+            return newAppointment;
+        }
+        
 
         public async Task<Appointment> GetById(Guid id)
         {

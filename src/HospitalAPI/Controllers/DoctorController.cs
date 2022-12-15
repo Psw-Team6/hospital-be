@@ -110,10 +110,14 @@ namespace HospitalAPI.Controllers
         }
         
         [HttpPost("FreeTermsByTimePriority")]
-        [ProducesResponseType(typeof(List<AppointmentRangeResponse>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<AppointmentRangeResponse>>> GetFreeTermsByTimePriority([FromBody] AppointmentSuggestion suggestion)
+        [ProducesResponseType(typeof(List<AppointmentSuggestion>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<AppointmentSuggestion>>> GetFreeTermsByTimePriority([FromBody] AppointmentRangeResponse appointmentRangeResponse)
         {
-            var ranges = await _doctorService.GetFreeTermsByDoctorPriority(suggestion);
+            AppointmentSuggestion a = new AppointmentSuggestion();
+            a.DoctorId = appointmentRangeResponse.DoctorId;
+            a.PatientId = appointmentRangeResponse.PatientId;
+            a.Duration = appointmentRangeResponse.Duration;
+            var ranges = await _doctorService.GetFreeTermsByDoctorPriority(a);
             return ranges == null ? NotFound() : Ok(ranges);
         }
     }
