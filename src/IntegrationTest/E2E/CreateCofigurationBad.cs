@@ -1,17 +1,15 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace IntegrationTest.E2E
 {
-   public class CreateConfigurationTest
+    public class CreateCofigurationBad
     {
         public readonly IWebDriver driver;
         private Pages.LoginPage loginPage;
@@ -19,7 +17,7 @@ namespace IntegrationTest.E2E
         private Pages.GenerateAndSendPage generateAndSendPage;
 
 
-        public CreateConfigurationTest()
+        public CreateCofigurationBad()
         {
 
             ChromeOptions options = new ChromeOptions();
@@ -57,7 +55,7 @@ namespace IntegrationTest.E2E
             Assert.True(generateAndSendPage.SubmitButtonDisplayed());
             generateAndSendPage.Select("bloodBankName", "BloodBank");
             generateAndSendPage.Select("generatePeriod", "1");
-            generateAndSendPage.Select("sendPeriod","3");
+          
 
         }
 
@@ -68,5 +66,8 @@ namespace IntegrationTest.E2E
         {
             generateAndSendPage.SubmitForm();
         }
+
+
     }
 }
+

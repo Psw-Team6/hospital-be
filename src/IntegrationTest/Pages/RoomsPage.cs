@@ -17,6 +17,8 @@ namespace IntegrationTest.Pages
         IWebElement bloodRequestNav => driver.FindElement(By.XPath("/html/body/app-root/app-sidenav/div/ul/li[7]/a/i"));
         IWebElement bloodBankNav => driver.FindElement(By.XPath("/html/body/app-root/app-sidenav/div/ul/li[9]/a"));
 
+        IWebElement configurationNav => driver.FindElement(By.XPath("/html/body/app-root/app-sidenav/div/ul/li[5]/a"));
+
         public RoomsPage(IWebDriver driver)
         {
             this.driver = driver;
@@ -41,6 +43,17 @@ namespace IntegrationTest.Pages
             bloodSupplyNav.Click();
         }
 
+        public void configurationNavClick()
+        {
+            configurationNav.Click();
+        }
+
+        public bool configurationNavDisplayed()
+        {
+            return configurationNav.Displayed;
+        }
+
+
         public void bloodRequestNavClick()
         {
             bloodRequestNav.Click();
@@ -58,6 +71,12 @@ namespace IntegrationTest.Pages
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe("http://localhost:4200/bloodBank/add"));
+        }
+
+        public void WaitForFormSubmitConfiguration()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe("http://localhost:4200/configureSendingReports"));
         }
     }
 }
