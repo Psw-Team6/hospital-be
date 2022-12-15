@@ -1041,32 +1041,9 @@ namespace HospitalLibrary.Settings
                     );
             modelBuilder.Entity<Holiday>().HasData(holiday1);
 
-            BloodUnit unit1 = new()
-            {
-                Id= Guid.NewGuid(),
-                BloodType = BloodType.Aneg,
-                Amount = 7,
-                BloodBankName = "Moja Banka Krvi"
-                    
-            };
-            
-            BloodUnit unit2 = new()
-            {
-                Id= Guid.NewGuid(),
-                BloodType = BloodType.Oneg,
-                Amount = 10,
-                BloodBankName = "Moja Banka Krvi"
-                    
-            };
-            
-            BloodUnit unit3 = new()
-            {
-                Id= Guid.NewGuid(),
-                BloodType = BloodType.Aneg,
-                Amount = 4,
-                BloodBankName = "Moja Banka Krvi"
-                    
-            };
+            BloodUnit unit1 = new(Guid.NewGuid(), BloodType.Aneg, 7, "Moja Banka Krvi");
+            BloodUnit unit2 = new(Guid.NewGuid(),BloodType.Oneg,10,"Moja Banka Krvi");
+            BloodUnit unit3 = new(Guid.NewGuid(),BloodType.Aneg,4,"Moja Banka Krvi");
 
             
             modelBuilder.Entity<BloodUnit>().HasData(
