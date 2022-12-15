@@ -126,13 +126,13 @@ namespace HospitalLibrary.Rooms.Service
             {
                 foreach (var alreadyMadeAppointment in appointments)
                 {
-                    if (potentialAppointment.DatesForSearch.From < alreadyMadeAppointment.Duration.To)
+                    if (potentialAppointment.DateRangeOfMerging.From < alreadyMadeAppointment.Duration.To)
                     {
                         appointmentsToRemove.Add(potentialAppointment);
                         break;
                     }
 
-                    if (potentialAppointment.DatesForSearch.To < alreadyMadeAppointment.Duration.To)
+                    if (potentialAppointment.DateRangeOfMerging.To < alreadyMadeAppointment.Duration.To)
                     {
                         appointmentsToRemove.Add(potentialAppointment);
                         break;
@@ -185,17 +185,17 @@ namespace HospitalLibrary.Rooms.Service
         private async Task<List<RoomMerging>> GetAppointmentsForEvery15MinMerging(RoomMerging roomMerging)
         {
             List<RoomMerging> potentialAppointments = new List<RoomMerging>();
-            DateTime startOfMovement = roomMerging.DatesForSearch.From;
+            DateTime startOfMovement = roomMerging.DateRangeOfMerging.From;
             DateTime endOfMovement = startOfMovement + roomMerging.Duration;
 
-            while (startOfMovement < roomMerging.DatesForSearch.To ||
-                   endOfMovement < roomMerging.DatesForSearch.To)
+            while (startOfMovement < roomMerging.DateRangeOfMerging.To ||
+                   endOfMovement < roomMerging.DateRangeOfMerging.To)
             {
                 RoomMerging newEquipmentMovement = new RoomMerging
                 {
                     Room1Id = roomMerging.Room1Id,
                     Room2Id = roomMerging.Room2Id,
-                    DatesForSearch = new DateRange
+                    DateRangeOfMerging = new DateRange
                     {
                         From = startOfMovement,
                         To = endOfMovement
@@ -221,13 +221,14 @@ namespace HospitalLibrary.Rooms.Service
             {
                 RoomSpliting newRoomSpliting = new RoomSpliting
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Empty,
                     RoomId = roomSpliting.RoomId,
                     DatesForSearch = new DateRange
                     {
                         From = startOfMovement,
                         To = endOfMovement
-                    }
+                    },
+                    newRoomName = roomSpliting.newRoomName
                 };
 
                 potentialAppointments.Add(newRoomSpliting);
@@ -241,13 +242,13 @@ namespace HospitalLibrary.Rooms.Service
         private async Task<bool> ValidateMergingRequest(RoomMerging roomMergingRequest)
         {
             //PROVERI I APPOINTMNETS
-            if (!roomMergingRequest.DatesForSearch.IsValidRange())
+            if (!roomMergingRequest.DateRangeOfMerging.IsValidRange())
             {
                 Console.WriteLine("Request end is before start.");
                 return false;
             }
 
-            if ( roomMergingRequest.DatesForSearch.From.Date.Date < DateTime.Now.Date || roomMergingRequest.DatesForSearch.To.Date.Date < DateTime.Now)
+            if ( roomMergingRequest.DateRangeOfMerging.From.Date.Date < DateTime.Now.Date || roomMergingRequest.DateRangeOfMerging.To.Date.Date < DateTime.Now)
             {
                 Console.WriteLine("Request cant start before today!");
                 return false;

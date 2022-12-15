@@ -10,7 +10,7 @@ namespace HospitalAPI.Dtos.Request
 
         public Guid Room2Id { get; set; }
 
-        public DateRange DatesForSearch { get; set; }
+        public DateRange DateRangeOfMerging { get; set; }
 
         public TimeSpan Duration{ get; set; }
     }

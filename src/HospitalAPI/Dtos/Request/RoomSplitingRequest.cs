@@ -6,8 +6,9 @@ namespace HospitalAPI.Dtos.Request
 {
     public class RoomSplitingRequest
     {
+        public Guid RoomId { get; set; }
         public DateRange DatesForSearch { get; set; }
         public TimeSpan Duration{ get; set; }
-        public string newRoomName { get; set; }
+        public string NewRoomName { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace HospitalLibrary.Rooms.Model
         public Guid Room2Id { get; set; }
         public Room Room2 { get; set; }
 
-        public DateRange DatesForSearch { get; set; }
+        public DateRange DateRangeOfMerging { get; set; }
 
         public TimeSpan Duration{ get; set; }
     }

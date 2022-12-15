@@ -59,7 +59,7 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction(nameof(GetSplitingById), new { id = result.Id }, result);
         }
         
-        [HttpGet("{id}")]
+        [HttpGet("getRoomMergingById/{id}")]
         [ProducesResponseType( StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<RoomMergingResponse>> GetMergingById(Guid id)
@@ -69,7 +69,7 @@ namespace HospitalAPI.Controllers
             return roomMerging == null ? NotFound() : Ok(result);
         }
         
-        [HttpGet("{id}")]
+        [HttpGet("getRoomSplitingById/{id}")]
         [ProducesResponseType( StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<RoomSplitingResponse>> GetSplitingById(Guid id)
