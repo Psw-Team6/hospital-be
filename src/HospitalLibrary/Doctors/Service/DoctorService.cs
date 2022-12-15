@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Holidays.Model;
+using HospitalLibrary.Patients.Model;
 using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Doctors.Service
@@ -21,6 +23,91 @@ namespace HospitalLibrary.Doctors.Service
         public DoctorService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+        
+        public async Task<IEnumerable<AppointmentSuggestion>> GetFreeTermsByDoctorPriority(AppointmentSuggestion appointmentSuggestion)
+        {
+            IEnumerable<AppointmentSuggestion> sortedFreeTermsByTimeRangePriority = new List<AppointmentSuggestion>();
+            List<AppointmentSuggestion> freeAppointments = new List<AppointmentSuggestion>();
+            Doctor doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(appointmentSuggestion.DoctorId);
+            try
+            {
+                
+                IEnumerable<DateRange> freeTermsChosenDoctor = await generateFreeTimeSpans(appointmentSuggestion.Duration, appointmentSuggestion.DoctorId);
+                if (freeTermsChosenDoctor.Any())
+                {
+                    foreach (var term in freeTermsChosenDoctor)
+                    {
+                        AppointmentSuggestion suggestion = new AppointmentSuggestion();
+                        suggestion.PatientId = appointmentSuggestion.PatientId;
+                        suggestion.DoctorId = appointmentSuggestion.DoctorId;
+                        suggestion.Duration = term;
+                        freeAppointments.Add(suggestion);
+                    }
+                }
+            }
+            catch (DoctorIsNotAvailable)
+            {
+                IEnumerable<Doctor> doctors = GetDoctorsBySpecialization(doctor.SpecializationId).Result;
+                freeAppointments = await timeSpansForTimePriority(appointmentSuggestion.Duration, doctors);
+                //freeAppointments = SortByTime(freeAppointments);
+
+            }
+            return freeAppointments;
+            
+        }
+
+        public List<AppointmentSuggestion> SortByTime(List<AppointmentSuggestion> unsortedDateRanges)
+        {
+            List<AppointmentSuggestion> sortedAppointmentSuggestions = new List<AppointmentSuggestion>();
+            foreach (var app in unsortedDateRanges)
+            {
+                // to do
+            }
+            return sortedAppointmentSuggestions;
+        }
+
+        public async Task<List<AppointmentSuggestion>> timeSpansForTimePriority(DateRange selectedDateSpan, IEnumerable<Doctor> doctors)
+        {
+            List<AppointmentSuggestion> freeTerms = new List<AppointmentSuggestion>();
+            foreach (var dr in doctors)
+            {
+                IEnumerable<DateRange> busyHours = await getBusyHours(selectedDateSpan, dr.Id);
+               
+                DateTime endDate = selectedDateSpan.To;
+                WorkingSchedule doctorsSchedule = await _unitOfWork.DoctorRepository.GetDoctorWorkingSchedule(dr.Id);
+                int startScheduleHour = doctorsSchedule.DayOfWork.From.Hour;
+                int startScheduleMin = doctorsSchedule.DayOfWork.From.Minute;
+            
+                DateTime startDate = new DateTime(selectedDateSpan.From.Year,selectedDateSpan.From.Month,selectedDateSpan.From.Day,startScheduleHour,startScheduleMin,0);
+                while (startDate<= endDate)
+                {
+                    DateTime newScheduleStart = startDate;
+
+                    for (int i = 0; i < 16; i++)
+                    {
+                        DateRange newScheduleRange = new DateRange();
+                        newScheduleRange.From = newScheduleStart;
+                        newScheduleRange.To = newScheduleStart.AddMinutes(30);
+                        if (checkHolidayAndAppointmentAvailability(busyHours, newScheduleRange))
+                        {
+                            AppointmentSuggestion newTerm = new AppointmentSuggestion();
+                            newTerm.Duration = newScheduleRange;
+                            newTerm.DoctorId = dr.Id;
+                            freeTerms.Add(newTerm);
+                        }
+                        newScheduleStart = newScheduleStart.AddMinutes(30);
+                    }
+
+                    startDate =startDate.AddDays(1);
+                    newScheduleStart = startDate;
+                }
+                
+            }
+            
+
+            return freeTerms;
+
         }
 
         public async Task<List<Doctor>> GetAll()
@@ -287,5 +374,7 @@ namespace HospitalLibrary.Doctors.Service
         {
             return await _unitOfWork.DoctorRepository.GetDoctorsBySpecialization(specId);
         }
+        
+        
     }
 }

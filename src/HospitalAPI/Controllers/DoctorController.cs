@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
+using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.SharedModel;
@@ -43,6 +44,8 @@ namespace HospitalAPI.Controllers
             return Ok(result);
         }
         
+        
+        
         [HttpGet("username/{username}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -70,6 +73,7 @@ namespace HospitalAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<List<DateRange>>> GetFreeTimes([FromRoute]Guid id,[FromBody] DateRange span)
         {
+            
             var spanes =  await _doctorService.generateFreeTimeSpans(span,id);
             return Ok(spanes);
 
@@ -103,6 +107,14 @@ namespace HospitalAPI.Controllers
         {
             var result = await _doctorService.DeleteById(id);
             return result ? NoContent() : NotFound();
+        }
+        
+        [HttpPost("FreeTermsByTimePriority")]
+        [ProducesResponseType(typeof(List<AppointmentRangeResponse>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<AppointmentRangeResponse>>> GetFreeTermsByTimePriority([FromBody] AppointmentSuggestion suggestion)
+        {
+            var ranges = await _doctorService.GetFreeTermsByDoctorPriority(suggestion);
+            return ranges == null ? NotFound() : Ok(ranges);
         }
     }
 }
