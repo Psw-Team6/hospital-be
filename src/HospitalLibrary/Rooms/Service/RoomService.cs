@@ -125,7 +125,7 @@ namespace HospitalLibrary.Rooms.Service
             
             await _unitOfWork.GRoomRepository.DeleteAsync(originalGroom);
             
-            await DeleteById(room1.Id);
+            await DeleteById(room1Id);
             
             await _unitOfWork.GRoomRepository.CreateAsync(newGroom1);
             await _unitOfWork.GRoomRepository.CreateAsync(newGroom2);

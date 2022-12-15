@@ -96,6 +96,7 @@ namespace HospitalLibrary.Rooms.Service
                         await _roomService.MergeRooms(appointment.Room1Id, appointment.Room2Id);
                         await  _unitOfWork.RoomMergingRepository.DeleteAsync(appointment);
                         await _unitOfWork.CompleteAsync();
+                        break;
                     }
                 }
             }
@@ -113,6 +114,8 @@ namespace HospitalLibrary.Rooms.Service
                     await _roomService.SplitRoom(appointment.RoomId, appointment.newRoomName);
                     await  _unitOfWork.RoomSplitingRepository.DeleteAsync(appointment);
                     await _unitOfWork.CompleteAsync();
+                    break;
+                    
                 }
             }
         }
