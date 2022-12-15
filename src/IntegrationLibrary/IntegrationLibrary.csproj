@@ -4,14 +4,6 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
- <ItemGroup>
-    <Folder Include="Migrations" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="AMQPNetLite.Core" Version="2.4.5" />
     <PackageReference Include="AutoMapper" Version="12.0.0" />

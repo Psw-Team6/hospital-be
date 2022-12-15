@@ -21,7 +21,6 @@ namespace HospitalLibrary.Examinations.Model
         }
 
         public Appointment Appointment { get; private set; }
-        public Guid IdApp { get; private set; }
         public string Anamnesis { get; private set;}
         public const string InvalidDateMessage = "Invalid examination date.";
         public const string InvalidAppointmentStateMessage = "Invalid appointment state.";
@@ -85,6 +84,7 @@ namespace HospitalLibrary.Examinations.Model
                 throw new ExaminationInvalidAnamnesis(InvalidAnamnesisMessage);
             }
         }
+        public Guid IdApp { get; private set; }
         public Examination()
         {
         }

@@ -46,6 +46,7 @@ namespace HospitalLibrary.Settings
         public DbSet<RoomEquipment> RoomEquipment { get; set; }
         public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
         //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
 
@@ -634,7 +635,6 @@ namespace HospitalLibrary.Settings
                 Name = "Djordje",
                 Surname = "Vuckovic",
                 Email = "DjordjeLopov@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Doctor,
                 Enabled = true,
                 IsBlocked = false
@@ -651,7 +651,6 @@ namespace HospitalLibrary.Settings
                 Name = "Ilija",
                 Surname = "Maric",
                 Email = "Cajons@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Doctor,
                 Enabled = true,
                 IsBlocked = false
@@ -669,7 +668,6 @@ namespace HospitalLibrary.Settings
                 Name = "Milos",
                 Surname = "Milosevic",
                 Email = "Cajons@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Doctor,
                 Enabled = true,
                 IsBlocked = false
@@ -708,7 +706,6 @@ namespace HospitalLibrary.Settings
                 Name = "Sale",
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
@@ -728,7 +725,6 @@ namespace HospitalLibrary.Settings
                 Name = "Miki",
                 Surname = "Djuricic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
@@ -749,7 +745,6 @@ namespace HospitalLibrary.Settings
                 Name = "Nina",
                 Surname = "Minic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
@@ -767,7 +762,6 @@ namespace HospitalLibrary.Settings
                 Name = "Mina",
                 Surname = "Minic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor2.Id,
@@ -785,7 +779,6 @@ namespace HospitalLibrary.Settings
                 Name = "Nikola",
                 Surname = "Nikolic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
@@ -803,7 +796,6 @@ namespace HospitalLibrary.Settings
                 Name = "Marko",
                 Surname = "Markovic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor2.Id,
@@ -821,7 +813,6 @@ namespace HospitalLibrary.Settings
                 Name = "Manja",
                 Surname = "Maric",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor2.Id,
@@ -839,7 +830,6 @@ namespace HospitalLibrary.Settings
                 Name = "Darko",
                 Surname = "Darkovic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor.Id,
@@ -857,7 +847,6 @@ namespace HospitalLibrary.Settings
                 Name = "Filip",
                 Surname = "Filipic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor.Id,
@@ -875,7 +864,6 @@ namespace HospitalLibrary.Settings
                 Name = "Tara",
                 Surname = "Markovic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor2.Id,
@@ -896,7 +884,6 @@ namespace HospitalLibrary.Settings
                 Name = "Moja Banka Krvi",
                 Surname = "Moja Banka Krvi",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.BloodBankCenter,
                 Enabled = true,
                 IsBlocked = false
@@ -915,7 +902,6 @@ namespace HospitalLibrary.Settings
                 Name = "Manager",
                 Surname = "Manger",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Manager,
                 Enabled = true,
                 IsBlocked = false
@@ -932,7 +918,6 @@ namespace HospitalLibrary.Settings
                 Name = "Manager",
                 Surname = "Blood Bank",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.BloodBank,
                 Enabled = true,
                 IsBlocked = false
@@ -1000,20 +985,20 @@ namespace HospitalLibrary.Settings
                     new
                     {
                         AppointmentId = appointment1.Id,
-                        From = DateTime.Now,
-                        To = DateTime.Now.AddMinutes(30)
+                        From = DateTime.Now.AddMinutes(-60),
+                        To = DateTime.Now.AddMinutes(-30)
                     },
                     new
                     {
                         AppointmentId = appointment2.Id,
-                        From = DateTime.Now.AddMinutes(30+15),
-                        To = DateTime.Now.AddMinutes(60+15)
+                        From = DateTime.Now.AddMinutes(-120),
+                        To = DateTime.Now.AddMinutes(-90)
                     },
                     new
                     {
                         AppointmentId = appointment3.Id,
-                        From = DateTime.Now.AddMinutes(60+30),
-                        To = DateTime.Now.AddMinutes(90+30)
+                        From = DateTime.Now.AddMinutes(-200),
+                        To = DateTime.Now.AddMinutes(-170)
                     }
                 );
             modelBuilder.Entity<Appointment>().HasData(
