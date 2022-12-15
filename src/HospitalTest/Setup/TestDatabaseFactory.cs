@@ -151,8 +151,6 @@ namespace HospitalTest.Setup
                 Enabled = true
             };
             context.Managers.Add(manager);
-            
-            
             RoomEquipment roomEquipment = new()
             {
                 RoomId = room.Id,   
@@ -227,6 +225,9 @@ namespace HospitalTest.Setup
                     To = DateTime.Now.AddMinutes(-90)
                 }
             };
+            context.Appointments.Add(appointment1);
+            context.Appointments.Add(appointment2);
+            context.Appointments.Add(appointment3);
             RoomBed bed1 = new()
             {
                 RoomId = room.Id,
@@ -267,12 +268,12 @@ namespace HospitalTest.Setup
                 SelectedRoomId = bed2.RoomId,
                 DateOfDischarge = null
             };
-            context.PatientAdmissions.Add(pa1);
-            context.Appointments.Add(appointment1);
-            context.Appointments.Add(appointment2);
-            context.Appointments.Add(appointment3);
-            
-            context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Patients\";");
+            //context.PatientAdmissions.Add(pa1);
+            context.Database.ExecuteSqlRaw("DELETE FROM  public.\"ExaminationPrescription\";");
+            //context.Database.ExecuteSqlRaw("DELETE FROM  public.\"ExaminationSymptoms\";");
+            context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Examinations\";");
+            //context.Database.ExecuteSqlRaw("DELETE FROM  public.\"PatientAdmissions\";");
+            //context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Patients\";");
             context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Doctors\";");
             context.Database.ExecuteSqlRaw("DELETE FROM  public.\"WorkingSchedules\";");
             context.Database.ExecuteSqlRaw("DELETE FROM public.\"Rooms\";");
