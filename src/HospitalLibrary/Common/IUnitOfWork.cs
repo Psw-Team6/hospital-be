@@ -36,7 +36,7 @@ namespace HospitalLibrary.Common
         IBloodUnitRepository BloodUnitRepository { get; }
         IBloodConsumptionRepository BloodConsumptionRepository { get; }
         IPatientAdmissionRepository PatientAdmissionRepository { get; }
-        
+        IMaliciousPatientRepository MaliciousPatientRepository { get; }
         IIEquipmentRepository EquipmentRepository { get; }
         ITreatmentReportRepository TreatmentReportRepository { get; }
         IRoomBedRepository RoomBedRepository { get; }

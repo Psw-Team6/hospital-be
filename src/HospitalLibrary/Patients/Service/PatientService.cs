@@ -46,6 +46,7 @@ namespace HospitalLibrary.Patients.Service
             patient.AddressId = patient.Address.Id;
             patient.Password = hashPassword;
             patient.UserRole = UserRole.Patient;
+            patient.IsBlocked = false;
             patient.CalculateAge();
             List<Allergen> allergens = new List<Allergen>();
             foreach (var id in patient.AllergyIds)

@@ -33,7 +33,10 @@ namespace HospitalLibrary.ApplicationUsers.Service
             {
                 throw new AuthenticationException("Please verify you account!");
             }
-
+            if (user.IsBlocked)
+            {
+                throw new AuthenticationException("Your account is blocked due to too many appointment cancelations!");
+            }
             return user;
         }
 
