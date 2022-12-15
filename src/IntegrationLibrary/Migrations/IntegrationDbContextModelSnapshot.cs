@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using IntegrationLibrary.BloodSubscription.Model;
 using IntegrationLibrary.Settings;
+using IntegrationLibrary.Tender.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -27,9 +28,6 @@ namespace IntegrationLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ApiKey")
-                        .HasColumnType("text");
-
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
@@ -49,8 +47,7 @@ namespace IntegrationLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2708b8d4-99c0-44dd-b0d1-d60543c7a201"),
-                            ApiKey = "x",
+                            Id = new Guid("0bde4b39-57d1-4367-acb9-a072fad5f358"),
                             Email = "aas@gmail.com",
                             Name = "BloodBank",
                             Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
@@ -66,6 +63,9 @@ namespace IntegrationLibrary.Migrations
 
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
+
+                    b.Property<Guid>("BloodBankId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Comment")
                         .HasColumnType("text");
@@ -92,8 +92,9 @@ namespace IntegrationLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("fc7fa009-af6a-47df-8336-b55616a05f02"),
+                            Id = new Guid("ae712315-f006-40a0-ae77-3927cac8429e"),
                             Amount = 10.0,
+                            BloodBankId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Comment = "",
                             Date = new DateTime(2022, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DoctorUsername = "Ilija",
@@ -103,8 +104,9 @@ namespace IntegrationLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d46cb553-059b-4317-b08c-607bba77bd1f"),
+                            Id = new Guid("e587ef13-7e02-480b-8fbd-49e3d54b0353"),
                             Amount = 20.0,
+                            BloodBankId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Comment = "",
                             Date = new DateTime(2022, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DoctorUsername = "Ilija",
@@ -114,8 +116,9 @@ namespace IntegrationLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2c1f8507-6019-4a54-a78b-28fb5ca51fd1"),
+                            Id = new Guid("99ebb045-307e-44b7-9eb1-467a4ebf4a22"),
                             Amount = 20.0,
+                            BloodBankId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Comment = "",
                             Date = new DateTime(2023, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DoctorUsername = "Ilija",
@@ -125,8 +128,9 @@ namespace IntegrationLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("427b9ff8-8b97-4d42-ae59-6f98d195e02a"),
+                            Id = new Guid("c890ab30-fa1a-43e9-9bdd-8319de73adbd"),
                             Amount = 5.0,
+                            BloodBankId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Comment = "",
                             Date = new DateTime(2023, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DoctorUsername = "Ilija",
@@ -192,18 +196,18 @@ namespace IntegrationLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d2b26c9c-0f2c-44c5-a2a3-32ce90deb7c6"),
+                            Id = new Guid("435d06ad-0b29-4852-a458-a9a551a3dd24"),
                             BloodBankName = "Moja Banka Krvi",
                             GeneratePeriod = "ONE_MONTH",
-                            NextDateForSending = new DateTime(2022, 11, 28, 21, 52, 36, 12, DateTimeKind.Local).AddTicks(6873),
+                            NextDateForSending = new DateTime(2022, 12, 15, 1, 54, 59, 91, DateTimeKind.Local).AddTicks(9606),
                             SendPeriod = "EVERY_TWO_MINUT"
                         },
                         new
                         {
-                            Id = new Guid("0e0ca636-fc9a-4bde-80f1-e2125e7931d0"),
+                            Id = new Guid("31e53b27-cb41-497e-b293-615d4f5d66cd"),
                             BloodBankName = "Nova banka",
                             GeneratePeriod = "TWO_MONTH",
-                            NextDateForSending = new DateTime(2022, 11, 28, 21, 52, 36, 17, DateTimeKind.Local).AddTicks(9407),
+                            NextDateForSending = new DateTime(2022, 12, 15, 1, 54, 59, 93, DateTimeKind.Local).AddTicks(9288),
                             SendPeriod = "ONE_MONTH"
                         });
                 });
@@ -235,6 +239,183 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("NewsFromBloodBank");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Tender.Model.BloodUnitAmount", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("TenderId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenderId");
+
+                    b.ToTable("BloodUnitAmounts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6f4bae6c-2263-43f4-b7f6-008524b01550"),
+                            Amount = 10,
+                            BloodType = 0,
+                            TenderId = new Guid("808445f5-2d7b-44b8-8fee-5fe4a4d14341")
+                        },
+                        new
+                        {
+                            Id = new Guid("46225298-3860-41cf-89b7-ef84b4af0a53"),
+                            Amount = 0,
+                            BloodType = 1,
+                            TenderId = new Guid("808445f5-2d7b-44b8-8fee-5fe4a4d14341")
+                        },
+                        new
+                        {
+                            Id = new Guid("ae7a2deb-433f-41f0-b4be-711bc5a538a1"),
+                            Amount = 5,
+                            BloodType = 2,
+                            TenderId = new Guid("808445f5-2d7b-44b8-8fee-5fe4a4d14341")
+                        },
+                        new
+                        {
+                            Id = new Guid("78cb88b1-a76e-45dc-8f86-f5df21e88150"),
+                            Amount = 0,
+                            BloodType = 3,
+                            TenderId = new Guid("808445f5-2d7b-44b8-8fee-5fe4a4d14341")
+                        },
+                        new
+                        {
+                            Id = new Guid("1b14656d-800b-4955-b417-8ba19ed8faa0"),
+                            Amount = 12,
+                            BloodType = 4,
+                            TenderId = new Guid("808445f5-2d7b-44b8-8fee-5fe4a4d14341")
+                        },
+                        new
+                        {
+                            Id = new Guid("69009ef2-36bf-4bb4-8d9d-0b911140a89c"),
+                            Amount = 7,
+                            BloodType = 5,
+                            TenderId = new Guid("808445f5-2d7b-44b8-8fee-5fe4a4d14341")
+                        },
+                        new
+                        {
+                            Id = new Guid("f8ff8db4-fd4d-4ce8-9f10-1837c64b5db0"),
+                            Amount = 10,
+                            BloodType = 6,
+                            TenderId = new Guid("808445f5-2d7b-44b8-8fee-5fe4a4d14341")
+                        },
+                        new
+                        {
+                            Id = new Guid("57eb3cfd-a3fa-460b-974d-125636cdb8c4"),
+                            Amount = 0,
+                            BloodType = 7,
+                            TenderId = new Guid("808445f5-2d7b-44b8-8fee-5fe4a4d14341")
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Tender.Model.Tender", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DeadlineDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("HasDeadline")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("PublishedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<IEnumerable<TenderOffer>>("TenderOffer")
+                        .HasColumnType("jsonb");
+
+                    b.Property<TenderOffer>("Winner")
+                        .HasColumnType("jsonb");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tenders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("808445f5-2d7b-44b8-8fee-5fe4a4d14341"),
+                            DeadlineDate = new DateTime(2023, 1, 4, 1, 54, 59, 94, DateTimeKind.Local).AddTicks(845),
+                            HasDeadline = true,
+                            PublishedDate = new DateTime(2022, 12, 15, 1, 54, 59, 94, DateTimeKind.Local).AddTicks(1094),
+                            Status = 0
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Tender.Model.TenderOffer", b =>
+                {
+                    b.Property<string>("BloodBankName")
+                        .HasColumnType("text");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime>("RealizationDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.ToTable("TenderOffer");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodBank.BloodBank", b =>
+                {
+                    b.OwnsOne("IntegrationLibrary.BloodBank.Model.ApiKey", "ApiKey", b1 =>
+                        {
+                            b1.Property<Guid>("BloodBankId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .HasColumnType("text");
+
+                            b1.HasKey("BloodBankId");
+
+                            b1.ToTable("BloodBanks");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BloodBankId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    BloodBankId = new Guid("0bde4b39-57d1-4367-acb9-a072fad5f358"),
+                                    Value = "GSaR9qP7Qr8TJyX+7Tow0cq1FiZrMiQv77nt5bDCApw="
+                                });
+                        });
+
+                    b.Navigation("ApiKey");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Tender.Model.BloodUnitAmount", b =>
+                {
+                    b.HasOne("IntegrationLibrary.Tender.Model.Tender", "Tender")
+                        .WithMany("BloodUnitAmount")
+                        .HasForeignKey("TenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tender");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Tender.Model.Tender", b =>
+                {
+                    b.Navigation("BloodUnitAmount");
                 });
 #pragma warning restore 612, 618
         }

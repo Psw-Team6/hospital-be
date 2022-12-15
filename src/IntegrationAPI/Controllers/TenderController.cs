@@ -156,8 +156,8 @@ namespace IntegrationAPI.Controllers
                 "Tender Offer Result",
                 "TEKST",
                 "We are happy to inform you that your offer was accepted.\nClick on this to verificate your offer" 
-                + "<a href=\"http://localhost:4200/tender/verification\" > Verificate offer</a>" 
-                + "to verificate your offer. In field ID enter <strong>" + tender.Id.ToString() + "</strong> \nBest regards"
+                + "<a href=\"http://localhost:4200/tender/verification\" >VERIFICATE</a>" 
+                + " to verificate your offer. In field ID enter <strong>" + tender.Id.ToString() + "</strong> \nBest regards"
                 );
             emailService.SendEmail(email);
 
