@@ -13,6 +13,7 @@ using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Medicines.Repository;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Prescriptions.Repository;
+using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Settings;
 using HospitalLibrary.SharedModel.Repository;
@@ -50,6 +51,8 @@ namespace HospitalLibrary.Common
         private ConsiliumRepository _consiliumRepository;
         private ExaminationRepository _examinationRepository;
         private ExaminationPrescriptionRepository _examinationPrescriptionRepository;
+        private IRoomMergingRepository _roomMergingRepository;
+        private IRoomSplitingRepository _roomSplitingRepository;
         
         public IAllergenRepository AllergenRepository =>
             _allergenRepository ??= new AllergenRepository(_hospitalDbContext);
@@ -110,8 +113,11 @@ namespace HospitalLibrary.Common
 
         public IApplicationUserRepository UserRepository =>
             _applicationUserRepository ??= new ApplicationUserRepository(_hospitalDbContext);
-
         
+        public IRoomMergingRepository RoomMergingRepository =>
+            _roomMergingRepository ??= new RoomMerginRepository(_hospitalDbContext);
+        public IRoomSplitingRepository RoomSplitingRepository =>
+            _roomSplitingRepository ??= new RoomSplitingRepository(_hospitalDbContext);
 
         public ISpecializationsRepository SpecializationsRepository=> _specializationsRepository ??= new SpecializationsRepository(_hospitalDbContext);
         public IDoctorRepository DoctorRepository=> _doctorRepository ??= new DoctorRepository(_hospitalDbContext);

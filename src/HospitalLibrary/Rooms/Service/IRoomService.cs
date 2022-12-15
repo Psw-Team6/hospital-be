@@ -10,8 +10,5 @@ namespace HospitalLibrary.Rooms.Service
         Task<IEnumerable<Room>> GetAll();
         Task<IEnumerable<Room>> GetAllByBuildingIdAndFloorId(Guid buildingId, Guid floorId);
         Task<Room> GetById(Guid id);
-        Task<bool> Update(Room room);
-        public Task<List<RoomMerging>> GetAllAvailableAppointmentsForRoomMerging(RoomMerging appointmentRequested);
-        public Task<List<RoomSpliting>> GetAllAvailableAppointmentsForRoomSpliting(RoomSpliting appointmentRequested);
-    }
+        Task<bool> Update(Room room);}
 }

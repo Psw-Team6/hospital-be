@@ -70,33 +70,6 @@ namespace HospitalAPI.Controllers
             var res = await _roomService.Update(room);
             return res ? NoContent() : NotFound();
         }
-        
-        [HttpPost("getAvailableMerging")]
-        [ProducesResponseType(typeof(List<RoomMergingResponse>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<RoomMergingResponse >>> GetAllAvailableAppointmentsForRoomMerging([FromBody]RoomMergingRequest roomMergingAppointmentRequest)
-        {
-            var appointmentRequested = _mapper.Map<RoomMerging>(roomMergingAppointmentRequest);
-    
-            var appointments = await _roomService.GetAllAvailableAppointmentsForRoomMerging(appointmentRequested);
-    
-            var result = _mapper.Map<List<RoomMergingResponse >>(appointments);
-            return result == null ? BadRequest() : Ok(result);
-        }
-        
-        
-        [HttpPost("getAvailableSpliting")]
-        [ProducesResponseType(typeof(List<RoomSplitingResponse>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<RoomSplitingResponse >>> GetAllAvailableAppointmentsForRoomSpliting([FromBody]RoomSplitingRequest roomSplitingAppointmentRequest)
-        {
-            var appointmentRequested = _mapper.Map<RoomSpliting>(roomSplitingAppointmentRequest);
-    
-            var appointments = await _roomService.GetAllAvailableAppointmentsForRoomSpliting(appointmentRequested);
-    
-            var result = _mapper.Map<List<RoomSplitingResponse >>(appointments);
-            return result == null ? BadRequest() : Ok(result);
-        }
     }
 
 }
