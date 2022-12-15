@@ -11,7 +11,7 @@ using HospitalLibrary.Appointments.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HospitalAPI.Controllers.Private
+namespace HospitalAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -109,6 +109,16 @@ namespace HospitalAPI.Controllers.Private
             var appointments = await _appointmentService.GetAppointmentsForExamination(doctorId);
             var result = _mapper.Map<List<AppointmentResponse>>(appointments);
             return result == null ? NotFound() : Ok(result);
+        }
+        
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<AppointmentRangeResponse>> CreateAppointment([FromBody] AppointmentRangeResponse appointmentRangeResponse)
+        {
+            var appointment = _mapper.Map<Appointment>(appointmentRangeResponse);
+            var result = await _appointmentService.CreateAppointment(appointment);
+            return CreatedAtAction(nameof(GetById), new {id = result.Id}, result);
         }
 
     }

@@ -174,7 +174,6 @@ namespace HospitalTest.ForwardAppointmentTests
                 Name = "Ilija",
                 Surname = "Maric",
                 Email = "Cajons@gmail.com",
-                Jmbg = "99999999",
                 Phone = "+612222222"
             };
             return doctor1;

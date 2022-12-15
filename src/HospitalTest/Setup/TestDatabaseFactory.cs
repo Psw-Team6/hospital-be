@@ -116,7 +116,6 @@ namespace HospitalTest.Setup
                 Name = "Milan",
                 Surname = "Milic",
                 Email = "mm@gmail.com",
-                Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Doctor,
                 Enabled = true
@@ -132,7 +131,6 @@ namespace HospitalTest.Setup
                 Name = "Marko",
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
@@ -148,7 +146,6 @@ namespace HospitalTest.Setup
                 Name = "Manager",
                 Surname = "Manger",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
                 Phone = "+612222222",
                 UserRole = UserRole.Manager,
                 Enabled = true
@@ -230,13 +227,51 @@ namespace HospitalTest.Setup
                     To = DateTime.Now.AddMinutes(-90)
                 }
             };
+            RoomBed bed1 = new()
+            {
+                RoomId = room.Id,
+                IsFree = true,
+                Number = "12A1"
+            };
+            context.RoomBeds.Add(bed1);
+            
+            RoomBed bed2 = new()
+            {
+                RoomId = room.Id,
+                IsFree = false,
+                Number = "12A12"
+            };
+            context.RoomBeds.Add(bed2);
+
+            Patient pat1 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address.Id,
+                Username = "Patientss",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Marko",
+                Surname = "Lave",
+                Email = "psw.isa.mail@gmail.com",
+                Phone = "+612222222",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor.Id
+            };
+
+            PatientAdmission pa1 = new()
+            {
+                PatientId = pat1.Id,
+                Reason = "bolestan",
+                DateOfAdmission = DateTime.Now,
+                SelectedBedId = bed2.Id,
+                SelectedRoomId = bed2.RoomId,
+                DateOfDischarge = null
+            };
+            context.PatientAdmissions.Add(pa1);
             context.Appointments.Add(appointment1);
             context.Appointments.Add(appointment2);
             context.Appointments.Add(appointment3);
             
-            context.Database.ExecuteSqlRaw("DELETE FROM public.\"ExaminationSymptom\";");
-            context.Database.ExecuteSqlRaw("DELETE FROM public.\"ExaminationPrescription\";");
-            context.Database.ExecuteSqlRaw("DELETE FROM public.\"Examinations\";");
             context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Patients\";");
             context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Doctors\";");
             context.Database.ExecuteSqlRaw("DELETE FROM  public.\"WorkingSchedules\";");

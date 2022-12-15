@@ -51,6 +51,8 @@ namespace IntegrationAPI.Controllers
             return tender;
         }
 
+        [HttpPut]
+
         // POST api/tender/add
         [HttpPost("add")]
         public ActionResult Create(IntegrationLibrary.Tender.Model.Tender tender)
@@ -115,6 +117,10 @@ namespace IntegrationAPI.Controllers
                     continue;
                 }
                 BloodBank bloodBank = bankService.GetByName(to.BloodBankName);
+                if (bloodBank == null)
+                {
+                    continue;
+                }
                 Email email = new Email(bloodBank.Email,
                     "Tender Offer Result",
                     "TEKST",
@@ -122,6 +128,39 @@ namespace IntegrationAPI.Controllers
                     );
                 emailService.SendEmail(email);
             }
+            return StatusCode(201, null);
+        }
+
+        [HttpPut("choose")]
+        public ActionResult ChooseTender(Tender tender)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (tender == null)
+            {
+                return BadRequest();
+            }
+
+            tender.Status = IntegrationLibrary.Enums.StatusTender.InProcess;
+            tenderService.Update(tender);
+
+            BloodBank bloodBank = bankService.GetByName(tender.Winner.BloodBankName);
+            if (bloodBank == null)
+            {
+                return StatusCode(400, null);
+            }
+            Email email = new Email(bloodBank.Email,
+                "Tender Offer Result",
+                "TEKST",
+                "We are happy to inform you that your offer was accepted.\nClick on this to verificate your offer" 
+                + "<a href=\"http://localhost:4200/tender/verification\" > Verificate offer</a>" 
+                + "to verificate your offer. In field ID enter <strong>" + tender.Id.ToString() + "</strong> \nBest regards"
+                );
+            emailService.SendEmail(email);
+
             return StatusCode(201, null);
         }
 
