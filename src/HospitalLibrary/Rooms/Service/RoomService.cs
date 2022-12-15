@@ -94,17 +94,7 @@ namespace HospitalLibrary.Rooms.Service
         {
             Room room1 = await GetById(room1Id);
             
-            Room newRoom1 = new Room();
-            newRoom1.Id = Guid.NewGuid();
-            newRoom1.Beds = room1.Beds;
-            newRoom1.Doctor = room1.Doctor;
-            newRoom1.Equipments = room1.Equipments;
-            newRoom1.Floor = room1.Floor;
-            newRoom1.Name = room1.Name;
-            newRoom1.Patients = room1.Patients;
-            newRoom1.Type = room1.Type;
-            newRoom1.BuildingId = room1.BuildingId;
-            newRoom1.FloorId = room1.BuildingId;
+            Room newRoom1= room1;
             
             Room newRoom2 = new Room();
             newRoom2.Id = Guid.NewGuid();
@@ -115,8 +105,8 @@ namespace HospitalLibrary.Rooms.Service
             GRoom originalGroom = await _unitOfWork.GRoomRepository.GetByIdAsync(room1.GRoomId);
             
             GRoom newGroom1 = new GRoom();
-            newGroom1.RoomId = newRoom1.Id;
             newGroom1.Id = Guid.NewGuid();
+            newGroom1.RoomId = newRoom1.Id;
             newGroom1.PositionX = originalGroom.PositionX;
             newGroom1.PositionY = originalGroom.PositionY;
             if (originalGroom.Lenght >= 2)
@@ -155,7 +145,7 @@ namespace HospitalLibrary.Rooms.Service
             await _unitOfWork.GRoomRepository.DeleteAsync(originalGroom);
             Console.WriteLine("Deleted GROM!");
             
-            if(await DeleteById(room1Id))
+          /*  if(await DeleteById(room1Id))
             {
                 
                 Console.WriteLine("DELETED OLD DATA");
@@ -164,16 +154,15 @@ namespace HospitalLibrary.Rooms.Service
             {
                 
                 Console.WriteLine("NOT DELETED OLD DATA");
-            }
+            }*/
             
             await _unitOfWork.GRoomRepository.CreateAsync(newGroom1);
             await _unitOfWork.GRoomRepository.CreateAsync(newGroom2);
             Console.WriteLine("MADE GROOMS");
             
-            await _unitOfWork.RoomRepository.CreateAsync(newRoom1);
+            await _unitOfWork.RoomRepository.UpdateAsync(newRoom1);
             await _unitOfWork.RoomRepository.CreateAsync(newRoom2);
             Console.WriteLine("MADE ROOMS");
-            
             
             await _unitOfWork.CompleteAsync();
 
