@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,19 @@ namespace IntegrationTest.EndToEnd.CreateBloodBank.Pages
     {
         private readonly IWebDriver driver;
         public const string URI = "http://localhost:4200/bloodBank/add";
-        private IWebElement NameElement => driver.FindElement(By.Id("name"));
+        private IWebElement NameElement => driver.FindElement(By.Id("bloodBankName"));
         private IWebElement ServerAddressElement => driver.FindElement(By.Id("serverAddress"));
         private IWebElement EmailElement => driver.FindElement(By.Id("email"));
         private IWebElement ErrorElement => driver.FindElement(By.Id("error"));
         private IWebElement SubmitButtonElement => driver.FindElement(By.Id("submitButton"));
 
         public string Title => driver.Title;
-        public const string InvalidEmailMessage = " Email format is not valid!";
+        public const string InvalidEmailMessage = "Email format is not valid!";
+
+        public string getInvalidEmailMessage() 
+        {
+            return InvalidEmailMessage;
+        }
        
         public CreateBloodBankPage(IWebDriver driver)
         {
@@ -75,6 +81,13 @@ namespace IntegrationTest.EndToEnd.CreateBloodBank.Pages
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe(CreateBloodBankPage.URI));
+        }
+
+        public void ClickOnElementsCoordinates(IWebDriver driver, int positionX, int positionY)
+        {
+            OpenQA.Selenium.Interactions.Actions builder = new OpenQA.Selenium.Interactions.Actions(driver);
+            builder.MoveByOffset(positionX, positionY).Click().Build().Perform(); 
+            builder.Release();
         }
     }
 }

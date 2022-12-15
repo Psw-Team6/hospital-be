@@ -127,7 +127,6 @@ namespace HospitalTest.ScheduleHolidayTests
                 Name = "Ilija",
                 Surname = "Maric",
                 Email = "Cajons@gmail.com",
-                Jmbg = "99999999",
                 Phone = "+612222222"
             };
             Patient patient1 = new()
@@ -139,7 +138,6 @@ namespace HospitalTest.ScheduleHolidayTests
                 Name = "Sale",
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
                 Phone = "+612222222"
             };
             Appointment appointment = new()
@@ -223,7 +221,6 @@ namespace HospitalTest.ScheduleHolidayTests
                 Name = "Ilija",
                 Surname = "Maric",
                 Email = "Cajons@gmail.com",
-                Jmbg = "99999999",
                 Phone = "+612222222"
             };
             holiday = new()
