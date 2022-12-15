@@ -8,7 +8,6 @@ using HospitalLibrary.Common;
 using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
-using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.SharedModel;
 
@@ -286,6 +285,11 @@ namespace HospitalLibrary.Doctors.Service
         public async Task<IEnumerable<Doctor>> GetDoctorsBySpecialization(Guid specId)
         {
             return await _unitOfWork.DoctorRepository.GetDoctorsBySpecialization(specId);
+        }
+
+        public async Task<Doctor> GetDoctorSpecialization(Guid id)
+        {
+            return await _unitOfWork.DoctorRepository.GetDoctorSpecialization(id);
         }
     }
 }

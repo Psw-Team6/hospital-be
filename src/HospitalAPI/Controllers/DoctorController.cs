@@ -95,6 +95,15 @@ namespace HospitalAPI.Controllers
            var result = _mapper.Map<DoctorResponse>(doctor);
            return result == null ? NotFound() : Ok(result);
         }
+        [HttpGet("specialization/{id:guid}")]
+        [ProducesResponseType(typeof(DoctorResponse),StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<DoctorResponse>> GetDoctorSpecialization([FromRoute]Guid id)
+        {
+           var doctor =  await _doctorService.GetDoctorSpecialization(id);
+           var result = _mapper.Map<DoctorResponse>(doctor);
+           return result == null ? NotFound() : Ok(result);
+        }
 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

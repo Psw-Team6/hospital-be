@@ -105,9 +105,11 @@ namespace HospitalLibrary.Doctors.Model
 
         public bool IsAvailable(DateTime startTime, int duration)
         {
-            if ( IsDoctorOnConsilium(startTime,startTime.AddMinutes(duration)) || 
-                 IsDoctorOnHoliday(startTime,startTime.AddMinutes(duration)) ||
-                 IsDoctorWorking(startTime,startTime.AddMinutes(duration)))
+            if (IsDoctorWorking(startTime, startTime.AddMinutes(duration)))
+                return false;
+            if (IsDoctorOnConsilium(startTime, startTime.AddMinutes(duration)))
+                return false;
+            if (IsDoctorOnHoliday(startTime, startTime.AddMinutes(duration)))
                 return false;
             return true;
         }
