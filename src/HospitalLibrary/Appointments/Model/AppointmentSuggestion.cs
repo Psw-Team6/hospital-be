@@ -8,6 +8,8 @@ namespace HospitalLibrary.Appointments.Model
     public class AppointmentSuggestion
     {
         public Guid DoctorId { get; set; }
+        public String DoctorName { get; set; }
+        public String DoctorSurname { get; set; }
         public Guid PatientId { get; set; }
         public DateRange Duration { get; set; }
     }
