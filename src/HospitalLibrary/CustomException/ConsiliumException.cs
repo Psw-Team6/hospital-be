@@ -21,4 +21,16 @@ namespace HospitalLibrary.CustomException
         {
         }
     }
+    public class ThemeNotExist : ConsiliumException
+    {
+        public ThemeNotExist(string message) : base(message)
+        {
+        }
+    } 
+    public class ConsiliumDoctorsNotExist : ConsiliumException
+    {
+        public ConsiliumDoctorsNotExist(string message) : base(message)
+        {
+        }
+    }
 }
