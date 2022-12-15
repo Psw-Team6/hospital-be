@@ -35,9 +35,8 @@ namespace IntegrationAPI.Controllers
             _bbService = bbService;
         }
 
-        /*
         // POST api/MounthlyBloodSubscription
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult Create(MounthlyBloodSubscriptionRequest bSup)
         {
             if (!ModelState.IsValid)
@@ -51,7 +50,7 @@ namespace IntegrationAPI.Controllers
             mounthlyBloodSubscription.amountOfBloodTypes = bSup.bloodTypeAmountPair;
 
             IntegrationLibrary.RabbitMQPublisher.MounthlyBloodSubscriptionResponse bSupResponse = new IntegrationLibrary.RabbitMQPublisher.MounthlyBloodSubscriptionResponse();
-            bSupResponse.APIKey = _bbService.GetByName(bSup.bloodBankName).ApiKey;
+            bSupResponse.APIKey = _bbService.GetByName(bSup.bloodBankName).ApiKey.Value;
             bSupResponse.dateAndTimeOfSubscription = mounthlyBloodSubscription.dateAndTimeOfSubscription;
             bSupResponse.bloodTypeAmountPair = mounthlyBloodSubscription.amountOfBloodTypes;
 

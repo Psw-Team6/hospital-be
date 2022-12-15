@@ -28,7 +28,7 @@ namespace IntegrationTest.Integration
             return new NewsFromBloodBankController(scope.ServiceProvider.GetRequiredService<INewsFromBloodBankService>());   
         }
 
-        [Fact]
+        /*[Fact]
         public void Update_NewsFromBloodBank_Successfuly()
         {
             using var scope = Factory.Services.CreateScope();
@@ -40,9 +40,9 @@ namespace IntegrationTest.Integration
             var result = controller.Update(news.Id, news);
 
             result.ShouldBeOfType<OkObjectResult>();
-        }
+        }*/
 
-        [Fact]
+/*        [Fact]
         public void Update_NewsFromBloodBank_Unsuccessfuly()
         {
             using var scope = Factory.Services.CreateScope();
@@ -62,7 +62,7 @@ namespace IntegrationTest.Integration
             var result = controller.Update(Guid.NewGuid(), news);
 
             result.ShouldBeOfType<BadRequestResult>();
-        }
+        }*/
         
         [Fact]
         public void Save_Recived_Message_With_Correct_APIKey_To_Database()

@@ -41,7 +41,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
                 await _unitOfWork.EquipmentMovementAppointmentRepository.GetByIdAsync(id);
             return equipmentMovementAppointment;
         }
-        
+        /*
         public async Task<bool> DeleteById(Guid id)
         {
             var equipmentMovementAppointment = await _unitOfWork.EquipmentMovementAppointmentRepository.GetByIdAsync(id);
@@ -50,7 +50,27 @@ namespace HospitalLibrary.EquipmentMovement.Service
             await _unitOfWork.CompleteAsync();
             return true;
         }
+        */
+        public async Task<bool> DeleteById(EquipmentMovementAppointment equipmentMovementAppointment)
+        {
+            if (CancelEquipmentMovement(equipmentMovementAppointment))
+            {
+                await _unitOfWork.EquipmentMovementAppointmentRepository.DeleteAsync(equipmentMovementAppointment);
+                await _unitOfWork.CompleteAsync();
+                return true;
+            }
 
+            return false;
+        }
+        
+        private bool CancelEquipmentMovement(EquipmentMovementAppointment equipmentMovementAppointment)
+        {
+            if(DateTime.Now.AddDays(1).CompareTo(equipmentMovementAppointment.Duration.From) < 0)
+                return true;
+            return false;
+        }
+            
+        
         public async Task<EquipmentMovementAppointment> Create(
             EquipmentMovementAppointment equipmentMovementAppointment)
         {
