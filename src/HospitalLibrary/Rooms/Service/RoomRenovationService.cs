@@ -25,7 +25,7 @@ namespace HospitalLibrary.Rooms.Service
         {
             try
             {
-                if (await ValidateAppointment(roomMerging) == false)
+                if (await ValidateRoomMerging(roomMerging) == false)
                 {
                     Console.WriteLine("PUKLO");
                     return null;
@@ -44,7 +44,44 @@ namespace HospitalLibrary.Rooms.Service
             return roomMergingResult;
         }
 
-        private async Task<bool> ValidateAppointment(RoomMerging roomMerging)
+        public async Task<RoomSpliting> CreateRoomSpliting(RoomSpliting roomSpliting)
+        {
+            try
+            {
+                if (await ValidateRoomSpliting(roomSpliting) == false)
+                {
+                    Console.WriteLine("PUKLO");
+                    return null;
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+                return null;
+            }
+
+            var roomSplitingResult = await _unitOfWork.RoomSplitingRepository.CreateAsync(roomSpliting);
+
+            await _unitOfWork.CompleteAsync();
+
+            return roomSplitingResult;
+        }
+
+        public Task<RoomSpliting> GetSplitingById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<RoomMerging> GetMergingById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async Task<bool> ValidateRoomMerging(RoomMerging roomMerging)
+        {
+            throw new NotImplementedException();
+        }
+        private async Task<bool> ValidateRoomSpliting(RoomSpliting roomSpliting)
         {
             throw new NotImplementedException();
         }
