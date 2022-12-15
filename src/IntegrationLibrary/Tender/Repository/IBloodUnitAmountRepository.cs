@@ -10,6 +10,8 @@ namespace IntegrationLibrary.Tender.Repository
     {
         public void Create(Model.BloodUnitAmount bloodUnitAmount);
         public IEnumerable<Model.BloodUnitAmount> GetAll();
+        public IEnumerable<Model.BloodUnitAmount> GetAllByTenderId(Guid tenderId);
+
         public Model.BloodUnitAmount GetById(Guid id);
     }
 }

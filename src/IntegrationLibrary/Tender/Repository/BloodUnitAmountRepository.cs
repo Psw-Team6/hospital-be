@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.Settings;
+using IntegrationLibrary.Tender.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,20 @@ namespace IntegrationLibrary.Tender.Repository
         public IEnumerable<Model.BloodUnitAmount> GetAll()
         {
             return _context.BloodUnitAmounts.ToList();
+        }
+
+        public IEnumerable<BloodUnitAmount> GetAllByTenderId(Guid tenderId)
+        {
+            List<BloodUnitAmount> allBloodUnitAmounts = _context.BloodUnitAmounts.ToList();
+            List<BloodUnitAmount> bloodUnitAmounts = new List<BloodUnitAmount>();
+            foreach (BloodUnitAmount bloodUnitAmount in allBloodUnitAmounts)
+            {
+                if (bloodUnitAmount.TenderId == tenderId)
+                {
+                    bloodUnitAmounts.Add(bloodUnitAmount);
+                }
+            }
+            return bloodUnitAmounts;
         }
 
         public Model.BloodUnitAmount GetById(Guid id)

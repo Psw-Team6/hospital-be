@@ -24,6 +24,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using IntegrationAPI.ScheduleTask.Service;
 using IntegrationAPI.Controllers;
+using IntegrationLibrary.Tender.Service;
+using IntegrationLibrary.Tender.Repository;
 using IntegrationLibrary.HTTP;
 using IntegrationLibrary.BloodSubscription.Service;
 using IntegrationLibrary.BloodSubscription.Repository;
