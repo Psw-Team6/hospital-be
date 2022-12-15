@@ -71,7 +71,7 @@ namespace HospitalTest.Setup
                     From = new DateTime(2022, 10, 27, 8, 0, 0),
                     To = new DateTime(2023, 12, 27, 14, 0, 0)
                 },
-                ExpirationDate = new DateRange
+                ExpirationDate = new NullableDateRange
                 {
                     From = new DateTime(2022, 10, 27),
                     To = new DateTime(2023, 12, 27)
