@@ -146,12 +146,13 @@ namespace HospitalLibrary.Rooms.Service
                         await _roomService.MergeRooms(appointment.Room1Id, appointment.Room2Id);
                         await  _unitOfWork.RoomMergingRepository.DeleteAsync(appointment);
                         Console.WriteLine("DELETED OLD APPOINTMENT");
-                        await _unitOfWork.CompleteAsync();
+                        Console.WriteLine("COMPLETE ASYNC2");
                         break;
                     }
                 }
             }
 
+            Console.WriteLine("SAD I OVO");
             IEnumerable<RoomSpliting> allSplitingAppointments = await _unitOfWork.RoomSplitingRepository.GetAllAsync();
             if(!allSplitingAppointments.Any())
                 return;
