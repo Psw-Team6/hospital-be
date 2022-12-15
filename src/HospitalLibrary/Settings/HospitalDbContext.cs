@@ -671,9 +671,26 @@ namespace HospitalLibrary.Settings
                 UserRole = UserRole.Doctor,
                 Enabled = true,
                 IsBlocked = false
+            }; 
+            Doctor doctor3 = new()
+            {
+                Id = Guid.NewGuid(),
+                SpecializationId = specializationSurgeon.Id,
+                AddressId = address.Id,
+                WorkingScheduleId = workingSchedule2.Id,
+                RoomId = room4.Id,
+                Username = "Jakov",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Jakov",
+                Surname = "Milosevic",
+                Email = "Cajons@gmail.com",
+                Jmbg = new Jmbg("1654156415"),
+                Phone = new Phone("55654654"),
+                UserRole = UserRole.Doctor,
+                Enabled = true
             };
             modelBuilder.Entity<Doctor>().HasData(
-                doctor,doctor1,doctor2
+                doctor,doctor1,doctor2,doctor3
             );
 
             Medicine medicine1 = new()
