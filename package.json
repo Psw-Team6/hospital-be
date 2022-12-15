@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Psw-Team6/hospital-be/issues"
   },
-  "homepage": "https://github.com/Psw-Team6/hospital-be#readme"
+  "homepage": "https://github.com/Psw-Team6/hospital-be#readme",
+  "dependencies": {
+    "selenium": "^2.20.0"
+  }
 }

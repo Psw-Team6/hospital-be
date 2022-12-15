@@ -36,7 +36,7 @@ namespace HospitalLibrary.Common
         IBloodUnitRepository BloodUnitRepository { get; }
         IBloodConsumptionRepository BloodConsumptionRepository { get; }
         IPatientAdmissionRepository PatientAdmissionRepository { get; }
-        
+        IMaliciousPatientRepository MaliciousPatientRepository { get; }
         IIEquipmentRepository EquipmentRepository { get; }
         ITreatmentReportRepository TreatmentReportRepository { get; }
         IRoomBedRepository RoomBedRepository { get; }
@@ -51,7 +51,10 @@ namespace HospitalLibrary.Common
         IConsiliumRepository ConsiliumRepository { get; }
         IExaminationRepository ExaminationRepository { get; }
         IExaminationPrescriptionRepository ExaminationPrescriptionRepository { get; }
+        IRoomMergingRepository RoomMergingRepository { get; }
+        IRoomSplitingRepository RoomSplitingRepository { get; }
         T GetRepository<T>() where T : class;
         Task CompleteAsync();
+        
     }
 }

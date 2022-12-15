@@ -123,6 +123,7 @@ namespace HospitalLibrary.Doctors.Service
         public async Task<IEnumerable<DateRange>> generateFreeTimeSpans(DateRange selectedDateSpan, Guid doctorId)
         {
             Boolean found = false;
+            await Validate(selectedDateSpan, doctorId);
             IEnumerable<DateRange> busyHours = await getBusyHours(selectedDateSpan, doctorId);
             IEnumerable<DateRange> freeHours = new List<DateRange>();
             DateTime endDate = selectedDateSpan.To;
@@ -234,7 +235,10 @@ namespace HospitalLibrary.Doctors.Service
             IEnumerable<Holiday> filteredHolidays = FiltertimespanHolidays(allHolidays, span);
             foreach (var app in filteredHolidays)
             {
-                holidayDates.Append(app.DateRange);
+                if (app.HolidayStatus != HolidayStatus.Declined)
+                {
+                    holidayDates.Append(app.DateRange);
+                }
             }
             return allHolidays;
         }
@@ -272,6 +276,15 @@ namespace HospitalLibrary.Doctors.Service
             return newSchedule.From > scheduled.To || newSchedule.To < scheduled.From;
         }
 
+        
+        private async Task DoctorNotExist(Guid doctorID)
+        {
+            var doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(doctorID);
+            if (doctor == null)
+            {
+                throw new DoctorNotExist("Doctor does not exist.");
+            }
+        }
         public async Task<List<Doctor>> GetAllGeneralWithRequirements()
         {
             List<Doctor> doctors = await GetAllGeneral();
@@ -338,7 +351,7 @@ namespace HospitalLibrary.Doctors.Service
             var doc = await _unitOfWork.DoctorRepository.GetBySpecificSpecialisation(specialisation);
             if (doc == null)
             {
-                throw new DoctorNotExist("Doctors with this specialisation dont exist");
+                throw new DoctorNotExist("Doctors with this specialisation dont exist.");
             }
 
             return doc;
@@ -369,12 +382,30 @@ namespace HospitalLibrary.Doctors.Service
             }
             return doctors;
         }
+        
+        private async Task Validate(DateRange range,Guid doctorID)
+        {
+            CheckDateRange(range);
+            await DoctorNotExist(doctorID);
+        }
 
         public async Task<IEnumerable<Doctor>> GetDoctorsBySpecialization(Guid specId)
         {
             return await _unitOfWork.DoctorRepository.GetDoctorsBySpecialization(specId);
         }
         
-        
+        private static void CheckDateRange(DateRange range)
+        {
+            if (!range.IsValidRange())
+            {
+                throw new DateRangeException("Date range is not valid");
+            }
+
+            if (range.IsBeforeAndTodayDate())
+            {
+                throw new DateRangeNotValid("Please select upcoming date");
+            }
+            
+        }
     }
 }
