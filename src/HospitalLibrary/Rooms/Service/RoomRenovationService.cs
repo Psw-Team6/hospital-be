@@ -95,6 +95,7 @@ namespace HospitalLibrary.Rooms.Service
                         Console.WriteLine("MERGING ROOMS!");
                         await _roomService.MergeRooms(appointment.Room1Id, appointment.Room2Id);
                         await  _unitOfWork.RoomMergingRepository.DeleteAsync(appointment);
+                        Console.WriteLine("DELETED OLD APPOINTMENT");
                         await _unitOfWork.CompleteAsync();
                         break;
                     }
@@ -102,9 +103,10 @@ namespace HospitalLibrary.Rooms.Service
             }
 
             IEnumerable<RoomSpliting> allSplitingAppointments = await _unitOfWork.RoomSplitingRepository.GetAllAsync();
-            var allSplitingAppointmentsArray = allSplitingAppointments as RoomSpliting[] ?? allSplitingAppointments.ToArray();
-            if(!allSplitingAppointmentsArray.Any())
+            if(!allSplitingAppointments.Any())
                 return;
+            var allSplitingAppointmentsArray = allSplitingAppointments as RoomSpliting[] ?? allSplitingAppointments.ToArray();
+
             
             foreach (var appointment in allSplitingAppointmentsArray)
             {
@@ -112,7 +114,10 @@ namespace HospitalLibrary.Rooms.Service
                 {
                     Console.WriteLine("SPLITING ROOMS!");
                     await _roomService.SplitRoom(appointment.RoomId, appointment.newRoomName);
+                    
+                    Console.WriteLine("ROOM SPLITED!");
                     await  _unitOfWork.RoomSplitingRepository.DeleteAsync(appointment);
+                    Console.WriteLine("ROOM SPLITING DELETED!");
                     await _unitOfWork.CompleteAsync();
                     break;
                     
