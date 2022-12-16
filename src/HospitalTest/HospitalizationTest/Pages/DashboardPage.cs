@@ -9,7 +9,9 @@ namespace HospitalTest.HospitalizationTest.Pages
         public const string URI = "http://localhost:4200/dashboard";
 
         IWebElement hospitalizationNav => driver.FindElement(By.XPath("/html/body/app-root/app-sidenav/div/ul/li[6]/a"));
+
         IWebElement consiliumNav => driver.FindElement(By.XPath("/html/body/app-root/app-sidenav/div/ul/li[3]/a"));
+
         public DashboardPage(IWebDriver driver)
         {
             this.driver = driver;

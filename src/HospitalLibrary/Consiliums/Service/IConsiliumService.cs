@@ -21,5 +21,9 @@ namespace HospitalLibrary.Consiliums.Service
              IEnumerable<Specialization> specializations, Guid doctorId);
 
          Task<IEnumerable<Consilium>> GetConsiliumsForDoctor(Guid id);
+         Dictionary<DateTime, List<Doctor>> FindAllAvailableDoctorsAndAppointments(Consilium consilium);
+
+         Dictionary<DateTime, List<Doctor>> RemoveAppointmentsWithNoDoctors(
+             Dictionary<DateTime, List<Doctor>> dictionary, IEnumerable<Specialization> specializations, Doctor doctor);
     }
 }

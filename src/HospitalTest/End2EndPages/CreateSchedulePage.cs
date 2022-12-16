@@ -16,7 +16,7 @@ namespace HospitalTest.End2EndPages
         private IWebElement SubmitButton => _driver.FindElement(By.Id("submitSchedule"));
         private IWebElement ToastMessage => _driver.FindElement(By.XPath("/html/body/app-root/lib-ng-toast/div/div[2]/p[2]"));
         private IWebElement MultiSelect => _driver.FindElement(By.CssSelector(".mat-select-trigger"));
-        private IWebElement PatientSelect => _driver.FindElement(By.ClassName(".mat-option-text"));
+        private IWebElement PatientSelect => _driver.FindElement(By.ClassName("mat-option-text"));
 
         public CreateSchedulePage(IWebDriver driver)
         {
@@ -31,8 +31,8 @@ namespace HospitalTest.End2EndPages
 
         public void EnterDate(string date)
         {
-            DateInput.SendKeys(date);
             DateInput.Clear();
+            DateInput.SendKeys(date);
         }
         public void EnterStartTime(string date)
         {
@@ -52,8 +52,7 @@ namespace HospitalTest.End2EndPages
         {
 
 // Select the option using the SelectElement class
-            var s = new SelectElement(MultiSelect);
-            s.SelectByIndex(0);
+            PatientSelect.Click();
         }
 
         public string GetToastMessage()
