@@ -47,10 +47,16 @@ namespace HospitalAPI.Exceptions
             catch (ExaminationException e)
             {
                 await BadRequestException(context, e);
-            } catch (ConsiliumException e)
+            }
+            catch (ConsiliumException e)
             {
                 await BadRequestException(context, e);
-            } catch (TimeRangeException e)
+            }
+            catch (TimeRangeException e)
+            {
+                await BadRequestException(context, e);
+            }
+            catch (JmbgException e)
             {
                 await BadRequestException(context, e);
             }

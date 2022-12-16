@@ -684,8 +684,6 @@ namespace HospitalLibrary.Settings
                 Name = "Jakov",
                 Surname = "Milosevic",
                 Email = "Cajons@gmail.com",
-                Jmbg = new Jmbg("1654156415"),
-                Phone = new Phone("55654654"),
                 UserRole = UserRole.Doctor,
                 Enabled = true
             };

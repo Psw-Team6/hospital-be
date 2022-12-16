@@ -15,9 +15,9 @@ namespace HospitalLibrary.Patients.Service
     public class PatientService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly DoctorService _doctorService;
+        private readonly IDoctorService _doctorService;
 
-        public PatientService(IUnitOfWork unitOfWork, DoctorService doctorService)
+        public PatientService(IUnitOfWork unitOfWork, IDoctorService doctorService)
         {
             _unitOfWork = unitOfWork;
             _doctorService = doctorService;
@@ -49,6 +49,7 @@ namespace HospitalLibrary.Patients.Service
             patient.IsBlocked = false;
             patient.CalculateAge();
             patient.Jmbg = new Jmbg(patient.Jmbg.Text);
+            patient.Jmbg.ValidateJmbg();
             List<Allergen> allergens = new List<Allergen>();
             foreach (var id in patient.AllergyIds)
             {

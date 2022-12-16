@@ -255,9 +255,7 @@ namespace HospitalTest.ForwardAppointmentTests
                 Password = "miki123",
                 Name = "Ilija",
                 Surname = "Maric",
-                Email = "Cajons@gmail.com",
-                Jmbg = new Jmbg("545412"),
-                Phone = new Phone("552416152")
+                Email = "Cajons@gmail.com"
             };
             holiday = new()
             {
