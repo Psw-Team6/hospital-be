@@ -107,6 +107,17 @@ namespace HospitalAPI.Mapper
                 CreateMap<ExaminationPrescriptionRequest, ExaminationPrescription>();
                 CreateMap<ExaminationPrescription, ExaminationPrescriptionRequest>();
                 CreateMap<AppointmentReportPdfRequest, AppointmentReportPdfOptions>();
+                CreateMap<Appointment, AppointmentRangeResponse>();
+                CreateMap<AppointmentRangeResponse, Appointment>();
+                CreateMap<RoomMergingResponse, RoomMerging>();
+                CreateMap<RoomMerging, RoomMergingResponse>();
+                CreateMap<RoomMergingRequest, RoomMerging>();
+                CreateMap<RoomMerging, RoomMergingRequest>();
+                CreateMap<RoomSplitingResponse, RoomSpliting>();
+                CreateMap<RoomSpliting, RoomSplitingResponse>();
+                CreateMap<RoomSplitingRequest, RoomSpliting>();
+                CreateMap<RoomSpliting, RoomSplitingRequest>();
+
             }
     }
     

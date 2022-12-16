@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HospitalAPI;
 using HospitalLibrary.ApplicationUsers.Model;
+using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Managers;
+using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Settings;
@@ -112,14 +116,12 @@ namespace HospitalTest.Setup
                 Name = "Milan",
                 Surname = "Milic",
                 Email = "mm@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Doctor,
                 Enabled = true
             };
             context.Doctors.Add(doctor);
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\";");
-            context.Patients.Add(new Patient
+            var patient = new Patient
             {
                 Id = Guid.NewGuid(),
                 AddressId = address.Id,
@@ -128,12 +130,11 @@ namespace HospitalTest.Setup
                 Name = "Marko",
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor.Id
-            });
+            };
+            context.Patients.Add(patient);
             Manager manager = new ()
             {
                 Id = Guid.NewGuid(),
@@ -143,14 +144,10 @@ namespace HospitalTest.Setup
                 Name = "Manager",
                 Surname = "Manger",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Manager,
                 Enabled = true
             };
             context.Managers.Add(manager);
-            
-            
             RoomEquipment roomEquipment = new()
             {
                 RoomId = room.Id,   
@@ -159,9 +156,120 @@ namespace HospitalTest.Setup
                 EquipmentName = "BANDAGE"
             };
             context.RoomEquipment.Add(roomEquipment);
+            Symptom symptom = new()
+            {
+                Id = new Guid(),
+                Description = "Fever"
+            };
+            Symptom symptom1 = new()
+            {
+                Id = new Guid(),
+                Description = "Nausea"
+            };
+            var medicine = new Medicine
+            {
+                Name = "Brufen",
+                Amount = 0,
+            };
+            var medicine1 = new Medicine
+            {
+                Name = "Panadol",
+                Amount = 0,
+            };
+            context.Symptoms.Add(symptom);
+            context.Symptoms.Add(symptom1);
+            context.Medicines.Add(medicine);
+            context.Medicines.Add(medicine1);
+            Appointment appointment1 = new()
+            {
+                Id = new Guid("852fa040-a1f5-46f1-963a-2addf5a86a37"),
+                Emergent = false,
+                PatientId = patient.Id,
+                DoctorId = doctor.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending,
+                Duration = new DateRange
+                {
+                    From = new DateTime(2023, 7, 27, 10, 0, 0),
+                    To = new DateTime(2023, 7, 27, 10, 30, 0)
+                }
+            };
+            Appointment appointment2 = new()
+            {
+                Id = new Guid("852fa040-a1f5-46f1-963a-2addf5a86a06"),
+                Emergent = false,
+                PatientId = patient.Id,
+                DoctorId = doctor.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending,
+                Duration = new DateRange
+                {
+                    From = DateTime.Now.AddMinutes(-60),
+                    To = DateTime.Now.AddMinutes(-30)
+                }
+            };
+            Appointment appointment3 = new()
+            {
+                Id = new Guid("852fa040-a1f5-46f1-963a-2addf5a86a90"),
+                Emergent = false,
+                PatientId = patient.Id,
+                DoctorId = doctor.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Finished,
+                Duration = new DateRange
+                {
+                    From = DateTime.Now.AddMinutes(-120),
+                    To = DateTime.Now.AddMinutes(-90)
+                }
+            };
+            context.Appointments.Add(appointment1);
+            context.Appointments.Add(appointment2);
+            context.Appointments.Add(appointment3);
+            RoomBed bed1 = new()
+            {
+                RoomId = room.Id,
+                IsFree = true,
+                Number = "12A1"
+            };
+            context.RoomBeds.Add(bed1);
             
-            
-            context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Patients\";");
+            RoomBed bed2 = new()
+            {
+                RoomId = room.Id,
+                IsFree = false,
+                Number = "12A12"
+            };
+            context.RoomBeds.Add(bed2);
+
+            Patient pat1 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address.Id,
+                Username = "Patientss",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Marko",
+                Surname = "Lave",
+                Email = "psw.isa.mail@gmail.com",
+                UserRole = UserRole.Patient,
+                Enabled = true,
+                DoctorId = doctor.Id
+            };
+
+            PatientAdmission pa1 = new()
+            {
+                PatientId = pat1.Id,
+                Reason = "bolestan",
+                DateOfAdmission = DateTime.Now,
+                SelectedBedId = bed2.Id,
+                SelectedRoomId = bed2.RoomId,
+                DateOfDischarge = null
+            };
+            //context.PatientAdmissions.Add(pa1);
+            context.Database.ExecuteSqlRaw("DELETE FROM  public.\"ExaminationPrescription\";");
+            //context.Database.ExecuteSqlRaw("DELETE FROM  public.\"ExaminationSymptoms\";");
+            context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Examinations\";");
+            //context.Database.ExecuteSqlRaw("DELETE FROM  public.\"PatientAdmissions\";");
+            //context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Patients\";");
             context.Database.ExecuteSqlRaw("DELETE FROM  public.\"Doctors\";");
             context.Database.ExecuteSqlRaw("DELETE FROM  public.\"WorkingSchedules\";");
             context.Database.ExecuteSqlRaw("DELETE FROM public.\"Rooms\";");
@@ -171,6 +279,14 @@ namespace HospitalTest.Setup
             context.Database.ExecuteSqlRaw("DELETE FROM public.\"Addresses\";");
             context.Database.ExecuteSqlRaw("DELETE FROM public.\"Managers\";");
             context.Database.ExecuteSqlRaw("DELETE FROM public.\"RoomEquipment\";");
+            context.Database.ExecuteSqlRaw("DELETE FROM public.\"Symptoms\";");
+            context.Database.ExecuteSqlRaw("DELETE FROM public.\"Medicines\";");
+            //context.Database.ExecuteSqlRaw("DELETE FROM public.\"Appointments\";");
+            //context.Database.ExecuteSqlRaw("DELETE FROM public.\"Appointments\" WHERE Id=\"852fa040-a1f5-46f1-963a-2addf5a86a90\";");
+            // context.Database.ExecuteSqlRaw("drop table public.\"ExaminationSymptom\" cascade");
+            // context.Database.ExecuteSqlRaw("drop table public.\"ExaminationPrescription\" cascade");
+            // context.Database.ExecuteSqlRaw("drop table public.\"Examinations\" cascade");
+            // context.Database.ExecuteSqlRaw("drop table public.\"Appointments\" cascade");
             context.SaveChanges();
         }
     }

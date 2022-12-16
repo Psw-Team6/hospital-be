@@ -112,11 +112,7 @@ namespace HospitalLibrary.Appointments.Service
                 return appointment.Duration.From.Date >= doctorWorkingSchedule.ExpirationDate.From.Date 
                        && appointment.Duration.To.Date <= doctorWorkingSchedule.ExpirationDate.To?.Date;
             }
-            else
-            {
-                return appointment.Duration.From.Date >= doctorWorkingSchedule.ExpirationDate.From.Date;
-            }
-            
+            return appointment.Duration.From.Date >= doctorWorkingSchedule.ExpirationDate.From.Date;
         }
 
         private async Task<bool> CheckDoctorAvailabilityForAppointment(Appointment appointment)

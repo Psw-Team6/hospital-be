@@ -29,6 +29,16 @@ namespace HospitalLibrary.Appointments.Service
             return appointments;
         }
         
+        public async Task<Appointment> CreateAppointment(Appointment appointment)
+        {
+            appointment.AppointmentState = 0;
+            appointment.AppointmentType = 0;
+            Console.WriteLine(appointment.PatientId.ToString());
+            var newAppointment = await _unitOfWork.AppointmentRepository.CreateAsync(appointment);
+            await _unitOfWork.CompleteAsync();
+            return newAppointment;
+        }
+        
 
         public async Task<Appointment> GetById(Guid id)
         {
@@ -78,6 +88,14 @@ namespace HospitalLibrary.Appointments.Service
         }
 
         public async Task<List<Appointment>> GetAppointmentsForExamination(Guid doctorId)
+        {
+            var appointments=  await _unitOfWork.AppointmentRepository.GetAppointmentsForExamination(doctorId);
+            var sorted = appointments
+                .Where(app => app.AppointmentState == AppointmentState.Pending)
+                .OrderBy(x => x.Duration.From).ToList();
+            return sorted;
+        }
+        public async Task<List<Appointment>> GetNextAppointments(Guid doctorId)
         {
             var appointments=  await _unitOfWork.AppointmentRepository.GetAppointmentsForExamination(doctorId);
             var sorted = appointments

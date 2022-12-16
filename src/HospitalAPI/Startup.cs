@@ -8,6 +8,7 @@ using HospitalAPI.ScheduleTask;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.EquipmentMovement.Service;
+using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.Settings;
 using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -62,7 +63,9 @@ namespace HospitalAPI
                 c.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
             });
             services.AddTransient<ExceptionMiddleware>();
-            
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IRoomRenovationService, RoomRenovationService>();
+
             services.AddScoped<IEquipmentMovementAppointmentService, EquipmentMovementAppointmentService>();
             services.AddSingleton<IHostedService, CheckIfAppointmentIsDone>();
             services.AddScoped<IEmailService, EmailService>();
@@ -99,11 +102,11 @@ namespace HospitalAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
-                context?.Database.Migrate();
-            }
+            // using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            // {
+            //     var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
+            //     context?.Database.Migrate();
+            // }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage(); 

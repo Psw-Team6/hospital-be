@@ -16,8 +16,8 @@ namespace HospitalAPI.Dtos.Request
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        public string Jmbg { get; set; }
-        public string Phone{ get; set; }
+        public Jmbg Jmbg { get; set; }
+        public Phone Phone{ get; set; }
         public string DoctorId { get; set; }
         public DateTime DateOfBirth { get; set; }
         public BloodType BloodType { get; set; }

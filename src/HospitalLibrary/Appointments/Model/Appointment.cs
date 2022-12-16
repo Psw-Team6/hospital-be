@@ -20,7 +20,19 @@ namespace HospitalLibrary.Appointments.Model
         public bool CanBeExamined()
         {
             if (!Duration.IsValidRange()) return false;
-            return Duration.From.Date == DateTime.Now.Date && Duration.To.Date >= DateTime.Now.Date;
+            //if more than 2 day earlier
+            var durationRange = Duration.To - Duration.From;
+            if (Duration.From.Date < DateTime.Now.Date.AddDays(-2) && Duration.To.Date < DateTime.Now.Date.AddDays(-2).Add(durationRange))
+            {
+                return false;
+            }
+            //if more than 2 hours before
+            if (Duration.To.Date > DateTime.Now.Date.AddHours(2) && 
+                Duration.From.Date > DateTime.Now.Date.AddHours(2).Add(-durationRange))
+            {
+                return false;
+            }
+            return true;
         }
         
         public bool IsDoctorConflicts(Appointment appointment)
