@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Security.Principal;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
+using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Enums;
+using HospitalLibrary.Examinations.DbConfig;
+using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Settings
@@ -31,6 +33,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Allergen> Allergens { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<MaliciousPatient> MaliciousPatients { get; set; }
         public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
         public DbSet<GRoom> GRooms { get; set; }
         public DbSet<RoomBed> RoomBeds { get; set; }
@@ -38,8 +41,13 @@ namespace HospitalLibrary.Settings
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<BloodConsumption> BloodConsumptions { get; set; }
+        public DbSet<Examination> Examinations { get; set; }
+        public DbSet<Symptom> Symptoms { get; set; }
         public DbSet<RoomEquipment> RoomEquipment { get; set; }
+        public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
+        //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
@@ -225,7 +233,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 FloorId = floor11.Id,
                 Name = "A11",
-                BuildingId = floor11.BuildingId
+                BuildingId = floor11.BuildingId,
+                Type = RoomType.EXAMINATION
             };
             
             GRoom gRoom1 = new()
@@ -243,7 +252,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 FloorId = floor11.Id,
                 Name = "B11",
-                BuildingId = floor11.BuildingId
+                BuildingId = floor11.BuildingId,
+                Type = RoomType.EXAMINATION
             };
             GRoom gRoom2 = new()
             {
@@ -260,7 +270,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 FloorId = floor12.Id,
                 Name = "A12",
-                BuildingId = floor12.BuildingId
+                BuildingId = floor12.BuildingId,
+                Type = RoomType.EXAMINATION
             };
             GRoom gRoom3 = new()
             {
@@ -277,7 +288,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 FloorId = floor13.Id,
                 Name = "A13",
-                BuildingId = floor13.BuildingId
+                BuildingId = floor13.BuildingId,
+                Type = RoomType.EXAMINATION
             };
             GRoom gRoom4 = new()
             {
@@ -294,7 +306,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 FloorId = floor21.Id,
                 Name = "A21",
-                BuildingId = floor21.BuildingId
+                BuildingId = floor21.BuildingId,
+                Type = RoomType.MEETING_ROOM
             };
             GRoom gRoom5 = new()
             {
@@ -311,7 +324,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 FloorId = floor21.Id,
                 Name = "B21",
-                BuildingId = floor21.BuildingId
+                BuildingId = floor21.BuildingId,
+                Type = RoomType.MEETING_ROOM
             };
             
             GRoom gRoom6 = new()
@@ -329,7 +343,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 Name = "A22",
                 FloorId = floor22.Id,
-                BuildingId = floor22.BuildingId
+                BuildingId = floor22.BuildingId,
+                Type = RoomType.MEETING_ROOM
             };
             GRoom gRoom7 = new()
             {
@@ -346,7 +361,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 Name = "C23",
                 FloorId = floor23.Id,
-                BuildingId = floor23.BuildingId
+                BuildingId = floor23.BuildingId,
+                Type = RoomType.MEETING_ROOM
             };
             GRoom gRoom8 = new()
             {
@@ -363,7 +379,8 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 Name = "B23",
                 FloorId = floor23.Id,
-                BuildingId = floor23.BuildingId
+                BuildingId = floor23.BuildingId,
+                Type = RoomType.MEETING_ROOM
             };
             GRoom gRoom9 = new()
             {
@@ -618,10 +635,9 @@ namespace HospitalLibrary.Settings
                 Name = "Djordje",
                 Surname = "Vuckovic",
                 Email = "DjordjeLopov@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Doctor,
-                Enabled = true
+                Enabled = true,
+                IsBlocked = false
             };
             Doctor doctor1 = new()
             {
@@ -635,10 +651,9 @@ namespace HospitalLibrary.Settings
                 Name = "Ilija",
                 Surname = "Maric",
                 Email = "Cajons@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Doctor,
-                Enabled = true
+                Enabled = true,
+                IsBlocked = false
             };
             
             Doctor doctor2 = new()
@@ -653,13 +668,27 @@ namespace HospitalLibrary.Settings
                 Name = "Milos",
                 Surname = "Milosevic",
                 Email = "Cajons@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
+                UserRole = UserRole.Doctor,
+                Enabled = true,
+                IsBlocked = false
+            }; 
+            Doctor doctor3 = new()
+            {
+                Id = Guid.NewGuid(),
+                SpecializationId = specializationSurgeon.Id,
+                AddressId = address.Id,
+                WorkingScheduleId = workingSchedule2.Id,
+                RoomId = room4.Id,
+                Username = "Jakov",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Jakov",
+                Surname = "Milosevic",
+                Email = "Cajons@gmail.com",
                 UserRole = UserRole.Doctor,
                 Enabled = true
             };
             modelBuilder.Entity<Doctor>().HasData(
-                doctor,doctor1,doctor2
+                doctor,doctor1,doctor2,doctor3
             );
 
             Medicine medicine1 = new()
@@ -692,8 +721,6 @@ namespace HospitalLibrary.Settings
                 Name = "Sale",
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
@@ -702,6 +729,7 @@ namespace HospitalLibrary.Settings
                 Age = 15,
                 BloodType = BloodType.ABpos,
                 Allergies = new List<Allergen>(),
+                IsBlocked = false
             };
             Patient patient2 = new()
             {
@@ -712,8 +740,6 @@ namespace HospitalLibrary.Settings
                 Name = "Miki",
                 Surname = "Djuricic",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
@@ -721,7 +747,8 @@ namespace HospitalLibrary.Settings
                 Gender = Gender.MALE,
                 Age = 32,
                 BloodType = BloodType.Aneg,
-                Allergies = new List<Allergen>()
+                Allergies = new List<Allergen>(),
+                IsBlocked = false
             };
             
             Patient patient3 = new()
@@ -733,14 +760,13 @@ namespace HospitalLibrary.Settings
                 Name = "Nina",
                 Surname = "Minic",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
                 Gender = Gender.FEMALE,
                 Age = 5,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient4 = new()
             {
@@ -751,14 +777,13 @@ namespace HospitalLibrary.Settings
                 Name = "Mina",
                 Surname = "Minic",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor2.Id,
                 Gender = Gender.FEMALE,
                 Age = 9,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient5 = new()
             {
@@ -769,14 +794,13 @@ namespace HospitalLibrary.Settings
                 Name = "Nikola",
                 Surname = "Nikolic",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
                 Gender = Gender.OTHER,
                 Age = 18,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient6 = new()
             {
@@ -787,14 +811,13 @@ namespace HospitalLibrary.Settings
                 Name = "Marko",
                 Surname = "Markovic",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor2.Id,
                 Gender = Gender.MALE,
                 Age = 65,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient7 = new()
             {
@@ -805,14 +828,13 @@ namespace HospitalLibrary.Settings
                 Name = "Manja",
                 Surname = "Maric",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor2.Id,
                 Gender = Gender.FEMALE,
                 Age = 50,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient8 = new()
             {
@@ -823,14 +845,13 @@ namespace HospitalLibrary.Settings
                 Name = "Darko",
                 Surname = "Darkovic",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor.Id,
                 Gender = Gender.MALE,
                 Age = 70,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient9 = new()
             {
@@ -841,14 +862,13 @@ namespace HospitalLibrary.Settings
                 Name = "Filip",
                 Surname = "Filipic",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor.Id,
                 Gender = Gender.MALE,
                 Age = 56,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             Patient patient10 = new()
             {
@@ -859,18 +879,34 @@ namespace HospitalLibrary.Settings
                 Name = "Tara",
                 Surname = "Markovic",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor2.Id,
                 Gender = Gender.FEMALE,
                 Age = 61,
-                BloodType = BloodType.Aneg
+                BloodType = BloodType.Aneg,
+                IsBlocked = false
             };
             modelBuilder.Entity<Patient>().HasData(
                 patient1,patient2,patient3, patient4, patient5, patient6,patient7,patient8,patient9,patient10
             );
+            ApplicationUser applicationUser = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "BloodBank",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Moja Banka Krvi",
+                Surname = "Moja Banka Krvi",
+                Email = "psw.isa.mail@gmail.com",
+                UserRole = UserRole.BloodBankCenter,
+                Enabled = true,
+                IsBlocked = false
+            };
+            modelBuilder.Entity<ApplicationUser>().HasData(
+                applicationUser
+            );
+
             //password = 123
             Manager manager = new ()
             {
@@ -881,13 +917,28 @@ namespace HospitalLibrary.Settings
                 Name = "Manager",
                 Surname = "Manger",
                 Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222",
                 UserRole = UserRole.Manager,
-                Enabled = true
+                Enabled = true,
+                IsBlocked = false
+            };
+            //modelBuilder.Entity<Manager>().HasData(
+            //    manager
+            //);
+            Manager manager1 = new()
+            {
+                Id = Guid.NewGuid(),
+                AddressId = address2.Id,
+                Username = "ManagerBB",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Manager",
+                Surname = "Blood Bank",
+                Email = "psw.isa.mail@gmail.com",
+                UserRole = UserRole.BloodBank,
+                Enabled = true,
+                IsBlocked = false
             };
             modelBuilder.Entity<Manager>().HasData(
-                manager
+               manager, manager1
             );
             // PatientAdmission patientAdmission1 = new()
             // {
@@ -910,6 +961,64 @@ namespace HospitalLibrary.Settings
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
+            Appointment appointment1 = new()
+            {
+                Id = Guid.NewGuid(),
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment2 = new()
+            {
+                Id = Guid.NewGuid(),
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment3 = new()
+            {
+                Id = Guid.NewGuid(),
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            modelBuilder.Entity<Appointment>()
+                .OwnsOne(app => app.Duration)
+                .HasData(
+                    new
+                    {
+                        AppointmentId = appointment.Id,
+                        From = new DateTime(2023, 7, 27, 10, 0, 0),
+                        To = new DateTime(2023, 7, 27, 10, 30, 0)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment1.Id,
+                        From = DateTime.Now.AddMinutes(-60),
+                        To = DateTime.Now.AddMinutes(-30)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment2.Id,
+                        From = DateTime.Now.AddMinutes(-120),
+                        To = DateTime.Now.AddMinutes(-90)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment3.Id,
+                        From = DateTime.Now.AddMinutes(-200),
+                        To = DateTime.Now.AddMinutes(-170)
+                    }
+                );
+            modelBuilder.Entity<Appointment>().HasData(
+                appointment,appointment1,appointment2,appointment3
+            );
 
             Holiday holiday1 = new()
             {
@@ -932,46 +1041,9 @@ namespace HospitalLibrary.Settings
                     );
             modelBuilder.Entity<Holiday>().HasData(holiday1);
 
-            modelBuilder.Entity<Appointment>()
-                .OwnsOne(app => app.Duration)
-                .HasData(
-                    new
-                    {
-                        AppointmentId = appointment.Id,
-                        From = new DateTime(2023, 7, 27, 10, 0, 0),
-                        To = new DateTime(2023, 7, 27, 10, 30, 0)
-                    }
-                );
-            modelBuilder.Entity<Appointment>().HasData(
-                appointment
-            );
-
-            BloodUnit unit1 = new()
-            {
-                Id= Guid.NewGuid(),
-                BloodType = BloodType.Aneg,
-                Amount = 7,
-                BloodBankName = "Moja Banka Krvi"
-                    
-            };
-            
-            BloodUnit unit2 = new()
-            {
-                Id= Guid.NewGuid(),
-                BloodType = BloodType.Oneg,
-                Amount = 10,
-                BloodBankName = "Moja Banka Krvi"
-                    
-            };
-            
-            BloodUnit unit3 = new()
-            {
-                Id= Guid.NewGuid(),
-                BloodType = BloodType.Aneg,
-                Amount = 4,
-                BloodBankName = "Moja Banka Krvi"
-                    
-            };
+            BloodUnit unit1 = new(Guid.NewGuid(), BloodType.Aneg, 7, "Moja Banka Krvi");
+            BloodUnit unit2 = new(Guid.NewGuid(),BloodType.Oneg,10,"Moja Banka Krvi");
+            BloodUnit unit3 = new(Guid.NewGuid(),BloodType.Aneg,4,"Moja Banka Krvi");
 
             
             modelBuilder.Entity<BloodUnit>().HasData(

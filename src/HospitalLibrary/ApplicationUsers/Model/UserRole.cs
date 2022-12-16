@@ -5,6 +5,7 @@
         Doctor=0,
         Manager=1,
         Patient=2,
-        BloodBank=3
+        BloodBank=3,
+        BloodBankCenter=4,
     }
 }

@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
+using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
+using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +18,10 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class DoctorController : ControllerBase
     {
-        private readonly DoctorService _doctorService;
+        private readonly IDoctorService _doctorService;
         private readonly IMapper _mapper;
 
-        public DoctorController( DoctorService doctorService, IMapper mapper)
+        public DoctorController( IDoctorService doctorService, IMapper mapper)
         {
             _doctorService = doctorService;
             _mapper = mapper;
@@ -43,6 +45,7 @@ namespace HospitalAPI.Controllers
         }
         
         
+        
         [HttpGet("username/{username}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -51,6 +54,29 @@ namespace HospitalAPI.Controllers
             var doctor =  await _doctorService.GetByUsername(username);
             var result = _mapper.Map<DoctorResponse>(doctor);
             return result == null ? NotFound() : Ok(result);
+        }
+        
+        [HttpGet("specialisation/{specialisation}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<List<DoctorResponse>>> GetBySpecialisation([FromRoute]string specialisation)
+        {
+            var doctors =  await _doctorService.GetBySpecialisation(specialisation);
+            var result = _mapper.Map<List<DoctorResponse>>(doctors);
+            return result == null ? NotFound() : Ok(result);
+        }
+        
+        [ProducesResponseType(typeof(List<DateRange>), StatusCodes.Status200OK)]
+
+        [HttpPost("freeRanges/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<List<DateRange>>> GetFreeTimes([FromRoute]Guid id,[FromBody] DateRange span)
+        {
+            
+            var spanes =  await _doctorService.generateFreeTimeSpans(span,id);
+            return Ok(spanes);
+
         }
         
         
@@ -73,6 +99,15 @@ namespace HospitalAPI.Controllers
            var result = _mapper.Map<DoctorResponse>(doctor);
            return result == null ? NotFound() : Ok(result);
         }
+        [HttpGet("specialization/{id:guid}")]
+        [ProducesResponseType(typeof(DoctorResponse),StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<DoctorResponse>> GetDoctorSpecialization([FromRoute]Guid id)
+        {
+           var doctor =  await _doctorService.GetDoctorSpecialization(id);
+           var result = _mapper.Map<DoctorResponse>(doctor);
+           return result == null ? NotFound() : Ok(result);
+        }
 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -81,6 +116,18 @@ namespace HospitalAPI.Controllers
         {
             var result = await _doctorService.DeleteById(id);
             return result ? NoContent() : NotFound();
+        }
+        
+        [HttpPost("FreeTermsByTimePriority")]
+        [ProducesResponseType(typeof(List<AppointmentSuggestion>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<AppointmentSuggestion>>> GetFreeTermsByTimePriority([FromBody] AppointmentRangeResponse appointmentRangeResponse)
+        {
+            AppointmentSuggestion a = new AppointmentSuggestion();
+            a.DoctorId = appointmentRangeResponse.DoctorId;
+            a.PatientId = appointmentRangeResponse.PatientId;
+            a.Duration = appointmentRangeResponse.Duration;
+            var ranges = await _doctorService.GetFreeTermsByDoctorPriority(a);
+            return ranges == null ? NotFound() : Ok(ranges);
         }
     }
 }

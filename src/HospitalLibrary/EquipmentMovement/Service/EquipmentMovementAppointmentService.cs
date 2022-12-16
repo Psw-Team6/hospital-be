@@ -9,7 +9,7 @@ using HospitalLibrary.Enums;
 using HospitalLibrary.EquipmentMovement.Model;
 using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.Rooms.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore.Update;
 using SendGrid.Helpers.Errors.Model;
 
@@ -25,6 +25,10 @@ namespace HospitalLibrary.EquipmentMovement.Service
             _appointmentService = appointmentService;
         }
 
+        public async Task<List<EquipmentMovementAppointment>> GetAllMovementAppointmentByRoomId(Guid originalRoomId)
+        {
+            return await _unitOfWork.EquipmentMovementAppointmentRepository.GetAllMovementAppointmentByRoomId(originalRoomId);
+        }
         public async Task<List<EquipmentMovementAppointment>> GetAllByRoomId(Guid id)
         {
             return await _unitOfWork.EquipmentMovementAppointmentRepository
@@ -37,7 +41,36 @@ namespace HospitalLibrary.EquipmentMovement.Service
                 await _unitOfWork.EquipmentMovementAppointmentRepository.GetByIdAsync(id);
             return equipmentMovementAppointment;
         }
+        /*
+        public async Task<bool> DeleteById(Guid id)
+        {
+            var equipmentMovementAppointment = await _unitOfWork.EquipmentMovementAppointmentRepository.GetByIdAsync(id);
+            if (equipmentMovementAppointment == null) { return false; }
+            await _unitOfWork.EquipmentMovementAppointmentRepository.DeleteAsync(equipmentMovementAppointment);
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
+        */
+        public async Task<bool> DeleteById(EquipmentMovementAppointment equipmentMovementAppointment)
+        {
+            if (CancelEquipmentMovement(equipmentMovementAppointment))
+            {
+                await _unitOfWork.EquipmentMovementAppointmentRepository.DeleteAsync(equipmentMovementAppointment);
+                await _unitOfWork.CompleteAsync();
+                return true;
+            }
 
+            return false;
+        }
+        
+        private bool CancelEquipmentMovement(EquipmentMovementAppointment equipmentMovementAppointment)
+        {
+            if(DateTime.Now.AddDays(1).CompareTo(equipmentMovementAppointment.Duration.From) < 0)
+                return true;
+            return false;
+        }
+            
+        
         public async Task<EquipmentMovementAppointment> Create(
             EquipmentMovementAppointment equipmentMovementAppointment)
         {
@@ -380,5 +413,7 @@ namespace HospitalLibrary.EquipmentMovement.Service
                 }
             }
         }
+        
+        
     }
 }

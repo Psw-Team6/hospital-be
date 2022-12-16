@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Appointments.Service
 {
     public interface IEmailService
     {
-        public Task SendEmail(Email email);
-        public Task SendCancelAppointmentEmail(Appointment appointment);
+        public Task<Email> SendEmail(Email email);
+        public Task<Email> SendCancelAppointmentEmail(Appointment appointment);
         
-        public Task SendRescheduleAppointmentEmail(Appointment appointment);
+        public Task<Email> SendRescheduleAppointmentEmail(Appointment appointment);
     }
 }

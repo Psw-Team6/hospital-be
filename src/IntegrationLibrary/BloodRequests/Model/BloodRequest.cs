@@ -17,6 +17,7 @@ namespace IntegrationLibrary.BloodRequests.Model
         public Status Status { get; set; }
         public String Comment { get; set; }
 
+        public Guid BloodBankId { get; set; }
 
     }
 }

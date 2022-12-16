@@ -9,5 +9,7 @@ namespace HospitalLibrary.EquipmentMovement.Repository
     public interface IEquipmentMovementAppointmentRepository: IGenericRepository<EquipmentMovementAppointment>
     {
         Task<List<EquipmentMovementAppointment>> GetAllMovementAppointmentsForRoom(Guid id);
+        Task<List<EquipmentMovementAppointment>> GetAllMovementAppointmentByRoomId(Guid originalRoomId);
+        
     }
 }

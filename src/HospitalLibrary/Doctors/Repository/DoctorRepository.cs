@@ -43,5 +43,37 @@ namespace HospitalLibrary.Doctors.Repository
                 .Where(d => d.Specialization.Name.Equals("General"))
                 .ToListAsync();
         }
+
+        public async Task<Doctor> GetAllDoctorsBySIdAsync(Guid id)
+        {
+            return await DbSet.Include(d => d.Holidays)
+                .Include(d => d.Appointments)
+                .Include(d => d.WorkingSchedule)
+                .Include(d => d.Consiliums)
+                .Where(d => d.Id == id)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Doctor>> GetDoctorsBySpecialization(Guid specializationId)
+        {
+            return await DbSet.Where(doctor => doctor.Specialization.Id == specializationId)
+                .Include(d => d.Holidays)
+                .Include(d => d.Appointments)
+                .Include(d => d.WorkingSchedule)
+                .Include(d => d.Consiliums)
+                .ToListAsync();
+        }
+        public async Task<List<Doctor>> GetBySpecificSpecialisation(String specialization)
+        {
+            return await DbSet.Include(d => d.Specialization)
+                .Where(d => d.Specialization.Name.Equals(specialization))
+                .ToListAsync();
+        }
+
+        public async Task<Doctor> GetDoctorSpecialization(Guid id)
+        {
+            return await DbSet.Include(d => d.Specialization).
+                    FirstOrDefaultAsync(d => d.Id == id);
+        }
     }
 }

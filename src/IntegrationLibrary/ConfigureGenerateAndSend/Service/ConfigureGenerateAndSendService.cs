@@ -78,5 +78,18 @@ namespace IntegrationLibrary.ConfigureGenerateAndSend.Service
         {
             _configureGenerateAndSendRepository.Delete(configuration);
         }
+
+        public bool IsNameEqual(Model.ConfigureGenerateAndSend configureGenerateAndSend)
+        {
+            List<Model.ConfigureGenerateAndSend> configurations = GetAll().ToList();
+
+            for (int i = 0; i < configurations.Count; i++)
+            {
+                if (configureGenerateAndSend.BloodBankName.Equals(configurations[i].BloodBankName))
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

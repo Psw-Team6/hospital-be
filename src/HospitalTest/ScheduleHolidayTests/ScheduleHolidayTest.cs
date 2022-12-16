@@ -13,7 +13,7 @@ using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Holidays.Service;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Rooms.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Moq;
 using Xunit;
 
@@ -104,7 +104,7 @@ namespace HospitalTest.ScheduleHolidayTests
             WorkingSchedule workingSchedule1 = new()
             {
                 Id = Guid.NewGuid(),
-                ExpirationDate = new DateRange
+                ExpirationDate = new NullableDateRange
                 {
                     From = new DateTime(2022, 10, 27),
                     To = new DateTime(2023, 1, 27)
@@ -126,9 +126,7 @@ namespace HospitalTest.ScheduleHolidayTests
                 Password = "miki123",
                 Name = "Ilija",
                 Surname = "Maric",
-                Email = "Cajons@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222"
+                Email = "Cajons@gmail.com"
             };
             Patient patient1 = new()
             {
@@ -138,9 +136,7 @@ namespace HospitalTest.ScheduleHolidayTests
                 Password = "sale1312",
                 Name = "Sale",
                 Surname = "Lave",
-                Email = "psw.isa.mail@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222"
+                Email = "psw.isa.mail@gmail.com"
             };
             Appointment appointment = new()
             {
@@ -180,7 +176,7 @@ namespace HospitalTest.ScheduleHolidayTests
             WorkingSchedule workingSchedule1 = new()
             {
                 Id = Guid.NewGuid(),
-                ExpirationDate = new DateRange
+                ExpirationDate = new NullableDateRange
                 {
                     From = new DateTime(2022, 10, 27),
                     To = new DateTime(2024, 1, 27)
@@ -222,9 +218,7 @@ namespace HospitalTest.ScheduleHolidayTests
                 Password = "miki123",
                 Name = "Ilija",
                 Surname = "Maric",
-                Email = "Cajons@gmail.com",
-                Jmbg = "99999999",
-                Phone = "+612222222"
+                Email = "Cajons@gmail.com"
             };
             holiday = new()
             {
@@ -334,7 +328,7 @@ namespace HospitalTest.ScheduleHolidayTests
             WorkingSchedule workingSchedule1 = new()
             {
                 Id = Guid.NewGuid(),
-                ExpirationDate = new DateRange
+                ExpirationDate = new NullableDateRange
                 {
                     From = new DateTime(2022, 10, 27),
                     To = new DateTime(2024, 1, 27)

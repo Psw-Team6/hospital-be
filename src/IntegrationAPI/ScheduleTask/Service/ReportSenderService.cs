@@ -1,4 +1,5 @@
 ﻿using IntegrationAPI.Controllers;
+using IntegrationLibrary.BloodRequests.Service;
 using IntegrationLibrary.ConfigureGenerateAndSend.Model;
 using IntegrationLibrary.ConfigureGenerateAndSend.Repository;
 using IntegrationLibrary.ConfigureGenerateAndSend.Service;
@@ -13,14 +14,16 @@ namespace IntegrationAPI.ScheduleTask.Service
    public class ReportSenderService: IReportSenderService
     {
         private readonly IConfigureGenerateAndSendRepository _configureGenerateAndSendRepository;
+        private readonly IBloodRequestService _bloodRequestService;
         private CalculateDate calculateDate = new CalculateDate();
         private readonly PDFReportController _PDFReportController;
         
 
-        public ReportSenderService(IConfigureGenerateAndSendRepository configureGenerateAndSendRepository, PDFReportController pDFReportController)
+        public ReportSenderService(IConfigureGenerateAndSendRepository configureGenerateAndSendRepository, PDFReportController pDFReportController, IBloodRequestService bloodRequestService)
         {
             _configureGenerateAndSendRepository = configureGenerateAndSendRepository;
             _PDFReportController = pDFReportController;
+            _bloodRequestService = bloodRequestService;
         }
 
        public List<DateTime> GetAllDateForSend()
@@ -49,6 +52,8 @@ namespace IntegrationAPI.ScheduleTask.Service
                     _configureGenerateAndSendRepository.Update(allDatesForSend[i]);
                     Console.WriteLine("Send message: "+ allDatesForSend[i].NextDateForSending +" to "+ allDatesForSend[i].BloodBankName);
 
+                    _bloodRequestService.sendScheduledRequest();
+                    Console.WriteLine("Request is sent!");
                 }
             }
         }

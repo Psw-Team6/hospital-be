@@ -31,6 +31,6 @@ namespace HospitalLibrary.BloodUnits.Repository
         {
             return await Task.FromResult(DbSet.Where(x => x.BloodType == bloodType).Sum(i => i.Amount));
         }
-        
+
     }
 }

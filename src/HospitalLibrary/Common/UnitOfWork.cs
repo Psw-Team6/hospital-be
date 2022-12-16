@@ -4,18 +4,20 @@ using HospitalLibrary.ApplicationUsers.Repository;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.BloodConsumptions.Repository;
 using HospitalLibrary.BloodUnits.Repository;
+using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.EquipmentMovement.Repository;
+using HospitalLibrary.Examinations.Repository;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Medicines.Repository;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Prescriptions.Repository;
+using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Settings;
-using HospitalLibrary.sharedModel.Repository;
+using HospitalLibrary.SharedModel.Repository;
 using HospitalLibrary.TreatmentReports.Repository;
-using HospitalLibrary.TreatmentReports.Service;
 
 namespace HospitalLibrary.Common
 {
@@ -37,6 +39,7 @@ namespace HospitalLibrary.Common
         private BloodUnitRepository _bloodUnitRepository;
         private BloodConsumptionRepository _bloodConsumptionRepository;
         private PatientAdmissionRepository _patientAdmissionRepository;
+        private MaliciousPatientRepository _maliciousPatientRepository;
         private EquipmentRepository _equipmentRepository;
         private TreatmentReportRepository _treatmentReportRepository;
         private RoomBedRepository _roomBedRepository;
@@ -45,10 +48,19 @@ namespace HospitalLibrary.Common
         private MedicineRepository _medicineRepository;
         private BloodPrescriptionRepository _bloodPrescriptionRepository;
         private MedicinePrescriptionRepository _medicinePrescriptionRepository;
-      
-
+        private SymptomRepository _symptomRepository;
+        private ConsiliumRepository _consiliumRepository;
+        private ExaminationRepository _examinationRepository;
+        private ExaminationPrescriptionRepository _examinationPrescriptionRepository;
+        private RoomRepository _roomRepository;
+        private IRoomMergingRepository _roomMergingRepository;
+        private IRoomSplitingRepository _roomSplitingRepository;
+        
+        
         public IAllergenRepository AllergenRepository =>
             _allergenRepository ??= new AllergenRepository(_hospitalDbContext);
+        public IConsiliumRepository ConsiliumRepository =>
+            _consiliumRepository ??= new ConsiliumRepository(_hospitalDbContext);
 
         public IMedicinePrescriptionRepository MedicinePrescriptionRepository =>
             _medicinePrescriptionRepository ??= new MedicinePrescriptionRepository(_hospitalDbContext);
@@ -59,15 +71,27 @@ namespace HospitalLibrary.Common
 
         public IMedicineRepository MedicineRepository =>
             _medicineRepository ??= new MedicineRepository(_hospitalDbContext);
+
+        public ISymptomRepository SymptomRepository =>
+            _symptomRepository ??= new SymptomRepository(_hospitalDbContext);
+
         public IBloodPrescriptionRepository BloodPrescriptionRepository =>
             _bloodPrescriptionRepository ??= new BloodPrescriptionRepository(_hospitalDbContext);
-        
+
+        public IExaminationRepository ExaminationRepository =>
+            _examinationRepository ??= new ExaminationRepository(_hospitalDbContext);
+
+        public IExaminationPrescriptionRepository ExaminationPrescriptionRepository =>
+            _examinationPrescriptionRepository ??= new ExaminationPrescriptionRepository(_hospitalDbContext);
+
         public ITreatmentReportRepository TreatmentReportRepository =>
             _treatmentReportRepository ??= new TreatmentReportRepository(_hospitalDbContext);
         public IIEquipmentRepository EquipmentRepository =>
             _equipmentRepository ??= new EquipmentRepository(_hospitalDbContext);
         public IPatientAdmissionRepository PatientAdmissionRepository =>
             _patientAdmissionRepository ??= new PatientAdmissionRepository(_hospitalDbContext);
+        public IMaliciousPatientRepository MaliciousPatientRepository =>
+            _maliciousPatientRepository ??= new MaliciousPatientRepository(_hospitalDbContext);
         public IBloodConsumptionRepository BloodConsumptionRepository =>
             _bloodConsumptionRepository ??= new BloodConsumptionRepository(_hospitalDbContext);
         public IBloodUnitRepository BloodUnitRepository =>
@@ -89,13 +113,16 @@ namespace HospitalLibrary.Common
         
         public IWorkingSchueduleRepository WorkingSchueduleRepository =>
             _workingScheduleRepository ??= new WorkingScheduleRepository(_hospitalDbContext);
-        private RoomRepository _roomRepository;
+ 
         public IRoomRepository RoomRepository => _roomRepository ??= new RoomRepository(_hospitalDbContext);
 
         public IApplicationUserRepository UserRepository =>
             _applicationUserRepository ??= new ApplicationUserRepository(_hospitalDbContext);
-
         
+        public IRoomMergingRepository RoomMergingRepository =>
+            _roomMergingRepository ??= new RoomMerginRepository(_hospitalDbContext);
+        public IRoomSplitingRepository RoomSplitingRepository =>
+            _roomSplitingRepository ??= new RoomSplitingRepository(_hospitalDbContext);
 
         public ISpecializationsRepository SpecializationsRepository=> _specializationsRepository ??= new SpecializationsRepository(_hospitalDbContext);
         public IDoctorRepository DoctorRepository=> _doctorRepository ??= new DoctorRepository(_hospitalDbContext);

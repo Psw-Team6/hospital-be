@@ -18,10 +18,10 @@ namespace HospitalAPI.Controllers
     //[HospitalAuthorization(UserRole.Manager)]
     public class RoomsController : ControllerBase
     {
-        private readonly RoomService _roomService;
         private readonly IMapper _mapper;
+        private IRoomService _roomService;
 
-        public RoomsController(RoomService roomService, IMapper mapper)
+        public RoomsController(IRoomService roomService, IMapper mapper)
         {
             _roomService = roomService;
             _mapper = mapper;
@@ -71,4 +71,5 @@ namespace HospitalAPI.Controllers
             return res ? NoContent() : NotFound();
         }
     }
+
 }

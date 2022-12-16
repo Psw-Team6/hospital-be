@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.BloodBank.Repository;
+﻿using IntegrationLibrary.BloodBank.Model;
+using IntegrationLibrary.BloodBank.Repository;
 using IntegrationLibrary.SendMail;
 using IntegrationLibrary.SendMail.Services;
 using System;
@@ -23,7 +24,7 @@ namespace IntegrationLibrary.BloodBank.Service
         public void Create(BloodBank bloodBank)
         {
             bloodBank.Password = GenerateDummyPassword();
-            bloodBank.ApiKey = GenerateApiKey();
+            bloodBank.ApiKey = new Model.ApiKey();
             String user = bloodBank.Name;
             String link = "Dear " + user + ",\n Click on link " + "<a href=\"http://localhost:4200/bloodBank/changePassword\">Change password</a>"
                 + " and change your initial password.\n\n Your username is <strong>" + user + "</strong> and initial password is <strong>" + bloodBank.Password + "</strong>.";
@@ -76,6 +77,10 @@ namespace IntegrationLibrary.BloodBank.Service
                 generator.GetBytes(key);
             return Convert.ToBase64String(key);
 
+        }
+        public BloodBank GetByAPIKey(string APIKey)
+        {
+            return _bloodBankRepository.GetByAPIKey(APIKey);
         }
     }
 }

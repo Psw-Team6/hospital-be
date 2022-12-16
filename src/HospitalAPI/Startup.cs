@@ -7,10 +7,10 @@ using HospitalAPI.Mapper;
 using HospitalAPI.ScheduleTask;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Appointments.Service;
-using HospitalLibrary.EquipmentMovement;
 using HospitalLibrary.EquipmentMovement.Service;
+using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.Settings;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,7 +39,7 @@ namespace HospitalAPI
             options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")!));
             services.Configure<EmailOptions>(Configuration.GetSection(EmailOptions.SendGridEmail));
             services.AddAutoMapper(typeof(MappingProfile));
-            //services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+            services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters(); //OVU SI ODKOMENTRISAO
             services.AddMvc(options =>
                 {
                     options.EnableEndpointRouting = false;
@@ -63,7 +63,9 @@ namespace HospitalAPI
                 c.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
             });
             services.AddTransient<ExceptionMiddleware>();
-            
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IRoomRenovationService, RoomRenovationService>();
+
             services.AddScoped<IEquipmentMovementAppointmentService, EquipmentMovementAppointmentService>();
             services.AddSingleton<IHostedService, CheckIfAppointmentIsDone>();
             services.AddScoped<IEmailService, EmailService>();
@@ -100,19 +102,19 @@ namespace HospitalAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
-                context?.Database.Migrate();
-            }
+            // using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            // {
+            //     var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
+            //     context?.Database.Migrate();
+            // }
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-              //  app.UseSwagger();
+                app.UseDeveloperExceptionPage(); 
+                /*app.UseSwagger();*/ 
               app.UseOpenApi();
               app.UseSwaggerUi3();
-              app.UseReDoc();
-              //  app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1"));
+             // app.UseReDoc();
+              app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1")); //ODKOMENTARIOSAO
             }
 
             app.UseRouting();

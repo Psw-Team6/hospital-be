@@ -11,7 +11,11 @@ namespace HospitalLibrary.Doctors.Repository
         Task<List<Doctor>> GetAllDoctors();
         Task<WorkingSchedule> GetDoctorWorkingSchedule(Guid doctorId);
         Task<Doctor> GetByUsername(string username);
-        Task<List<Doctor>> GetAllDoctorsBySpecialization();
+        Task<List<Doctor>> GetAllDoctorsBySpecialization(); 
+        Task<Doctor> GetAllDoctorsBySIdAsync(Guid id);
+        Task<IEnumerable<Doctor>> GetDoctorsBySpecialization(Guid specializationId);
+        Task<List<Doctor>> GetBySpecificSpecialisation(String specialization);
+        Task<Doctor> GetDoctorSpecialization(Guid id);
 
     }
 }

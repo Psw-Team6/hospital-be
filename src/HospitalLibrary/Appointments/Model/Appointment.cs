@@ -1,7 +1,7 @@
 ﻿using System;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Appointments.Model
 {
@@ -16,6 +16,25 @@ namespace HospitalLibrary.Appointments.Model
         public AppointmentType AppointmentType { get; set; }
         public Doctor Doctor { get; set; }
         public AppointmentState AppointmentState { get; set; }
+
+        public bool CanBeExamined()
+        {
+            if (!Duration.IsValidRange()) return false;
+            //if more than 2 day earlier
+            var durationRange = Duration.To - Duration.From;
+            if (Duration.From.Date < DateTime.Now.Date.AddDays(-2) && Duration.To.Date < DateTime.Now.Date.AddDays(-2).Add(durationRange))
+            {
+                return false;
+            }
+            //if more than 2 hours before
+            if (Duration.To.Date > DateTime.Now.Date.AddHours(2) && 
+                Duration.From.Date > DateTime.Now.Date.AddHours(2).Add(-durationRange))
+            {
+                return false;
+            }
+            return true;
+        }
+        
         public bool IsDoctorConflicts(Appointment appointment)
         {
             return CheckDate(appointment) && CheckTimeOfDay(appointment);

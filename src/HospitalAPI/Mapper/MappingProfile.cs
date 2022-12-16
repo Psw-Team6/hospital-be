@@ -4,15 +4,17 @@ using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
+using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.EquipmentMovement.Model;
+using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Rooms.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 using HospitalLibrary.TreatmentReports.Model;
 
 namespace HospitalAPI.Mapper
@@ -43,7 +45,7 @@ namespace HospitalAPI.Mapper
                 CreateMap<Holiday,HolidayRequest>();
                 CreateMap<Appointment, AppointmentRequest>();
                 CreateMap<Appointment,AppointmentResponse>();
-                CreateMap<AppointmentResponse,Appointment>();
+                CreateMap<AppointmentResponse, Appointment>();
                 CreateMap<WorkingScheduleRequest,WorkingSchedule>();
                 CreateMap<FeedbackResponse, Feedback>();
                 CreateMap<Feedback, FeedbackRequest>();
@@ -80,7 +82,8 @@ namespace HospitalAPI.Mapper
                 CreateMap<Patient, PatientProfileResponse>();
                 CreateMap<PatientProfileResponse, Patient>();
                 CreateMap<Patient, PatientProfileRequest>();
-                CreateMap<TreatmentReportBloodRequest, TreatmentReport>();
+                CreateMap<Symptom, SymptomResponse>();
+                CreateMap<SymptomResponse, Symptom>();
                 CreateMap<TreatmentReport, TreatmentReportBloodRequest>();
                 CreateMap<BloodPrescriptionRequest, BloodPrescription>();
                 CreateMap<BloodPrescription, BloodPrescriptionRequest>();
@@ -92,6 +95,29 @@ namespace HospitalAPI.Mapper
                 CreateMap<MedicinePrescription, MedicinePrescriptionRequest>();
                 CreateMap<MedicineResponse, Medicine>();
                 CreateMap<Medicine, MedicineResponse>();
+                CreateMap<Medicine, MedicineExaminationResponse>();
+                CreateMap<Consilium, ConsiliumResponse>();
+                CreateMap<ConsiliumRequest, Consilium>();
+                CreateMap<DoctorConsiliumResponse, Doctor>();
+                CreateMap<ConsiliumSpecializationRequest, Consilium>();
+                CreateMap<Room, RoomBasicResponse>();
+                CreateMap<MedicineExaminationResponse, Medicine>();
+                CreateMap<ExaminationRequest, Examination>();
+                CreateMap<Examination, ExaminationRequest>();
+                CreateMap<ExaminationPrescriptionRequest, ExaminationPrescription>();
+                CreateMap<ExaminationPrescription, ExaminationPrescriptionRequest>();
+                CreateMap<AppointmentReportPdfRequest, AppointmentReportPdfOptions>();
+                CreateMap<Appointment, AppointmentRangeResponse>();
+                CreateMap<AppointmentRangeResponse, Appointment>();
+                CreateMap<RoomMergingResponse, RoomMerging>();
+                CreateMap<RoomMerging, RoomMergingResponse>();
+                CreateMap<RoomMergingRequest, RoomMerging>();
+                CreateMap<RoomMerging, RoomMergingRequest>();
+                CreateMap<RoomSplitingResponse, RoomSpliting>();
+                CreateMap<RoomSpliting, RoomSplitingResponse>();
+                CreateMap<RoomSplitingRequest, RoomSpliting>();
+                CreateMap<RoomSpliting, RoomSplitingRequest>();
+
             }
     }
     

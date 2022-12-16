@@ -8,7 +8,7 @@ using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Holidays.Repository;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Holidays.Service
 {
@@ -257,7 +257,7 @@ namespace HospitalLibrary.Holidays.Service
                 throw new DateRangeException("Date range is not valid");
             }
 
-            if (holiday.DateRange.IsBeforeDate())
+            if (holiday.DateRange.IsBeforeAndTodayDate())
             {
                 throw new DateRangeNotValid("Please select upcoming date");
             }

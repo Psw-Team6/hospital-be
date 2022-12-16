@@ -1,6 +1,6 @@
 using System;
 using HospitalLibrary.Rooms.Model;
-using HospitalLibrary.sharedModel;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.EquipmentMovement.Model
 {
