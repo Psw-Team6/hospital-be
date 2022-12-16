@@ -206,7 +206,7 @@ namespace HospitalLibrary.Consiliums.Service
             return sortedDictionary;
         }
 
-        private Dictionary<DateTime,List<Doctor>> RemoveAppointmentsWithNoDoctors(Dictionary<DateTime,List<Doctor>> dictionary, IEnumerable<Specialization> specializations,Doctor doctor)
+        public Dictionary<DateTime,List<Doctor>> RemoveAppointmentsWithNoDoctors(Dictionary<DateTime,List<Doctor>> dictionary, IEnumerable<Specialization> specializations,Doctor doctor)
         {
             foreach (var key in dictionary.Keys)
             {  
@@ -238,7 +238,7 @@ namespace HospitalLibrary.Consiliums.Service
             return shouldRemove;
         }
 
-        private Dictionary<DateTime, List<Doctor>> FindAllAvailableDoctorsAndAppointments(Consilium consilium)
+        public Dictionary<DateTime, List<Doctor>> FindAllAvailableDoctorsAndAppointments(Consilium consilium)
         {
             var startTime = InitializeStartAndEndTime(consilium, out var endTime);
             var dictionary = new Dictionary<DateTime, List<Doctor>>();
