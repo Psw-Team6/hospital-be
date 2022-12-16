@@ -2,6 +2,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Threading;
 using HospitalTest.End2EndCommon;
 using HospitalTest.HospitalizationTest.Pages;
 using Xunit;
@@ -12,10 +13,10 @@ namespace HospitalTest.End2EndTests
     public class ConsiliumE2ETest
     {
         public readonly IWebDriver driver;
-        private DashboardPage dashboardPagePage;
-        private DoctorLoginPage loginPage;
-        private ConsiliumPage _consiliumPage;
-        private ScheduleConsiliumPage scheduleConsiliumPage;
+        private readonly DashboardPage dashboardPagePage;
+        private readonly DoctorLoginPage loginPage;
+        private readonly ConsiliumPage _consiliumPage;
+        private readonly ScheduleConsiliumPage _scheduleConsiliumPage;
 
         public ConsiliumE2ETest()
         {
@@ -51,28 +52,124 @@ namespace HospitalTest.End2EndTests
             _consiliumPage.schecduleConsiliumBtnClick();
             _consiliumPage.WaitForBtnScheduleConsilium();
             
-            scheduleConsiliumPage = new ScheduleConsiliumPage(driver);
-            Assert.True(scheduleConsiliumPage.ThemeInputDisplayed());
-            Assert.True(scheduleConsiliumPage.DurationInputDisplayed());
-            Assert.True(scheduleConsiliumPage.StartDateInputDisplayed());
-            Assert.True(scheduleConsiliumPage.EndDateInputDisplayed());
+            _scheduleConsiliumPage = new ScheduleConsiliumPage(driver);
+            Assert.True(_scheduleConsiliumPage.ThemeInputDisplayed());
+            Assert.True(_scheduleConsiliumPage.DurationInputDisplayed());
+            Assert.True(_scheduleConsiliumPage.StartDateInputDisplayed());
+            Assert.True(_scheduleConsiliumPage.EndDateInputDisplayed());
         }
 
         
         [Fact]
         public void schedule_consilium_doctors_successfuly()
         {
-            scheduleConsiliumPage.InsertTheme("Proooba");
-            scheduleConsiliumPage.InsertDuration("45");
-            scheduleConsiliumPage.InsertStartDate("12/17/2022");
-            scheduleConsiliumPage.InsertEndDate("12/17/2022");
-            scheduleConsiliumPage.DoctorSubmit();
-            
-            //promeniti id polja, selektovati doktora i kliknuti submit
-            
+            _scheduleConsiliumPage.InsertTheme("Test");
+            _scheduleConsiliumPage.InsertDuration("45");
+            _scheduleConsiliumPage.InsertStartDate("12/17/2022");
+            _scheduleConsiliumPage.InsertEndDate("12/17/2022");
+            _scheduleConsiliumPage.DoctorSubmit();
+            Thread.Sleep(1000);
+            Assert.True(_scheduleConsiliumPage.IsMultiVisible());
+            _scheduleConsiliumPage.MultiSelectDocClick();
+            _scheduleConsiliumPage.Select();
+            Thread.Sleep(1000);
+            _scheduleConsiliumPage.Esc();
+            _scheduleConsiliumPage.SubmitForm();
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
-            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe("http://localhost:4200/consiliums"));
-            Assert.NotEqual(driver.Url,"http://localhost:4200/consiliums");
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe(ScheduleConsiliumPage.UriDashboard));
+            Assert.Equal(ScheduleConsiliumPage.UriDashboard,driver.Url);
+            driver.Close();
+        }
+        [Fact]
+        public void schedule_consilium_doctors_not_valid_range()
+        {
+            _scheduleConsiliumPage.InsertTheme("Test");
+            _scheduleConsiliumPage.InsertDuration("45");
+            _scheduleConsiliumPage.InsertStartDate("12/15/2022");
+            _scheduleConsiliumPage.InsertEndDate("12/15/2022");
+            _scheduleConsiliumPage.DoctorSubmit();
+            Thread.Sleep(1000);
+            Assert.True(_scheduleConsiliumPage.IsMultiVisible());
+            _scheduleConsiliumPage.MultiSelectDocClick();
+            _scheduleConsiliumPage.Select();
+            Thread.Sleep(1000);
+            _scheduleConsiliumPage.Esc();
+            _scheduleConsiliumPage.SubmitForm();
+            Assert.NotEqual(ScheduleConsiliumPage.UriDashboard,driver.Url);
+            driver.Close();
+        }
+        [Fact]
+        public void schedule_consilium_doctors_not_valid_start_date()
+        {
+            _scheduleConsiliumPage.InsertTheme("Test");
+            _scheduleConsiliumPage.InsertDuration("45");
+            _scheduleConsiliumPage.InsertStartDate("12/15/2022");
+            _scheduleConsiliumPage.InsertEndDate("12/15/2022");
+            _scheduleConsiliumPage.DoctorSubmit();
+            Thread.Sleep(2000);
+            Assert.True(_scheduleConsiliumPage.IsMultiVisible());
+            _scheduleConsiliumPage.MultiSelectDocClick();
+            _scheduleConsiliumPage.Select();
+            Thread.Sleep(1000);
+            _scheduleConsiliumPage.Esc();
+            _scheduleConsiliumPage.SubmitForm();
+            Assert.NotEqual(ScheduleConsiliumPage.UriDashboard,driver.Url);
+            driver.Close();
+        }
+        [Fact]
+        public void schedule_consilium_doctors_not_valid_end_date()
+        {
+            _scheduleConsiliumPage.InsertTheme("Test");
+            _scheduleConsiliumPage.InsertDuration("45");
+            _scheduleConsiliumPage.InsertStartDate("12/17/2022");
+            _scheduleConsiliumPage.InsertEndDate("12/13/2022");
+            _scheduleConsiliumPage.DoctorSubmit();
+            Thread.Sleep(1000);
+            Assert.True(_scheduleConsiliumPage.IsMultiVisible());
+            _scheduleConsiliumPage.MultiSelectDocClick();
+            _scheduleConsiliumPage.Select();
+            Thread.Sleep(1000);
+            _scheduleConsiliumPage.Esc();
+            _scheduleConsiliumPage.SubmitForm();
+            Assert.NotEqual(ScheduleConsiliumPage.UriDashboard,driver.Url);
+            driver.Close();
+        }
+        [Fact]
+        public void schedule_consilium_specialization_success()
+        {
+            _scheduleConsiliumPage.InsertTheme("Test");
+            _scheduleConsiliumPage.InsertDuration("45");
+            _scheduleConsiliumPage.InsertStartDate("12/20/2022");
+            _scheduleConsiliumPage.InsertEndDate("12/22/2022");
+            _scheduleConsiliumPage.SpecializationSubmit();
+            Thread.Sleep(1000);
+            Assert.True(_scheduleConsiliumPage.IsMultiVisibleSpec());
+            _scheduleConsiliumPage.MultiSelectSpecClick();
+            _scheduleConsiliumPage.Select();
+            Thread.Sleep(1000);
+            _scheduleConsiliumPage.EscSpec();
+            _scheduleConsiliumPage.SubmitForm();
+            Thread.Sleep(1000);
+            Assert.Equal(ScheduleConsiliumPage.UriDashboard,driver.Url);
+            driver.Close();
+        }
+        [Fact]
+        public void schedule_consilium_specialization_not_valid()
+        {
+            _scheduleConsiliumPage.InsertTheme("Test");
+            _scheduleConsiliumPage.InsertDuration("45");
+            _scheduleConsiliumPage.InsertStartDate("12/13/2022");
+            _scheduleConsiliumPage.InsertEndDate("12/13/2022");
+            _scheduleConsiliumPage.SpecializationSubmit();
+            Thread.Sleep(1000);
+            Assert.True(_scheduleConsiliumPage.IsMultiVisibleSpec());
+            _scheduleConsiliumPage.MultiSelectSpecClick();
+            _scheduleConsiliumPage.Select();
+            Thread.Sleep(1000);
+            _scheduleConsiliumPage.EscSpec();
+            _scheduleConsiliumPage.SubmitForm();
+            Assert.NotEqual(ScheduleConsiliumPage.UriDashboard,driver.Url);
+            driver.Close();
         }
         
     }
