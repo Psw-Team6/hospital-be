@@ -71,6 +71,13 @@ namespace HospitalLibrary.Patients.Service
             await _unitOfWork.CompleteAsync();
             return patient;
         }
+        
+        public async Task<bool> Update(Patient patient)
+        {
+            await _unitOfWork.PatientRepository.UpdateAsync(patient);
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
 
         public async Task<int> GetFemalePatient()
         {

@@ -59,6 +59,16 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<PatientResponse>(patient);
             return result == null ? NotFound() : Ok(result);
         }
+        
+        [HttpPut]
+        [ProducesResponseType( StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> Update(Patient patient)
+        {
+            var p = _mapper.Map<PatientResponse>(patient);
+            var spec = await _patientService.Update(patient);
+            return spec ? NoContent() : NotFound();
+        }
 
         [HttpGet("/api/v1/Patient-gender-female")]
         [ProducesResponseType( StatusCodes.Status200OK)]

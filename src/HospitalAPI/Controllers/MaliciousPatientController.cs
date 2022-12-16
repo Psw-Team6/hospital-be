@@ -13,7 +13,6 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [HospitalAuthorization(UserRole.Manager)]
     public class MaliciousPatientController : ControllerBase
     {
         private readonly MaliciousPatientService _maliciousPatientService;
@@ -39,6 +38,7 @@ namespace HospitalAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> MaliciousPatientStatus([FromRoute]Guid patientId)
         {
+            Console.WriteLine("usao");
             var result = await _maliciousPatientService.MaliciousPatientStatus(patientId);
             return result ? Ok(result) : NotFound();
         }
