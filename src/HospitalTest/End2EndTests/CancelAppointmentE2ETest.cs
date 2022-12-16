@@ -11,7 +11,7 @@ namespace HospitalTest.End2EndTests
         private readonly IWebDriver _webDriver;
         private readonly LoginPage _loginPage;
         private readonly CancelAppointmentPage _cancelAppointmentPage;
-        
+        public IWebElement CancelButton => _webDriver.FindElement(By.Id("cancelButton"));
         public CancelAppointmentE2ETest()
         {
             var browserOptions = new BrowserOptions();
@@ -46,5 +46,21 @@ namespace HospitalTest.End2EndTests
             Assert.Equal("success", _cancelAppointmentPage.GetDialogMessage());
             _webDriver.Dispose();
         }
+        [Fact]
+        public void Cancel_appointment_unsuccess()
+        {
+            Login();
+            Thread.Sleep(1000);
+            _cancelAppointmentPage.Navigate();
+            _cancelAppointmentPage.BadChangeDay();
+            _cancelAppointmentPage.Cancel();
+            Thread.Sleep(2000);
+            _cancelAppointmentPage.WaitForFormSubmit();
+            if (!CancelButton.Enabled)
+            {
+                _webDriver.Dispose();
+            }
+        }
+
     }
 }
