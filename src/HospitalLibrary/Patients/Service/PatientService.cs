@@ -77,7 +77,7 @@ namespace HospitalLibrary.Patients.Service
         {
             var patientUpdate = await GetById(patient.Id);
             patientUpdate.IsBlocked = patient.IsBlocked;
-            await _unitOfWork.PatientRepository.UpdateAsync(patient);
+            await _unitOfWork.PatientRepository.UpdateAsync(patientUpdate);
             await _unitOfWork.CompleteAsync();
             return true;
         }
