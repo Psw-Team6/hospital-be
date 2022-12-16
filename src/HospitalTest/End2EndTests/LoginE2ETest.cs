@@ -9,15 +9,14 @@ namespace HospitalTest.End2EndTests
     
     public class LoginE2ETest
     {
-        private  IWebDriver _webDriver;
-        private  LoginPage _loginPage;
+        private readonly IWebDriver _webDriver;
+        private readonly LoginPage _loginPage;
 
         public LoginE2ETest()
         {
             var browserOptions = new BrowserOptions();
             _webDriver = browserOptions.CreateChromeDriver();
             _loginPage = new LoginPage(_webDriver);
-
         }
 
         [Fact]
@@ -45,7 +44,6 @@ namespace HospitalTest.End2EndTests
             try
             {
                 _loginPage.WaitForFormSubmitDoctor();
-                Thread.Sleep(2000);
             }
             catch (WebDriverTimeoutException e)
             {
