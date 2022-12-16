@@ -6,24 +6,26 @@ using Xunit;
 
 namespace HospitalTest.End2EndTests
 {
-    public class CancelAppointmentE2ETest
+    public class PublishFeedbackE2ETest
     {
+        
         private readonly IWebDriver _webDriver;
         private readonly LoginPage _loginPage;
-        private readonly CancelAppointmentPage _cancelAppointmentPage;
-        
-        public CancelAppointmentE2ETest()
+        private readonly PublishFeedbackPage _publishFeedbackPage;
+
+        public PublishFeedbackE2ETest()
         {
             var browserOptions = new BrowserOptions();
             _webDriver = browserOptions.CreateChromeDriver();
             _loginPage = new LoginPage(_webDriver);
-            _cancelAppointmentPage = new CancelAppointmentPage(_webDriver);
+            _publishFeedbackPage = new PublishFeedbackPage(_webDriver);
+          
         }
-
+        
         private void Login()
         {
             _loginPage.Navigate();
-            _loginPage.InsertUsername("Sale");
+            _loginPage.InsertUsername("Manager");
             Thread.Sleep(1000);
             _loginPage.InsertPassword("123");
             Thread.Sleep(1000);
@@ -33,18 +35,18 @@ namespace HospitalTest.End2EndTests
         }
         
         [Fact]
-        public void Cancel_appointment_success()
+        public void Publish_feedback_success()
         {
             Login();
             Thread.Sleep(1000);
-            _cancelAppointmentPage.Navigate();
-            _cancelAppointmentPage.ChangeDay();
-            _cancelAppointmentPage.Cancel();
+            _publishFeedbackPage.Navigate();
             Thread.Sleep(2000);
-            _cancelAppointmentPage.WaitForFormSubmit();
-            _cancelAppointmentPage.WaitForAlertDialog();
-            Assert.Equal("success", _cancelAppointmentPage.GetDialogMessage());
+            _publishFeedbackPage.Publish();
+            _publishFeedbackPage.WaitForFormSubmit();
+            _publishFeedbackPage.WaitForAlertDialog();
+            Assert.Equal("success", _publishFeedbackPage.GetDialogMessage());
             _webDriver.Dispose();
         }
+        
     }
 }

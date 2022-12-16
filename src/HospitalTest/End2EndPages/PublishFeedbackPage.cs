@@ -1,36 +1,30 @@
 ﻿using System;
-using HospitalTest.End2EndCommon;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
 namespace HospitalTest.End2EndPages
 {
-    public class CancelAppointmentPage
+    public class PublishFeedbackPage
     {
         private readonly IWebDriver _driver;
-        private const string Uri = "http://localhost:4200/my-appointments";
-        private IWebElement CancelButton => _driver.FindElement(By.Id("cancelButton"));
-        private IWebElement ChangePageButton => _driver.FindElement(By.Id("mat-tab-label-0-2"));
-        public CancelAppointmentPage(IWebDriver driver)
+        private const string Uri = "http://localhost:4200/feedback";
+        private IWebElement PublishButton => _driver.FindElement(By.Id("publish"));
+
+        public PublishFeedbackPage(IWebDriver driver)
         {
             _driver = driver;
         }
-
+        
         public void Navigate() => _driver.Navigate().GoToUrl(Uri);
-
-        public void Cancel()
+        
+        public void Publish()
         {
-            CancelButton.Click();
+            PublishButton.Click();
         }
         
         public void WaitForFormSubmit()
         {
             var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 1));
-        }
-
-        public void ChangeDay()
-        {
-            ChangePageButton.Click();
         }
         
         public void WaitForAlertDialog()
@@ -43,7 +37,6 @@ namespace HospitalTest.End2EndPages
         {
             return _driver.SwitchTo().Alert().Text;
         }
+        
     }
-    
-    
 }
