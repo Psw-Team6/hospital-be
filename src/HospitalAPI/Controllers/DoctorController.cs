@@ -118,9 +118,9 @@ namespace HospitalAPI.Controllers
             return result ? NoContent() : NotFound();
         }
         
-        [HttpPost("FreeTermsByTimePriority")]
+        [HttpPost("FreeTermsByDoctorPriority")]
         [ProducesResponseType(typeof(List<AppointmentSuggestion>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<AppointmentSuggestion>>> GetFreeTermsByTimePriority([FromBody] AppointmentRangeResponse appointmentRangeResponse)
+        public async Task<ActionResult<List<AppointmentSuggestion>>> GetFreeTermsByDoctorPriority([FromBody] AppointmentRangeResponse appointmentRangeResponse)
         {
             AppointmentSuggestion a = new AppointmentSuggestion();
             a.DoctorId = appointmentRangeResponse.DoctorId;
@@ -129,5 +129,27 @@ namespace HospitalAPI.Controllers
             var ranges = await _doctorService.GetFreeTermsByDoctorPriority(a);
             return ranges == null ? NotFound() : Ok(ranges);
         }
+        
+        [HttpPost("FreeTermsByTimePriority/{time:bool}")]
+        [ProducesResponseType(typeof(List<AppointmentSuggestion>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<AppointmentSuggestion>>> GetFreeTermsByTimePriority([FromRoute]bool time,[FromBody] AppointmentRangeResponse appointmentRangeResponse)
+        {
+            AppointmentSuggestion a = new AppointmentSuggestion();
+            a.DoctorId = appointmentRangeResponse.DoctorId;
+            a.PatientId = appointmentRangeResponse.PatientId;
+            a.Duration = appointmentRangeResponse.Duration;
+            if (time)
+            {
+                var ranges = await _doctorService.GetFreeTermsByTimeRangePriority(a); 
+                return ranges == null ? NotFound() : Ok(ranges);
+               
+            }
+
+            Console.WriteLine(appointmentRangeResponse);
+            var ranges2 = await _doctorService.GetFreeTermsByDoctorPriority(a);
+            return ranges2 == null ? NotFound() : Ok(ranges2);
+        }
+        
+       
     }
 }
