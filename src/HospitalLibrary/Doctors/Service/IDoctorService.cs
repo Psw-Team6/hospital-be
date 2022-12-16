@@ -31,7 +31,6 @@ namespace HospitalLibrary.Doctors.Service
 
         Task<IEnumerable<AppointmentSuggestion>> GetFreeTermsByDoctorPriority(
             AppointmentSuggestion appointmentSuggestion);
-
-        Task<IEnumerable<AppointmentSuggestion>> GetFreeTermsByTimeRangePriority(AppointmentSuggestion appointmentRangeResponse);
+        
     }
 }
