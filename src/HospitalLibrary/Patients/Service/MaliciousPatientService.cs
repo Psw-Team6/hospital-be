@@ -77,6 +77,8 @@ namespace HospitalLibrary.Patients.Service
             if (newMaliciousPatient.NumberOfCancellations >= 3)
             {
                 maliciousPatient.Malicious = true;
+                await _unitOfWork.MaliciousPatientRepository.UpdateAsync(maliciousPatient);
+                await _unitOfWork.CompleteAsync();
             }
 
             return true;

@@ -18,10 +18,10 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class DoctorController : ControllerBase
     {
-        private readonly DoctorService _doctorService;
+        private readonly IDoctorService _doctorService;
         private readonly IMapper _mapper;
 
-        public DoctorController( DoctorService doctorService, IMapper mapper)
+        public DoctorController( IDoctorService doctorService, IMapper mapper)
         {
             _doctorService = doctorService;
             _mapper = mapper;
@@ -96,6 +96,15 @@ namespace HospitalAPI.Controllers
         public async Task<ActionResult<DoctorResponse>> GetById([FromRoute]Guid id)
         {
            var doctor =  await _doctorService.GetById(id);
+           var result = _mapper.Map<DoctorResponse>(doctor);
+           return result == null ? NotFound() : Ok(result);
+        }
+        [HttpGet("specialization/{id:guid}")]
+        [ProducesResponseType(typeof(DoctorResponse),StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<DoctorResponse>> GetDoctorSpecialization([FromRoute]Guid id)
+        {
+           var doctor =  await _doctorService.GetDoctorSpecialization(id);
            var result = _mapper.Map<DoctorResponse>(doctor);
            return result == null ? NotFound() : Ok(result);
         }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos;
@@ -22,6 +24,15 @@ namespace HospitalAPI.Controllers
             _specializationsService = specializationsService;
             _mapper = mapper;
         }
+        [HttpGet()]
+        [ProducesResponseType( StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<SpecializationResponse>>> GetAll()
+        {
+            var specializations = await _specializationsService.GetAll();
+            var result = _mapper.Map<IEnumerable<SpecializationResponse>>(specializations);
+            return specializations == null ? NotFound() : Ok(result);
+        }
         [HttpPost]
         [ProducesResponseType( StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -44,7 +55,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType( StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PatientResponse>> GetById(Guid id)
+        public async Task<ActionResult<SpecializationResponse>> GetById(Guid id)
         {
             var specialization = await _specializationsService.GetById(id);
             var result = _mapper.Map<SpecializationResponse>(specialization);

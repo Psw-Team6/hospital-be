@@ -10,14 +10,13 @@ using HospitalLibrary.Common;
 using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
-using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Doctors.Service
 {
-    public class DoctorService
+    public class DoctorService : IDoctorService
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -440,7 +439,8 @@ namespace HospitalLibrary.Doctors.Service
         {
             return await _unitOfWork.DoctorRepository.GetDoctorsBySpecialization(specId);
         }
-        
+
+
         private static void CheckDateRange(DateRange range)
         {
             if (!range.IsValidRange())
@@ -452,7 +452,12 @@ namespace HospitalLibrary.Doctors.Service
             {
                 throw new DateRangeNotValid("Please select upcoming date");
             }
-            
+
+        }
+
+        public async Task<Doctor> GetDoctorSpecialization(Guid id)
+        {
+            return await _unitOfWork.DoctorRepository.GetDoctorSpecialization(id);
         }
     }
 }

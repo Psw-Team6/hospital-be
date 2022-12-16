@@ -13,7 +13,15 @@ namespace HospitalLibrary.SharedModel
         
         public bool IsValidRange()
         {
-            return From < To;
+            return From <= To;
+        }
+        public bool IsValidFrom()
+        {
+            return From.Date >=  DateTime.Now.Date;
+        }
+        public bool IsValidTo()
+        {
+            return To.Date >=  DateTime.Now.Date;
         }
 
         public bool IsValidDuration()

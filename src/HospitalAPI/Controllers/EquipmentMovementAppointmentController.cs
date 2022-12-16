@@ -77,7 +77,8 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<List<EquipmentMovementAppointmentResponse>>(appointments);
             return result == null ? BadRequest() : Ok(result);
         }
-        
+        /*
+         //Bez Vremenskog ogranicenja 
         [HttpDelete ("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -85,6 +86,24 @@ namespace HospitalAPI.Controllers
         {
             var result = await _equipmentMovementAppointmentService.DeleteById(id);
             return result ? NoContent() : NotFound();
+        }
+        */
+        
+        [HttpDelete ("{id}")] //Najkasnije 24h od trenutnog dana IRL
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> DeleteById([FromRoute]Guid id)
+        {
+            var result = await _equipmentMovementAppointmentService.GetById(id);
+           if (result == null)
+               return NotFound();
+            
+           if(await _equipmentMovementAppointmentService.DeleteById(result) == false)
+               return BadRequest();
+            
+           return NoContent();
+           
         }
     }
 }

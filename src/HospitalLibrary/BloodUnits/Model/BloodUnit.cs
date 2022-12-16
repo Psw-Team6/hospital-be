@@ -41,25 +41,25 @@ namespace HospitalLibrary.BloodUnits.Model
         public int Amount
         {
             get=> _amount;
-            set=> _amount = value;
+            private set=> _amount = value;
         }
         
         public Guid Id
         {
             get=> _id;
-            set=> _id = value;
+            private set=> _id = value;
         }
         
         public BloodType BloodType
         {
             get=> _bloodType;
-            set=> _bloodType = value;
+            private set=> _bloodType = value;
         }
         
         public string BloodBankName
         {
             get=> _bloodBankName;
-            set=> _bloodBankName = value;
+            private set=> _bloodBankName = value;
         }
         
         public BloodUnit(BloodType bloodType, int amount, string bloodBankName)
