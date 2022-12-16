@@ -25,5 +25,8 @@ namespace HospitalLibrary.Doctors.Service
         Task<List<Doctor>> GetDoctorsBySpecializations(IEnumerable<Specialization> specializations);
         Task<IEnumerable<Doctor>> GetDoctorsBySpecialization(Guid specId);
         Task<Doctor> GetDoctorSpecialization(Guid id);
+
+        Task<IEnumerable<AppointmentSuggestion>> GetFreeTermsByDoctorPriority(
+            AppointmentSuggestion appointmentSuggestion);
     }
 }
