@@ -145,7 +145,7 @@ namespace HospitalAPI.Controllers
                
             }
 
-            Console.WriteLine(appointmentRangeResponse);
+            Console.WriteLine("X");
             var ranges2 = await _doctorService.GetFreeTermsByDoctorPriority(a);
             return ranges2 == null ? NotFound() : Ok(ranges2);
         }
