@@ -13,9 +13,6 @@ namespace HospitalTest.End2EndTests
     public class ConsiliumE2ETest
     {
         public readonly IWebDriver driver;
-        private readonly DashboardPage dashboardPagePage;
-        private readonly DoctorLoginPage loginPage;
-        private readonly ConsiliumPage _consiliumPage;
         private readonly ScheduleConsiliumPage _scheduleConsiliumPage;
 
         public ConsiliumE2ETest()
@@ -31,7 +28,7 @@ namespace HospitalTest.End2EndTests
             
             driver = new ChromeDriver(options);
 
-            loginPage = new DoctorLoginPage(driver);
+            var loginPage = new DoctorLoginPage(driver);
             loginPage.Navigate();
             Assert.True(loginPage.LoginButtonDisplayed());
             Assert.True(loginPage.UsernameInputDisplayed());
@@ -42,15 +39,15 @@ namespace HospitalTest.End2EndTests
             loginPage.SubmitForm();
             loginPage.WaitForFormSubmit();
 
-            dashboardPagePage = new DashboardPage(driver);
+            var dashboardPagePage = new DashboardPage(driver);
             Assert.True(dashboardPagePage.consiliumNavDisplayed());
             dashboardPagePage.consiliumNavClick();
             dashboardPagePage.WaitForConsiliumNavigate();
 
-            _consiliumPage = new ConsiliumPage(driver);
-            Assert.True(_consiliumPage.ScheduleConsiliumDisplayed());
-            _consiliumPage.schecduleConsiliumBtnClick();
-            _consiliumPage.WaitForBtnScheduleConsilium();
+            var consiliumPage = new ConsiliumPage(driver);
+            Assert.True(consiliumPage.ScheduleConsiliumDisplayed());
+            consiliumPage.schecduleConsiliumBtnClick();
+            consiliumPage.WaitForBtnScheduleConsilium();
             
             _scheduleConsiliumPage = new ScheduleConsiliumPage(driver);
             Assert.True(_scheduleConsiliumPage.ThemeInputDisplayed());
