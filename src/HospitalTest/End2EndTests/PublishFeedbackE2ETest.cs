@@ -12,6 +12,7 @@ namespace HospitalTest.End2EndTests
         private readonly IWebDriver _webDriver;
         private readonly LoginPage _loginPage;
         private readonly PublishFeedbackPage _publishFeedbackPage;
+        private IWebElement PublishButton => _webDriver.FindElement(By.Id("publish"));
 
         public PublishFeedbackE2ETest()
         {
@@ -46,6 +47,21 @@ namespace HospitalTest.End2EndTests
             _publishFeedbackPage.WaitForAlertDialog();
             Assert.Equal("success", _publishFeedbackPage.GetDialogMessage());
             _webDriver.Dispose();
+        }
+        
+        [Fact]
+        public void Cancel_appointment_unsuccess()
+        {
+            Login();
+            Thread.Sleep(1000);
+            _publishFeedbackPage.Navigate();
+            _publishFeedbackPage.Publish();
+            Thread.Sleep(2000);
+            _publishFeedbackPage.WaitForFormSubmit();
+            if (!PublishButton.Enabled)
+            {
+                _webDriver.Dispose();
+            }
         }
         
     }

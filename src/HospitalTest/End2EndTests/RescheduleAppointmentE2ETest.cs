@@ -11,7 +11,7 @@ namespace HospitalTest.End2EndTests
         private readonly IWebDriver _webDriver;
         private readonly LoginPage _loginPage;
         private readonly RescheduleAppointmentPage _createSchedulePage;
-        private readonly string _appId = "c0576733-b7fa-4974-b60c-d3d7e8c9f214";
+        private readonly string _appId = "c0576733-b7fa-4974-b60c-d3d7e8c9f216";
 
         public RescheduleAppointmentE2ETest()
         {
