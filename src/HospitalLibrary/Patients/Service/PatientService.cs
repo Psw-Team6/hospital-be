@@ -70,12 +70,13 @@ namespace HospitalLibrary.Patients.Service
         public async Task<Patient> GetById(Guid id)
         {
             var patient = await _unitOfWork.PatientRepository.GetPatientById(id);
-            await _unitOfWork.CompleteAsync();
             return patient;
         }
         
         public async Task<bool> Update(Patient patient)
         {
+            var patientUpdate = await GetById(patient.Id);
+            patientUpdate.IsBlocked = patient.IsBlocked;
             await _unitOfWork.PatientRepository.UpdateAsync(patient);
             await _unitOfWork.CompleteAsync();
             return true;

@@ -18,10 +18,10 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class DoctorController : ControllerBase
     {
-        private readonly DoctorService _doctorService;
+        private readonly IDoctorService _doctorService;
         private readonly IMapper _mapper;
 
-        public DoctorController( DoctorService doctorService, IMapper mapper)
+        public DoctorController( IDoctorService doctorService, IMapper mapper)
         {
             _doctorService = doctorService;
             _mapper = mapper;

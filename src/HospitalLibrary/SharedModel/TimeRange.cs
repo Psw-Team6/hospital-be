@@ -13,7 +13,7 @@ namespace HospitalLibrary.SharedModel
         
         public bool IsValidRange()
         {
-            return From < To;
+            return From <= To;
         }
         public bool IsValidFrom()
         {

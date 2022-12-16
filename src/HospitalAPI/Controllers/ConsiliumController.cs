@@ -17,11 +17,11 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class ConsiliumController: ControllerBase
     {
-        private readonly ConsiliumService _consiliumService;
+        private readonly IConsiliumService _consiliumService;
         private readonly SpecializationsService _specializationsService;
         private readonly IMapper _mapper;
 
-        public ConsiliumController(ConsiliumService consiliumService, IMapper mapper, SpecializationsService specializationsService)
+        public ConsiliumController(IConsiliumService consiliumService, IMapper mapper, SpecializationsService specializationsService)
         {
             _consiliumService = consiliumService;
             _mapper = mapper;
