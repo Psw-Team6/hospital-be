@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
 using HospitalAPI.Dtos.Response;
+using HospitalAPI.Infrastructure.Authorization;
+using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Consiliums.Service;
 using HospitalLibrary.Doctors.Model;
@@ -15,6 +17,7 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [HospitalAuthorization(UserRole.Doctor)]
     public class ConsiliumController: ControllerBase
     {
         private readonly IConsiliumService _consiliumService;

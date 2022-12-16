@@ -954,7 +954,7 @@ namespace HospitalLibrary.Settings
             // );
             Appointment appointment = new()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("c0576733-b7fa-4974-b60c-d3d7e8c9f216"),
                 Emergent = false,
                 PatientId = patient1.Id,
                 DoctorId = doctor1.Id,
@@ -980,6 +980,33 @@ namespace HospitalLibrary.Settings
                 AppointmentState = AppointmentState.Pending
             };
             Appointment appointment3 = new()
+            {
+                Id = Guid.NewGuid(),
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment4 = new()
+            {
+                Id = Guid.NewGuid(),
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment5 = new()
+            {
+                Id = Guid.NewGuid(),
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment6 = new()
             {
                 Id = Guid.NewGuid(),
                 Emergent = false,
@@ -1014,6 +1041,24 @@ namespace HospitalLibrary.Settings
                         AppointmentId = appointment3.Id,
                         From = DateTime.Now.AddMinutes(-200),
                         To = DateTime.Now.AddMinutes(-170)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment4.Id,
+                        From = DateTime.Now.AddMinutes(-270),
+                        To = DateTime.Now.AddMinutes(-200)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment5.Id,
+                        From = DateTime.Now.AddMinutes(-350),
+                        To = DateTime.Now.AddMinutes(-250)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment6.Id,
+                        From = DateTime.Now.AddMinutes(-425),
+                        To = DateTime.Now.AddMinutes(-365)
                     }
                 );
             modelBuilder.Entity<Appointment>().HasData(

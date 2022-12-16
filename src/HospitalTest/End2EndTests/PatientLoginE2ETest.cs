@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using HospitalTest.End2EndCommon;
 using OpenQA.Selenium;
@@ -7,31 +7,32 @@ using Xunit;
 namespace HospitalTest.End2EndTests
 {
     
-    public class LoginE2ETest
+    public class PatientLoginE2ETest
     {
-        private readonly IWebDriver _webDriver;
-        private readonly LoginPage _loginPage;
+        private  IWebDriver _webDriver;
+        private  PatientLoginPage _loginPage;
 
-        public LoginE2ETest()
+        public PatientLoginE2ETest()
         {
             var browserOptions = new BrowserOptions();
             _webDriver = browserOptions.CreateChromeDriver();
-            _loginPage = new LoginPage(_webDriver);
+            _loginPage = new PatientLoginPage(_webDriver);
+
         }
 
+       
+        
         [Fact]
-        public void Doctor_success_login()
+        public void Patient_success_login()
         {
             _loginPage.Navigate();
-            _loginPage.InsertUsername("Ilija");
-            Thread.Sleep(1000);
+            _loginPage.InsertUsername("Sale");
             _loginPage.InsertPassword("123");
-            Thread.Sleep(1000);
             _loginPage.SubmitForm();
             _loginPage.WaitForFormSubmitDoctor();
-            Thread.Sleep(2000);
             _webDriver.Dispose();
         }
+        
         [Fact]
         public void Doctor_bad_credential()
         {
@@ -44,6 +45,7 @@ namespace HospitalTest.End2EndTests
             try
             {
                 _loginPage.WaitForFormSubmitDoctor();
+                Thread.Sleep(2000);
             }
             catch (WebDriverTimeoutException e)
             {

@@ -8,7 +8,8 @@ namespace HospitalTest.End2EndPages
     public class CreateSchedulePage
     {
         private readonly IWebDriver _driver;
-        private const string Uri = "http://localhost:4200/create-schedule";
+        public const string Uri = "http://localhost:4200/create-schedule";
+        public const string UriDashboard = "http://localhost:4200/dashboard";
 
         private IWebElement DateInput => _driver.FindElement(By.Id("dateSchedule"));
         private IWebElement StartTimeInput => _driver.FindElement(By.Id("startTimeSchedule"));
@@ -16,7 +17,6 @@ namespace HospitalTest.End2EndPages
         private IWebElement SubmitButton => _driver.FindElement(By.Id("submitSchedule"));
         private IWebElement ToastMessage => _driver.FindElement(By.XPath("/html/body/app-root/lib-ng-toast/div/div[2]/p[2]"));
         private IWebElement MultiSelect => _driver.FindElement(By.CssSelector(".mat-select-trigger"));
-        private IWebElement PatientSelect => _driver.FindElement(By.ClassName(".mat-option-text"));
 
         public CreateSchedulePage(IWebDriver driver)
         {
@@ -32,7 +32,6 @@ namespace HospitalTest.End2EndPages
         public void EnterDate(string date)
         {
             DateInput.SendKeys(date);
-            DateInput.Clear();
         }
         public void EnterStartTime(string date)
         {
@@ -50,10 +49,8 @@ namespace HospitalTest.End2EndPages
 
         public void SelectPatient()
         {
-
-// Select the option using the SelectElement class
-            var s = new SelectElement(MultiSelect);
-            s.SelectByIndex(0);
+            var patientSelect  =_driver.FindElements(By.ClassName("mat-option-text"));
+            patientSelect[0].Click();
         }
 
         public string GetToastMessage()
@@ -62,8 +59,8 @@ namespace HospitalTest.End2EndPages
         }
         public void WaitForFormSubmit()
         {
-            var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 5));
-            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe("http://localhost:4200/dashboard"));
+            var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 10));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe(UriDashboard));
         }
     }
 }
