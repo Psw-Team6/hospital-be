@@ -118,6 +118,7 @@ namespace HospitalAPI.Controllers
             var result = await _appointmentService.CreateAppointment(appointment);
             return CreatedAtAction(nameof(GetById), new {id = result.Id}, result);
         }
+        
 
     }
 }
