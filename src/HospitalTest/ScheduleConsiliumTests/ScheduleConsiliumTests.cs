@@ -166,8 +166,8 @@ namespace HospitalTest.ScheduleConsiliumTests
         }
         private Consilium SeedDataConsilium2()
         {
-            var start = new DateTime(2022, 12, 16);
-            var end = new DateTime(2022, 12, 15);
+            var start = new DateTime(2022, 12, 30);
+            var end = new DateTime(2022, 12, 29);
             Specialization specializationDermatology = new()
             {
                 Id = Guid.NewGuid(),
