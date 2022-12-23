@@ -25,7 +25,7 @@ namespace HospitalTest.RoomMergingTests
         
         
         [Fact]
-        public async Task GetMerging_Succesfull()
+        public void  GetMerging_Succesfull()
         {
             var mockSearchRepo = new Mock<IRoomMergingRepository>();
             var GetMovementByRoomId = new Mock<RoomRenovationService>();

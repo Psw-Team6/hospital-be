@@ -87,6 +87,11 @@ namespace HospitalTest.HospitalizationTest.Pages
             var select  =_driver.FindElements(By.ClassName("mat-option-text"));
             select[0].Click();
         }
+        public void SelectSpec()
+        {
+            var select  =_driver.FindElements(By.ClassName("mat-option-text"));
+            select[1].Click();
+        }
         
         public void InsertEndDate(string duration)
         {

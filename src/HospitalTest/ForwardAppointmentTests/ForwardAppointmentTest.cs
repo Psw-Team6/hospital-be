@@ -112,15 +112,15 @@ namespace HospitalTest.ForwardAppointmentTests
         }
         
         [Fact]
-        public async Task Forward_appointmet_sucsess()
+        public void Forward_appointmet_sucsess()
         {
-            DateRange Duration = new DateRange
+            var duration = new DateRange
             {
                 From = new DateTime(2025, 11, 27, 15, 0, 0),
                 To = new DateTime(2025, 11, 28, 13, 15, 0)
             };
             var doctor = CreateMockForwardAppointmentValid(out var doctorService);
-            Func<Task> act = () => doctorService.generateFreeTimeSpans(Duration,doctor.Id);
+            Func<Task> act = () => doctorService.generateFreeTimeSpans(duration,doctor.Id);
             Assert.NotNull(act);
         }
         

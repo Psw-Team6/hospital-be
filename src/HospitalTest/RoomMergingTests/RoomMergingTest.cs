@@ -25,7 +25,7 @@ namespace HospitalTest.RoomMergingTests
         }
         
         [Fact]
-        public async Task Merging_Succesfull()
+        public void  Merging_Succesfull()
         {
             Building building1 = new()
             {
