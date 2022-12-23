@@ -65,7 +65,7 @@ namespace HospitalTest.End2EndCommon
         }
         public void WaitForFormSubmitDoctor()
         {
-            var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 10));
+            var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 5));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe("http://localhost:4200/dashboard"));
         }
     }

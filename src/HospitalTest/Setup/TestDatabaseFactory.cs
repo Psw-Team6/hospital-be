@@ -116,7 +116,6 @@ namespace HospitalTest.Setup
                 Name = "Milan",
                 Surname = "Milic",
                 Email = "mm@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Doctor,
                 Enabled = true
             };
@@ -131,7 +130,6 @@ namespace HospitalTest.Setup
                 Name = "Marko",
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor.Id
@@ -146,7 +144,6 @@ namespace HospitalTest.Setup
                 Name = "Manager",
                 Surname = "Manger",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Manager,
                 Enabled = true
             };
@@ -253,7 +250,6 @@ namespace HospitalTest.Setup
                 Name = "Marko",
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor.Id

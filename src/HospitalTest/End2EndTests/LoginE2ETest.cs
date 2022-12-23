@@ -6,9 +6,10 @@ using Xunit;
 
 namespace HospitalTest.End2EndTests
 {
+    
     public class LoginE2ETest
     {
-        private IWebDriver _webDriver;
+        private readonly IWebDriver _webDriver;
         private readonly LoginPage _loginPage;
 
         public LoginE2ETest()
@@ -16,7 +17,6 @@ namespace HospitalTest.End2EndTests
             var browserOptions = new BrowserOptions();
             _webDriver = browserOptions.CreateChromeDriver();
             _loginPage = new LoginPage(_webDriver);
-
         }
 
         [Fact]
@@ -24,12 +24,32 @@ namespace HospitalTest.End2EndTests
         {
             _loginPage.Navigate();
             _loginPage.InsertUsername("Ilija");
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             _loginPage.InsertPassword("123");
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             _loginPage.SubmitForm();
             _loginPage.WaitForFormSubmitDoctor();
             Thread.Sleep(2000);
+            _webDriver.Dispose();
+        }
+        [Fact]
+        public void Doctor_bad_credential()
+        {
+            _loginPage.Navigate();
+            _loginPage.InsertUsername("Ilija");
+            Thread.Sleep(1000);
+            _loginPage.InsertPassword("1234");
+            Thread.Sleep(1000);
+            _loginPage.SubmitForm();
+            try
+            {
+                _loginPage.WaitForFormSubmitDoctor();
+            }
+            catch (WebDriverTimeoutException e)
+            {
+                Assert.True(e.Message.Equals("Timed out after 5 seconds"));
+                _webDriver.Dispose();
+            }
             _webDriver.Dispose();
         }
     }

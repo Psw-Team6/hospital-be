@@ -40,7 +40,7 @@ namespace HospitalAPI.Extensions
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<FeedbackService>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
-            services.AddScoped<DoctorService>();
+            services.AddScoped<IDoctorService,DoctorService>();
             services.AddScoped<ApplicationUserService>();
             services.AddScoped<IWorkingSchueduleRepository, WorkingScheduleRepository>();
             services.AddScoped<WorkingScheduleService>();
@@ -87,7 +87,7 @@ namespace HospitalAPI.Extensions
             services.AddScoped<SymptomService>();
             services.AddScoped<IMedicinePrescriptionRepository, MedicinePrescriptionRepository>();
             services.AddScoped<MedicinePrescriptionService>();
-            services.AddScoped<ConsiliumService>();
+            services.AddScoped<IConsiliumService,ConsiliumService>();
             services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
             services.AddScoped<ExaminationService>();
 

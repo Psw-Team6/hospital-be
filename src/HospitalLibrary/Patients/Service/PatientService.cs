@@ -15,9 +15,9 @@ namespace HospitalLibrary.Patients.Service
     public class PatientService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly DoctorService _doctorService;
+        private readonly IDoctorService _doctorService;
 
-        public PatientService(IUnitOfWork unitOfWork, DoctorService doctorService)
+        public PatientService(IUnitOfWork unitOfWork, IDoctorService doctorService)
         {
             _unitOfWork = unitOfWork;
             _doctorService = doctorService;
@@ -49,6 +49,7 @@ namespace HospitalLibrary.Patients.Service
             patient.IsBlocked = false;
             patient.CalculateAge();
             patient.Jmbg = new Jmbg(patient.Jmbg.Text);
+            patient.Jmbg.ValidateJmbg();
             List<Allergen> allergens = new List<Allergen>();
             foreach (var id in patient.AllergyIds)
             {
@@ -69,8 +70,16 @@ namespace HospitalLibrary.Patients.Service
         public async Task<Patient> GetById(Guid id)
         {
             var patient = await _unitOfWork.PatientRepository.GetPatientById(id);
-            await _unitOfWork.CompleteAsync();
             return patient;
+        }
+        
+        public async Task<bool> Update(Patient patient)
+        {
+            var patientUpdate = await GetById(patient.Id);
+            patientUpdate.IsBlocked = patient.IsBlocked;
+            await _unitOfWork.PatientRepository.UpdateAsync(patientUpdate);
+            await _unitOfWork.CompleteAsync();
+            return true;
         }
 
         public async Task<int> GetFemalePatient()
