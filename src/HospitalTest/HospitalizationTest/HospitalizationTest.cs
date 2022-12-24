@@ -1,16 +1,9 @@
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Controllers;
-using HospitalAPI.Dtos.Request;
-using HospitalLibrary.ApplicationUsers.Service;
-using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Patients.Service;
 using HospitalTest.Setup;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
 

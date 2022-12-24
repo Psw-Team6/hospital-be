@@ -72,5 +72,10 @@ namespace IntegrationTest.Pages
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe("http://localhost:4200/rooms"));
         }
+        public void WaitForFormSubmitRequest()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe("http://localhost:4200/tender/add"));
+        }
     }
 }

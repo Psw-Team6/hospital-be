@@ -133,8 +133,7 @@ namespace HospitalTest.BloodConsumptionTest
             Password = "miki123",
             Name = "Ilija",
             Surname = "Maric",
-            Email = "Cajons@gmail.com",
-            Phone = "+612222222"
+            Email = "Cajons@gmail.com"
         };
         
         static BloodConsumptionCreateDto request = new()

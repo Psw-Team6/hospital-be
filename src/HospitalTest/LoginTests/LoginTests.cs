@@ -49,7 +49,7 @@ namespace HospitalTest.LoginTests
             result.Result.ShouldBeOfType<OkObjectResult>();
         }
         [Fact]
-        public async Task Authenticate_Doctor_Success__Login_Result()
+        public async Task Authenticate_Doctor_Success_Login_Result()
         {
             // Arrange
             using var scope = Factory.Services.CreateScope();

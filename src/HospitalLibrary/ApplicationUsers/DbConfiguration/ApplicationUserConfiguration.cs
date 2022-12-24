@@ -18,6 +18,9 @@ namespace HospitalLibrary.ApplicationUsers.DbConfiguration
                 .IsRequired();
             _ = builder.Property(x => x.Jmbg)
                 .HasColumnType("jsonb");
+            _ = builder.Property(x => x.Phone)
+                .HasColumnType("jsonb");
+            
         }
     }
 }

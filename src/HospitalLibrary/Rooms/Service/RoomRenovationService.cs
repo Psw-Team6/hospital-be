@@ -24,6 +24,56 @@ namespace HospitalLibrary.Rooms.Service
             _unitOfWork = unitOfWork;
             _appointmentService = appointmentService;
         }
+        
+        
+        public async Task<List<RoomSpliting>> GetAllSplittingByRoomId(Guid roomId)
+        {
+            return await _unitOfWork.RoomSplitingRepository.GetAllSplittingByRoomId(roomId);
+        }
+        
+        public async Task<bool> DeleteSplitting(RoomSpliting roomSplitting)
+        {
+            if (CancelSplitting(roomSplitting))
+            {
+                await _unitOfWork.RoomSplitingRepository.DeleteAsync(roomSplitting);
+                await _unitOfWork.CompleteAsync();
+                return true;
+            }
+
+            return false;
+        }
+        
+        private bool CancelSplitting(RoomSpliting roomSplitting)
+        {
+            if(DateTime.Now.AddDays(1).CompareTo(roomSplitting.DatesForSearch.From) < 0)
+                return true;
+            return false;
+        }
+        
+        public async Task<List<RoomMerging>> GetAllMergingByRoomId(Guid originalRoomId)
+        {
+            return await _unitOfWork.RoomMergingRepository.GetAllMergingByRoomId(originalRoomId);
+        }
+        
+        public async Task<bool> DeleteMerging(RoomMerging roomMerging)
+        {
+            if (CancelMerging(roomMerging))
+            {
+                await _unitOfWork.RoomMergingRepository.DeleteAsync(roomMerging);
+                await _unitOfWork.CompleteAsync();
+                return true;
+            }
+
+            return false;
+        }
+        
+        private bool CancelMerging(RoomMerging roomMerging)
+        {
+            if(DateTime.Now.AddDays(1).CompareTo(roomMerging.DateRangeOfMerging.From) < 0)
+                return true;
+            return false;
+        }
+        
         public async Task<RoomMerging> CreateRoomMerging(RoomMerging roomMerging)
         {
             try
@@ -96,12 +146,13 @@ namespace HospitalLibrary.Rooms.Service
                         await _roomService.MergeRooms(appointment.Room1Id, appointment.Room2Id);
                         await  _unitOfWork.RoomMergingRepository.DeleteAsync(appointment);
                         Console.WriteLine("DELETED OLD APPOINTMENT");
-                        await _unitOfWork.CompleteAsync();
+                        Console.WriteLine("COMPLETE ASYNC2");
                         break;
                     }
                 }
             }
 
+            Console.WriteLine("SAD I OVO");
             IEnumerable<RoomSpliting> allSplitingAppointments = await _unitOfWork.RoomSplitingRepository.GetAllAsync();
             if(!allSplitingAppointments.Any())
                 return;

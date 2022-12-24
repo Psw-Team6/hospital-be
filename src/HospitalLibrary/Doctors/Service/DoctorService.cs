@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.ApplicationUsers.Model;
@@ -9,14 +10,13 @@ using HospitalLibrary.Common;
 using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
-using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Doctors.Service
 {
-    public class DoctorService
+    public class DoctorService : IDoctorService
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -25,7 +25,7 @@ namespace HospitalLibrary.Doctors.Service
             _unitOfWork = unitOfWork;
         }
         
-        public async Task<IEnumerable<AppointmentSuggestion>> GetFreeTermsByDoctorPriority(AppointmentSuggestion appointmentSuggestion)
+        public async Task<IEnumerable<AppointmentSuggestion>> GetFreeTermsByTimeRangePriority(AppointmentSuggestion appointmentSuggestion)
         {
             //IEnumerable<AppointmentSuggestion> sortedFreeTermsByTimeRangePriority = new List<AppointmentSuggestion>();
             List<AppointmentSuggestion> freeAppointments = new List<AppointmentSuggestion>();
@@ -53,6 +53,48 @@ namespace HospitalLibrary.Doctors.Service
                 IEnumerable<Doctor> doctors = GetDoctorsBySpecialization(doctor.SpecializationId).Result;
                 freeAppointments = await timeSpansForTimePriority(appointmentSuggestion.Duration, doctors);
                 //freeAppointments = SortByTime(freeAppointments);
+
+            }
+            return freeAppointments;
+            
+        }
+        
+        public async Task<IEnumerable<AppointmentSuggestion>> GetFreeTermsByDoctorPriority(AppointmentSuggestion appointmentSuggestion)
+        {
+            //IEnumerable<AppointmentSuggestion> sortedFreeTermsByTimeRangePriority = new List<AppointmentSuggestion>();
+            List<AppointmentSuggestion> freeAppointments = new List<AppointmentSuggestion>();
+            Doctor doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(appointmentSuggestion.DoctorId);
+            try
+            {
+                DateRange newDuration = new DateRange();
+                newDuration.From = appointmentSuggestion.Duration.From;
+                int ctr = 0;
+                while (newDuration.From > DateTime.Now  && ctr < 6 )
+                {
+                    ctr++;
+                    newDuration.From = appointmentSuggestion.Duration.From.AddDays(-1);
+                }
+                //newDuration.From = appointmentSuggestion.Duration.From.AddDays(-5);
+                newDuration.To = appointmentSuggestion.Duration.To.AddDays(5);
+                IEnumerable<DateRange> freeTermsChosenDoctor = await generateFreeTimeSpans(newDuration, appointmentSuggestion.DoctorId);
+                if (freeTermsChosenDoctor.Any())
+                {
+                    foreach (var term in freeTermsChosenDoctor)
+                    {
+                        AppointmentSuggestion suggestion = new AppointmentSuggestion();
+                        suggestion.PatientId = appointmentSuggestion.PatientId;
+                        suggestion.DoctorId = appointmentSuggestion.DoctorId;
+                        suggestion.DoctorName = doctor.Name;
+                        suggestion.DoctorSurname = doctor.Surname;
+                        suggestion.Duration = term;
+                        freeAppointments.Add(suggestion);
+                    }
+                }
+            }
+            catch (DoctorIsNotAvailable)
+            {
+                IEnumerable<Doctor> doctors = GetDoctorsBySpecialization(doctor.SpecializationId).Result;
+            
 
             }
             return freeAppointments;
@@ -397,7 +439,8 @@ namespace HospitalLibrary.Doctors.Service
         {
             return await _unitOfWork.DoctorRepository.GetDoctorsBySpecialization(specId);
         }
-        
+
+
         private static void CheckDateRange(DateRange range)
         {
             if (!range.IsValidRange())
@@ -409,7 +452,12 @@ namespace HospitalLibrary.Doctors.Service
             {
                 throw new DateRangeNotValid("Please select upcoming date");
             }
-            
+
+        }
+
+        public async Task<Doctor> GetDoctorSpecialization(Guid id)
+        {
+            return await _unitOfWork.DoctorRepository.GetDoctorSpecialization(id);
         }
     }
 }

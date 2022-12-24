@@ -62,8 +62,8 @@ namespace HospitalLibrary.Rooms.Service
             newGroom.Id = groom1.Id;
             newGroom.PositionX = Math.Min(groom1.PositionX, groom2.PositionX);
             newGroom.PositionY = Math.Min(groom1.PositionY, groom2.PositionY);
-            newGroom.Lenght = Math.Max(groom1.PositionX + groom1.Lenght, groom2.PositionX + groom2.Lenght) - newGroom.PositionX;
-            newGroom.Width = Math.Max(groom1.PositionY + groom1.Width, groom2.PositionY + groom2.Width) - newGroom.PositionY;
+            newGroom.Lenght =Math.Max(groom1.PositionY + groom1.Lenght, groom2.PositionY + groom2.Lenght) - newGroom.PositionY; 
+            newGroom.Width = Math.Max(groom1.PositionX + groom1.Width, groom2.PositionX + groom2.Width) - newGroom.PositionX;
             newRoom.GRoomId = newGroom.Id;
             Console.WriteLine("ROOM MERGING DATA FINISHED");
             
@@ -78,6 +78,7 @@ namespace HospitalLibrary.Rooms.Service
             Console.WriteLine("UPDATED GROOM AND ROOM");
             
             await _unitOfWork.CompleteAsync();
+            Console.WriteLine("COMPLETE ASYNC");
 
             return newRoom;
         }
@@ -94,17 +95,7 @@ namespace HospitalLibrary.Rooms.Service
         {
             Room room1 = await GetById(room1Id);
             
-            Room newRoom1 = new Room();
-            newRoom1.Id = Guid.NewGuid();
-            newRoom1.Beds = room1.Beds;
-            newRoom1.Doctor = room1.Doctor;
-            newRoom1.Equipments = room1.Equipments;
-            newRoom1.Floor = room1.Floor;
-            newRoom1.Name = room1.Name;
-            newRoom1.Patients = room1.Patients;
-            newRoom1.Type = room1.Type;
-            newRoom1.BuildingId = room1.BuildingId;
-            newRoom1.FloorId = room1.BuildingId;
+            Room newRoom1= room1;
             
             Room newRoom2 = new Room();
             newRoom2.Id = Guid.NewGuid();
@@ -115,10 +106,11 @@ namespace HospitalLibrary.Rooms.Service
             GRoom originalGroom = await _unitOfWork.GRoomRepository.GetByIdAsync(room1.GRoomId);
             
             GRoom newGroom1 = new GRoom();
-            newGroom1.RoomId = newRoom1.Id;
             newGroom1.Id = Guid.NewGuid();
+            newGroom1.RoomId = newRoom1.Id;
             newGroom1.PositionX = originalGroom.PositionX;
             newGroom1.PositionY = originalGroom.PositionY;
+            
             if (originalGroom.Lenght >= 2)
             {
                 newGroom1.Lenght = originalGroom.Lenght / 2;
@@ -137,15 +129,18 @@ namespace HospitalLibrary.Rooms.Service
             newGroom2.Id = Guid.NewGuid();
             if (originalGroom.Lenght >= 2)
             {
-                newGroom2.Lenght = originalGroom.Lenght / 2;
+                Console.WriteLine("Delim drugu, original lenght:" +originalGroom.Lenght + "  newGrom1Len:"+newGroom1.Lenght);
+                newGroom2.Lenght = originalGroom.Lenght -  newGroom1.Lenght;
                 newGroom2.Width = originalGroom.Width;
-                newGroom2.PositionX = newGroom1.PositionX + newGroom1.Lenght;
-                newGroom2.PositionY = newGroom1.PositionY;
+                
+                newGroom2.PositionX = newGroom1.PositionX;
+                newGroom2.PositionY = newGroom1.PositionY + newGroom1.Lenght;
             }
             else
             {
                 newGroom2.Lenght = originalGroom.Lenght;
-                newGroom2.Width = originalGroom.Width / 2;
+                newGroom2.Width = originalGroom.Width - newGroom1.Width;
+                
                 newGroom2.PositionX = newGroom1.PositionX+ newGroom1.Width;
                 newGroom2.PositionY = newGroom1.PositionY ;
             }
@@ -155,7 +150,7 @@ namespace HospitalLibrary.Rooms.Service
             await _unitOfWork.GRoomRepository.DeleteAsync(originalGroom);
             Console.WriteLine("Deleted GROM!");
             
-            if(await DeleteById(room1Id))
+          /*  if(await DeleteById(room1Id))
             {
                 
                 Console.WriteLine("DELETED OLD DATA");
@@ -164,16 +159,15 @@ namespace HospitalLibrary.Rooms.Service
             {
                 
                 Console.WriteLine("NOT DELETED OLD DATA");
-            }
+            }*/
             
             await _unitOfWork.GRoomRepository.CreateAsync(newGroom1);
             await _unitOfWork.GRoomRepository.CreateAsync(newGroom2);
             Console.WriteLine("MADE GROOMS");
             
-            await _unitOfWork.RoomRepository.CreateAsync(newRoom1);
+            await _unitOfWork.RoomRepository.UpdateAsync(newRoom1);
             await _unitOfWork.RoomRepository.CreateAsync(newRoom2);
             Console.WriteLine("MADE ROOMS");
-            
             
             await _unitOfWork.CompleteAsync();
 

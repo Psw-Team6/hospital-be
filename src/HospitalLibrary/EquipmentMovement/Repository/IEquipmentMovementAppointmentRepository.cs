@@ -10,5 +10,6 @@ namespace HospitalLibrary.EquipmentMovement.Repository
     {
         Task<List<EquipmentMovementAppointment>> GetAllMovementAppointmentsForRoom(Guid id);
         Task<List<EquipmentMovementAppointment>> GetAllMovementAppointmentByRoomId(Guid originalRoomId);
+        
     }
 }
