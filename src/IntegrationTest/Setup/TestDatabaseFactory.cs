@@ -3,6 +3,7 @@ using System.Linq;
 using IntegrationAPI;
 using IntegrationAPI.Dtos.Request;
 using IntegrationLibrary.BloodBank;
+using IntegrationLibrary.BloodBank.Model;
 using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.ConfigureGenerateAndSend.Model;
 using IntegrationLibrary.NewsFromBloodBank.Model;
@@ -139,6 +140,9 @@ namespace IntegrationTest.Setup
 
             context.BloodBanks.Add(bloodBank);
             context.BloodBanks.Add(bloodBank1);
+
+
+
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE public.\"NewsFromBloodBank\";");
             NewsFromBloodBank news1 = new()

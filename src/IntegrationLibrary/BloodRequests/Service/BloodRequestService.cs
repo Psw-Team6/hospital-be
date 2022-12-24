@@ -91,12 +91,14 @@ namespace IntegrationLibrary.BloodRequests.Service
         //METODA KOJA TREBA DA SE POZOVE SVAKI DAN (POZIVA SE VISE PUTA SVE DOK NE VRATI NULL)
         /*public async Task<BloodSupplyResponse> sendScheduledRequest()
         {
+            
             List<BloodRequest> requestTodayList = scheduledRequestsForToday();
             if(requestTodayList.Count > 0)
             {
                 requestTodayList[0].Status = Status.SENT;
                 Update(requestTodayList[0]);
-                return await _httpService.GetProductAsync(requestTodayList[0].BloodBank.ServerAddress + "blood/" + requestTodayList[0].BloodBank.Name + "/" + requestTodayList[0].Type + '/' + requestTodayList[0].Amount);
+                BloodBank.BloodBank bb = _bloodBankService.GetById(requestTodayList[0].BloodBankId);
+                return await _httpService.GetProductAsync(bb.ServerAddress + "blood/" + bb.Name + "/" + requestTodayList[0].Type + '/' + requestTodayList[0].Amount);
             }
 
             return null;
@@ -129,6 +131,15 @@ namespace IntegrationLibrary.BloodRequests.Service
                     if (IfOnDemandRequest(request))
                     {
                         requestTodayList.Add(request);
+                    }
+                    else
+                    {
+                        IntegrationLibrary.BloodBank.BloodBank bloodBank = _bloodBankService.GetById(request.BloodBankId);
+                        if (bloodBank == null)
+                        {
+                            continue;
+                        }
+                        _httpService.GetProductAsync(bloodBank.ServerAddress + "blood/" + bloodBank.Name + "/" + request.Type + '/' + request.Amount);
                     }
                 }
             }
