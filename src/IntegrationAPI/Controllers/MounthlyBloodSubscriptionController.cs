@@ -36,7 +36,7 @@ namespace IntegrationAPI.Controllers
         }
 
         // POST api/MounthlyBloodSubscription
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult Create(MounthlyBloodSubscriptionRequest bSup)
         {
             if (!ModelState.IsValid)
@@ -61,6 +61,6 @@ namespace IntegrationAPI.Controllers
 
             _supService.Create(mounthlyBloodSubscription);
             return CreatedAtAction("GetById", new { id = mounthlyBloodSubscription.id }, mounthlyBloodSubscription);
-        }
+        }*/
     }
 }
