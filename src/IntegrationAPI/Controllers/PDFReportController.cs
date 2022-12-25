@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.PDFReports.Service;
+using IntegrationLibrary.SFTP.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net.Http;
