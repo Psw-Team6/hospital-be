@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,8 @@ using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Common;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.SharedModel;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace HospitalLibrary.Rooms.Service
 {
@@ -120,14 +123,18 @@ namespace HospitalLibrary.Rooms.Service
             return roomSplitingResult;
         }
 
-        public Task<RoomSpliting> GetSplitingById(Guid id)
+        public async Task<RoomSpliting> GetSplitingById(Guid id)
         {
-            throw new NotImplementedException();
+            var roomSplitting =
+                await _unitOfWork.RoomSplitingRepository.GetByIdAsync(id);
+            return roomSplitting;
         }
 
-        public Task<RoomMerging> GetMergingById(Guid id)
+        public async Task<RoomMerging> GetMergingById(Guid id)
         {
-            throw new NotImplementedException();
+            var roomMerging =
+                await _unitOfWork.RoomMergingRepository.GetByIdAsync(id);
+            return roomMerging;
         }
 
         public async Task CheckIfRenovationFinished()
