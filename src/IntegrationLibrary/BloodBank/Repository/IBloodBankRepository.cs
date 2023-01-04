@@ -16,5 +16,6 @@ namespace IntegrationLibrary.BloodBank.Repository
         void Update(BloodBank bloodBank);
         void Delete(BloodBank bloodBank); 
         BloodBank Authenticate(string username, string password);
+        public BloodBank GetBloodBankByName(String name);
     }
 }

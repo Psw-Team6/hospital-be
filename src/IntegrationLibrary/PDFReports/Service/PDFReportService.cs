@@ -11,12 +11,25 @@ using IntegrationLibrary.PDFReports.Model;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Json;
+using IntegrationLibrary.SendMail.Services;
+using IntegrationLibrary.BloodBank.Repository;
 
 namespace IntegrationLibrary.PDFReports.Service
 {
     public class PDFReportService : IPDFReportService
     {
-        
+
+
+        private readonly IBloodBankRepository _bloodBankRepository;
+        private readonly IEmailService _emailService;
+
+        public PDFReportService(IBloodBankRepository bloodBankRepository, IEmailService emailService)
+        {
+            _bloodBankRepository = bloodBankRepository;
+            _emailService = emailService;
+        }
+
+
         public byte[] CreateDocument(PDFReport report)
         {
             PdfDocument document = new PdfDocument();
@@ -87,6 +100,22 @@ namespace IntegrationLibrary.PDFReports.Service
             PDFReport report = new PDFReport(generatePeriod, bankName, GetConsumptions(bankName));
             MultipartFormDataContent form = new MultipartFormDataContent();
             byte[] paramFileBytes = CreateDocument(report);
+
+            BloodBank.BloodBank bloodBank = _bloodBankRepository.GetByName(bankName);
+            string text = "Dear Sir or Madam, in the attachment, we are sending you a report for the blood bank <strong>"+bankName+"</strong> for the last "+generatePeriod+" days.";
+            
+            if (bloodBank != null)
+            {
+                SendMail.Email email = new SendMail.Email(bloodBank.Email, "PSW-hospital", text, "");
+                _emailService.SendEmailWithAttacment(email, paramFileBytes, bankName);
+            }
+            else
+            {
+                SendMail.Email emailDefaul = new SendMail.Email("psw.isa.mail@gmail.com", "PSW-hospital","", text);
+                _emailService.SendEmailWithAttacment(emailDefaul, paramFileBytes, bankName);
+            }
+            
+
             form.Add(new StreamContent(new MemoryStream(paramFileBytes)), "file", report.bankName + ".pdf");
             try
             {
