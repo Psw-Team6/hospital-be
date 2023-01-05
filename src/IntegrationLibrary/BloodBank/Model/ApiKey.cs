@@ -13,12 +13,6 @@ namespace IntegrationLibrary.BloodBank.Model
         public ApiKey()
         {
             Value = GenerateApiKey();
-            Validate();
-        }
-
-        private void Validate()
-        {
-
         }
 
         private String GenerateApiKey()
@@ -29,5 +23,7 @@ namespace IntegrationLibrary.BloodBank.Model
             return Convert.ToBase64String(key);
 
         }
+
+        
     }
 }

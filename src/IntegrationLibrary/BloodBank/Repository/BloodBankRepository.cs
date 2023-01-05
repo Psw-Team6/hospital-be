@@ -68,5 +68,12 @@ namespace IntegrationLibrary.BloodBank.Repository
                 throw;
             }
         }
+
+        public BloodBank GetBloodBankByName(String name)
+        {
+            var pom = _context.BloodBanks.Find(name);
+            return pom;
+        }
+
     }
 }

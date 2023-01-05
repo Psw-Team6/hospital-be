@@ -107,7 +107,7 @@ namespace HospitalAPI.Controllers
         }
         
         
-        [HttpGet("GetSplittingByRoomId/{roomId}")]
+        [HttpGet("GetAllSplittingByRoomId/{roomId}")]
         [ProducesResponseType( StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<RoomSplitingResponse>> GetAllSplittingByRoomId([FromRoute]Guid roomId)
@@ -133,12 +133,12 @@ namespace HospitalAPI.Controllers
            
         }
 
-        [HttpGet("GetAllMergingByRoomId/{roomId}")]
+        [HttpGet("GetAllMergingByRoomId/{VroomId}")]
         [ProducesResponseType( StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<RoomMerging>> GetAllMergingByRoomId([FromRoute]Guid roomId)
+        public async Task<ActionResult<RoomMerging>> GetAllMergingByRoomId([FromRoute]Guid VroomId)
         {
-            var result = await _roomRenovationService.GetAllMergingByRoomId(roomId);
+            var result = await _roomRenovationService.GetAllMergingByRoomId(VroomId);
             return result == null ? NotFound() : Ok(result);
            
         }
