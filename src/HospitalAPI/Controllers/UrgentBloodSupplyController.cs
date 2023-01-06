@@ -15,14 +15,11 @@ namespace HospitalAPI.Controllers
     public class UrgentBloodSupplyController : ControllerBase
     {
         private readonly IUrgentBloodSupplyService _urgentBloodSupplyService;
-        private readonly IMapper _mapper;
-        private readonly BloodUnitService _bloodUnitService;
-
-        public UrgentBloodSupplyController(IUrgentBloodSupplyService urgentBloodSupplyService, IMapper mapper, BloodUnitService bloodUnitService)
+        
+        public UrgentBloodSupplyController(IUrgentBloodSupplyService urgentBloodSupplyService)
         {
             _urgentBloodSupplyService = urgentBloodSupplyService;
-            _mapper = mapper;
-            _bloodUnitService = bloodUnitService;
+           
         }
         //api/v1/UrgentBloodSupplyController
         [HttpPost]
