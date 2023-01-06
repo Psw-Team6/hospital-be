@@ -104,6 +104,9 @@ namespace HospitalAPI.Mapper
                 CreateMap<MedicineExaminationResponse, Medicine>();
                 CreateMap<ExaminationRequest, Examination>();
                 CreateMap<Examination, ExaminationRequest>();
+                
+                CreateMap<ExeminationResponse, Examination>();
+                CreateMap<Examination, ExeminationResponse>();
                 CreateMap<ExaminationPrescriptionRequest, ExaminationPrescription>();
                 CreateMap<ExaminationPrescription, ExaminationPrescriptionRequest>();
                 CreateMap<AppointmentReportPdfRequest, AppointmentReportPdfOptions>();
