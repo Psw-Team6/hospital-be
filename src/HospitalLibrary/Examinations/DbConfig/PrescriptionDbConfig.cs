@@ -12,6 +12,8 @@ namespace HospitalLibrary.Examinations.DbConfig
             _ = builder
                 .HasMany(x => x.Medicines)
                 .WithMany(x => x.ExaminationPrescriptions);
+
+
         }
     }
 }

@@ -38,10 +38,11 @@ namespace HospitalAPI.Controllers.Private
         
         [HttpGet]
         [ProducesResponseType( StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<Examination>>> GetAllExaminations()
+        public async Task<ActionResult<List<ExeminationResponse>>> GetAllExaminations()
         {
             var examinations = await _examinationService.GetAllExaminations();
-            return Ok(examinations);
+            var result = _mapper.Map<IEnumerable<ExeminationResponse>>(examinations);
+            return Ok(result);
         }
     }
 }
