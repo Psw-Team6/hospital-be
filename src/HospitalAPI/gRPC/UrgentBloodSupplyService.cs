@@ -2,22 +2,18 @@ using Grpc.Core;
 using System;
 using System.Threading.Tasks;
 using HospitalLibrary.BloodUnits.Model;
-using HospitalLibrary.BloodUnits.Repository;
 using HospitalLibrary.BloodUnits.Service;
 
 namespace HospitalAPI.gRPC
 {
-    public class UrgentBloodSupplyService : IUrgentBloodSupplyService
+    public class UrgentBloodSupplyService
     {
         private Channel channel { get; set; }
         private UrgentBloodSupply.UrgentBloodSupplyClient client;
-
-        private readonly IBloodUnitRepository _bloodUnitRepository;
         private readonly BloodUnitService _bloodUnitService;
 
-        public UrgentBloodSupplyService(IBloodUnitRepository bloodUnitRepository, BloodUnitService bloodUnitService)
+        public UrgentBloodSupplyService(BloodUnitService bloodUnitService)
         {
-            _bloodUnitRepository = bloodUnitRepository;
             _bloodUnitService = bloodUnitService;
         }
 

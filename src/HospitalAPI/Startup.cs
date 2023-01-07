@@ -38,7 +38,7 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HospitalDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")!));
+            options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
             services.Configure<EmailOptions>(Configuration.GetSection(EmailOptions.SendGridEmail));
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters(); //OVU SI ODKOMENTRISAO
@@ -67,14 +67,13 @@ namespace HospitalAPI
             services.AddTransient<ExceptionMiddleware>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRenovationService, RoomRenovationService>();
-            services.AddScoped<IUrgentBloodSupplyService, UrgentBloodSupplyService>();
+            services.AddScoped<UrgentBloodSupplyService>();
 
 
             services.AddScoped<IEquipmentMovementAppointmentService, EquipmentMovementAppointmentService>();
             services.AddSingleton<IHostedService, CheckIfAppointmentIsDone>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
-            services.AddTransient<IBloodUnitRepository, BloodUnitRepository>();
 
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
             services.AddMyDependencyGroup();

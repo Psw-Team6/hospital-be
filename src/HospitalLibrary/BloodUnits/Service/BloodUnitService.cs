@@ -10,12 +10,10 @@ namespace HospitalLibrary.BloodUnits.Service
     public class BloodUnitService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IBloodUnitRepository _bloodUnitRepository;
 
-        public BloodUnitService(IUnitOfWork unitOfWork, IBloodUnitRepository bloodUnitRepository)
+        public BloodUnitService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _bloodUnitRepository = bloodUnitRepository;
         }
 
         public async Task<IEnumerable<BloodUnitDto>> GetUnitsGroupByType()

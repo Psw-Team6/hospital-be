@@ -2,7 +2,6 @@
 using HospitalAPI.Controllers;
 using HospitalAPI.gRPC;
 using HospitalTest.Setup;
-using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -19,11 +18,6 @@ namespace HospitalTest.UrgentBloodSupplyTest
     public class UrgentBloodSupplyTest: BaseIntegrationTest
     {
         public  UrgentBloodSupplyTest(TestDatabaseFactory factory) : base(factory) { }
-
-        public static UrgentBloodSupplyController SetupController(IServiceScope scope)
-        {
-            return new UrgentBloodSupplyController(scope.ServiceProvider.GetRequiredService<UrgentBloodSupplyService>());
-        }
 
         [Fact]
         public async Task Send_urgent_requets_to_blood_bank_successfullyAsync()
