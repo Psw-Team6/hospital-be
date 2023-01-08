@@ -60,7 +60,7 @@ namespace IntegrationAPI.Controllers
             RabbitMQPublisher.SendBloodSubscription(bSupResponse);
 
             _supService.Create(mounthlyBloodSubscription);
-            return CreatedAtAction("GetById", new { id = mounthlyBloodSubscription.id }, mounthlyBloodSubscription);
+            return CreatedAtAction("Create", new { id = mounthlyBloodSubscription.id }, mounthlyBloodSubscription);
         }
     }
 }
