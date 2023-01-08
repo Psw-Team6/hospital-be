@@ -92,7 +92,7 @@ namespace HospitalLibrary.Examinations.Service
                 {
                     foreach (var medicine in prescription.Medicines)
                     {
-                        if (medicine.Name.Contains(word))
+                        if (medicine.Name.ToLower().Contains(word.ToLower()))
                         {
                             return true;
                         }
@@ -111,7 +111,7 @@ namespace HospitalLibrary.Examinations.Service
             {
                 foreach (var symptom in examination.Symptoms)
                 {
-                    if (symptom.Description.Contains(word))
+                    if (symptom.Description.ToLower().Contains(word.ToLower()))
                     {
                         return true;
                     }
@@ -127,7 +127,7 @@ namespace HospitalLibrary.Examinations.Service
             var split = query.Split(" ");
             foreach (var word in split)
             {
-                if (patient.Name.Contains(word) || patient.Surname.Contains(word))
+                if (patient.Name.ToLower().Contains(word.ToLower()) || patient.Surname.ToLower().Contains(word.ToLower()))
                 {
                     return true;
                 }
@@ -142,7 +142,7 @@ namespace HospitalLibrary.Examinations.Service
             var split = query.Split(" ");
             foreach (var word in split)
             {
-                if (doctor.Name.Contains(word) || doctor.Surname.Contains(word))
+                if (doctor.Name.ToLower().Contains(word.ToLower()) || doctor.Surname.ToLower().Contains(word.ToLower()))
                 {
                     return true;
                 }
