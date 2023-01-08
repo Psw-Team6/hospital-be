@@ -13,5 +13,6 @@ namespace IntegrationLibrary.Tender.Service
         public void Delete(Model.Tender tender);
         public Task<List<Model.Tender>> GetAll();
         public Model.Tender GetById(Guid id);
+        public Task<List<Model.Tender>> GetClosedTenders();
     }
 }
