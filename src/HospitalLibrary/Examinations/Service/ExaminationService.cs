@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Examinations.Repository;
 using HospitalLibrary.Medicines.Model;
+using SendGrid.Helpers.Errors.Model;
 
 namespace HospitalLibrary.Examinations.Service
 {
@@ -59,6 +62,93 @@ namespace HospitalLibrary.Examinations.Service
         public async Task<IEnumerable<Examination>> GetAllExaminations()
         {
             return  await _unitOfWork.GetRepository<ExaminationRepository>().GetAllExaminations();
+        }
+
+        public async Task<IEnumerable<Examination>> GetSearchedExaminations(String query)
+        {
+            var allExaminations = await _unitOfWork.GetRepository<ExaminationRepository>().GetAllExaminations();
+            IEnumerable<Examination> filteredEx = new List<Examination>();
+            foreach (var examination in allExaminations)
+            {
+                if ( CheckSymptoms(query, examination) || CheckMedicine(query, examination) || await CheckDoctor(query, examination) || await CheckPatient(query, examination))
+                {
+                    filteredEx = filteredEx.Append(examination);
+                }
+            }
+
+            if (!filteredEx.Any())
+            {
+                throw new NotFoundException("No Exeminatiosn found");
+            }
+            return filteredEx;
+        }
+
+        private bool CheckMedicine(String query, Examination examination)
+        {
+            var split = query.Split(" ");
+            foreach (var word in split)
+            {
+                foreach (var prescription in examination.Prescriptions)
+                {
+                    foreach (var medicine in prescription.Medicines)
+                    {
+                        if (medicine.Name.Contains(word))
+                        {
+                            return true;
+                        }
+                        
+                    }
+                }
+            }
+
+            return false;
+        }
+        
+        private bool CheckSymptoms(String query, Examination examination)
+        {
+            var split = query.Split(" ");
+            foreach (var word in split)
+            {
+                foreach (var symptom in examination.Symptoms)
+                {
+                    if (symptom.Description.Contains(word))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+        
+        private async Task<bool> CheckPatient(String query, Examination examination)
+        {
+            var patient = await _unitOfWork.PatientRepository.GetByIdAsync(examination.Appointment.PatientId);
+            var split = query.Split(" ");
+            foreach (var word in split)
+            {
+                if (patient.Name.Contains(word) || patient.Surname.Contains(word))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        
+        private async Task<bool> CheckDoctor(String query, Examination examination)
+        {
+            var doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(examination.Appointment.DoctorId);
+            var split = query.Split(" ");
+            foreach (var word in split)
+            {
+                if (doctor.Name.Contains(word) || doctor.Surname.Contains(word))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
