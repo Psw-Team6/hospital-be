@@ -175,9 +175,8 @@ namespace HospitalTest.AppointmentPdfReportTest
         };
         
         ///Test repository data
-        static Appointment appointment = new()
+        static Appointment appointment = new(Guid.NewGuid())
         {
-            Id = Guid.NewGuid(),
             Emergent = false,
             AppointmentType = AppointmentType.Examination,
             AppointmentState = AppointmentState.Pending,
@@ -191,9 +190,9 @@ namespace HospitalTest.AppointmentPdfReportTest
                 
             }
         };
-        static Appointment appointment1 = new()
+        static Appointment appointment1 = new(Guid.NewGuid())
         {
-            Id = Guid.NewGuid(),
+            
             Emergent = false,
             AppointmentType = AppointmentType.Examination,
             AppointmentState = AppointmentState.Pending,

@@ -94,19 +94,27 @@ namespace HospitalAPI.Controllers
 
         private async Task<string> AuthenticateBloodBank(LoginRequest loginRequest)
         {
-            var bank = new BankRequest
-            {
-                Name = loginRequest.Username,
-                Password = loginRequest.Password
-            };
-            var client = _clientFactory.CreateClient();
-            client.BaseAddress = new Uri(BloodBankUrl);
-            var response = await client.PostAsJsonAsync("/api/BloodBank/Authenticate",bank);
             var token = "";
-            if (!response.IsSuccessStatusCode) return token;
-            var content = await response.Content.ReadAsStringAsync();
-            var bankLoginResponse = JsonConvert.DeserializeObject<BankLoginResponse>(content);
-            token = CreateBloodBankJwt(bankLoginResponse);
+            try
+            {
+                var bank = new BankRequest
+                {
+                    Name = loginRequest.Username,
+                    Password = loginRequest.Password
+                };
+                var client = _clientFactory.CreateClient();
+                client.BaseAddress = new Uri(BloodBankUrl);
+                var response = await client.PostAsJsonAsync("/api/BloodBank/Authenticate", bank);
+                if (!response.IsSuccessStatusCode) return token;
+                var content = await response.Content.ReadAsStringAsync();
+                var bankLoginResponse = JsonConvert.DeserializeObject<BankLoginResponse>(content);
+                token = CreateBloodBankJwt(bankLoginResponse);
+            }
+            catch (Exception ex)
+            {
+                token = "";
+            }
+
             return token;
         }
 
