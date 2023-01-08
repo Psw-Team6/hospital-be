@@ -57,7 +57,7 @@ namespace HospitalTest.ScheduleHolidayTests
         }
         
         [Fact]
-        public async Task Schedule_holiday_sucsess()
+        public void  Schedule_holiday_sucsess()
         {
             var holiday = CreateMockHolidazValid(out var holidayService);
             Func<Task> act = () => holidayService.ScheduleHoliday(holiday);

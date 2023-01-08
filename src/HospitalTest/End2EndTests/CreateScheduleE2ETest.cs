@@ -33,9 +33,9 @@ namespace HospitalTest.End2EndTests
         {
             Login();
             _createSchedulePage.Navigate();
-            _createSchedulePage.EnterDate("12/30/2022");
-            _createSchedulePage.EnterStartTime("11:00 AM");
-            _createSchedulePage.EnterFinishTime("11:30 AM");
+            _createSchedulePage.EnterDate("6/20/2023");
+            _createSchedulePage.EnterStartTime("10:00 AM");
+            _createSchedulePage.EnterFinishTime("10:30 AM");
             _createSchedulePage.MultiSelectClick();
             _createSchedulePage.SelectPatient();
             _createSchedulePage.Submit();
@@ -50,7 +50,7 @@ namespace HospitalTest.End2EndTests
         {
             Login();
             _createSchedulePage.Navigate();
-            _createSchedulePage.EnterDate("12/24/2022");
+            _createSchedulePage.EnterDate("12/30/2022");
             _createSchedulePage.EnterStartTime("11:00 AM");
             _createSchedulePage.EnterFinishTime("11:30 AM");
             _createSchedulePage.MultiSelectClick();

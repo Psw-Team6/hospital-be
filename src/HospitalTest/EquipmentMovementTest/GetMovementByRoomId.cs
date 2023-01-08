@@ -27,7 +27,7 @@ namespace HospitalTest.EquipmentMovementTest
         
         
         [Fact]
-        public async Task GetMovementByRoomId_Succesfull()
+        public  void GetMovementByRoomId_Succesfull()
         {
             var mockSearchRepo = new Mock<IEquipmentMovementAppointmentRepository>();
             var GetMovementByRoomId = new Mock<EquipmentMovementAppointmentService>();

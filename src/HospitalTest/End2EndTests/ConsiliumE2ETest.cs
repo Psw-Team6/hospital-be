@@ -136,13 +136,13 @@ namespace HospitalTest.End2EndTests
         {
             _scheduleConsiliumPage.InsertTheme("Test");
             _scheduleConsiliumPage.InsertDuration("45");
-            _scheduleConsiliumPage.InsertStartDate("12/20/2022");
-            _scheduleConsiliumPage.InsertEndDate("12/22/2022");
+            _scheduleConsiliumPage.InsertStartDate("12/18/2022");
+            _scheduleConsiliumPage.InsertEndDate("12/20/2022");
             _scheduleConsiliumPage.SpecializationSubmit();
             Thread.Sleep(1000);
             Assert.True(_scheduleConsiliumPage.IsMultiVisibleSpec());
             _scheduleConsiliumPage.MultiSelectSpecClick();
-            _scheduleConsiliumPage.Select();
+            _scheduleConsiliumPage.SelectSpec();
             Thread.Sleep(1000);
             _scheduleConsiliumPage.EscSpec();
             _scheduleConsiliumPage.SubmitForm();

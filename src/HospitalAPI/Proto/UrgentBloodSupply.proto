@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_package = "com.example.demo.grpc";
+
+service UrgentBloodSupply {
+  rpc orderBloodUrgently(Request) returns (Response);
+}
+
+
+message Request {
+  string bloodType = 1;
+  int32 quantity = 2;
+}
+
+message Response {
+  string bloodBankName=1;
+  string bloodType = 2;
+  int32 quantity = 3;
+}

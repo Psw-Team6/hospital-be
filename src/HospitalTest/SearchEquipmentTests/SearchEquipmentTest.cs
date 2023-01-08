@@ -29,7 +29,7 @@ namespace HospitalTest.SearchEquipmentTests
 
         
         [Fact]
-        public async Task Search_Succesfull()
+        public void  Search_Succesfull()
         {
             var mockSearchRepo = new Mock<IIEquipmentRepository>();
               var mockSearchService = new Mock<EquipmentService>();

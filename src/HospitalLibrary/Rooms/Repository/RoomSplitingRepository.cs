@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
@@ -17,7 +17,7 @@ namespace HospitalLibrary.Rooms.Repository
         
         public async Task<List<RoomSpliting>> GetAllSplittingByRoomId(Guid roomId)
         {
-            return await  DbSet.Where(roomSpliting => roomSpliting.Id == roomId)
+            return await  DbSet.Where(roomSpliting => roomSpliting.RoomId == roomId)
                 .ToListAsync();
         }
         

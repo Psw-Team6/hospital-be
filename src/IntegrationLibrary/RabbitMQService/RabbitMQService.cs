@@ -57,7 +57,7 @@ namespace IntegrationLibrary.RabbitMQService
                 var channel = connection.CreateModel();
                 var consumer = new EventingBasicConsumer(channel);
 
-                var contextOptions = new DbContextOptionsBuilder<IntegrationDbContext>().UseNpgsql("Host=localhost;Database=IntegrationDB;Username=postgres;Password=password;").Options;
+                var contextOptions = new DbContextOptionsBuilder<IntegrationDbContext>().UseNpgsql("Host=localhost;Database=IntegrationDB;Username=postgres;Password=tamara;").Options;
                 var dbContext = new IntegrationDbContext(contextOptions);
 
                 consumer.Received += (model, ea) =>

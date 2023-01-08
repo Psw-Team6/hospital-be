@@ -8,6 +8,13 @@
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="Google.Protobuf" Version="3.21.12" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
+    <PackageReference Include="Grpc.Core" Version="2.46.5" />
+    <PackageReference Include="Grpc.Tools" Version="2.51.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
@@ -21,6 +28,10 @@
     <PackageReference Include="Polybioz.HtmlRenderer.PdfSharp.Core" Version="1.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
+
+	<ItemGroup>
+		<Protobuf Include="Proto\UrgentBloodSupply.proto" GrpcServices="Client" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\HospitalLibrary\HospitalLibrary.csproj" />

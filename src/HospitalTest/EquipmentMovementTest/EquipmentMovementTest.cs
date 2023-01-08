@@ -114,7 +114,7 @@ namespace HospitalTest.EquipmentMovementTest
         }
         
         [Fact]
-        public async Task Schedule_Succesfull()
+        public void Schedule_Succesfull()
         {
             var mockEquipmentMovementRepo = new Mock<IEquipmentMovementAppointmentRepository>();
             var mockEquipmentRepo = new Mock<IIEquipmentRepository>();

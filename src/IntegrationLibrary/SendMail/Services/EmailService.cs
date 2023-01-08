@@ -31,7 +31,24 @@ namespace IntegrationLibrary.SendMail.Services
 
         }
 
+        public async Task SendEmailWithAttacment(Email email, byte[] report, string bloodBankName)
+        {
+            var client = new SendGridClient(_options.APIKey);
+            String fileName = bloodBankName + ".pdf";
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress(_options.FromEmail, _options.FromName),
+                Subject = email.Subject,
+                PlainTextContent = email.PlainTextContent,
+                HtmlContent = email.HtmlContent
+            };
+            msg.AddTo(new EmailAddress(email.ToEmail));
+            var file = Convert.ToBase64String(report);
 
+            msg.AddAttachment(fileName, file);
+            _ = await client.SendEmailAsync(msg);
+
+        }
 
     }
 }

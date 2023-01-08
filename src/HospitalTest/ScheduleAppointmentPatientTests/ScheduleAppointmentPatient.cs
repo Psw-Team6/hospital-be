@@ -111,15 +111,15 @@ namespace HospitalTest.ScheduleAppointmentPatientTests
         }
         
         [Fact]
-        public async Task Schedule_appointmet_sucsess()
+        public void Schedule_appointmet_sucsess()
         {
-            DateRange Duration = new DateRange
+            var duration = new DateRange
             {
                 From = new DateTime(2025, 11, 27, 15, 0, 0),
                 To = new DateTime(2025, 11, 28, 13, 15, 0)
             };
             var doctor = CreateMockScheduleAppointmentValid(out var doctorService);
-            Func<Task> act = () => doctorService.generateFreeTimeSpans(Duration,doctor.Id);
+            Func<Task> act = () => doctorService.generateFreeTimeSpans(duration,doctor.Id);
             Assert.NotNull(act);
         }
         

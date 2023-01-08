@@ -27,8 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Medicines\Controller" />
-    <Folder Include="Medicines\Medicine" />
     <Folder Include="Medicines\Service" />
     <Folder Include="BloodConsumptions\Repository" />
     <Folder Include="BloodConsumptions\Service" />

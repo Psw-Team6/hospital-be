@@ -34,9 +34,9 @@ namespace HospitalTest.End2EndTests
         {
             Login();
             _createSchedulePage.Navigate(_appId);
-            _createSchedulePage.EnterDate("1/20/2023");
-            _createSchedulePage.EnterStartTime("11:00 AM");
-            _createSchedulePage.EnterFinishTime("11:30 AM");
+            _createSchedulePage.EnterDate("1/25/2023");
+            _createSchedulePage.EnterStartTime("09:00 AM");
+            _createSchedulePage.EnterFinishTime("09:30 AM");
             _createSchedulePage.Submit();
             Thread.Sleep(2000);
             //assert
