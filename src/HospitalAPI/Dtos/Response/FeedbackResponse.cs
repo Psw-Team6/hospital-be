@@ -9,7 +9,7 @@ namespace HospitalAPI.Dtos.Response
         public Guid Id { get; set; }
         public PatientResponseName Patient { get; set; }
         public DateTime Date { get; set; }
-        public String Text { get; set; }
+        public string Text { get; set; }
         public bool IsAnonymous { get; set; }
         public bool IsPublic { get; set; }
         public Status Status { get; set; }
