@@ -55,7 +55,7 @@ namespace HospitalLibrary.Common
         private RoomRepository _roomRepository;
         private IRoomMergingRepository _roomMergingRepository;
         private IRoomSplitingRepository _roomSplitingRepository;
-        
+        private RoomEventRepository _roomEventRepository;
         
         public IAllergenRepository AllergenRepository =>
             _allergenRepository ??= new AllergenRepository(_hospitalDbContext);
@@ -98,6 +98,8 @@ namespace HospitalLibrary.Common
             _bloodUnitRepository ??= new BloodUnitRepository(_hospitalDbContext);
         public IBuildingRepository BuildingRepository =>
             _buildingRepository ??= new BuildingRepository(_hospitalDbContext);
+        public IRoomEventRepository RoomEventRepository =>
+            _roomEventRepository ??= new RoomEventRepository(_hospitalDbContext);
         public IFloorRepository FloorRepository =>
             _floorRepository ??= new FloorRepository(_hospitalDbContext);
 

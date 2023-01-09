@@ -53,6 +53,7 @@ namespace HospitalLibrary.Common
         IExaminationPrescriptionRepository ExaminationPrescriptionRepository { get; }
         IRoomMergingRepository RoomMergingRepository { get; }
         IRoomSplitingRepository RoomSplitingRepository { get; }
+        IRoomEventRepository RoomEventRepository { get; }
         T GetRepository<T>() where T : class;
         Task CompleteAsync();
         
