@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Common;
 using HospitalLibrary.Examinations.Exceptions;
 
 namespace HospitalLibrary.Examinations.Model
@@ -85,7 +86,7 @@ namespace HospitalLibrary.Examinations.Model
             }
         }
         public Guid IdApp { get; private set; }
-        public Examination()
+        public Examination() : base()
         {
         }
         
