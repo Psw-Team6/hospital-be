@@ -19,6 +19,10 @@ namespace HospitalLibrary.Appointments.Model
         public Appointment(Guid id) : base(id)
         {
         }
+        public Appointment()
+        {
+            
+        }
 
         public bool CanBeExamined()
         {

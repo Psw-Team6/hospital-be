@@ -1008,63 +1008,56 @@ namespace HospitalLibrary.Settings
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
-            Appointment appointment7 = new()
+            Appointment appointment7 = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 PatientId = patient1.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
-            Appointment appointment8 = new()
+            Appointment appointment8 = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 PatientId = patient1.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
-            Appointment appointment9 = new()
+            Appointment appointment9 = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 PatientId = patient1.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
-            Appointment appointment10 = new()
+            Appointment appointment10 = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 PatientId = patient1.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
-            Appointment appointment11 = new()
+            Appointment appointment11 = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 PatientId = patient1.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
-            Appointment appointment12 = new()
+            Appointment appointment12 = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 PatientId = patient1.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
-            Appointment appointment13 = new()
+            Appointment appointment13 = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 PatientId = patient1.Id,
                 DoctorId = doctor1.Id,
