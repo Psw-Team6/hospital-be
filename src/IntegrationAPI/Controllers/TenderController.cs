@@ -163,6 +163,13 @@ namespace IntegrationAPI.Controllers
 
             return StatusCode(201, null);
         }
+        
+        [HttpGet("getClosedTenders")]
+        public async Task<ActionResult<List<Tender>>> GetClosedTenders()
+        {
+            var tenders = await tenderService.GetClosedTenders();
+            return Ok(tenders);
+        }
 
     }
 }

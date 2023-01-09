@@ -156,7 +156,17 @@ namespace IntegrationLibrary.Settings
                 Status = Enums.StatusTender.Open
               //  TenderOffer = TenderOffer1,
             };
-            modelBuilder.Entity<Tender.Model.Tender>().HasData(tender1);
+            Tender.Model.Tender tender2 = new()
+            {
+                Id = Guid.NewGuid(),
+                HasDeadline = true,
+                DeadlineDate = DateTime.Now.AddDays(-1),
+                PublishedDate = DateTime.Now.AddDays(-4),
+                Status = Enums.StatusTender.Close
+                //  TenderOffer = TenderOffer1,
+            };
+            
+            modelBuilder.Entity<Tender.Model.Tender>().HasData(tender1,tender2);
             modelBuilder.Entity<IntegrationLibrary.Tender.Model.Tender>().Property(d => d.Winner).HasColumnType("jsonb");
 
             BloodUnitAmount bloodUnitAmount1 = new()
@@ -215,6 +225,29 @@ namespace IntegrationLibrary.Settings
                 Amount = 0,
                 TenderId = tender1.Id
             };
+            
+            BloodUnitAmount bloodUnitAmount66 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.ABneg,
+                Amount = 7,
+                TenderId = tender2.Id
+            };
+            BloodUnitAmount bloodUnitAmount77 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.Opos,
+                Amount = 10,
+                TenderId = tender2.Id
+            };
+            BloodUnitAmount bloodUnitAmount88 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.Oneg,
+                Amount = 0,
+                TenderId = tender2.Id
+            };
+            
             modelBuilder.Entity<BloodUnitAmount>().HasData(
                 bloodUnitAmount1,
                 bloodUnitAmount2,
@@ -223,7 +256,10 @@ namespace IntegrationLibrary.Settings
                 bloodUnitAmount5,
                 bloodUnitAmount6,
                 bloodUnitAmount7,
-                bloodUnitAmount8);
+                bloodUnitAmount8,
+                bloodUnitAmount66,
+                bloodUnitAmount77,
+                bloodUnitAmount88);
 
 
             base.OnModelCreating(modelBuilder);
