@@ -1009,6 +1009,62 @@ namespace HospitalLibrary.Settings
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
+            Appointment appointment7 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment8 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment9 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment10 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment11 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment12 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment13 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
             modelBuilder.Entity<Appointment>()
                 .OwnsOne(app => app.Duration)
                 .HasData(
@@ -1053,10 +1109,47 @@ namespace HospitalLibrary.Settings
                         AppointmentId = appointment6.Id,
                         From = DateTime.Now.AddMinutes(-425),
                         To = DateTime.Now.AddMinutes(-365)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment7.Id,
+                        From = new DateTime(2022, 7, 27, 10, 0, 0),
+                        To = new DateTime(2022, 7, 27, 10, 30, 0)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment8.Id,
+                        From = new DateTime(2022, 8, 27, 10, 0, 0),
+                        To = new DateTime(2022, 8, 27, 10, 30, 0)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment9.Id,
+                        From = new DateTime(2022, 9, 27, 10, 0, 0),
+                        To = new DateTime(2022, 9, 27, 10, 30, 0)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment10.Id,
+                        From = new DateTime(2022, 10, 27, 10, 0, 0),
+                        To = new DateTime(2022, 10, 27, 10, 30, 0)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment11.Id,
+                        From = new DateTime(2022, 11, 27, 10, 0, 0),
+                        To = new DateTime(2022, 11, 27, 10, 30, 0)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment12.Id,
+                        From = new DateTime(2022, 12, 27, 10, 0, 0),
+                        To = new DateTime(2022, 12, 27, 10, 30, 0)
                     }
                 );
             modelBuilder.Entity<Appointment>().HasData(
-                appointment,appointment1,appointment2,appointment3
+                appointment,appointment1,appointment2,appointment3,appointment4,appointment5,appointment6,appointment7,
+                appointment8,appointment9,appointment10,appointment11,appointment12
             );
 
             Holiday holiday1 = new()
