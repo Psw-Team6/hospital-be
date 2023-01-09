@@ -7,5 +7,6 @@ namespace HospitalLibrary.Rooms.Service
     public interface IRoomEventService
     {
         Task<IEnumerable<RoomEvent>> GetAll();
+        Task<RoomEvent> Create(RoomEvent roomEvent);
     }
 }

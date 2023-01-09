@@ -67,6 +67,7 @@ namespace HospitalAPI
             services.AddTransient<ExceptionMiddleware>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRenovationService, RoomRenovationService>();
+            services.AddScoped<IRoomEventService, RoomEventsService>();
             services.AddScoped<UrgentBloodSupplyService>();
 
 

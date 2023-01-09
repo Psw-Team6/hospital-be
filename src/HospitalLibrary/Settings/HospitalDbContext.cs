@@ -47,6 +47,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<RoomEvent> RoomEvents { get; set; }
         //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
 
@@ -1111,6 +1112,17 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<BloodConsumption>().HasData(
                 consumption1, consumption2
             );
+
+            RoomEvent roomEvent1 = new RoomEvent()
+            {
+                Id = Guid.NewGuid(),
+                EventName = "SessionStarted",
+                TimeStamp = DateTime.Now,
+                UserId = manager.Id,
+                Value = "null"
+            };
+
+            modelBuilder.Entity<RoomEvent>().HasData(roomEvent1);
 
         }
     }
