@@ -64,6 +64,51 @@ namespace HospitalLibrary.Examinations.Service
             return  await _unitOfWork.GetRepository<ExaminationRepository>().GetAllExaminations();
         }
 
+        private IEnumerable<string> splitQuery(string query)
+        {
+            IEnumerable<string> splitedQuery = new List<string>();
+            
+            var split = query.Split("\"");
+            int num = 0;
+            
+
+            int lencount = 1;
+            foreach (var word in split)
+            {
+                if (num % 2 == 1 && lencount < split.Length)
+                {
+                    splitedQuery = splitedQuery.Append(word);
+                }
+                else if(word!="" && word!=" " )
+                {
+                    var split2 = word.Split(" ");
+                    foreach (var word1 in split2)
+                    {
+                        if (word1 != "" && word1 != " ")
+                        {
+                            splitedQuery = splitedQuery.Append(word1);
+
+                        }
+                    }
+                }
+
+                num = num + 1;
+                lencount = lencount + 1;
+            }
+            
+
+            return splitedQuery;
+        }
+
+        private bool checkFirstChar(String query)
+        {
+            var split = query.Split(" ");
+            if (split[0][0].Equals('\"') )
+            {
+                return true;
+            }
+            return false;
+        }
         public async Task<IEnumerable<Examination>> GetSearchedExaminations(String query)
         {
             var allExaminations = await _unitOfWork.GetRepository<ExaminationRepository>().GetAllExaminations();
@@ -85,7 +130,7 @@ namespace HospitalLibrary.Examinations.Service
 
         private bool CheckMedicine(String query, Examination examination)
         {
-            var split = query.Split(" ");
+            var split = splitQuery(query);
             foreach (var word in split)
             {
                 foreach (var prescription in examination.Prescriptions)
@@ -106,7 +151,7 @@ namespace HospitalLibrary.Examinations.Service
         
         private bool CheckSymptoms(String query, Examination examination)
         {
-            var split = query.Split(" ");
+            var split = splitQuery(query);
             foreach (var word in split)
             {
                 foreach (var symptom in examination.Symptoms)
@@ -124,7 +169,7 @@ namespace HospitalLibrary.Examinations.Service
         private async Task<bool> CheckPatient(String query, Examination examination)
         {
             var patient = await _unitOfWork.PatientRepository.GetByIdAsync(examination.Appointment.PatientId);
-            var split = query.Split(" ");
+            var split = splitQuery(query);
             foreach (var word in split)
             {
                 if (patient.Name.ToLower().Contains(word.ToLower()) || patient.Surname.ToLower().Contains(word.ToLower()))
@@ -139,7 +184,7 @@ namespace HospitalLibrary.Examinations.Service
         private async Task<bool> CheckDoctor(String query, Examination examination)
         {
             var doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(examination.Appointment.DoctorId);
-            var split = query.Split(" ");
+            var split = splitQuery(query);
             foreach (var word in split)
             {
                 if (doctor.Name.ToLower().Contains(word.ToLower()) || doctor.Surname.ToLower().Contains(word.ToLower()))
