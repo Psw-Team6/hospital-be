@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Reflection;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
@@ -10,6 +11,7 @@ using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Enums;
 using HospitalLibrary.Examinations.DbConfig;
+using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
@@ -18,34 +20,38 @@ using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore;
+using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
 namespace HospitalLibrary.Settings
 {
     public class HospitalDbContext : DbContext
     {
-        public DbSet<Room> Rooms { get; set; }
-        public DbSet<Building> Buildings { get; set; }
-        public DbSet<Floor> Floors { get; set; }
-        public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<Patient> Patients { get; set; }
-        public DbSet<Manager> Managers { get; set; }
-        public DbSet<Specialization> Specializations { get; set; }
-        public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Allergen> Allergens { get; set; }
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<MaliciousPatient> MaliciousPatients { get; set; }
-        public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
-        public DbSet<GRoom> GRooms { get; set; }
-        public DbSet<RoomBed> RoomBeds { get; set; }
-        public DbSet<PatientAdmission> PatientAdmissions { get; set; }
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<BloodUnit> BloodUnits { get; set; }
-        public DbSet<BloodConsumption> BloodConsumptions { get; set; }
-        public DbSet<Examination> Examinations { get; set; }
-        public DbSet<Symptom> Symptoms { get; set; }
-        public DbSet<RoomEquipment> RoomEquipment { get; set; }
-        public DbSet<Consilium> Consiliums { get; set; }
-        public DbSet<Holiday> Holidays { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Room> Rooms { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Building> Buildings { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Floor> Floors { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Doctor> Doctors { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Patient> Patients { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Manager> Managers { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Specialization> Specializations { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Appointment> Appointments { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Allergen> Allergens { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Address> Addresses { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<MaliciousPatient> MaliciousPatients { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<WorkingSchedule> WorkingSchedules { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<GRoom> GRooms { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<RoomBed> RoomBeds { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<PatientAdmission> PatientAdmissions { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<BloodUnit> BloodUnits { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<BloodConsumption> BloodConsumptions { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Examination> Examinations { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Symptom> Symptoms { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<RoomEquipment> RoomEquipment { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Consilium> Consiliums { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Holiday> Holidays { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<EventStoreExamination> EventStoreExaminations { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Medicine> Medicines { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<RoomEvent> RoomEvents { get; set; }
         //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
 
@@ -634,7 +640,6 @@ namespace HospitalLibrary.Settings
                 Name = "Djordje",
                 Surname = "Vuckovic",
                 Email = "DjordjeLopov@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Doctor,
                 Enabled = true,
                 IsBlocked = false
@@ -651,7 +656,6 @@ namespace HospitalLibrary.Settings
                 Name = "Ilija",
                 Surname = "Maric",
                 Email = "Cajons@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Doctor,
                 Enabled = true,
                 IsBlocked = false
@@ -669,13 +673,27 @@ namespace HospitalLibrary.Settings
                 Name = "Milos",
                 Surname = "Milosevic",
                 Email = "Cajons@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Doctor,
                 Enabled = true,
                 IsBlocked = false
+            }; 
+            Doctor doctor3 = new()
+            {
+                Id = Guid.NewGuid(),
+                SpecializationId = specializationSurgeon.Id,
+                AddressId = address.Id,
+                WorkingScheduleId = workingSchedule2.Id,
+                RoomId = room4.Id,
+                Username = "Jakov",
+                Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
+                Name = "Jakov",
+                Surname = "Milosevic",
+                Email = "Cajons@gmail.com",
+                UserRole = UserRole.Doctor,
+                Enabled = true
             };
             modelBuilder.Entity<Doctor>().HasData(
-                doctor,doctor1,doctor2
+                doctor,doctor1,doctor2,doctor3
             );
 
             Medicine medicine1 = new()
@@ -708,7 +726,6 @@ namespace HospitalLibrary.Settings
                 Name = "Sale",
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
@@ -728,7 +745,6 @@ namespace HospitalLibrary.Settings
                 Name = "Miki",
                 Surname = "Djuricic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
@@ -749,7 +765,6 @@ namespace HospitalLibrary.Settings
                 Name = "Nina",
                 Surname = "Minic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
@@ -767,7 +782,6 @@ namespace HospitalLibrary.Settings
                 Name = "Mina",
                 Surname = "Minic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor2.Id,
@@ -785,7 +799,6 @@ namespace HospitalLibrary.Settings
                 Name = "Nikola",
                 Surname = "Nikolic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor1.Id,
@@ -803,7 +816,6 @@ namespace HospitalLibrary.Settings
                 Name = "Marko",
                 Surname = "Markovic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor2.Id,
@@ -821,7 +833,6 @@ namespace HospitalLibrary.Settings
                 Name = "Manja",
                 Surname = "Maric",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor2.Id,
@@ -839,7 +850,6 @@ namespace HospitalLibrary.Settings
                 Name = "Darko",
                 Surname = "Darkovic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor.Id,
@@ -857,7 +867,6 @@ namespace HospitalLibrary.Settings
                 Name = "Filip",
                 Surname = "Filipic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor.Id,
@@ -875,7 +884,6 @@ namespace HospitalLibrary.Settings
                 Name = "Tara",
                 Surname = "Markovic",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor2.Id,
@@ -896,7 +904,6 @@ namespace HospitalLibrary.Settings
                 Name = "Moja Banka Krvi",
                 Surname = "Moja Banka Krvi",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.BloodBankCenter,
                 Enabled = true,
                 IsBlocked = false
@@ -915,7 +922,6 @@ namespace HospitalLibrary.Settings
                 Name = "Manager",
                 Surname = "Manger",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.Manager,
                 Enabled = true,
                 IsBlocked = false
@@ -932,7 +938,6 @@ namespace HospitalLibrary.Settings
                 Name = "Manager",
                 Surname = "Blood Bank",
                 Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222",
                 UserRole = UserRole.BloodBank,
                 Enabled = true,
                 IsBlocked = false
@@ -952,36 +957,112 @@ namespace HospitalLibrary.Settings
             // modelBuilder.Entity<PatientAdmission>().HasData(
             //     patientAdmission1
             // );
-            Appointment appointment = new()
+            Appointment appointment = new(new Guid("c0576733-b7fa-4974-b60c-d3d7e8c9f216"))
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 PatientId = patient1.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
-            Appointment appointment1 = new()
-            {
-                Id = Guid.NewGuid(),
+            Appointment appointment1 = new(Guid.NewGuid())
+            { 
                 Emergent = false,
                 PatientId = patient1.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
-            Appointment appointment2 = new()
+            Appointment appointment2 = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 PatientId = patient1.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
             };
-            Appointment appointment3 = new()
+            Appointment appointment3 = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment4 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment5 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment6 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment7 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment8 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment9 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment10 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment11 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment12 = new(Guid.NewGuid())
+            {
+                Emergent = false,
+                PatientId = patient1.Id,
+                DoctorId = doctor1.Id,
+                AppointmentType = AppointmentType.Examination,
+                AppointmentState = AppointmentState.Pending
+            };
+            Appointment appointment13 = new(Guid.NewGuid())
+            {
                 Emergent = false,
                 PatientId = patient1.Id,
                 DoctorId = doctor1.Id,
@@ -1000,24 +1081,79 @@ namespace HospitalLibrary.Settings
                     new
                     {
                         AppointmentId = appointment1.Id,
-                        From = DateTime.Now,
-                        To = DateTime.Now.AddMinutes(30)
+                        From = DateTime.Now.AddMinutes(-60),
+                        To = DateTime.Now.AddMinutes(-30)
                     },
                     new
                     {
                         AppointmentId = appointment2.Id,
-                        From = DateTime.Now.AddMinutes(30+15),
-                        To = DateTime.Now.AddMinutes(60+15)
+                        From = DateTime.Now.AddMinutes(-120),
+                        To = DateTime.Now.AddMinutes(-90)
                     },
                     new
                     {
                         AppointmentId = appointment3.Id,
-                        From = DateTime.Now.AddMinutes(60+30),
-                        To = DateTime.Now.AddMinutes(90+30)
+                        From = DateTime.Now.AddMinutes(-200),
+                        To = DateTime.Now.AddMinutes(-170)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment4.Id,
+                        From = DateTime.Now.AddMinutes(-270),
+                        To = DateTime.Now.AddMinutes(-200)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment5.Id,
+                        From = DateTime.Now.AddMinutes(-350),
+                        To = DateTime.Now.AddMinutes(-250)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment6.Id,
+                        From = DateTime.Now.AddMinutes(-425),
+                        To = DateTime.Now.AddMinutes(-365)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment7.Id,
+                        From = new DateTime(2022, 7, 27, 10, 0, 0),
+                        To = new DateTime(2022, 7, 27, 10, 30, 0)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment8.Id,
+                        From = new DateTime(2022, 8, 27, 10, 0, 0),
+                        To = new DateTime(2022, 8, 27, 10, 30, 0)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment9.Id,
+                        From = new DateTime(2022, 9, 27, 10, 0, 0),
+                        To = new DateTime(2022, 9, 27, 10, 30, 0)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment10.Id,
+                        From = new DateTime(2022, 10, 27, 10, 0, 0),
+                        To = new DateTime(2022, 10, 27, 10, 30, 0)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment11.Id,
+                        From = new DateTime(2022, 11, 27, 10, 0, 0),
+                        To = new DateTime(2022, 11, 27, 10, 30, 0)
+                    },
+                    new
+                    {
+                        AppointmentId = appointment12.Id,
+                        From = new DateTime(2022, 12, 27, 10, 0, 0),
+                        To = new DateTime(2022, 12, 27, 10, 30, 0)
                     }
                 );
             modelBuilder.Entity<Appointment>().HasData(
-                appointment,appointment1,appointment2,appointment3
+                appointment,appointment1,appointment2,appointment3,appointment4,appointment5,appointment6,appointment7,
+                appointment8,appointment9,appointment10,appointment11,appointment12
             );
 
             Holiday holiday1 = new()
@@ -1073,6 +1209,17 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<BloodConsumption>().HasData(
                 consumption1, consumption2
             );
+
+            RoomEvent roomEvent1 = new RoomEvent()
+            {
+                Id = Guid.NewGuid(),
+                EventName = "SessionStarted",
+                TimeStamp = DateTime.Now,
+                UserId = manager.Id,
+                Value = "null"
+            };
+
+            modelBuilder.Entity<RoomEvent>().HasData(roomEvent1);
 
         }
     }

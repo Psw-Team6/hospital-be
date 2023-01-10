@@ -69,5 +69,11 @@ namespace HospitalLibrary.Doctors.Repository
                 .Where(d => d.Specialization.Name.Equals(specialization))
                 .ToListAsync();
         }
+
+        public async Task<Doctor> GetDoctorSpecialization(Guid id)
+        {
+            return await DbSet.Include(d => d.Specialization).
+                    FirstOrDefaultAsync(d => d.Id == id);
+        }
     }
 }

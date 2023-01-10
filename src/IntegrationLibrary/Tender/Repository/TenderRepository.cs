@@ -8,6 +8,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.Enums;
 
 namespace IntegrationLibrary.Tender.Repository
 {
@@ -62,7 +63,12 @@ namespace IntegrationLibrary.Tender.Repository
             }
         }
 
-
+        public async Task<List<Model.Tender>> GetClosedTenders()
+        {
+            return  await DbSet.Where(d=>d.Status==StatusTender.Close).Include(d => d.BloodUnitAmount).ToListAsync();
+        }        
+        
+        
     }
 
 

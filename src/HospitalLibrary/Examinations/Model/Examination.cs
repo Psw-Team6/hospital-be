@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Common.EventSourcing;
+using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Examinations.Exceptions;
 
 namespace HospitalLibrary.Examinations.Model
 {
-    public class Examination
+    public class Examination : EventSourcedAggregate<EventStoreExaminationType>
     {
         private IEnumerable<Symptom> _symptoms;
         private IEnumerable<ExaminationPrescription> _examinationPrescriptions;
-        public Guid Id { get; private set; }
 
         public IEnumerable<Symptom> Symptoms
         {
@@ -21,7 +20,6 @@ namespace HospitalLibrary.Examinations.Model
         }
 
         public Appointment Appointment { get; private set; }
-        public Guid IdApp { get; private set; }
         public string Anamnesis { get; private set;}
         public const string InvalidDateMessage = "Invalid examination date.";
         public const string InvalidAppointmentStateMessage = "Invalid appointment state.";
@@ -85,9 +83,14 @@ namespace HospitalLibrary.Examinations.Model
                 throw new ExaminationInvalidAnamnesis(InvalidAnamnesisMessage);
             }
         }
-        public Examination()
+        public Guid IdApp { get; private set; }
+        public Examination() : base()
         {
         }
-        
+
+        public override void Apply(DomainEvent<EventStoreExaminationType> @event)
+        {
+            Changes.Add(@event);
+        }
     }
 }

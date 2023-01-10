@@ -25,7 +25,7 @@ namespace HospitalTest.RoomSplitingTest
         }
         
         [Fact]
-        public async Task Spliting_Succesfull()
+        public void Spliting_Succesfull()
         {
             Building building1 = new()
             {

@@ -32,7 +32,7 @@ namespace HospitalTest.BloodConsumptionTest
         public async Task Consumption_doctor_doesnt_exists()
         {
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var request = BloodConsumptionTest.request;
+            var fromResult = await Task.FromResult(BloodConsumptionTest.request);
             mockUnitOfWork.Setup(uw => uw.BloodUnitRepository
                     .GetUnitsAmountByType(BloodType.Aneg))
                 .ReturnsAsync(7);
@@ -42,7 +42,7 @@ namespace HospitalTest.BloodConsumptionTest
 
             BloodConsumptionService service = new BloodConsumptionService(mockUnitOfWork.Object);
 
-            List<BloodConsumption> res = service.CreateConsumptions(request).Result;
+            List<BloodConsumption> res = service.CreateConsumptions(fromResult).Result;
             Assert.Null(res);
         }
         
@@ -50,7 +50,7 @@ namespace HospitalTest.BloodConsumptionTest
         public async Task Get_units_for_consumptions()
         {
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var request = BloodConsumptionTest.request;
+            var request = await Task.FromResult(BloodConsumptionTest.request);
             var unitsForConsumption = SeedUnitsData();
             mockUnitOfWork.Setup(uw => uw.BloodUnitRepository
                     .GetSortUnitsByType(BloodType.Aneg))
@@ -63,7 +63,7 @@ namespace HospitalTest.BloodConsumptionTest
         }
         
         [Fact]
-        public async Task Good()
+        public void  Good()
         {
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             var request = BloodConsumptionTest.request;
@@ -133,8 +133,7 @@ namespace HospitalTest.BloodConsumptionTest
             Password = "miki123",
             Name = "Ilija",
             Surname = "Maric",
-            Email = "Cajons@gmail.com",
-            Phone = "+612222222"
+            Email = "Cajons@gmail.com"
         };
         
         static BloodConsumptionCreateDto request = new()

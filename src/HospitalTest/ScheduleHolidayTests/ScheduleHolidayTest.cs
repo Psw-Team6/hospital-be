@@ -57,7 +57,7 @@ namespace HospitalTest.ScheduleHolidayTests
         }
         
         [Fact]
-        public async Task Schedule_holiday_sucsess()
+        public void  Schedule_holiday_sucsess()
         {
             var holiday = CreateMockHolidazValid(out var holidayService);
             Func<Task> act = () => holidayService.ScheduleHoliday(holiday);
@@ -126,8 +126,7 @@ namespace HospitalTest.ScheduleHolidayTests
                 Password = "miki123",
                 Name = "Ilija",
                 Surname = "Maric",
-                Email = "Cajons@gmail.com",
-                Phone = "+612222222"
+                Email = "Cajons@gmail.com"
             };
             Patient patient1 = new()
             {
@@ -137,12 +136,10 @@ namespace HospitalTest.ScheduleHolidayTests
                 Password = "sale1312",
                 Name = "Sale",
                 Surname = "Lave",
-                Email = "psw.isa.mail@gmail.com",
-                Phone = "+612222222"
+                Email = "psw.isa.mail@gmail.com"
             };
-            Appointment appointment = new()
+            Appointment appointment = new( Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 Doctor = doctor1,
                 Patient = patient1,
@@ -220,8 +217,7 @@ namespace HospitalTest.ScheduleHolidayTests
                 Password = "miki123",
                 Name = "Ilija",
                 Surname = "Maric",
-                Email = "Cajons@gmail.com",
-                Phone = "+612222222"
+                Email = "Cajons@gmail.com"
             };
             holiday = new()
             {

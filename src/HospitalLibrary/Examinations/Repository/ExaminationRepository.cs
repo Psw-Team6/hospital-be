@@ -25,8 +25,19 @@ namespace HospitalLibrary.Examinations.Repository
 
         public async Task<IEnumerable<Examination>> GetAllExaminations()
         {
-            return await DbSet.Select(x => x)
-                .Include(x => x.Prescriptions).Include(x => x.Symptoms).ToListAsync();
+            return  await DbSet.Select(x => x)
+                .Include(x => x.Prescriptions)
+                .ThenInclude(p => p.Medicines)
+                .Include(x => x.Symptoms)
+                .Include(x => x.Appointment).ToListAsync();
+
+            // var exeminationsWithMedicines = exeminations.Select(e =>
+            //     new
+            //     {
+            //         Exemination =e,
+            //         Medicines = e.Prescriptions.Select(p => p.Medicines)
+            //     });
+            // return exeminationsWithMedicines.Select(x => x.Exemination);
         }
     }
 }

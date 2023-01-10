@@ -44,6 +44,10 @@ namespace IntegrationLibrary.Tender.Service
             tenderRepository.Update(tender);
         }
 
+        public async Task<List<Model.Tender>> GetClosedTenders()
+        {
+            return await tenderRepository.GetClosedTenders();
+        }
         public List<Model.Tender> GetAllTenders()
         {
             return tenderRepository.GetAllTenders();

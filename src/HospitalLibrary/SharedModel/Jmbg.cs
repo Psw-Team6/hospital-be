@@ -1,6 +1,8 @@
 using System;
 using System.Text.RegularExpressions;
 using HospitalLibrary.Common;
+using HospitalLibrary.CustomException;
+using Microsoft.EntityFrameworkCore.Storage;
 using RabbitMQ.Client;
 
 namespace HospitalLibrary.SharedModel
@@ -8,26 +10,27 @@ namespace HospitalLibrary.SharedModel
     public class Jmbg : ValueObject<Jmbg>
     {
 
-        public String Text { get; }
-        
-        public Jmbg(String text)
+        public string Text { get; }
+
+        public Jmbg(string text)
         {
-            if (IsJmbgValid(text))
+            Text = text;
+        }
+
+        public void ValidateJmbg()
+        {
+            if (!IsJmbgValid(Text))
             {
-                Text = text;
-            }
-            else
-            {
-                throw new NullReferenceException("Invalid jmbg");
+                throw new JmbgException("Invalid jmbg");
             }
         }
         
-        public bool IsJmbgValid(String text)
+        private bool IsJmbgValid(string text)
         {
-            String patternStrict = "^[0-9]{13}$";
-
+            var patternStrict = "[0-9]{13}$";
+            
             Regex regexStrict = new Regex(patternStrict);
-
+            
             return regexStrict.IsMatch(text);
         }
 
@@ -38,9 +41,7 @@ namespace HospitalLibrary.SharedModel
 
         protected override int GetHashCodeCore()
         {
-            var hashCode = -1186395504;
-            hashCode = hashCode * -1521134295 + Text.GetHashCode();
-            return hashCode;
+            return Text.GetHashCode();;
         }
     }
 }

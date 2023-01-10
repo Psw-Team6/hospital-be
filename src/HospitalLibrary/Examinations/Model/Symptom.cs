@@ -21,7 +21,7 @@ namespace HospitalLibrary.Examinations.Model
 
         public IEnumerable<Examination> Examinations
         {
-            get => _examinations as ReadOnlyCollection<Examination>;
+            get => _examinations;
             private set => _examinations = value;
         }
     }

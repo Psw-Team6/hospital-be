@@ -30,6 +30,10 @@ namespace HospitalLibrary.Doctors.Service
             return specialization;
         }
 
+        public async Task<IEnumerable<Specialization>> GetAll()
+        {
+            return await _unitOfWork.SpecializationsRepository.GetAllAsync();
+        }
         public async Task<IEnumerable<Specialization>> GetSpecializations(IEnumerable<Specialization> specializations)
         {
             var specializationList =  new List<Specialization>();
