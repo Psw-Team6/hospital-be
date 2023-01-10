@@ -40,7 +40,7 @@ namespace HospitalAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<LoginResponse>> Authenticate([FromBody]LoginRequest loginRequest)
         {
-            var jwtBloodBank = await AuthenticateBloodBank(loginRequest);
+            /*var jwtBloodBank = await AuthenticateBloodBank(loginRequest);
             if (jwtBloodBank != "")
             {
                 return Ok(new LoginResponse
@@ -48,7 +48,7 @@ namespace HospitalAPI.Controllers
                     Token = jwtBloodBank,
                     Message = "Login Success"
                 });   
-            }
+            }*/
             var user = await _userService.Authenticate(loginRequest.Username, loginRequest.Password);
            if (user.UserRole is UserRole.Patient)
            {

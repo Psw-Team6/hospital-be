@@ -108,11 +108,11 @@ namespace HospitalAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
-             // using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-             // {
-             //     var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
-             //     context?.Database.Migrate();
-             // }
+             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+             {
+                 var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
+                 context?.Database.Migrate();
+             }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage(); 

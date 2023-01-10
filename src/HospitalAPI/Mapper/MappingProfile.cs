@@ -4,9 +4,11 @@ using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
+using HospitalLibrary.Common.EventSourcing;
 using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.EquipmentMovement.Model;
+using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Holidays.Model;
@@ -104,7 +106,6 @@ namespace HospitalAPI.Mapper
                 CreateMap<MedicineExaminationResponse, Medicine>();
                 CreateMap<ExaminationRequest, Examination>();
                 CreateMap<Examination, ExaminationRequest>();
-                
                 CreateMap<ExeminationResponse, Examination>();
                 CreateMap<Examination, ExeminationResponse>();
                 CreateMap<ExaminationPrescriptionRequest, ExaminationPrescription>();
@@ -122,6 +123,7 @@ namespace HospitalAPI.Mapper
                 CreateMap<RoomSpliting, RoomSplitingRequest>();
                 CreateMap<RoomEvent, RoomEventRequest>();
                 CreateMap<RoomEventRequest, RoomEvent>();
+                CreateMap<DomainEventRequest,DomainEvent<EventStoreExaminationType>>();
 
             }
     }

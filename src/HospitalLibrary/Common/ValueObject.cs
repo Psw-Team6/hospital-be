@@ -1,4 +1,4 @@
-﻿namespace HospitalLibrary.Common
+namespace HospitalLibrary.Common
 {
     public abstract class ValueObject<T> where T : ValueObject<T>
     {
