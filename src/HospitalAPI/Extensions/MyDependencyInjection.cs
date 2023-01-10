@@ -8,7 +8,9 @@ using HospitalLibrary.Consiliums.Service;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.EquipmentMovement.Service;
+using HospitalLibrary.Examinations.Repository.EventStoreRepository;
 using HospitalLibrary.Examinations.Service;
+using HospitalLibrary.Examinations.Service.EventStoreService;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Holidays.Repository;
@@ -90,6 +92,8 @@ namespace HospitalAPI.Extensions
             services.AddScoped<IConsiliumService,ConsiliumService>();
             services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
             services.AddScoped<ExaminationService>();
+            services.AddScoped<EventStoreExaminationService>();
+            services.AddScoped<IEventStoreExaminationRepository, EventStoreExaminationRepository>();
 
 
         }

@@ -10,5 +10,6 @@ namespace HospitalAPI.Dtos.Request
         public List<SymptomResponse> Symptoms { get; set; }
         public List<ExaminationPrescriptionRequest> Prescriptions { get; set; }
         public string Anamnesis { get; set; }
+        public List<DomainEventRequest> Changes { get; set; }
     }
 }

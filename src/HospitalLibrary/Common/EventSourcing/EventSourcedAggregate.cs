@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace HospitalLibrary.Common.EventSourcing
 {
-    public abstract class EventSourcedAggregate : Entity<Guid> 
+    public abstract class EventSourcedAggregate<T> : Entity<Guid> 
     {
-        public List<DomainEvent> Changes { get; private set; }
+        public List<DomainEvent<T>> Changes { get; private set; }
 
-        protected EventSourcedAggregate(Guid id) : base(id)
+        public EventSourcedAggregate()
         {
-            Changes = new List<DomainEvent>();
+            Changes = new List<DomainEvent<T>>();
         }
-        public abstract void Apply(DomainEvent changes);
 
+        public abstract void Apply(DomainEvent<T> @event);
     }
 }

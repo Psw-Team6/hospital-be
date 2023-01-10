@@ -6,6 +6,7 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Examinations.Repository;
+using HospitalLibrary.Examinations.Service.EventStoreService;
 using HospitalLibrary.Medicines.Model;
 using SendGrid.Helpers.Errors.Model;
 
@@ -14,10 +15,12 @@ namespace HospitalLibrary.Examinations.Service
     public class ExaminationService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly EventStoreExaminationService _eventStoreService;
 
-        public ExaminationService(IUnitOfWork unitOfWork)
+        public ExaminationService(IUnitOfWork unitOfWork, EventStoreExaminationService eventStoreService)
         {
             _unitOfWork = unitOfWork;
+            _eventStoreService = eventStoreService;
         }
 
         public async Task<Examination>  CreateExamination(Examination examination)
@@ -29,8 +32,9 @@ namespace HospitalLibrary.Examinations.Service
                 new Examination(app, examination.Anamnesis, symptoms, prescriptions);
             newExamination.ValidateExamination();
             app.AppointmentState = AppointmentState.Finished;
-            await _unitOfWork.ExaminationRepository.CreateAsync(newExamination);
+            var createdExamination =  await _unitOfWork.ExaminationRepository.CreateAsync(newExamination);
             await _unitOfWork.CompleteAsync();
+            await _eventStoreService.CreateEventStore(createdExamination,examination.Changes);
             return newExamination;
         }
 
