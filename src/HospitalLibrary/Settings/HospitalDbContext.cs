@@ -51,6 +51,7 @@ namespace HospitalLibrary.Settings
         public Microsoft.EntityFrameworkCore.DbSet<Holiday> Holidays { get; set; }
         public Microsoft.EntityFrameworkCore.DbSet<EventStoreExamination> EventStoreExaminations { get; set; }
         public Microsoft.EntityFrameworkCore.DbSet<Medicine> Medicines { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<RoomEvent> RoomEvents { get; set; }
         //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
 
@@ -1208,6 +1209,17 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<BloodConsumption>().HasData(
                 consumption1, consumption2
             );
+
+            RoomEvent roomEvent1 = new RoomEvent()
+            {
+                Id = Guid.NewGuid(),
+                EventName = "SessionStarted",
+                TimeStamp = DateTime.Now,
+                UserId = manager.Id,
+                Value = "null"
+            };
+
+            modelBuilder.Entity<RoomEvent>().HasData(roomEvent1);
 
         }
     }

@@ -121,6 +121,8 @@ namespace HospitalAPI.Mapper
                 CreateMap<RoomSpliting, RoomSplitingResponse>();
                 CreateMap<RoomSplitingRequest, RoomSpliting>();
                 CreateMap<RoomSpliting, RoomSplitingRequest>();
+                CreateMap<RoomEvent, RoomEventRequest>();
+                CreateMap<RoomEventRequest, RoomEvent>();
                 CreateMap<DomainEventRequest,DomainEvent<EventStoreExaminationType>>();
 
             }
