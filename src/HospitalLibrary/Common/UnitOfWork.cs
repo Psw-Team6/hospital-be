@@ -8,12 +8,12 @@ using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.EquipmentMovement.Repository;
 using HospitalLibrary.Examinations.Repository;
+using HospitalLibrary.Examinations.Repository.EventStoreRepository;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Holidays.Repository;
 using HospitalLibrary.Medicines.Repository;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Prescriptions.Repository;
-using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.Rooms.Repository;
 using HospitalLibrary.Settings;
 using HospitalLibrary.SharedModel.Repository;
@@ -55,8 +55,10 @@ namespace HospitalLibrary.Common
         private RoomRepository _roomRepository;
         private IRoomMergingRepository _roomMergingRepository;
         private IRoomSplitingRepository _roomSplitingRepository;
-        
-        
+        private EventStoreExaminationRepository _eventStoreExaminationRepository;
+
+        public IEventStoreExaminationRepository EventStoreExaminationRepository =>
+            _eventStoreExaminationRepository ??= new EventStoreExaminationRepository(_hospitalDbContext);
         public IAllergenRepository AllergenRepository =>
             _allergenRepository ??= new AllergenRepository(_hospitalDbContext);
         public IConsiliumRepository ConsiliumRepository =>
@@ -118,7 +120,8 @@ namespace HospitalLibrary.Common
 
         public IApplicationUserRepository UserRepository =>
             _applicationUserRepository ??= new ApplicationUserRepository(_hospitalDbContext);
-        
+
+       
         public IRoomMergingRepository RoomMergingRepository =>
             _roomMergingRepository ??= new RoomMerginRepository(_hospitalDbContext);
         public IRoomSplitingRepository RoomSplitingRepository =>
