@@ -35,6 +35,7 @@ namespace IntegrationAPI.Controllers
             _bbService = bbService;
         }
 
+        /*
         // POST api/MounthlyBloodSubscription
         [HttpPost]
         public ActionResult Create(MounthlyBloodSubscriptionRequest bSup)
@@ -61,6 +62,6 @@ namespace IntegrationAPI.Controllers
 
             _supService.Create(mounthlyBloodSubscription);
             return CreatedAtAction("Create", new { id = mounthlyBloodSubscription.id }, mounthlyBloodSubscription);
-        }
+        } */
     }
 }
