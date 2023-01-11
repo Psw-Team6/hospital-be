@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.BloodBank.Repository;
 using IntegrationLibrary.BloodStatistic.Model;
+using IntegrationLibrary.Enums;
 using IntegrationLibrary.Tender.Model;
 using IntegrationLibrary.Tender.Service;
 using System;
@@ -29,85 +30,89 @@ namespace IntegrationLibrary.BloodStatistic.Service
 
             foreach (Tender.Model.Tender tender in allInRange)
             {
+
                 tender.BloodUnitAmount = tenderService.GetBloodUnitAmounts(tender.Id);
                 if (tender.DeadlineDate.Ticks >= range.From.Ticks && tender.DeadlineDate.Ticks <= range.To.Ticks)
                 {
-                    var matches = response.Where(p => p.BloodBankID == bloodBankRepository.GetByName(tender.Winner.BloodBankName).Id).ToList();
-                    if (matches.Count == 0)
+                    if (tender.Status == StatusTender.Close)
                     {
-                        BloodStatisticResponse res = new BloodStatisticResponse();
-                        res.BloodBankID = bloodBankRepository.GetByName(tender.Winner.BloodBankName).Id;
-                        res.DateRange = range;
-                        foreach (BloodUnitAmount bu in tender.BloodUnitAmount)
+                        var matches = response.Where(p => p.BloodBankID == bloodBankRepository.GetByName(tender.Winner.BloodBankName).Id).ToList();
+                        if (matches.Count == 0)
                         {
-                            switch (bu.BloodType)
+                            BloodStatisticResponse res = new BloodStatisticResponse();
+                            res.BloodBankID = bloodBankRepository.GetByName(tender.Winner.BloodBankName).Id;
+                            res.DateRange = range;
+                            foreach (BloodUnitAmount bu in tender.BloodUnitAmount)
                             {
-                                case BloodRequests.Model.BloodType.ABneg:
-                                    res.ABneg += bu.Amount;
-                                    break;
-                                case BloodRequests.Model.BloodType.ABpos:
-                                    res.ABpos += bu.Amount;
-                                    break;
-                                case BloodRequests.Model.BloodType.Apos:
-                                    res.Apos += bu.Amount;
-                                    break;
-                                case BloodRequests.Model.BloodType.Aneg:
-                                    res.Aneg += bu.Amount;
-                                    break;
-                                case BloodRequests.Model.BloodType.Bpos:
-                                    res.Bpos += bu.Amount;
-                                    break;
-                                case BloodRequests.Model.BloodType.Bneg:
-                                    res.Bneg += bu.Amount;
-                                    break;
-                                case BloodRequests.Model.BloodType.Opos:
-                                    res.Opos += bu.Amount;
-                                    break;
-                                case BloodRequests.Model.BloodType.Oneg:
-                                    res.Oneg += bu.Amount;
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        response.Add(res);
-                    }
-                    else
-                    {
-                        foreach (BloodStatisticResponse res in response.ToArray())
-                        {
-                            if (res.BloodBankID == bloodBankRepository.GetByName(tender.Winner.BloodBankName).Id)
-                            {
-                                foreach (BloodUnitAmount bu in tender.BloodUnitAmount)
+                                switch (bu.BloodType)
                                 {
-                                    switch (bu.BloodType)
+                                    case BloodRequests.Model.BloodType.ABneg:
+                                        res.ABneg += bu.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.ABpos:
+                                        res.ABpos += bu.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.Apos:
+                                        res.Apos += bu.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.Aneg:
+                                        res.Aneg += bu.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.Bpos:
+                                        res.Bpos += bu.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.Bneg:
+                                        res.Bneg += bu.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.Opos:
+                                        res.Opos += bu.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.Oneg:
+                                        res.Oneg += bu.Amount;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            response.Add(res);
+                        }
+                        else
+                        {
+                            foreach (BloodStatisticResponse res in response.ToArray())
+                            {
+                                if (res.BloodBankID == bloodBankRepository.GetByName(tender.Winner.BloodBankName).Id)
+                                {
+                                    foreach (BloodUnitAmount bu in tender.BloodUnitAmount)
                                     {
-                                        case BloodRequests.Model.BloodType.ABneg:
-                                            res.ABneg += bu.Amount;
-                                            break;
-                                        case BloodRequests.Model.BloodType.ABpos:
-                                            res.ABpos += bu.Amount;
-                                            break;
-                                        case BloodRequests.Model.BloodType.Apos:
-                                            res.Apos += bu.Amount;
-                                            break;
-                                        case BloodRequests.Model.BloodType.Aneg:
-                                            res.Aneg += bu.Amount;
-                                            break;
-                                        case BloodRequests.Model.BloodType.Bpos:
-                                            res.Bpos += bu.Amount;
-                                            break;
-                                        case BloodRequests.Model.BloodType.Bneg:
-                                            res.Bneg += bu.Amount;
-                                            break;
-                                        case BloodRequests.Model.BloodType.Opos:
-                                            res.Opos += bu.Amount;
-                                            break;
-                                        case BloodRequests.Model.BloodType.Oneg:
-                                            res.Oneg += bu.Amount;
-                                            break;
-                                        default:
-                                            break;
+                                        switch (bu.BloodType)
+                                        {
+                                            case BloodRequests.Model.BloodType.ABneg:
+                                                res.ABneg += bu.Amount;
+                                                break;
+                                            case BloodRequests.Model.BloodType.ABpos:
+                                                res.ABpos += bu.Amount;
+                                                break;
+                                            case BloodRequests.Model.BloodType.Apos:
+                                                res.Apos += bu.Amount;
+                                                break;
+                                            case BloodRequests.Model.BloodType.Aneg:
+                                                res.Aneg += bu.Amount;
+                                                break;
+                                            case BloodRequests.Model.BloodType.Bpos:
+                                                res.Bpos += bu.Amount;
+                                                break;
+                                            case BloodRequests.Model.BloodType.Bneg:
+                                                res.Bneg += bu.Amount;
+                                                break;
+                                            case BloodRequests.Model.BloodType.Opos:
+                                                res.Opos += bu.Amount;
+                                                break;
+                                            case BloodRequests.Model.BloodType.Oneg:
+                                                res.Oneg += bu.Amount;
+                                                break;
+                                            default:
+                                                break;
+                                        }
                                     }
                                 }
                             }
