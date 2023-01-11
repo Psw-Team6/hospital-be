@@ -104,7 +104,6 @@ namespace HospitalAPI.Mapper
                 CreateMap<MedicineExaminationResponse, Medicine>();
                 CreateMap<ExaminationRequest, Examination>();
                 CreateMap<Examination, ExaminationRequest>();
-                
                 CreateMap<ExeminationResponse, Examination>();
                 CreateMap<Examination, ExeminationResponse>();
                 CreateMap<ExaminationPrescriptionRequest, ExaminationPrescription>();
@@ -120,6 +119,11 @@ namespace HospitalAPI.Mapper
                 CreateMap<RoomSpliting, RoomSplitingResponse>();
                 CreateMap<RoomSplitingRequest, RoomSpliting>();
                 CreateMap<RoomSpliting, RoomSplitingRequest>();
+                CreateMap<PatientHealthState, PatientHealthStateDto>();
+                CreateMap<PatientHealthStateDto, PatientHealthState>()
+                    .ForMember(dest=> dest.RootId
+                        ,opt =>
+                            opt.MapFrom(src => src.PatientId));
 
             }
     }

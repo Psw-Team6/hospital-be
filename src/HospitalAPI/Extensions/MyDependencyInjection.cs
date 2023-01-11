@@ -90,6 +90,7 @@ namespace HospitalAPI.Extensions
             services.AddScoped<IConsiliumService,ConsiliumService>();
             services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
             services.AddScoped<ExaminationService>();
+            services.AddScoped<PatientHealthStateService>();
 
 
         }

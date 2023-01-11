@@ -47,8 +47,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
-        //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
-       
+        public DbSet<PatientHealthState> PatientHealthStates { get; set; }
+
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
