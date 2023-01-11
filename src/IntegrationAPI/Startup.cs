@@ -32,6 +32,7 @@ using IntegrationLibrary.BloodSubscription.Repository;
 using IntegrationLibrary.Tender.Service;
 using IntegrationLibrary.Tender.Repository;
 using IntegrationLibrary.SFTP.Service;
+using IntegrationLibrary.BloodStatistic.Service;
 
 namespace IntegrationAPI
 {
@@ -91,6 +92,7 @@ namespace IntegrationAPI
             services.AddTransient<IBloodRequestService, BloodRequestService>();
             services.AddTransient<IHttpService, HttpService>();
             services.AddScoped<IBloodRequestService, BloodRequestService>();
+            services.AddScoped<IBloodStatisticService, BloodStatisticService>();
             services.AddScoped<IBloodSubscriptionService, BloodSubscriptionService>();
             services.AddScoped<IMounthlyBloodSubscriptionRepository, MounthlyBloodSubscriptionRepository>();
             services.AddScoped<ISFTPService, SFTPService>();

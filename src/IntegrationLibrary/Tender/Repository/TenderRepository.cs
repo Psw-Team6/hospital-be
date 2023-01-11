@@ -40,6 +40,11 @@ namespace IntegrationLibrary.Tender.Repository
             return  await DbSet.Include(d => d.BloodUnitAmount).ToListAsync();
         }
 
+        public List<Model.Tender> GetAllTenders()
+        {
+            return _context.Tenders.ToList();
+        }
+
         public Model.Tender GetById(Guid id)
         {
             return _context.Tenders.Find(id);
