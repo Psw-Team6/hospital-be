@@ -180,9 +180,8 @@ namespace HospitalTest.Setup
             context.Symptoms.Add(symptom1);
             context.Medicines.Add(medicine);
             context.Medicines.Add(medicine1);
-            Appointment appointment1 = new()
+            Appointment appointment1 = new(new Guid("852fa040-a1f5-46f1-963a-2addf5a86a37"))
             {
-                Id = new Guid("852fa040-a1f5-46f1-963a-2addf5a86a37"),
                 Emergent = false,
                 PatientId = patient.Id,
                 DoctorId = doctor.Id,
@@ -194,9 +193,8 @@ namespace HospitalTest.Setup
                     To = new DateTime(2023, 7, 27, 10, 30, 0)
                 }
             };
-            Appointment appointment2 = new()
+            Appointment appointment2 = new(new Guid("852fa040-a1f5-46f1-963a-2addf5a86a06"))
             {
-                Id = new Guid("852fa040-a1f5-46f1-963a-2addf5a86a06"),
                 Emergent = false,
                 PatientId = patient.Id,
                 DoctorId = doctor.Id,
@@ -208,9 +206,8 @@ namespace HospitalTest.Setup
                     To = DateTime.Now.AddMinutes(-30)
                 }
             };
-            Appointment appointment3 = new()
+            Appointment appointment3 = new(new Guid("852fa040-a1f5-46f1-963a-2addf5a86a90"))
             {
-                Id = new Guid("852fa040-a1f5-46f1-963a-2addf5a86a90"),
                 Emergent = false,
                 PatientId = patient.Id,
                 DoctorId = doctor.Id,

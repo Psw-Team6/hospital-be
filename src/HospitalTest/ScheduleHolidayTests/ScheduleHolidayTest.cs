@@ -138,9 +138,8 @@ namespace HospitalTest.ScheduleHolidayTests
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com"
             };
-            Appointment appointment = new()
+            Appointment appointment = new( Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 Doctor = doctor1,
                 Patient = patient1,

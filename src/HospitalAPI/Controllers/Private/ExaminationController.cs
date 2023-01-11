@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalAPI.Dtos.Request;
@@ -38,10 +39,21 @@ namespace HospitalAPI.Controllers.Private
         
         [HttpGet]
         [ProducesResponseType( StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<Examination>>> GetAllExaminations()
+        public async Task<ActionResult<List<ExeminationResponse>>> GetAllExaminations()
         {
             var examinations = await _examinationService.GetAllExaminations();
-            return Ok(examinations);
+            var result = _mapper.Map<IEnumerable<ExeminationResponse>>(examinations);
+            return Ok(result);
+        }
+
+        [HttpPost("GetSearched")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<ExeminationResponse>>> FinSearchedExaminations([FromBody] String query)
+        {
+            var examinations = await _examinationService.GetSearchedExaminations(query); 
+            var result = _mapper.Map<IEnumerable<ExeminationResponse>>(examinations);
+            return Ok(result);
         }
     }
 }

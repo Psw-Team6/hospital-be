@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using HospitalLibrary.ApplicationUsers;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodUnits.Model;
@@ -10,7 +8,6 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.SharedModel;
-using HospitalLibrary.TreatmentReports.Model;
 
 namespace HospitalLibrary.Patients.Model
 {

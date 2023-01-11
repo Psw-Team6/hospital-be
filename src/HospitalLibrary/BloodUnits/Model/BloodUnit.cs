@@ -61,10 +61,12 @@ namespace HospitalLibrary.BloodUnits.Model
             get=> _bloodBankName;
             private set=> _bloodBankName = value;
         }
-        
-        public BloodUnit(BloodType bloodType, int amount, string bloodBankName)
+
+        public BloodUnit(int amount, BloodType bloodType, string bloodBankName)
         {
+            Amount = amount;
+            BloodType = bloodType;
+            BloodBankName = bloodBankName;
         }
-        
     }
 }

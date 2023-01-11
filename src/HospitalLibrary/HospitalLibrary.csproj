@@ -35,6 +35,7 @@
     <Folder Include="BloodUnits\Repository" />
     <Folder Include="BloodUnits\Service" />
     <Folder Include="Migrations\" />
+
   </ItemGroup>
 
   <ItemGroup>

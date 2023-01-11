@@ -11,7 +11,6 @@ namespace HospitalLibrary.BloodUnits.Service
     {
         private readonly IUnitOfWork _unitOfWork;
 
-
         public BloodUnitService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
