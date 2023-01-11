@@ -4,9 +4,11 @@ using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptions.Model;
 using HospitalLibrary.BloodUnits.Model;
+using HospitalLibrary.Common.EventSourcing;
 using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.EquipmentMovement.Model;
+using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Holidays.Model;
@@ -124,6 +126,9 @@ namespace HospitalAPI.Mapper
                     .ForMember(dest=> dest.RootId
                         ,opt =>
                             opt.MapFrom(src => src.PatientId));
+                CreateMap<RoomEvent, RoomEventRequest>();
+                CreateMap<RoomEventRequest, RoomEvent>();
+                CreateMap<DomainEventRequest,DomainEvent<EventStoreExaminationType>>();
 
             }
     }
