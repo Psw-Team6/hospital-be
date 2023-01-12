@@ -2,9 +2,8 @@
 using IntegrationLibrary.Tender.Repository;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.BloodStatistic.Model;
 
 namespace IntegrationLibrary.Tender.Service
 {
@@ -49,6 +48,33 @@ namespace IntegrationLibrary.Tender.Service
         public async Task<List<Model.Tender>> GetClosedTenders()
         {
             return await tenderRepository.GetClosedTenders();
+        }
+        public List<Model.Tender> GetAllTenders()
+        {
+            return tenderRepository.GetAllTenders();
+        }
+
+        public List<Model.Tender> getAllInDateRange(DateRange dateRange)
+        {
+            List<Model.Tender> all = tenderRepository.GetAllTenders();
+            List<Model.Tender> inRange = new List<Model.Tender>();
+
+            foreach(Model.Tender tender in all)
+            {
+                if (dateRange.From <= tender.DeadlineDate && tender.DeadlineDate  <= dateRange.To)
+                {
+                    if (tender.Winner != null)
+                    {
+                        inRange.Add(tender);
+                    }
+                }
+            }
+            return inRange;
+        }
+
+        public List<BloodUnitAmount> GetBloodUnitAmounts(Guid tenderID)
+        {
+            return (List<BloodUnitAmount>)amountRepository.GetAllByTenderId(tenderID);
         }
         
         public async Task<List<Model.Tender>> GetWinnerTenders()

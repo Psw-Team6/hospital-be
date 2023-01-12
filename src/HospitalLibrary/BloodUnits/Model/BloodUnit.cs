@@ -11,6 +11,8 @@ namespace HospitalLibrary.BloodUnits.Model
         private int _amount;
         private String _bloodBankName;
         private IEnumerable<BloodConsumption> _consumptions;
+        private DateTime _date; //date of acquisition
+        private String _source;
 
         public BloodUnit(Guid id, BloodType bloodType, int amount, string bloodBankName)
         {
@@ -62,11 +64,34 @@ namespace HospitalLibrary.BloodUnits.Model
             private set=> _bloodBankName = value;
         }
 
+        public DateTime Date
+        {
+            get => _date;
+            private set => _date = value;
+        }
+
+        public string Source
+        {
+            get => _source;
+            private set => _source = value;
+        }
+
+
         public BloodUnit(int amount, BloodType bloodType, string bloodBankName)
         {
             Amount = amount;
             BloodType = bloodType;
             BloodBankName = bloodBankName;
+        }
+
+        public BloodUnit(int amount, Guid id, BloodType bloodType, string bloodBankName, DateTime date, string source)
+        {
+            Amount = amount;
+            Id = id;
+            BloodType = bloodType;
+            BloodBankName = bloodBankName;
+            Date = date;
+            Source = source;
         }
     }
 }
