@@ -12,11 +12,9 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Json;
 using HospitalAPI.Exceptions;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace HospitalAPI.Controllers
 {

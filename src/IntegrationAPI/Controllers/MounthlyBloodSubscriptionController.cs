@@ -22,6 +22,7 @@ using IntegrationLibrary.RabbitMQService.RabbitMQProducer;
 
 namespace IntegrationAPI.Controllers
 {
+    /*
     [Route("api/[controller]")]
     [ApiController]
     public class MounthlyBloodSubscriptionController : ControllerBase
@@ -37,7 +38,7 @@ namespace IntegrationAPI.Controllers
 
         /*
         // POST api/MounthlyBloodSubscription
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult Create(MounthlyBloodSubscriptionRequest bSup)
         {
             if (!ModelState.IsValid)
@@ -61,7 +62,7 @@ namespace IntegrationAPI.Controllers
             RabbitMQPublisher.SendBloodSubscription(bSupResponse);
 
             _supService.Create(mounthlyBloodSubscription);
+
             return CreatedAtAction("Create", new { id = mounthlyBloodSubscription.id }, mounthlyBloodSubscription);
-        } */
-    }
+        } */   
 }

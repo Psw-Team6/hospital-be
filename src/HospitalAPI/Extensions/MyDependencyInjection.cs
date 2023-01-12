@@ -94,6 +94,7 @@ namespace HospitalAPI.Extensions
             services.AddScoped<ExaminationService>();
             services.AddScoped<EventStoreExaminationService>();
             services.AddScoped<IEventStoreExaminationRepository, EventStoreExaminationRepository>();
+            services.AddScoped<PatientHealthStateService>();
 
 
         }

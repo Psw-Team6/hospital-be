@@ -10,11 +10,6 @@
     <None Remove="Migrations\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="Migrations\20230111185155_mig.cs" />
-    <Compile Include="Migrations\20230111185155_mig.Designer.cs" />
-    <Compile Include="Migrations\IntegrationDbContextModelSnapshot.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AMQPNetLite.Core" Version="2.4.5" />
