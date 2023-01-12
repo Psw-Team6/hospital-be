@@ -33,6 +33,8 @@ using IntegrationLibrary.Tender.Service;
 using IntegrationLibrary.Tender.Repository;
 using IntegrationLibrary.SFTP.Service;
 using IntegrationLibrary.BloodStatistic.Service;
+using IntegrationLibrary.PDFReportDetails.Service;
+using IntegrationLibrary.PDFReportDetails.Repository;
 
 namespace IntegrationAPI
 {
@@ -78,6 +80,8 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IPDFReportService,PDFReportService>();
             services.AddScoped<PDFReportController>();
+            services.AddScoped<IPDFReportDetailsService, PDFReportDetailsService>();
+            services.AddScoped<IPDFReportDetailsRepository, PDFReportDetailsRepository>();
 
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
 

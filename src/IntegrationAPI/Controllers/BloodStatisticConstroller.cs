@@ -21,6 +21,11 @@ using IntegrationLibrary.BloodStatistic.Model;
 using IntegrationLibrary.BloodStatistic.Service;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
+using IntegrationLibrary.PDFReportDetails.Model;
+using Microsoft.EntityFrameworkCore.Metadata;
+using IntegrationLibrary.PDFReportDetails.Service;
+using IntegrationLibrary.SFTP.Service;
+using IntegrationLibrary.PDFReports.Service;
 
 namespace IntegrationAPI.Controllers
 {
@@ -30,15 +35,31 @@ namespace IntegrationAPI.Controllers
     {
         private readonly IBloodStatisticService bloodStatisticService;
         private static readonly HttpClient client = new HttpClient();
+        private readonly IPDFReportDetailsService pDFReportDetailsService;
+        private readonly ISFTPService sFTPService;
+        private readonly IPDFReportService pDFReportService;
 
-        public BloodStatisticController(IBloodStatisticService bloodStatisticService)
+        public BloodStatisticController(IBloodStatisticService bloodStatisticService, IPDFReportDetailsService pDFReportDetailsService, ISFTPService sFTPService, IPDFReportService pDFReportService)
         {
             this.bloodStatisticService = bloodStatisticService;
+            this.pDFReportDetailsService = pDFReportDetailsService;
+            this.sFTPService = sFTPService;
+            this.pDFReportService = pDFReportService;
         }
 
         [HttpPut("getTenderStatistic")]
         public List<BloodStatisticResponse> getTenderStatistic(DateRange range)
         {
+            String pdfName = "TenderStatistic " + range.From.Day.ToString() + "-" + range.From.Month.ToString() + "-" + range.From.Year.ToString() + "  " + range.To.Day.ToString() + "-" + range.To.Month.ToString() + "-" + range.To.Year.ToString() + ".pdf";
+            //String pdfName = "proba.pdf";
+            PDFReportDetails details = new PDFReportDetails(pdfName, range.From, range.To, IntegrationLibrary.Enums.PDFReportType.Tender);
+
+
+                sFTPService.UploadFileToRebexServer(pDFReportService.CreateDocumentInRange(bloodStatisticService.getTenderStatistic(range)), pdfName); 
+                pDFReportDetailsService.Create(details);
+
+            
+                    
             return bloodStatisticService.getTenderStatistic(range);
         }
 
