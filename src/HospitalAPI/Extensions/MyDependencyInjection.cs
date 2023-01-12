@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.ApplicationUsers.Service;
 using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.Appointments.Service.EventStoreService;
 using HospitalLibrary.BloodConsumptions.Service;
 using HospitalLibrary.BloodUnits.Service;
 using HospitalLibrary.Common;
@@ -95,7 +96,7 @@ namespace HospitalAPI.Extensions
             services.AddScoped<EventStoreExaminationService>();
             services.AddScoped<IEventStoreExaminationRepository, EventStoreExaminationRepository>();
             services.AddScoped<PatientHealthStateService>();
-
+            services.AddScoped<EventStoreSchedulingAppointmentService>();
 
         }
     }
