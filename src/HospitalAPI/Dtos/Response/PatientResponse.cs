@@ -1,4 +1,5 @@
 ﻿using System;
+using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.SharedModel;
 
 namespace HospitalAPI.Dtos.Response
@@ -14,5 +15,6 @@ namespace HospitalAPI.Dtos.Response
         public string Email { get; set; }
         public string Jmbg{ get; set; }
         public string Phone{ get; set; }
+        public Gender Gender{ get; set; }
     }
 }

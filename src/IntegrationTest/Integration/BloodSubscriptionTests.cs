@@ -23,12 +23,12 @@ namespace IntegrationTest.Integration
     public class BloodSubscriptionTests : BaseIntegrationTest
     {
         public BloodSubscriptionTests(TestDatabaseFactory<Startup> factory) : base(factory){}
-
+/*
         private static MounthlyBloodSubscriptionController SetupController(IServiceScope scope)
         {
             return new MounthlyBloodSubscriptionController(scope.ServiceProvider.GetRequiredService<IBloodSubscriptionService>(), scope.ServiceProvider.GetRequiredService <IBloodBankService>());
         }
-
+*/
         [Fact]
         public void Save_Recived_Message_With_Correct_APIKey_To_Database()
         {

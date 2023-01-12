@@ -170,6 +170,14 @@ namespace IntegrationAPI.Controllers
             var tenders = await tenderService.GetClosedTenders();
             return Ok(tenders);
         }
+        /*
+        [HttpGet("getWinnerTenders")]
+        public async Task<ActionResult<List<Tender>>> GetWinnerTenders()
+        {
+            var tenders = await tenderService.GetWinnerTenders();
+            return Ok(tenders);
+        }
+        */
 
     }
 }

@@ -6,6 +6,7 @@ using HospitalLibrary.Common;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
+using HospitalLibrary.Patients.Exceptions;
 
 namespace HospitalLibrary.Appointments.Service
 {

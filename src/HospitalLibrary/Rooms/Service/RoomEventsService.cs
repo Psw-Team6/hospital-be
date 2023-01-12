@@ -136,8 +136,57 @@ namespace HospitalLibrary.Rooms.Service
 
         public async  Task<int[]> GetAverageMergningStepTimes()
         {
-            int[] result = { 0, 0, 0 };
+            int[] result = { 0, 0, 0, 0 };
             List<List<RoomEvent>> allSessions = await GetSessions();
+
+            int[] vremena = { 0, 0, 0, 0 };
+            int[] brojaci = { 0, 0, 0, 0 };
+            
+            foreach (var session in allSessions)
+            {
+                int i = 0;
+                if (session[0].Value == "Merging")
+                {
+                    foreach (var e in session)
+                    {
+                        if (e.EventName.Contains("SessionStarted") && e.Value == "Merging")
+                        {
+                            vremena[0] += (int)(session[i + 1].TimeStamp - e.TimeStamp).TotalSeconds;
+                            brojaci[0]++;
+                        }
+                        else if (e.EventName.Contains("1"))
+                        {
+                            vremena[1] += (int)( session[i + 1].TimeStamp -e.TimeStamp).TotalSeconds;
+                            brojaci[1]++;
+                        }
+                        else if (e.EventName.Contains("2"))
+                        {
+                            vremena[2] += (int)( session[i + 1].TimeStamp -e.TimeStamp).TotalSeconds;
+                            brojaci[2]++;
+                        }
+                        else if (e.EventName.Contains("3"))
+                        {
+                            vremena[3] += (int)( session[i + 1].TimeStamp -e.TimeStamp).TotalSeconds;
+                            brojaci[3]++;
+                        }
+
+                        i++;
+                    }
+                }
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (brojaci[i] == 0)
+                {
+                    result[i] = 0;
+                }
+                else
+                {
+                    result[i] = vremena[i] / brojaci[i];
+                }
+            }
+            
             return result;
         }
 
@@ -174,8 +223,56 @@ namespace HospitalLibrary.Rooms.Service
 
         public async Task<int[]> GetAverageSplitingStepTimes()
         {
-            int[] result = { 0, 0, 0 };
+            int[] result = { 0, 0, 0, 0 };
             List<List<RoomEvent>> allSessions = await GetSessions();
+
+            int[] vremena = { 0, 0, 0, 0 };
+            int[] brojaci = { 0, 0, 0, 0 };
+            
+            foreach (var session in allSessions)
+            {
+                int i = 0;
+                if (session[0].Value == "Spliting")
+                {
+                    foreach (var e in session)
+                    {
+                        if (e.EventName.Contains("SessionStarted") && e.Value == "Merging")
+                        {
+                            vremena[0] += (int)(session[i + 1].TimeStamp -e.TimeStamp).TotalSeconds;
+                            brojaci[0]++;
+                        }
+                        else if (e.EventName.Contains("1"))
+                        {
+                            vremena[1] += (int)(session[i + 1].TimeStamp -e.TimeStamp).TotalSeconds;
+                            brojaci[1]++;
+                        }
+                        else if (e.EventName.Contains("2"))
+                        {
+                            vremena[2] += (int)(session[i + 1].TimeStamp - e.TimeStamp).TotalSeconds;
+                            brojaci[2]++;
+                        }
+                        else if (e.EventName.Contains("3"))
+                        {
+                            vremena[3] += (int)(session[i + 1].TimeStamp - e.TimeStamp).TotalSeconds;
+                            brojaci[3]++;
+                        }
+
+                        i++;
+                    }
+                }
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (brojaci[i] == 0)
+                {
+                    result[i] = 0;
+                }
+                else
+                {
+                    result[i] = vremena[i] / brojaci[i];
+                }
+            }
 
             return result;
         }
@@ -195,9 +292,14 @@ namespace HospitalLibrary.Rooms.Service
             {
                 if (newSession.Count() > 0)
                 {
-                    if (e.EventName == "SessionEnded")
+
+                    if (e.EventName == "SessionStarted")
                     {
-                        Console.WriteLine("End of session");
+                        newSession = new List<RoomEvent>();
+                        newSession.Add(e);
+                    }
+                    else if(e.EventName == "SessionEnded")
+                    {
                         newSession.Add(e);
                         sessions.Add(newSession);
                         newSession = new List<RoomEvent>();
@@ -215,7 +317,6 @@ namespace HospitalLibrary.Rooms.Service
                 {
                     if (e.EventName == "SessionStarted")
                     {
-                        Console.WriteLine("Found new session");
                         newSession.Add(e);
                     }
                     

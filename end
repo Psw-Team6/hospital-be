@@ -1,0 +1,94 @@
+[33ma890679[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m HEAD@{0}: reset: moving to HEAD
+[33ma890679[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m HEAD@{1}: reset: moving to develop@{50 minutes ago}
+[33ma890679[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m HEAD@{2}: pull origin develop: Fast-forward
+[33mad4299e[m HEAD@{3}: checkout: moving from SplittingFix to develop
+[33m086096c[m[33m ([m[1;31morigin/SplittingFix[m[33m, [m[1;32mSplittingFix[m[33m)[m HEAD@{4}: commit: fixed
+[33mad4299e[m HEAD@{5}: checkout: moving from develop to SplittingFix
+[33mad4299e[m HEAD@{6}: pull origin develop: Fast-forward
+[33mcae16c1[m HEAD@{7}: checkout: moving from main to develop
+[33m40e6792[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{8}: reset: moving to HEAD
+[33m40e6792[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{9}: reset: moving to HEAD
+[33m40e6792[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{10}: pull origin main: Fast-forward
+[33m9de72c0[m HEAD@{11}: checkout: moving from develop to main
+[33mcae16c1[m HEAD@{12}: reset: moving to HEAD
+[33mcae16c1[m HEAD@{13}: pull origin develop: Fast-forward
+[33m5e7c309[m HEAD@{14}: pull origin develop: Fast-forward
+[33m9155bae[m HEAD@{15}: reset: moving to HEAD
+[33m9155bae[m HEAD@{16}: pull origin develop: Fast-forward
+[33meb9ec4c[m[33m ([m[1;31morigin/DeletingRenovation[m[33m, [m[1;32mDeletingRenovation[m[33m)[m HEAD@{17}: checkout: moving from develop to develop
+[33meb9ec4c[m[33m ([m[1;31morigin/DeletingRenovation[m[33m, [m[1;32mDeletingRenovation[m[33m)[m HEAD@{18}: pull origin DeletingRenovation: Fast-forward
+[33m0787fa9[m HEAD@{19}: checkout: moving from DeletingRenovation to develop
+[33meb9ec4c[m[33m ([m[1;31morigin/DeletingRenovation[m[33m, [m[1;32mDeletingRenovation[m[33m)[m HEAD@{20}: commit: DeletingImplemented
+[33m0787fa9[m HEAD@{21}: checkout: moving from develop to DeletingRenovation
+[33m0787fa9[m HEAD@{22}: commit: Fix controller
+[33m65d13be[m HEAD@{23}: checkout: moving from DeleteEquipmentMove to develop
+[33m0af8659[m[33m ([m[1;32mDeleteEquipmentMove[m[33m)[m HEAD@{24}: revert: Revert "deleting"
+[33m5b268e2[m[33m ([m[1;31morigin/DeleteEquipmentMove[m[33m)[m HEAD@{25}: checkout: moving from DeleteEquipmentMOve to DeleteEquipmentMove
+[33m5b268e2[m[33m ([m[1;31morigin/DeleteEquipmentMove[m[33m)[m HEAD@{26}: checkout: moving from develop to DeleteEquipmentMOve
+[33m65d13be[m HEAD@{27}: checkout: moving from main to develop
+[33m9de72c0[m HEAD@{28}: checkout: moving from develop to main
+[33m65d13be[m HEAD@{29}: reset: moving to HEAD
+[33m65d13be[m HEAD@{30}: revert: Revert "fix bug"
+[33meb433ce[m HEAD@{31}: pull origin develop: Fast-forward
+[33m1a1861f[m HEAD@{32}: reset: moving to HEAD
+[33m1a1861f[m HEAD@{33}: reset: moving to HEAD
+[33m1a1861f[m HEAD@{34}: pull origin develop: Fast-forward
+[33mc95ccc0[m HEAD@{35}: pull origin develop: Fast-forward
+[33md582d16[m HEAD@{36}: checkout: moving from main to develop
+[33m9de72c0[m HEAD@{37}: checkout: moving from develop to main
+[33md582d16[m HEAD@{38}: pull origin develop: Fast-forward
+[33mc67c38a[m HEAD@{39}: reset: moving to HEAD
+[33mc67c38a[m HEAD@{40}: reset: moving to HEAD
+[33mc67c38a[m HEAD@{41}: checkout: moving from main to develop
+[33m9de72c0[m HEAD@{42}: checkout: moving from develop to main
+[33mc67c38a[m HEAD@{43}: pull origin develop: Fast-forward
+[33mfa43b67[m HEAD@{44}: checkout: moving from DeleteEquipmentMove to develop
+[33m5b268e2[m[33m ([m[1;31morigin/DeleteEquipmentMove[m[33m)[m HEAD@{45}: commit: deleting
+[33mfa43b67[m HEAD@{46}: checkout: moving from develop to DeleteEquipmentMove
+[33mfa43b67[m HEAD@{47}: reset: moving to HEAD
+[33mfa43b67[m HEAD@{48}: checkout: moving from GetMovementbyRoom to develop
+[33mc27419e[m[33m ([m[1;31morigin/GetMovementbyRoom[m[33m, [m[1;32mGetMovementbyRoom[m[33m)[m HEAD@{49}: commit: Fix
+[33m3aa9e59[m HEAD@{50}: checkout: moving from develop to GetMovementbyRoom
+[33mfa43b67[m HEAD@{51}: pull origin develop: Fast-forward
+[33m62b6b8c[m HEAD@{52}: checkout: moving from GetMovementbyRoom to develop
+[33m3aa9e59[m HEAD@{53}: commit: getting
+[33m9de72c0[m HEAD@{54}: checkout: moving from main to GetMovementbyRoom
+[33m9de72c0[m HEAD@{55}: pull origin main: Fast-forward
+[33mc36d099[m HEAD@{56}: checkout: moving from develop to main
+[33m62b6b8c[m HEAD@{57}: reset: moving to HEAD
+[33m62b6b8c[m HEAD@{58}: pull origin develop: Fast-forward
+[33m93c23a7[m HEAD@{59}: checkout: moving from EQtst to develop
+[33m33a7780[m[33m ([m[1;31morigin/EQtst[m[33m, [m[1;32mEQtst[m[33m)[m HEAD@{60}: commit: tst
+[33m93c23a7[m HEAD@{61}: checkout: moving from develop to EQtst
+[33m93c23a7[m HEAD@{62}: pull origin develop: Fast-forward
+[33m38ad8d9[m HEAD@{63}: pull origin develop: Fast-forward
+[33m0d5960e[m HEAD@{64}: checkout: moving from EquipmentSearchBE to develop
+[33mfcc3c1a[m[33m ([m[1;31morigin/EquipmentSearchBE[m[33m, [m[1;32mEquipmentSearchBE[m[33m)[m HEAD@{65}: reset: moving to HEAD
+[33mfcc3c1a[m[33m ([m[1;31morigin/EquipmentSearchBE[m[33m, [m[1;32mEquipmentSearchBE[m[33m)[m HEAD@{66}: commit: SearchEquipment
+[33m0d5960e[m HEAD@{67}: checkout: moving from develop to EquipmentSearchBE
+[33m0d5960e[m HEAD@{68}: pull origin develop: Fast-forward
+[33m01240f3[m HEAD@{69}: pull origin develop: Fast-forward
+[33m70a6892[m HEAD@{70}: checkout: moving from SearchEquipmentBE to develop
+[33ma318e15[m[33m ([m[1;31morigin/SearchEquipmentBE[m[33m, [m[1;32mSearchEquipmentBE[m[33m)[m HEAD@{71}: commit: SearchBE
+[33mcb39357[m HEAD@{72}: commit: SearchBE
+[33m70a6892[m HEAD@{73}: checkout: moving from develop to SearchEquipmentBE
+[33m70a6892[m HEAD@{74}: reset: moving to 70a68924f76aef9397b76a0c4206cdde2d19be81
+[33m3340260[m HEAD@{75}: checkout: moving from RoomEquipment to develop
+[33m3bdc835[m[33m ([m[1;31morigin/RoomEquipment[m[33m, [m[1;32mRoomEquipment[m[33m)[m HEAD@{76}: checkout: moving from develop to RoomEquipment
+[33m3340260[m HEAD@{77}: reset: moving to 3340260889ecf48c79b86b13b7c9de0b6fece010
+[33m3340260[m HEAD@{78}: checkout: moving from develop to develop
+[33m3340260[m HEAD@{79}: checkout: moving from RoomEquipment to develop
+[33m3bdc835[m[33m ([m[1;31morigin/RoomEquipment[m[33m, [m[1;32mRoomEquipment[m[33m)[m HEAD@{80}: reset: moving to HEAD
+[33m3bdc835[m[33m ([m[1;31morigin/RoomEquipment[m[33m, [m[1;32mRoomEquipment[m[33m)[m HEAD@{81}: checkout: moving from develop to RoomEquipment
+[33m3340260[m HEAD@{82}: reset: moving to HEAD
+[33m3340260[m HEAD@{83}: reset: moving to 3340260889ecf48c79b86b13b7c9de0b6fece010
+[33m70a6892[m HEAD@{84}: reset: moving to 70a6892
+[33md69905b[m HEAD@{85}: pull origin develop: Fast-forward
+[33m3f5829c[m HEAD@{86}: pull origin develop: Fast-forward
+[33mb205137[m HEAD@{87}: checkout: moving from RoomEquipment to develop
+[33m3bdc835[m[33m ([m[1;31morigin/RoomEquipment[m[33m, [m[1;32mRoomEquipment[m[33m)[m HEAD@{88}: commit: EquipmentBE
+[33mb205137[m HEAD@{89}: checkout: moving from develop to RoomEquipment
+[33mb205137[m HEAD@{90}: pull origin develop: Fast-forward
+[33m7f7c572[m HEAD@{91}: reset: moving to HEAD
+[33m7f7c572[m HEAD@{92}: checkout: moving from main to develop
+[33mc36d099[m HEAD@{93}: clone: from https://github.com/Psw-Team6/hospital-be

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
 using HospitalLibrary.Examinations.EventStores;
@@ -9,5 +10,9 @@ namespace HospitalLibrary.Examinations.Repository.EventStoreRepository
     {
         Task<int> GetVersionCount(Guid aggregateId);
         Task<int> GetSequenceCount();
+        Task<int> GetEventCountByAggregate(Guid aggregateId);
+        Task<List<EventStoreExamination>> GetEventsByAggregate(Guid aggregateId);
+        Task<int> GetAverageViewForType(EventStoreExaminationType type);
+        Task<List<EventStoreExamination>> GetEventsWithoutType(EventStoreExaminationType type, Guid aggregateId);
     }
 }

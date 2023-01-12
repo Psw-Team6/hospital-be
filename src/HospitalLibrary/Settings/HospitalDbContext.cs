@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Reflection;
 using HospitalLibrary.ApplicationUsers.Model;
 using HospitalLibrary.Appointments.Model;
@@ -20,38 +19,36 @@ using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore;
-using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
 namespace HospitalLibrary.Settings
 {
     public class HospitalDbContext : DbContext
     {
-        public Microsoft.EntityFrameworkCore.DbSet<Room> Rooms { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Building> Buildings { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Floor> Floors { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Doctor> Doctors { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Patient> Patients { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Manager> Managers { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Specialization> Specializations { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Appointment> Appointments { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Allergen> Allergens { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Address> Addresses { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<MaliciousPatient> MaliciousPatients { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<WorkingSchedule> WorkingSchedules { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<GRoom> GRooms { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<RoomBed> RoomBeds { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<PatientAdmission> PatientAdmissions { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<BloodUnit> BloodUnits { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<BloodConsumption> BloodConsumptions { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Examination> Examinations { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Symptom> Symptoms { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<RoomEquipment> RoomEquipment { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Consilium> Consiliums { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Holiday> Holidays { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<EventStoreExamination> EventStoreExaminations { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Medicine> Medicines { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<RoomEvent> RoomEvents { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Building> Buildings { get; set; }
+        public DbSet<Floor> Floors { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Manager> Managers { get; set; }
+        public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Allergen> Allergens { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<MaliciousPatient> MaliciousPatients { get; set; }
+        public DbSet<WorkingSchedule> WorkingSchedules { get; set; }
+        public DbSet<GRoom> GRooms { get; set; }
+        public DbSet<RoomBed> RoomBeds { get; set; }
+        public DbSet<PatientAdmission> PatientAdmissions { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<BloodUnit> BloodUnits { get; set; }
+        public DbSet<BloodConsumption> BloodConsumptions { get; set; }
+        public DbSet<Examination> Examinations { get; set; }
+        public DbSet<Symptom> Symptoms { get; set; }
+        public DbSet<RoomEquipment> RoomEquipment { get; set; }
+        public DbSet<Consilium> Consiliums { get; set; }
+        public DbSet<Holiday> Holidays { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<EventStoreExamination> EventStoreExaminations { get; set; }
         //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
 
@@ -1209,7 +1206,6 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<BloodConsumption>().HasData(
                 consumption1, consumption2
             );
-
             RoomEvent roomEvent1 = new RoomEvent()
             {
                 Id = Guid.NewGuid(),

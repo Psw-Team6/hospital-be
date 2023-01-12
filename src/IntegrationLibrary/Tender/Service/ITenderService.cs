@@ -14,5 +14,7 @@ namespace IntegrationLibrary.Tender.Service
         public Task<List<Model.Tender>> GetAll();
         public Model.Tender GetById(Guid id);
         public Task<List<Model.Tender>> GetClosedTenders();
+
+        public Task<List<Model.Tender>> GetWinnerTenders();
     }
 }
