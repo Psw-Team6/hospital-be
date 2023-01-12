@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using IntegrationLibrary.Tender.Model;
 using Newtonsoft.Json;
+using HospitalLibrary.SharedModel;
 
 namespace HospitalAPI.Controllers
 {
@@ -78,7 +79,12 @@ namespace HospitalAPI.Controllers
 
             return null;
         }
-        
-        
+
+        [HttpGet("getUrgentUnits")]
+        public async Task<ActionResult<List<BloodUnitForStatisticDto>>> getUrgentUnits()
+        {
+            var units = await _bloodUnitService.GetUrgentUnits();
+            return Ok(units);
+        }
     }
 }

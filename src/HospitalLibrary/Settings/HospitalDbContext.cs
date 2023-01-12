@@ -1180,10 +1180,11 @@ namespace HospitalLibrary.Settings
             BloodUnit unit1 = new(Guid.NewGuid(), BloodType.Aneg, 7, "Moja Banka Krvi");
             BloodUnit unit2 = new(Guid.NewGuid(),BloodType.Oneg,10,"Moja Banka Krvi");
             BloodUnit unit3 = new(Guid.NewGuid(),BloodType.Aneg,4,"Moja Banka Krvi");
+            BloodUnit unit4 = new(5,Guid.NewGuid(), BloodType.Aneg, "Moja Banka Krvi", new DateTime(), "URGENT");
 
-            
+
             modelBuilder.Entity<BloodUnit>().HasData(
-                unit1, unit2,unit3
+                unit1, unit2,unit3, unit4
             );
 
             BloodConsumption consumption1 = new BloodConsumption()
