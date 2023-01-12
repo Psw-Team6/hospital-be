@@ -8,6 +8,6 @@ namespace HospitalLibrary.Patients.Repository
 {
     public interface IPatientHealthStateNotificationRepository:IGenericRepository<PatientHealthStateNotification>
     {
-        public Task<List<PatientHealthStateNotification>> GetAllNotifications(Guid patientId);
+        public Task<List<PatientHealthStateNotification>> GetAllNotifications(Guid doctorId);
     }
 }
