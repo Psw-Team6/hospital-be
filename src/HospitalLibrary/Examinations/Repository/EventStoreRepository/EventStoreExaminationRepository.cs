@@ -40,7 +40,7 @@ namespace HospitalLibrary.Examinations.Repository.EventStoreRepository
 
         public  Task<int> GetAverageViewForType(EventStoreExaminationType type)
         {
-            return Task.FromResult(DbSet.Count(@event => @event.Data == EventStoreExaminationType.SYMPTOMS_VIEWED));
+            return Task.FromResult(DbSet.Count(@event => @event.Data == type));
         }
 
         public async Task<List<EventStoreExamination>> GetEventsWithoutType(EventStoreExaminationType type, Guid aggregateId)

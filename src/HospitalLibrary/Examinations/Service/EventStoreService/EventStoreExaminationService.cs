@@ -144,13 +144,13 @@ namespace HospitalLibrary.Examinations.Service.EventStoreService
             return counter;
         }
 
-        public async Task<Dictionary<EventStoreExaminationType, TimeSpan>> GetAverageTimeForEveryStep()
+        public async Task<Dictionary<EventStoreExaminationType, double>> GetAverageTimeForEveryStep()
         {
             return await CountTimeForSteps();
         }
-        private async Task<Dictionary<EventStoreExaminationType, TimeSpan>> CountTimeForSteps()
+        private async Task<Dictionary<EventStoreExaminationType, double>> CountTimeForSteps()
         {
-            var dictionary = new Dictionary<EventStoreExaminationType, TimeSpan>();
+            var dictionary = new Dictionary<EventStoreExaminationType, double>();
             await GetAverageTimeForType(EventStoreExaminationType.SYMPTOMS_VIEWED, dictionary);
             await GetAverageTimeForType(EventStoreExaminationType.ANAMNESIS_VIEWED, dictionary);
             await GetAverageTimeForType(EventStoreExaminationType.PRESCRIPTION_VIEWED, dictionary);
@@ -159,11 +159,12 @@ namespace HospitalLibrary.Examinations.Service.EventStoreService
             return dictionary;
         }
 
-        private async Task GetAverageTimeForType(EventStoreExaminationType type, Dictionary<EventStoreExaminationType, TimeSpan> dictionary)
+        private async Task GetAverageTimeForType(EventStoreExaminationType type, Dictionary<EventStoreExaminationType, double> dictionary)
         {
             var duration = await CountAverageTime(type);
+            var durationInt = duration.TotalSeconds;
             var counter = await CheckIfEventsExistsForExamination();
-            dictionary.Add(type,duration/counter);
+            dictionary.Add(type,durationInt/counter);
         }
 
         private async Task<TimeSpan> CountAverageTime(EventStoreExaminationType type)

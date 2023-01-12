@@ -49,7 +49,7 @@ namespace HospitalAPI.Controllers.Private
         }
         [HttpGet("get-average-time-type")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Dictionary<EventStoreExaminationType, int>>> GetAverageTimeForEveryStep()
+        public async Task<ActionResult<Dictionary<EventStoreExaminationType, double>>> GetAverageTimeForEveryStep()
         {
             var result = await _eventStoreExaminationService.GetAverageTimeForEveryStep();
             return Ok(result);
