@@ -7,6 +7,7 @@ namespace HospitalLibrary.SharedModel
     [Owned]
     public class DateRange:ValueObject<DateRange>
     {
+        
         public DateTime From { get; set; }
         public DateTime To { get; set; }
 
@@ -14,7 +15,17 @@ namespace HospitalLibrary.SharedModel
         {
             return From < To;
         }
-        
+
+        public DateRange(DateTime from, DateTime to)
+        {
+            From = from;
+            To = to;
+        }
+
+        public DateRange()
+        {
+        }
+
         public bool IsBeforeAndTodayDate()
         {
             return From.Date.Date <= DateTime.Now.Date || To.Date.Date <= DateTime.Now.Date;

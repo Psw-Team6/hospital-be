@@ -18,6 +18,11 @@ namespace HospitalLibrary.SharedModel
             }
         }
 
+        public Percentage(int value)
+        {
+            Value = value;
+        }
+
         public Percentage()
         {
         }

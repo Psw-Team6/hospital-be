@@ -56,5 +56,10 @@ namespace HospitalLibrary.Patients.Service
         {
             return await _patientHealthStateRepository.GetAllByPatientId(patientId);
         }
+
+        public async Task<List<PatientHealthStateNotification>> GetAllNotifications(Guid patientId)
+        {
+            return await _notificationRepository.GetAllNotifications(patientId);
+        }
     }
 }

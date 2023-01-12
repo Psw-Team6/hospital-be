@@ -33,7 +33,7 @@ namespace HospitalAPI.Controllers
             await _patientHealthStateService.CreatePatientHealthState(result);
             return CreatedAtAction(nameof(CreatePatientHealthState), "", patientHealthStateDto);
         }
-        [HttpGet("/GetByPatient/{patientId:guid}")]
+        [HttpGet("/get-by-patient/{patientId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<PatientHealthStateDto>>> GetByPatientId([FromRoute]Guid patientId)
@@ -42,6 +42,16 @@ namespace HospitalAPI.Controllers
             var result = _mapper.Map<List<PatientHealthStateDto>>(states);
             return result.Any() ? Ok(result) : NotFound();
         }
+
+        [HttpGet("/notifications/{patientId:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<PatientHealthStateNotification>>> GetAllNotifications([FromRoute]Guid patientId)
+        {
+            var notifications = await _patientHealthStateService.GetAllNotifications(patientId);
+            return notifications.Any() ? Ok(notifications) : NotFound();
+        }
+            
 
     }
 }
