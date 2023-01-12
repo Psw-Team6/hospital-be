@@ -10,11 +10,7 @@
     <None Remove="Migrations\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="Migrations\20230112174414_mig.cs" />
-    <Compile Include="Migrations\20230112174414_mig.Designer.cs" />
-    <Compile Include="Migrations\IntegrationDbContextModelSnapshot.cs" />
-  </ItemGroup>
+
 
 
   <ItemGroup>
