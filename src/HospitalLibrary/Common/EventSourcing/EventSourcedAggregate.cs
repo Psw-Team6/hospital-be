@@ -5,6 +5,10 @@ namespace HospitalLibrary.Common.EventSourcing
 {
     public abstract class EventSourcedAggregate<T> : Entity<Guid> 
     {
+        protected EventSourcedAggregate(Guid id) : base(id)
+        {
+        }
+
         public List<DomainEvent<T>> Changes { get; private set; }
 
         public EventSourcedAggregate()

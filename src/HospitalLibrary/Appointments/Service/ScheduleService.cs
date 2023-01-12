@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Appointments.Service.EventStoreService;
 using HospitalLibrary.Common;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Doctors.Service;
 
 namespace HospitalLibrary.Appointments.Service
 {
@@ -11,19 +13,23 @@ namespace HospitalLibrary.Appointments.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailService _emailService;
+        private readonly EventStoreSchedulingAppointmentService _eventStoreSchedulingAppointmentService;
 
-        public ScheduleService(IUnitOfWork unitOfWork,IEmailService emailService)
+        public ScheduleService(IUnitOfWork unitOfWork,IEmailService emailService, EventStoreSchedulingAppointmentService eventStoreSchedulingAppointmentService)
         {
             _unitOfWork = unitOfWork;
             _emailService = emailService;
+            _eventStoreSchedulingAppointmentService = eventStoreSchedulingAppointmentService;
         }
-        
 
         public async Task<Appointment> ScheduleAppointment(Appointment appointment)
         {
             await ValidateAppointment(appointment);
+            // var doctors = await _doctorService.GetBySpecialisation(appointment.Doctor.Specialization.Name);
+            // var freeTerms = await _doctorService.generateFreeTimeSpans(appointment.Duration, appointment.DoctorId);
             var app = await _unitOfWork.AppointmentRepository.CreateAsync(appointment);
             await _unitOfWork.CompleteAsync();
+            await _eventStoreSchedulingAppointmentService.CreateEventStore(app, appointment.Changes);
             return app;
         }
 
