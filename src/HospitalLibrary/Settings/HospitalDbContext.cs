@@ -10,6 +10,7 @@ using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Enums;
 using HospitalLibrary.Examinations.DbConfig;
+using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Holidays.Model;
 using HospitalLibrary.Managers;
@@ -47,6 +48,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<EventStoreExamination> EventStoreExaminations { get; set; }
         //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
 
