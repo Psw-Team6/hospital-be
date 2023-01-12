@@ -6,7 +6,7 @@ using HospitalLibrary.BloodUnits.Service;
 
 namespace HospitalAPI.gRPC
 {
-    public class UrgentBloodSupplyService
+    public class UrgentBloodSupplyService: IUrgentBloodSupplyService
     {
         private Channel channel { get; set; }
         private UrgentBloodSupply.UrgentBloodSupplyClient client;
