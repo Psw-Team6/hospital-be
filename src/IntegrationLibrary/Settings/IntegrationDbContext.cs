@@ -1,5 +1,5 @@
 using IntegrationLibrary.ConfigureGenerateAndSend.Model;
-﻿using IntegrationLibrary.BloodRequests.Model;
+using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.Tender.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,7 +14,7 @@ using IntegrationLibrary.BloodBank.Model;
 
 namespace IntegrationLibrary.Settings
 {
-    public class IntegrationDbContext: DbContext
+    public class IntegrationDbContext : DbContext
     {
         public DbSet<BloodBank.BloodBank> BloodBanks { get; set; }
 
@@ -34,7 +34,7 @@ namespace IntegrationLibrary.Settings
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            modelBuilder.Entity<AmountOfBloodType>(eb => { 
+            modelBuilder.Entity<AmountOfBloodType>(eb => {
                 eb.HasNoKey();
             });
             modelBuilder.Entity<TenderOffer>(eb => {
@@ -45,7 +45,7 @@ namespace IntegrationLibrary.Settings
                     .Property(b => b.amountOfBloodTypes)
                     .HasColumnType("jsonb");
 
-   
+
             modelBuilder.Entity<IntegrationLibrary.Tender.Model.Tender>().Property(d => d.TenderOffer).HasColumnType("jsonb");
 
 
@@ -57,7 +57,7 @@ namespace IntegrationLibrary.Settings
                 Type = BloodType.ABneg,
                 Amount = 10.0,
                 Reason = "Operacija",
-                Date = new DateTime(2022,12,10),
+                Date = new DateTime(2022, 12, 10),
                 DoctorUsername = "Ilija",
                 Status = Status.PENDING,
                 Comment = ""
@@ -106,7 +106,7 @@ namespace IntegrationLibrary.Settings
                 request3,
                 request4
             );
-            
+
             base.OnModelCreating(modelBuilder);
             BloodBank.BloodBank bloodBank = new()
             {
@@ -115,12 +115,12 @@ namespace IntegrationLibrary.Settings
                 ServerAddress = "localhost",
                 Email = "aas@gmail.com",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
-                
+
             };
             modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);
 
             modelBuilder.Entity<BloodBank.BloodBank>().OwnsOne(x => x.ApiKey).HasData(
-                new { BloodBankId = bloodBank.Id, Value = new ApiKey().Value});
+                new { BloodBankId = bloodBank.Id, Value = new ApiKey().Value });
 
             ConfigureGenerateAndSend.Model.ConfigureGenerateAndSend configuration1 = new()
             {
@@ -145,22 +145,6 @@ namespace IntegrationLibrary.Settings
                configuration2
             );
 
-            TenderOffer tenderOffer1 = new()
-            {
-                BloodBankName = "BloodBank",
-                Price = 500,
-                RealizationDate = DateTime.Now.AddDays(+2)
-            };
-            
-            
-            TenderOffer tenderOffer2 = new()
-            {
-                BloodBankName = "BloodBank",
-                Price = 230,
-                RealizationDate = DateTime.Now.AddDays(+3)
-            };
-            
-            modelBuilder.Entity<TenderOffer>().HasData(tenderOffer1,tenderOffer2);
 
 
             Tender.Model.Tender tender1 = new()
@@ -170,7 +154,7 @@ namespace IntegrationLibrary.Settings
                 DeadlineDate = DateTime.Now.AddDays(20),
                 PublishedDate = DateTime.Now,
                 Status = Enums.StatusTender.Open
-              //  TenderOffer = TenderOffer1,
+                //  TenderOffer = TenderOffer1,
             };
             Tender.Model.Tender tender2 = new()
             {
@@ -178,28 +162,13 @@ namespace IntegrationLibrary.Settings
                 HasDeadline = true,
                 DeadlineDate = DateTime.Now.AddDays(-1),
                 PublishedDate = DateTime.Now.AddDays(-4),
-                Status = Enums.StatusTender.Close,
-               // TenderOffer = tenderOffer1
-                
+                Status = Enums.StatusTender.Close
+                //  TenderOffer = TenderOffer1,
             };
-            
-            Tender.Model.Tender tender3 = new()
-            {
-                Id = Guid.NewGuid(),
-                HasDeadline = true,
-                DeadlineDate = DateTime.Now.AddDays(-1),
-                PublishedDate = DateTime.Now.AddDays(-4),
-                Status = Enums.StatusTender.Close,
-                // TenderOffer = tenderOffer1
-                
-            };
-            
-            modelBuilder.Entity<Tender.Model.Tender>().HasData(tender1,tender2,tender3);
+
+            modelBuilder.Entity<Tender.Model.Tender>().HasData(tender1, tender2);
             modelBuilder.Entity<IntegrationLibrary.Tender.Model.Tender>().Property(d => d.Winner).HasColumnType("jsonb");
 
-            
-            
-            
             BloodUnitAmount bloodUnitAmount1 = new()
             {
                 Id = Guid.NewGuid(),
@@ -256,7 +225,7 @@ namespace IntegrationLibrary.Settings
                 Amount = 0,
                 TenderId = tender1.Id
             };
-            
+
             BloodUnitAmount bloodUnitAmount66 = new()
             {
                 Id = Guid.NewGuid(),
@@ -278,23 +247,7 @@ namespace IntegrationLibrary.Settings
                 Amount = 0,
                 TenderId = tender2.Id
             };
-            
-            BloodUnitAmount bloodUnitAmount9 = new()
-            {
-                Id = Guid.NewGuid(),
-                BloodType = BloodType.Oneg,
-                Amount = 7,
-                TenderId = tender3.Id
-            };
-            
-            BloodUnitAmount bloodUnitAmount99 = new()
-            {
-                Id = Guid.NewGuid(),
-                BloodType = BloodType.ABneg,
-                Amount = 77,
-                TenderId = tender3.Id
-            };
-            
+
             modelBuilder.Entity<BloodUnitAmount>().HasData(
                 bloodUnitAmount1,
                 bloodUnitAmount2,
@@ -306,10 +259,7 @@ namespace IntegrationLibrary.Settings
                 bloodUnitAmount8,
                 bloodUnitAmount66,
                 bloodUnitAmount77,
-                bloodUnitAmount88,
-                bloodUnitAmount9,
-                bloodUnitAmount99
-                );
+                bloodUnitAmount88);
 
 
             base.OnModelCreating(modelBuilder);
