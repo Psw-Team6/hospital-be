@@ -5,7 +5,6 @@ using HospitalLibrary.Common;
 using HospitalLibrary.Patients.Enums;
 using HospitalLibrary.Patients.Exceptions;
 using HospitalLibrary.SharedModel;
-using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Patients.Model
 {
@@ -64,7 +63,7 @@ namespace HospitalLibrary.Patients.Model
                 {
                     if (BloodPressure.LowerPressure < 60)
                     {
-                        messages.Add( $"Diastolic  blood pressure is low.Value: {BloodPressure.LowerPressure}.");
+                        messages.Add( $"Diastolic blood pressure is low.Value: {BloodPressure.LowerPressure}.");
                     }
 
                     if (BloodPressure.UpperPressure < 90)
@@ -78,7 +77,7 @@ namespace HospitalLibrary.Patients.Model
                 {
                     if (BloodPressure.LowerPressure < 50)
                     {
-                        messages.Add( $"Diastolic  blood pressure is  low.Value: {BloodPressure.LowerPressure}.");
+                        messages.Add( $"Diastolic blood pressure is  low.Value: {BloodPressure.LowerPressure}.");
                     }
 
                     if (BloodPressure.UpperPressure < 80)
@@ -115,7 +114,7 @@ namespace HospitalLibrary.Patients.Model
                 {
                     if (BloodPressure.LowerPressure > 100)
                     {
-                        messages.Add( $"Diastolic  blood pressure is too low.Value: {BloodPressure.LowerPressure}.");
+                        messages.Add( $"Diastolic blood pressure is too low.Value: {BloodPressure.LowerPressure}.");
                     }
 
                     if (BloodPressure.UpperPressure > 150)
