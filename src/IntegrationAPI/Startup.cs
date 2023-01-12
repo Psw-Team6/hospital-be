@@ -82,6 +82,7 @@ namespace IntegrationAPI
             services.AddScoped<PDFReportController>();
             services.AddScoped<IPDFReportDetailsService, PDFReportDetailsService>();
             services.AddScoped<IPDFReportDetailsRepository, PDFReportDetailsRepository>();
+          
 
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
 
