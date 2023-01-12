@@ -61,7 +61,13 @@ namespace IntegrationLibrary.Tender.Repository
         public async Task<List<Model.Tender>> GetClosedTenders()
         {
             return  await DbSet.Where(d=>d.Status==StatusTender.Close).Include(d => d.BloodUnitAmount).ToListAsync();
-        }        
+        }
+
+        public async Task<List<Model.Tender>> GetWinnerTenders()
+        {
+            return  await DbSet.Where(d=>d.Status==StatusTender.Close).Include(d => d.Winner).ToListAsync();
+        }
+        
         
         
     }
