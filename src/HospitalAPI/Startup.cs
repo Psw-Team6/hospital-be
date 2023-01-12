@@ -68,6 +68,8 @@ namespace HospitalAPI
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRenovationService, RoomRenovationService>();
             services.AddScoped<IUrgentBloodSupplyService,UrgentBloodSupplyService>();
+            services.AddScoped<IRoomEventService, RoomEventsService>();
+ 
 
 
             services.AddScoped<IEquipmentMovementAppointmentService, EquipmentMovementAppointmentService>();
@@ -107,11 +109,11 @@ namespace HospitalAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
-             // using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-             // {
-             //     var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
-             //     context?.Database.Migrate();
-             // }
+             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+             {
+                 var context = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
+                 context?.Database.Migrate();
+             }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage(); 
