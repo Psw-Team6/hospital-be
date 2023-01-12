@@ -10,10 +10,10 @@ namespace IntegrationAPI.Controllers
     public class PDFReportDetailsController : Controller
     {
         
-        private readonly PDFReportDetailsService _detaisService;
-        private readonly SFTPService _sftpService;
+        private readonly IPDFReportDetailsService _detaisService;
+        private readonly ISFTPService _sftpService;
 
-        public PDFReportDetailsController(PDFReportDetailsService detailsService, SFTPService sftpService)
+        public PDFReportDetailsController(IPDFReportDetailsService detailsService, ISFTPService sftpService)
         {
             _detaisService = detailsService;
             _sftpService = sftpService;
