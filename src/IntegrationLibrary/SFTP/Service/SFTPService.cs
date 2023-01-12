@@ -14,13 +14,13 @@ namespace IntegrationLibrary.SFTP.Service
         {
             byte[] fileData = new byte[16 * 1024];
 
-            using (SftpClient client = new SftpClient("172.24.48.1", 2222, "tester", "password"))
+            using (SftpClient client = new SftpClient("192.168.0.17", 2222, "tester", "password"))
             {
                 client.Connect();
 
                 using (var stream = new MemoryStream())
                 {
-                    client.DownloadFile(@"\public\" + fileName, stream);
+                    client.DownloadFile(@"/public/" + fileName, stream);
 
                     fileData = stream.ToArray();
 
@@ -34,11 +34,11 @@ namespace IntegrationLibrary.SFTP.Service
 
         public void ShowAllFilesFromRebexServer()
         {
-            using (SftpClient client = new SftpClient("172.24.48.1", 2222, "tester", "password"))
+            using (SftpClient client = new SftpClient("192.168.0.17", 2222, "tester", "password"))
             {
                 client.Connect();
 
-                var paths = client.ListDirectory(@"\public\");
+                var paths = client.ListDirectory(@"/public/");
                 foreach (var path in paths) 
                 {
                     Console.WriteLine(path.IsDirectory?"Directory: " + path.FullName : "File: " + path.FullName);
@@ -50,13 +50,13 @@ namespace IntegrationLibrary.SFTP.Service
 
         public void UploadFileToRebexServer(byte[] file, String fileName)
         {
-            using (SftpClient client = new SftpClient("172.24.48.1", 2222, "tester", "password")) 
+            using (SftpClient client = new SftpClient("192.168.0.17", 2222, "tester", "password")) 
             {
                 client.Connect();
 
                 using (Stream stream = new MemoryStream(file))
                 {
-                    client.UploadFile(stream, @"\public\" + fileName);
+                    client.UploadFile(stream, @"/public/" + fileName);
                 }
 
                 /*using (Stream stream = File.OpenRead(@"C:\Users\X\Desktop\Fakultet\PostgreSQL.txt")) 

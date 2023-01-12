@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using HospitalAPI.Dtos.Response;
 using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Examinations.Service.EventStoreService;
 using Microsoft.AspNetCore.Http;
@@ -34,7 +35,7 @@ namespace HospitalAPI.Controllers.Private
         } 
         [HttpGet("get-time")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<TimeSpan>> GetAverageTime()
+        public async Task<ActionResult<double>> GetAverageTime()
         {
             var result = await _eventStoreExaminationService.GetAverageTime();
             return Ok(result);
@@ -52,6 +53,20 @@ namespace HospitalAPI.Controllers.Private
         public async Task<ActionResult<Dictionary<EventStoreExaminationType, double>>> GetAverageTimeForEveryStep()
         {
             var result = await _eventStoreExaminationService.GetAverageTimeForEveryStep();
+            return Ok(result);
+        }
+        [HttpGet("get-steps-medical-branch")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<Dictionary<string, int>>> GetStepsForMedicalBranch()
+        {
+            var result = await _eventStoreExaminationService.GetStepsForMedicalBranch();
+            return Ok(result);
+        }
+        [HttpGet("get-time-medical-branch")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<Dictionary<string, double>>> GetAverageTimeForMedicalBranch()
+        {
+            var result = await _eventStoreExaminationService.GetAverageTimeForMedicalBranch();
             return Ok(result);
         }
     }

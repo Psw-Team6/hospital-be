@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegrationLibrary.Tender.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace IntegrationLibrary.Tender.Service
         public void Delete(Model.Tender tender);
         public Task<List<Model.Tender>> GetAll();
         public Model.Tender GetById(Guid id);
+        public List<Model.Tender> GetAllTenders();
+        public List<BloodUnitAmount> GetBloodUnitAmounts(Guid tenderID);
         public Task<List<Model.Tender>> GetClosedTenders();
 
         public Task<List<Model.Tender>> GetWinnerTenders();
