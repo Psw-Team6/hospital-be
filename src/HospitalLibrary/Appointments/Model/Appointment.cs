@@ -1,13 +1,13 @@
 ﻿using System;
+using HospitalLibrary.Common;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Appointments.Model
 {
-    public class Appointment
+    public class Appointment:Entity<Guid>
     {
-        public Guid Id { get; set; }
         public bool Emergent { get; set; }
         public DateRange Duration { get; set; }
         public Patient Patient { get; set; }
@@ -16,6 +16,13 @@ namespace HospitalLibrary.Appointments.Model
         public AppointmentType AppointmentType { get; set; }
         public Doctor Doctor { get; set; }
         public AppointmentState AppointmentState { get; set; }
+        public Appointment(Guid id) : base(id)
+        {
+        }
+        public Appointment()
+        {
+            
+        }
 
         public bool CanBeExamined()
         {

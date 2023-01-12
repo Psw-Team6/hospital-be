@@ -29,9 +29,8 @@ namespace HospitalTest.ExaminationTests
         public void Invalid_examination_date(DateTime startDate, DateTime endDate)
         {
             //Arrange
-            Appointment appointment = new()
+            Appointment appointment = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending,
@@ -72,9 +71,8 @@ namespace HospitalTest.ExaminationTests
         public void Invalid_examination_appointment_state()
         {
             //Arrange
-            Appointment appointment = new()
+            Appointment appointment = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Finished,
@@ -116,9 +114,8 @@ namespace HospitalTest.ExaminationTests
         public void Examination_invalid_prescriptions()
         {
             //Arrange
-            Appointment appointment = new()
+            Appointment appointment = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending,
@@ -159,9 +156,8 @@ namespace HospitalTest.ExaminationTests
         public void Examination_invalid_anamnesis()
         {
             //Arrange
-            Appointment appointment = new()
+            Appointment appointment = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending,
@@ -203,9 +199,8 @@ namespace HospitalTest.ExaminationTests
         public void Examination_success_creation()
         {
             //Arrange
-            Appointment appointment = new()
+            Appointment appointment = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending,

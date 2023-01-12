@@ -19,6 +19,7 @@ namespace HospitalLibrary.Examinations.DbConfig
                 .HasForeignKey(x => x.Id);
                 
             _ = builder.Ignore(x => x.IdApp);
+            _ = builder.Ignore(x => x.Changes);
         }
     }
 }

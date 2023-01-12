@@ -12,11 +12,9 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Json;
 using HospitalAPI.Exceptions;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace HospitalAPI.Controllers
 {
@@ -40,7 +38,7 @@ namespace HospitalAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<LoginResponse>> Authenticate([FromBody]LoginRequest loginRequest)
         {
-            var jwtBloodBank = await AuthenticateBloodBank(loginRequest);
+            /*var jwtBloodBank = await AuthenticateBloodBank(loginRequest);
             if (jwtBloodBank != "")
             {
                 return Ok(new LoginResponse
@@ -48,7 +46,7 @@ namespace HospitalAPI.Controllers
                     Token = jwtBloodBank,
                     Message = "Login Success"
                 });   
-            }
+            }*/
             var user = await _userService.Authenticate(loginRequest.Username, loginRequest.Password);
            if (user.UserRole is UserRole.Patient)
            {
@@ -94,19 +92,27 @@ namespace HospitalAPI.Controllers
 
         private async Task<string> AuthenticateBloodBank(LoginRequest loginRequest)
         {
-            var bank = new BankRequest
-            {
-                Name = loginRequest.Username,
-                Password = loginRequest.Password
-            };
-            var client = _clientFactory.CreateClient();
-            client.BaseAddress = new Uri(BloodBankUrl);
-            var response = await client.PostAsJsonAsync("/api/BloodBank/Authenticate",bank);
             var token = "";
-            if (!response.IsSuccessStatusCode) return token;
-            var content = await response.Content.ReadAsStringAsync();
-            var bankLoginResponse = JsonConvert.DeserializeObject<BankLoginResponse>(content);
-            token = CreateBloodBankJwt(bankLoginResponse);
+            try
+            {
+                var bank = new BankRequest
+                {
+                    Name = loginRequest.Username,
+                    Password = loginRequest.Password
+                };
+                var client = _clientFactory.CreateClient();
+                client.BaseAddress = new Uri(BloodBankUrl);
+                var response = await client.PostAsJsonAsync("/api/BloodBank/Authenticate", bank);
+                if (!response.IsSuccessStatusCode) return token;
+                var content = await response.Content.ReadAsStringAsync();
+                var bankLoginResponse = JsonConvert.DeserializeObject<BankLoginResponse>(content);
+                token = CreateBloodBankJwt(bankLoginResponse);
+            }
+            catch (Exception ex)
+            {
+                token = "";
+            }
+
             return token;
         }
 

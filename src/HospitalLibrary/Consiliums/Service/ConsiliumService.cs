@@ -144,7 +144,7 @@ namespace HospitalLibrary.Consiliums.Service
         {
             var doctors = await  _doctorService.GetDoctorsBySpecializations(specializations as List<Specialization>);
             var doctor = await _doctorService.GetById(doctorId);
-            if(!doctors.Any(d => d.Id != doctor.Id))
+            if(doctors.All(d => d.Id == doctor.Id))
                 doctors.Add(doctor);
             var consilium = new Consilium(consiliumRequest.Theme, doctors, consiliumRequest.TimeRange);
             consilium.ValidateConsilium();

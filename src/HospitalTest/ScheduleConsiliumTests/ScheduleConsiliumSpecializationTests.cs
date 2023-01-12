@@ -288,7 +288,7 @@ namespace HospitalTest.ScheduleConsiliumTests
                 Name = "Dermatology"
             };
             var theme = "Theme";
-            var appointment1 = new Appointment
+            var appointment1 = new Appointment( Guid.NewGuid())
             {
                 Duration = duration
             };

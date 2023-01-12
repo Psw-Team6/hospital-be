@@ -8,5 +8,9 @@
         {
             Id = id;
         }
+        protected Entity()
+        {
+            
+        }
     }
 }
