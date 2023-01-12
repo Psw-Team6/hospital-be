@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
+using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -46,6 +47,15 @@ namespace HospitalLibrary.Examinations.Repository.EventStoreRepository
         public async Task<List<EventStoreExamination>> GetEventsWithoutType(EventStoreExaminationType type, Guid aggregateId)
         {
             return await DbSet.Where(x => x.AggregateId == aggregateId && x.Data == type)
+                .ToListAsync();
+        }
+
+        public async Task<List<EventStoreExamination>> GetEventsBySpecialization(Guid specializationId)
+        {
+            return await DbSet.Where(x => x.Aggregate
+                    .Appointment
+                        .Doctor
+                            .Specialization.Id == specializationId)
                 .ToListAsync();
         }
     }

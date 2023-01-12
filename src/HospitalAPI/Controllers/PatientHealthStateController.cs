@@ -43,12 +43,12 @@ namespace HospitalAPI.Controllers
             return result.Any() ? Ok(result) : NotFound();
         }
 
-        [HttpGet("/notifications/{patientId:guid}")]
+        [HttpGet("/notifications/{doctorId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<PatientHealthStateNotification>>> GetAllNotifications([FromRoute]Guid patientId)
+        public async Task<ActionResult<List<PatientHealthStateNotification>>> GetAllNotifications([FromRoute]Guid doctorId)
         {
-            var notifications = await _patientHealthStateService.GetAllNotifications(patientId);
+            var notifications = await _patientHealthStateService.GetAllNotifications(doctorId);
             return notifications.Any() ? Ok(notifications) : NotFound();
         }
             

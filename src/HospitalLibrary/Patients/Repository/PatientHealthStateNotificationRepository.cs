@@ -15,9 +15,10 @@ namespace HospitalLibrary.Patients.Repository
         {
         }
 
-        public async Task<List<PatientHealthStateNotification>> GetAllNotifications(Guid patientId)
+        public async Task<List<PatientHealthStateNotification>> GetAllNotifications(Guid doctorId)
         {
-            return await DbSet.Where(n => n.Patient.Id == patientId).ToListAsync();
+            return await DbSet.Where(n => n.Patient.Doctor.Id == doctorId)
+                .Include(n=> n.Patient).ToListAsync();
         }
     }
 }
