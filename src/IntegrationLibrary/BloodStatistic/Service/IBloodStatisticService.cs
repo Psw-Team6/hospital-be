@@ -11,5 +11,7 @@ namespace IntegrationLibrary.BloodStatistic.Service
     {
         public List<BloodStatisticResponse> getTenderStatistic(DateRange range);
 
+        public List<BloodStatisticResponse> getUrgentStatistic(DateRange range, List<BloodUnit> units);
+
     }
 }

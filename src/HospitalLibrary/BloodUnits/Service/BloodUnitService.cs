@@ -34,5 +34,11 @@ namespace HospitalLibrary.BloodUnits.Service
             await _unitOfWork.CompleteAsync();
             return bloodUnit;
         }
+
+        public async Task<IEnumerable<BloodUnit>> GetUrgentUnits()
+        {
+            var bloodUnits = await _unitOfWork.GetRepository<BloodUnitRepository>().GetUrgentUnits();
+            return bloodUnits;
+        }
     }
 }
