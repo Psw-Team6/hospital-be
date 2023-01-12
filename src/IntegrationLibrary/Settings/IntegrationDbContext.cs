@@ -27,7 +27,6 @@ namespace IntegrationLibrary.Settings
 
         public DbSet<NewsFromBloodBank.Model.NewsFromBloodBank> NewsFromBloodBank { get; set; }
         public DbSet<IntegrationLibrary.Tender.Model.Tender> Tenders { get; set; }
-        public DbSet<PDFReportDetails.Model.PDFReportDetails> PDFReportDetails { get; set; }
 
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
