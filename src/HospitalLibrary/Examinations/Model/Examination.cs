@@ -20,7 +20,7 @@ namespace HospitalLibrary.Examinations.Model
             set => _symptoms = value;
         }
 
-        public Appointment Appointment { get; private set; }
+        public Appointment Appointment { get;  set; }
         public string Anamnesis { get; private set;}
         public const string InvalidDateMessage = "Invalid examination date.";
         public const string InvalidAppointmentStateMessage = "Invalid appointment state.";
