@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
+using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,12 @@ namespace HospitalLibrary.Examinations.Repository
             //         Medicines = e.Prescriptions.Select(p => p.Medicines)
             //     });
             // return exeminationsWithMedicines.Select(x => x.Exemination);
+        }
+
+        public async Task<List<Examination>> GetExaminationsBySpecializations(Guid specializationId)
+        {
+            return await DbSet.Where(x => x.Appointment.Doctor.Specialization.Id == specializationId)
+                .ToListAsync();
         }
     }
 }

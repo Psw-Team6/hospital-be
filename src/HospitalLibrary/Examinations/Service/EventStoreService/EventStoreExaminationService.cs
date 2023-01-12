@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
 using HospitalLibrary.Common.EventSourcing;
+using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Examinations.Model;
 
@@ -79,7 +80,7 @@ namespace HospitalLibrary.Examinations.Service.EventStoreService
            return events.Count / counter;
         }
 
-        public async Task<TimeSpan> GetAverageTime()
+        public async Task<double> GetAverageTime()
         {
             var duration = TimeSpan.Zero;
             var examinations = (List<Examination>) await _unitOfWork.ExaminationRepository.GetAllAsync();
@@ -91,7 +92,9 @@ namespace HospitalLibrary.Examinations.Service.EventStoreService
                if (timeSpan == TimeSpan.Zero)
                    --counter;
             }
-            return duration / counter;
+
+            var durationDouble = duration.TotalSeconds;
+            return durationDouble / counter;
         }
 
         private async Task<TimeSpan> CountDurationExamination(Examination examination)
@@ -177,6 +180,71 @@ namespace HospitalLibrary.Examinations.Service.EventStoreService
                     duration += events[i + 1].CreatedAt - events[i].CreatedAt;
             }
             return duration;
+        }
+
+        public async Task<Dictionary<string,int>> GetStepsForMedicalBranch()
+        {
+            return await CountExaminationStepsSpecialization();
+        }
+
+        private async Task<Dictionary<string, int>> CountExaminationStepsSpecialization()
+        {
+            var dictionary = new Dictionary<string, int>();
+            var specializations = await _unitOfWork.SpecializationsRepository.GetAllAsync();
+            foreach (var specialization in specializations)
+            {
+                await GetAverageStepsSpecialization(specialization, dictionary);
+            }
+            return dictionary;
+        }
+
+        private async Task GetAverageStepsSpecialization(Specialization specialization, Dictionary<string, int> dictionary)
+        {
+            var specializationExaminations =
+                await _unitOfWork.ExaminationRepository.GetExaminationsBySpecializations(specialization.Id);
+            var specializationEvents =
+                await _unitOfWork.EventStoreExaminationRepository.GetEventsBySpecialization(specialization.Id);
+            if (specializationEvents.Count == 0 || specializationEvents.Count == 0)
+            {
+                dictionary.Add(specialization.Name,0);
+                return;
+            }
+            dictionary.Add(specialization.Name,specializationEvents.Count/specializationExaminations.Count);
+        }
+
+        public async Task<Dictionary<string,double>> GetAverageTimeForMedicalBranch()
+        {
+            return await CountAverageTimeMedicalBranch();
+        }
+
+        private async Task<Dictionary<string, double>> CountAverageTimeMedicalBranch()
+        {
+            var dictionary = new Dictionary<string, double>();
+            var specializations = await _unitOfWork.SpecializationsRepository.GetAllAsync();
+            foreach (var specialization in specializations)
+            {
+                await CountAverageTimeSpecialization(specialization, dictionary);
+            }
+
+            return dictionary;
+        }
+
+        private async Task CountAverageTimeSpecialization(Specialization specialization, Dictionary<string, double> dictionary)
+        {
+            var duration = TimeSpan.Zero;
+            var specializationExaminations =
+                await _unitOfWork.ExaminationRepository.GetExaminationsBySpecializations(specialization.Id);
+            foreach (var examination in specializationExaminations)
+            {
+                 duration += await CountDurationExamination(examination);
+            }
+
+            if (duration == TimeSpan.Zero || specializationExaminations.Count == 0)
+            {
+                dictionary.Add(specialization.Name,0);
+                return;
+            }
+            dictionary.Add(specialization.Name,duration.TotalSeconds/specializationExaminations.Count);
         }
     }
 }
