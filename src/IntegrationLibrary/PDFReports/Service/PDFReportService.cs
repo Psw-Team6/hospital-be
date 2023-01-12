@@ -390,8 +390,8 @@ namespace IntegrationLibrary.PDFReports.Service
         {
             PDFReport report = new PDFReport(generatePeriod, bankName, GetConsumptions(bankName));
             MultipartFormDataContent form = new MultipartFormDataContent();
-            // byte[] paramFileBytes = CreateDocument(report);
-            byte[] paramFileBytes = CreateDocumentInRange(_bloodStatisticService.getTenderStatistic(new DateRange(new DateTime(2023,1,1), new DateTime(2023, 3, 20))));
+            byte[] paramFileBytes = CreateDocument(report);
+            //byte[] paramFileBytes = CreateDocumentInRange(_bloodStatisticService.getTenderStatistic(new DateRange(new DateTime(2023,1,1), new DateTime(2023, 3, 20))));
 
             BloodBank.BloodBank bloodBank = _bloodBankRepository.GetByName(bankName);
             string text = "Dear Sir or Madam, in the attachment, we are sending you a report for the blood bank <strong>"+bankName+"</strong> for the last "+generatePeriod+" days.";
