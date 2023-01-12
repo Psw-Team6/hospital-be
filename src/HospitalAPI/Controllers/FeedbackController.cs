@@ -36,7 +36,7 @@ namespace HospitalAPI.Controllers
             return Ok(result);
         }
         
-        [HttpGet("/api/v1/Feedback-public")]
+        [HttpGet("/api/v1/feedback-public")]
         [HospitalAuthorization(UserRole.Patient)]
         public async Task<ActionResult<IEnumerable<FeedbackResponse>>> GetAllPublic()
         {

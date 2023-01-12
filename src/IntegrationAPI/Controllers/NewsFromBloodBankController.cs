@@ -16,7 +16,6 @@ using IntegrationLibrary.NewsFromBloodBank.Service;
 using System.Collections.Generic;
 using IntegrationLibrary.NewsFromBloodBank.Model;
 using System.Linq;
-
 namespace IntegrationAPI.Controllers
 {
     [Route("api/news")]
@@ -24,7 +23,6 @@ namespace IntegrationAPI.Controllers
     public class NewsFromBloodBankController : ControllerBase
     {
         private readonly INewsFromBloodBankService _newsService;
-
         public NewsFromBloodBankController(INewsFromBloodBankService service)
         {
             _newsService = service;
@@ -33,7 +31,6 @@ namespace IntegrationAPI.Controllers
         public NewsFromBloodBank GetFirst() {
             return _newsService.GetAllOnHold().First();
         }
-
         [HttpGet]
         public ActionResult GetAllOnHold()
         {
@@ -41,13 +38,29 @@ namespace IntegrationAPI.Controllers
             return Ok(news);
         }
 
+        [HttpGet("patient")]
+        public ActionResult GetAllPatientNews()
+        {
+            IEnumerable<NewsFromBloodBank> news = _newsService.GetAllPatientNews();
+            return Ok(news);
+        }
+
         [HttpGet("getAllForBloodSubscription")]
         public ActionResult GetAllForBloodSubscription()
+
+    
+          
+            
+    
+
+          
+    
+    
+  
         {
             IEnumerable<NewsFromBloodBank> news = _newsService.GetAllForBloodSubscription();
             return Ok(news);
         }
-
         [HttpPut("{id}")]
         public ActionResult Update(Guid id, NewsFromBloodBank newsFromBloodBank)
         {
@@ -55,12 +68,10 @@ namespace IntegrationAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             if (id != newsFromBloodBank.Id)
             {
                 return BadRequest();
             }
-
             try
             {
                 _newsService.Update(newsFromBloodBank);
@@ -69,7 +80,6 @@ namespace IntegrationAPI.Controllers
             {
                 return BadRequest();
             }
-
             return Ok(newsFromBloodBank);
         }
     }

@@ -13,5 +13,6 @@ namespace IntegrationLibrary.NewsFromBloodBank.Repository
         void Delete(NewsFromBloodBank.Model.NewsFromBloodBank bloodBank);
         public IEnumerable<NewsFromBloodBank.Model.NewsFromBloodBank> GetAllOnHold();
         IEnumerable<Model.NewsFromBloodBank> GetAllForBloodSubscription();
+        IEnumerable<Model.NewsFromBloodBank> GetAllPatientNews();
     }
 }
