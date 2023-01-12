@@ -106,7 +106,7 @@ namespace HospitalLibrary.Patients.Model
 
                     if (BloodPressure.UpperPressure > 140)
                     {
-                        messages.Add($"Systolic blood pressure is hi.Value: {BloodPressure.UpperPressure}.");
+                        messages.Add($"Systolic blood pressure is high.Value: {BloodPressure.UpperPressure}.");
                     }
 
                     break;
