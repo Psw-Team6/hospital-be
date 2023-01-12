@@ -126,5 +126,93 @@ namespace IntegrationLibrary.BloodStatistic.Service
             }
             return response;
         }
+
+        public List<BloodStatisticResponse> getUrgentStatistic(DateRange range, List<BloodUnit> units)
+        {
+            List<BloodStatisticResponse> response = new List<BloodStatisticResponse>();
+
+            foreach (BloodUnit unit in units)
+            {
+                if (unit.Date.Ticks >= range.From.Ticks && unit.Date.Ticks <= range.To.Ticks)
+                {
+                    var matches = response.Where(p => p.BloodBankID == bloodBankRepository.GetByName(unit.BloodBankName).Id).ToList();
+                    if (matches.Count == 0)
+                    {
+                        BloodStatisticResponse res = new BloodStatisticResponse();
+                        res.BloodBankID = bloodBankRepository.GetByName(unit.BloodBankName).Id;
+                        res.DateRange = range;
+                        switch (unit.BloodType)
+                        {
+                            case BloodRequests.Model.BloodType.ABneg:
+                                res.ABneg += unit.Amount;
+                                break;
+                            case BloodRequests.Model.BloodType.ABpos:
+                                res.ABpos += unit.Amount;
+                                break;
+                            case BloodRequests.Model.BloodType.Apos:
+                                res.Apos += unit.Amount;
+                                break;
+                            case BloodRequests.Model.BloodType.Aneg:
+                                res.Aneg += unit.Amount;
+                                break;
+                            case BloodRequests.Model.BloodType.Bpos:
+                                res.Bpos += unit.Amount;
+                                break;
+                            case BloodRequests.Model.BloodType.Bneg:
+                                res.Bneg += unit.Amount;
+                                break;
+                            case BloodRequests.Model.BloodType.Opos:
+                                res.Opos += unit.Amount;
+                                break;
+                            case BloodRequests.Model.BloodType.Oneg:
+                                res.Oneg += unit.Amount;
+                                break;
+                            default:
+                                break;
+                        }
+                        response.Add(res);
+                    }
+                    else
+                    {
+                        foreach (BloodStatisticResponse res in response.ToArray())
+                        {
+                            if (res.BloodBankID == bloodBankRepository.GetByName(unit.BloodBankName).Id)
+                            {
+                                switch (unit.BloodType)
+                                {
+                                    case BloodRequests.Model.BloodType.ABneg:
+                                        res.ABneg += unit.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.ABpos:
+                                        res.ABpos += unit.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.Apos:
+                                        res.Apos += unit.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.Aneg:
+                                        res.Aneg += unit.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.Bpos:
+                                        res.Bpos += unit.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.Bneg:
+                                        res.Bneg += unit.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.Opos:
+                                        res.Opos += unit.Amount;
+                                        break;
+                                    case BloodRequests.Model.BloodType.Oneg:
+                                        res.Oneg += unit.Amount;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return response;
+        }
     }
 }
