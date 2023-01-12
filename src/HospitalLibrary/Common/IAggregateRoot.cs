@@ -2,8 +2,7 @@
 
 namespace HospitalLibrary.Common
 {
-    public interface IAggregateRoot
+    public interface IAggregateRoot<T>
     {
-        public Guid Id { get; set; }
     }
 }

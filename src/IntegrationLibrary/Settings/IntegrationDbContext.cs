@@ -145,6 +145,22 @@ namespace IntegrationLibrary.Settings
                configuration2
             );
 
+            TenderOffer tenderOffer1 = new()
+            {
+                BloodBankName = "BloodBank",
+                Price = 500,
+                RealizationDate = DateTime.Now.AddDays(+2)
+            };
+            
+            
+            TenderOffer tenderOffer2 = new()
+            {
+                BloodBankName = "BloodBank",
+                Price = 230,
+                RealizationDate = DateTime.Now.AddDays(+3)
+            };
+            
+            modelBuilder.Entity<TenderOffer>().HasData(tenderOffer1,tenderOffer2);
 
 
             Tender.Model.Tender tender1 = new()
@@ -162,13 +178,28 @@ namespace IntegrationLibrary.Settings
                 HasDeadline = true,
                 DeadlineDate = DateTime.Now.AddDays(-1),
                 PublishedDate = DateTime.Now.AddDays(-4),
-                Status = Enums.StatusTender.Close
-                //  TenderOffer = TenderOffer1,
+                Status = Enums.StatusTender.Close,
+               // TenderOffer = tenderOffer1
+                
             };
             
-            modelBuilder.Entity<Tender.Model.Tender>().HasData(tender1,tender2);
+            Tender.Model.Tender tender3 = new()
+            {
+                Id = Guid.NewGuid(),
+                HasDeadline = true,
+                DeadlineDate = DateTime.Now.AddDays(-1),
+                PublishedDate = DateTime.Now.AddDays(-4),
+                Status = Enums.StatusTender.Close,
+                // TenderOffer = tenderOffer1
+                
+            };
+            
+            modelBuilder.Entity<Tender.Model.Tender>().HasData(tender1,tender2,tender3);
             modelBuilder.Entity<IntegrationLibrary.Tender.Model.Tender>().Property(d => d.Winner).HasColumnType("jsonb");
 
+            
+            
+            
             BloodUnitAmount bloodUnitAmount1 = new()
             {
                 Id = Guid.NewGuid(),
@@ -248,6 +279,22 @@ namespace IntegrationLibrary.Settings
                 TenderId = tender2.Id
             };
             
+            BloodUnitAmount bloodUnitAmount9 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.Oneg,
+                Amount = 7,
+                TenderId = tender3.Id
+            };
+            
+            BloodUnitAmount bloodUnitAmount99 = new()
+            {
+                Id = Guid.NewGuid(),
+                BloodType = BloodType.ABneg,
+                Amount = 77,
+                TenderId = tender3.Id
+            };
+            
             modelBuilder.Entity<BloodUnitAmount>().HasData(
                 bloodUnitAmount1,
                 bloodUnitAmount2,
@@ -259,7 +306,10 @@ namespace IntegrationLibrary.Settings
                 bloodUnitAmount8,
                 bloodUnitAmount66,
                 bloodUnitAmount77,
-                bloodUnitAmount88);
+                bloodUnitAmount88,
+                bloodUnitAmount9,
+                bloodUnitAmount99
+                );
 
 
             base.OnModelCreating(modelBuilder);
