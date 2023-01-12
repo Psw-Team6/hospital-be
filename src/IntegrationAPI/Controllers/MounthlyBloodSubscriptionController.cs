@@ -22,6 +22,7 @@ using IntegrationLibrary.RabbitMQService.RabbitMQProducer;
 
 namespace IntegrationAPI.Controllers
 {
+    /*
     [Route("api/[controller]")]
     [ApiController]
     public class MounthlyBloodSubscriptionController : ControllerBase
@@ -63,4 +64,5 @@ namespace IntegrationAPI.Controllers
             return CreatedAtAction("Create", new { id = mounthlyBloodSubscription.id }, mounthlyBloodSubscription);
         }
     }
+    */
 }
