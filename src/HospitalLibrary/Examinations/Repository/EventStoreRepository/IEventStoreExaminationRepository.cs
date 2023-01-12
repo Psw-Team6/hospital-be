@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
+using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Examinations.EventStores;
 
 namespace HospitalLibrary.Examinations.Repository.EventStoreRepository
@@ -14,5 +15,7 @@ namespace HospitalLibrary.Examinations.Repository.EventStoreRepository
         Task<List<EventStoreExamination>> GetEventsByAggregate(Guid aggregateId);
         Task<int> GetAverageViewForType(EventStoreExaminationType type);
         Task<List<EventStoreExamination>> GetEventsWithoutType(EventStoreExaminationType type, Guid aggregateId);
+        Task<List<EventStoreExamination>> GetEventsBySpecialization(Guid specializationId);
+        
     }
 }
