@@ -1,5 +1,5 @@
 using IntegrationLibrary.ConfigureGenerateAndSend.Model;
-﻿using IntegrationLibrary.BloodRequests.Model;
+using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.Tender.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace IntegrationLibrary.Settings
 {
-    public class IntegrationDbContext: DbContext
+    public class IntegrationDbContext : DbContext
     {
         public DbSet<BloodBank.BloodBank> BloodBanks { get; set; }
 
@@ -28,6 +28,7 @@ namespace IntegrationLibrary.Settings
 
         public DbSet<NewsFromBloodBank.Model.NewsFromBloodBank> NewsFromBloodBank { get; set; }
         public DbSet<IntegrationLibrary.Tender.Model.Tender> Tenders { get; set; }
+        public DbSet<PDFReportDetails.Model.PDFReportDetails> PDFReportDetails { get; set; }
 
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
@@ -35,7 +36,7 @@ namespace IntegrationLibrary.Settings
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            modelBuilder.Entity<AmountOfBloodType>(eb => { 
+            modelBuilder.Entity<AmountOfBloodType>(eb => {
                 eb.HasNoKey();
             });
             modelBuilder.Entity<TenderOffer>(eb => {
@@ -46,7 +47,7 @@ namespace IntegrationLibrary.Settings
                     .Property(b => b.amountOfBloodTypes)
                     .HasColumnType("jsonb");
 
-   
+
             modelBuilder.Entity<IntegrationLibrary.Tender.Model.Tender>().Property(d => d.TenderOffer).HasColumnType("jsonb");
 
 
@@ -58,7 +59,7 @@ namespace IntegrationLibrary.Settings
                 Type = BloodType.ABneg,
                 Amount = 10.0,
                 Reason = "Operacija",
-                Date = new DateTime(2022,12,10),
+                Date = new DateTime(2022, 12, 10),
                 DoctorUsername = "Ilija",
                 Status = Status.PENDING,
                 Comment = ""
@@ -107,7 +108,7 @@ namespace IntegrationLibrary.Settings
                 request3,
                 request4
             );
-            
+
             base.OnModelCreating(modelBuilder);
             BloodBank.BloodBank bloodBank = new()
             {
@@ -116,12 +117,12 @@ namespace IntegrationLibrary.Settings
                 ServerAddress = "localhost",
                 Email = "tasaantic00@gmail.com",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
-                
+
             };
             modelBuilder.Entity<BloodBank.BloodBank>().HasData(bloodBank);
 
             modelBuilder.Entity<BloodBank.BloodBank>().OwnsOne(x => x.ApiKey).HasData(
-                new { BloodBankId = bloodBank.Id, Value = new ApiKey().Value});
+                new { BloodBankId = bloodBank.Id, Value = new ApiKey().Value });
 
             BloodBank.BloodBank bloodBank1 = new()
             {
@@ -168,10 +169,13 @@ namespace IntegrationLibrary.Settings
                 HasDeadline = true,
                 DeadlineDate = DateTime.Now.AddDays(20),
                 PublishedDate = DateTime.Now,
+
                 Status = Enums.StatusTender.Open,
                 
                 
               //  TenderOffer = TenderOffer1,
+
+
             };
 
             string json = @"{
@@ -199,7 +203,9 @@ namespace IntegrationLibrary.Settings
                 //  TenderOffer = TenderOffer1,
             };
 
+
             modelBuilder.Entity<Tender.Model.Tender>().HasData(tender1,tender2, tender3);
+
             modelBuilder.Entity<IntegrationLibrary.Tender.Model.Tender>().Property(d => d.Winner).HasColumnType("jsonb");
 
 
@@ -259,7 +265,8 @@ namespace IntegrationLibrary.Settings
                 Amount = 0,
                 TenderId = tender1.Id
             };
-            
+
+
             BloodUnitAmount bloodUnitAmount9 = new()
             {
                 Id = Guid.NewGuid(),

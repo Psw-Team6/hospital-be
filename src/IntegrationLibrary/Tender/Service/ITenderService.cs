@@ -17,5 +17,7 @@ namespace IntegrationLibrary.Tender.Service
         public List<Model.Tender> GetAllTenders();
         public List<BloodUnitAmount> GetBloodUnitAmounts(Guid tenderID);
         public Task<List<Model.Tender>> GetClosedTenders();
+
+        public Task<List<Model.Tender>> GetWinnerTenders();
     }
 }

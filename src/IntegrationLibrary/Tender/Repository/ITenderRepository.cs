@@ -15,6 +15,8 @@ namespace IntegrationLibrary.Tender.Repository
         public void Update(Model.Tender tender);
         public List<Model.Tender> GetAllTenders();
         public Task<List<Model.Tender>> GetClosedTenders();
+        
+        public Task<List<Model.Tender>> GetWinnerTenders();
 
 
     }

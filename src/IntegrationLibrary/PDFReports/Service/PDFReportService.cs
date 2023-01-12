@@ -394,7 +394,7 @@ namespace IntegrationLibrary.PDFReports.Service
             //byte[] paramFileBytes = CreateDocumentInRange(_bloodStatisticService.getTenderStatistic(new DateRange(new DateTime(2023,1,1), new DateTime(2023, 3, 20))));
 
             BloodBank.BloodBank bloodBank = _bloodBankRepository.GetByName(bankName);
-            string text = "Dear Sir or Madam, in the attachment, we are sending you a report for the blood bank <strong>"+bankName+"</strong> for the last "+generatePeriod+" days.";
+            string text = "Dear Sir or Madam, in the attachment, we are send you a report for the blood bank <strong>"+bankName+"</strong> for the last "+generatePeriod+" days.";
             
             if (bloodBank != null)
             {

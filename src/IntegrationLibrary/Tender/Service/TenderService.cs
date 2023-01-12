@@ -38,6 +38,7 @@ namespace IntegrationLibrary.Tender.Service
             tender.BloodUnitAmount = bloodUnitAmounts;
             return tender;
         }
+        
 
         public void Update(Model.Tender tender)
         {
@@ -74,6 +75,11 @@ namespace IntegrationLibrary.Tender.Service
         public List<BloodUnitAmount> GetBloodUnitAmounts(Guid tenderID)
         {
             return (List<BloodUnitAmount>)amountRepository.GetAllByTenderId(tenderID);
+        }
+        
+        public async Task<List<Model.Tender>> GetWinnerTenders()
+        {
+            return await tenderRepository.GetWinnerTenders();
         }
         
     }
