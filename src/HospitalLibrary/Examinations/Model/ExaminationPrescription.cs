@@ -11,15 +11,7 @@ namespace HospitalLibrary.Examinations.Model
         public string Usage { get; set; }
         
 
-        public IEnumerable<Medicine> _medicines;
-        // public Examination Examination { get; set; }
-        // public Guid ExaminationId { get; set; }
-        // public IEnumerable<Guid> MedicineIds { get; set; }
-        public IEnumerable<Medicine> Medicines
-        {
-            get => _medicines;
-            set => _medicines = value;
-        }
+        public IEnumerable<Medicine> Medicines { get; private set; }
         private void AddMedicines(IEnumerable<Medicine> medicines)
         {
             Medicines = medicines;

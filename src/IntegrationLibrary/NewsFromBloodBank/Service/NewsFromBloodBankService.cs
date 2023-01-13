@@ -30,11 +30,29 @@ namespace IntegrationLibrary.NewsFromBloodBank.Service
         }
 
         public IEnumerable<Model.NewsFromBloodBank> GetAllOnHold()
+
         {
+
             return _newsFromBloodBankRepository.GetAllOnHold();
+
         }
 
+
+
+
+        public IEnumerable<Model.NewsFromBloodBank> GetAllPatientNews()
+
+        {
+
+            return _newsFromBloodBankRepository.GetAllPatientNews();
+
+        }
+
+
+
+
         public IEnumerable<Model.NewsFromBloodBank> GetAll()
+
         {
             return _newsFromBloodBankRepository.GetAll();
         }
@@ -56,7 +74,11 @@ namespace IntegrationLibrary.NewsFromBloodBank.Service
 
         public IEnumerable<Model.NewsFromBloodBank> GetAllForBloodSubscription()
         {
+
             return _newsFromBloodBankRepository.GetAllForBloodSubscription();
+
         }
+
     }
+
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace IntegrationLibrary.NewsFromBloodBank.Service
 {
     public interface INewsFromBloodBankService
@@ -15,6 +14,8 @@ namespace IntegrationLibrary.NewsFromBloodBank.Service
         void Update(Model.NewsFromBloodBank news);
         void Delete(Model.NewsFromBloodBank news);
         public IEnumerable<Model.NewsFromBloodBank> GetAllOnHold();
+        public IEnumerable<Model.NewsFromBloodBank> GetAllPatientNews();
         IEnumerable<Model.NewsFromBloodBank> GetAllForBloodSubscription();
+
     }
 }
