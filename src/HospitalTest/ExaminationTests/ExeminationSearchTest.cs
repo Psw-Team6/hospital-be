@@ -6,6 +6,7 @@ using HospitalLibrary.Common;
 using HospitalLibrary.Common.EventSourcing;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Repository;
+using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Examinations.Repository;
 using HospitalLibrary.Examinations.Repository.EventStoreRepository;
@@ -45,7 +46,7 @@ namespace HospitalTest.ExaminationTests
                 .GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(() => patient);
             mockUnitOfWork.Setup(uw => uw.ExaminationRepository
                 .GetAllExaminations()).ReturnsAsync(() => new List<Examination>(){examination});
-            var exeminationService = new ExaminationService(mockUnitOfWork.Object,new Mock<EventStoreExaminationService>().Object);
+            var exeminationService = new ExaminationService(mockUnitOfWork.Object,new Mock<IEventStoreExaminationService>().Object);
             Func<Task> act = () => exeminationService.GetSearchedExaminations("nevalja");
             var ex = await Assert.ThrowsAsync<NotFoundException>(act);
             Assert.Equal("No Exeminatiosn found", ex.Message);
@@ -71,7 +72,7 @@ namespace HospitalTest.ExaminationTests
                 .GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(() => patient);
             mockUnitOfWork.Setup(uw => uw.ExaminationRepository
                 .GetAllExaminations()).ReturnsAsync(() => new List<Examination>(){examination});
-            var exeminationService = new ExaminationService(mockUnitOfWork.Object,new Mock<EventStoreExaminationService>().Object);
+            var exeminationService = new ExaminationService(mockUnitOfWork.Object,new Mock<IEventStoreExaminationService>().Object);
             Func<Task> act = () => exeminationService.GetSearchedExaminations("Sale");
             Assert.NotNull(act);
         }
@@ -97,7 +98,7 @@ namespace HospitalTest.ExaminationTests
                 .GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(() => patient);
             mockUnitOfWork.Setup(uw => uw.ExaminationRepository
                 .GetAllExaminations()).ReturnsAsync(() => new List<Examination>(){examination});
-            var exeminationService = new ExaminationService(mockUnitOfWork.Object,mockEventStoreExaminationRepository.Object);
+            var exeminationService = new ExaminationService(mockUnitOfWork.Object,new Mock<IEventStoreExaminationService>().Object);
             Func<Task> act = () => exeminationService.GetSearchedExaminations("Sale Lave");
             Assert.NotNull(act);
         }
