@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HospitalLibrary.Common;
+using HospitalLibrary.Common.EventSourcing;
+using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Rooms.Model;
 
 namespace HospitalLibrary.Rooms.Service
 {
-    public class FloorService
+    public class FloorService 
     {
         private readonly IUnitOfWork _unitOfWork;
         
