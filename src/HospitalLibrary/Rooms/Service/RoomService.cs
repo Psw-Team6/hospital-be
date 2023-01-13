@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Common;
+using HospitalLibrary.Common.EventSourcing;
+using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Rooms.Model;
 using HospitalLibrary.SharedModel;
 
@@ -25,6 +27,18 @@ namespace HospitalLibrary.Rooms.Service
             _unitOfWork = unitOfWork;
         }
 
+        public void RoomRenov(Renovation renovation)
+        {
+            renovation.calculateDateRange();
+            
+        }
+        
+        public void RoomRn(RoomMerging mrg)
+        {
+            mrg.calculateDateRan();
+            
+        }
+        
         public async Task<IEnumerable<Room>> GetAll()
         {
             return await _unitOfWork.RoomRepository.GetAllRooms();
