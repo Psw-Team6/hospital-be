@@ -28,15 +28,15 @@ namespace HospitalLibrary.Examinations.Service.EventStoreService
             }
         }
 
-        private async Task CreateEvents(DomainEvent<EventStoreExaminationType> @event, Examination examination)
+        public async Task<EventStoreExamination> CreateEvents(DomainEvent<EventStoreExaminationType> @event, Examination examination)
         {
             var name = GetEventTypeName(@event);
             var newEventStore = new EventStoreExamination(examination, @event.CreatedAt,
                 await GetVersion(examination.Id), await GetSequence(),@event.Event, name);
-            await _unitOfWork.EventStoreExaminationRepository.CreateAsync(newEventStore);
+             return await _unitOfWork.EventStoreExaminationRepository.CreateAsync(newEventStore);
         }
 
-        private static string GetEventTypeName(DomainEvent<EventStoreExaminationType> @event)
+        public static string GetEventTypeName(DomainEvent<EventStoreExaminationType> @event)
         {
             if (@event.Event == EventStoreExaminationType.SYMPTOMS_VIEWED)
                 return  "symptoms viewed event";
