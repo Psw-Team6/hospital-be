@@ -59,6 +59,16 @@ namespace HospitalLibrary.Rooms.Service
             return result;
         }
 
+
+        public bool IdRenovation(Renovation renovation)
+        {
+            renovation.Id = new Guid();
+            renovation.Room1Id = new Guid();
+            renovation.Room2 = new Room();
+            renovation.Room1 = new Room();
+            return true;
+        }
+        
         public async Task<int[]> StepSplitingCount()
         {
             int[] result = { 0, 0, 0, 0 };

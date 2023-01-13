@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using HospitalLibrary.ApplicationUsers.Repository;
 using HospitalLibrary.Appointments.Repository;
+using HospitalLibrary.Appointments.Repository.EventStoreRepository;
 using HospitalLibrary.BloodConsumptions.Repository;
 using HospitalLibrary.BloodUnits.Repository;
 using HospitalLibrary.Consiliums.Repository;
@@ -58,9 +59,13 @@ namespace HospitalLibrary.Common
         private RoomEventRepository _roomEventRepository;
         
         private EventStoreExaminationRepository _eventStoreExaminationRepository;
-
+        private EventStoreSchedulingAppointmentRepository _eventStoreSchedulingAppointmentRepository;
         public IEventStoreExaminationRepository EventStoreExaminationRepository =>
             _eventStoreExaminationRepository ??= new EventStoreExaminationRepository(_hospitalDbContext);
+
+        public IEventStoreSchedulingAppointmentRepository EventStoreSchedulingAppointmentRepository =>
+            _eventStoreSchedulingAppointmentRepository ??=
+                new EventStoreSchedulingAppointmentRepository(_hospitalDbContext);
         public IAllergenRepository AllergenRepository =>
             _allergenRepository ??= new AllergenRepository(_hospitalDbContext);
         public IConsiliumRepository ConsiliumRepository =>
