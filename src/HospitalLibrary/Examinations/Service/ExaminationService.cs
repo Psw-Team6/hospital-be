@@ -115,7 +115,7 @@ namespace HospitalLibrary.Examinations.Service
         }
         public async Task<IEnumerable<Examination>> GetSearchedExaminations(String query)
         {
-            var allExaminations = await _unitOfWork.GetRepository<ExaminationRepository>().GetAllExaminations();
+            var allExaminations = await _unitOfWork.ExaminationRepository.GetAllExaminations();
             IEnumerable<Examination> filteredEx = new List<Examination>();
             foreach (var examination in allExaminations)
             {
