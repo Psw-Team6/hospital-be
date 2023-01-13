@@ -7,6 +7,7 @@ using HospitalLibrary.Common.EventSourcing;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Examinations.EventStores;
+using HospitalLibrary.Examinations.Exceptions;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Examinations.Repository;
 using HospitalLibrary.Examinations.Repository.EventStoreRepository;
@@ -48,7 +49,7 @@ namespace HospitalTest.ExaminationTests
                 .GetAllExaminations()).ReturnsAsync(() => new List<Examination>(){examination});
             var exeminationService = new ExaminationService(mockUnitOfWork.Object,new Mock<IEventStoreExaminationService>().Object);
             Func<Task> act = () => exeminationService.GetSearchedExaminations("nevalja");
-            var ex = await Assert.ThrowsAsync<NotFoundException>(act);
+            var ex = await Assert.ThrowsAsync<ExaminationNotFoundException>(act);
             Assert.Equal("No Exeminatiosn found", ex.Message);
         }
         
