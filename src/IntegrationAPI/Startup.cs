@@ -31,6 +31,10 @@ using IntegrationLibrary.BloodSubscription.Service;
 using IntegrationLibrary.BloodSubscription.Repository;
 using IntegrationLibrary.Tender.Service;
 using IntegrationLibrary.Tender.Repository;
+using IntegrationLibrary.SFTP.Service;
+using IntegrationLibrary.BloodStatistic.Service;
+using IntegrationLibrary.PDFReportDetails.Service;
+using IntegrationLibrary.PDFReportDetails.Repository;
 
 namespace IntegrationAPI
 {
@@ -76,6 +80,9 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IPDFReportService,PDFReportService>();
             services.AddScoped<PDFReportController>();
+            services.AddScoped<IPDFReportDetailsService, PDFReportDetailsService>();
+            services.AddScoped<IPDFReportDetailsRepository, PDFReportDetailsRepository>();
+          
 
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
 
@@ -90,8 +97,10 @@ namespace IntegrationAPI
             services.AddTransient<IBloodRequestService, BloodRequestService>();
             services.AddTransient<IHttpService, HttpService>();
             services.AddScoped<IBloodRequestService, BloodRequestService>();
+            services.AddScoped<IBloodStatisticService, BloodStatisticService>();
             services.AddScoped<IBloodSubscriptionService, BloodSubscriptionService>();
             services.AddScoped<IMounthlyBloodSubscriptionRepository, MounthlyBloodSubscriptionRepository>();
+            services.AddScoped<ISFTPService, SFTPService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

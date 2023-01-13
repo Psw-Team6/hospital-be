@@ -2,11 +2,13 @@ using System.Text;
 using FluentValidation.AspNetCore;
 using HospitalAPI.Exceptions;
 using HospitalAPI.Extensions;
+using HospitalAPI.gRPC;
 using HospitalAPI.Infrastructure;
 using HospitalAPI.Mapper;
 using HospitalAPI.ScheduleTask;
 using HospitalAPI.Validations.Filter;
 using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.BloodUnits.Repository;
 using HospitalLibrary.EquipmentMovement.Service;
 using HospitalLibrary.Rooms.Service;
 using HospitalLibrary.Settings;
@@ -36,7 +38,7 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HospitalDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")!));
+            options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")).EnableSensitiveDataLogging());
             services.Configure<EmailOptions>(Configuration.GetSection(EmailOptions.SendGridEmail));
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters(); //OVU SI ODKOMENTRISAO
@@ -65,11 +67,16 @@ namespace HospitalAPI
             services.AddTransient<ExceptionMiddleware>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRenovationService, RoomRenovationService>();
+            services.AddScoped<IUrgentBloodSupplyService,UrgentBloodSupplyService>();
+            services.AddScoped<IRoomEventService, RoomEventsService>();
+ 
+
 
             services.AddScoped<IEquipmentMovementAppointmentService, EquipmentMovementAppointmentService>();
             services.AddSingleton<IHostedService, CheckIfAppointmentIsDone>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
+
             services.Configure<EmailOptions>(options => Configuration.GetSection("EmailOptions").Bind(options));
             services.AddMyDependencyGroup();
             services.AddHttpClient();

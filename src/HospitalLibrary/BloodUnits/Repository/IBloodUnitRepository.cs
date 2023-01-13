@@ -10,5 +10,8 @@ namespace HospitalLibrary.BloodUnits.Repository
         Task<IEnumerable<BloodUnitDto>> GetUnitsGroupByType();
         Task<int> GetUnitsAmountByType(BloodType bloodType);
         Task<IEnumerable<BloodUnit>> GetSortUnitsByType(BloodType bloodType);
+
+        Task<IEnumerable<BloodUnit>> GetUrgentUnits();
+
     }
 }

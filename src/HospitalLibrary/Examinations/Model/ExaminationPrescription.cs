@@ -9,12 +9,10 @@ namespace HospitalLibrary.Examinations.Model
     {
         public Guid Id { get; set; }
         public string Usage { get; set; }
+        
 
-        public List<Medicine> Medicines { get; private set; }
-        // public Examination Examination { get; set; }
-        // public Guid ExaminationId { get; set; }
-
-        private void AddMedicines(List<Medicine> medicines)
+        public IEnumerable<Medicine> Medicines { get; private set; }
+        private void AddMedicines(IEnumerable<Medicine> medicines)
         {
             Medicines = medicines;
         }
@@ -23,7 +21,7 @@ namespace HospitalLibrary.Examinations.Model
         {
         }
 
-        public ExaminationPrescription(List<Medicine> medicines,string usage)
+        public ExaminationPrescription(IEnumerable<Medicine> medicines,string usage)
         {
             AddMedicines(medicines);
             Usage = usage;

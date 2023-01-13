@@ -8,6 +8,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.Enums;
 
 namespace IntegrationLibrary.Tender.Repository
 {
@@ -39,6 +40,11 @@ namespace IntegrationLibrary.Tender.Repository
             return  await DbSet.Include(d => d.BloodUnitAmount).ToListAsync();
         }
 
+        public List<Model.Tender> GetAllTenders()
+        {
+            return _context.Tenders.ToList();
+        }
+
         public Model.Tender GetById(Guid id)
         {
             return _context.Tenders.Find(id);
@@ -57,7 +63,18 @@ namespace IntegrationLibrary.Tender.Repository
             }
         }
 
+        public async Task<List<Model.Tender>> GetClosedTenders()
+        {
+            return  await DbSet.Where(d=>d.Status==StatusTender.Close).Include(d => d.BloodUnitAmount).ToListAsync();
+        }
 
+        public async Task<List<Model.Tender>> GetWinnerTenders()
+        {
+            return  await DbSet.Where(d=>d.Status==StatusTender.Close).Include(d => d.Winner).ToListAsync();
+        }
+        
+        
+        
     }
 
 

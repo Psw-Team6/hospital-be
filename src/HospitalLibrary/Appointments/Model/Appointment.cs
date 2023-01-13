@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using HospitalLibrary.Appointments.DomainEvents;
+using HospitalLibrary.Common;
+using HospitalLibrary.Common.EventSourcing;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.SharedModel;
 
 namespace HospitalLibrary.Appointments.Model
 {
-    public class Appointment
+    public class Appointment: EventSourcedAggregate<EventStoreSchedulingAppointmentType>
     {
-        public Guid Id { get; set; }
         public bool Emergent { get; set; }
         public DateRange Duration { get; set; }
         public Patient Patient { get; set; }
@@ -16,6 +19,19 @@ namespace HospitalLibrary.Appointments.Model
         public AppointmentType AppointmentType { get; set; }
         public Doctor Doctor { get; set; }
         public AppointmentState AppointmentState { get; set; }
+        public Appointment(Guid id) : base(id)
+        {
+        }
+        public Appointment()
+        {
+            
+        }
+
+        public Appointment(List<Doctor> doctors, DateRange duration, IEnumerable<DateRange> freeTerms)
+        {
+            Duration = duration;
+            
+        }
 
         public bool CanBeExamined()
         {
@@ -53,6 +69,11 @@ namespace HospitalLibrary.Appointments.Model
         {
             return appointment.Duration.From.TimeOfDay < Duration.To.TimeOfDay 
                    && appointment.Duration.To.TimeOfDay > Duration.From.TimeOfDay;
+        }
+        
+        public override void Apply(DomainEvent<EventStoreSchedulingAppointmentType> @event)
+        {
+            Changes.Add(@event);
         }
     }
     

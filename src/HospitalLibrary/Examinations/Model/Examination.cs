@@ -1,44 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Common.EventSourcing;
+using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Examinations.Exceptions;
 
 namespace HospitalLibrary.Examinations.Model
 {
-    public class Examination
+    public class Examination : EventSourcedAggregate<EventStoreExaminationType>
     {
-        private IEnumerable<Symptom> _symptoms;
-        private IEnumerable<ExaminationPrescription> _examinationPrescriptions;
-        public Guid Id { get; private set; }
 
-        public IEnumerable<Symptom> Symptoms
-        {
-            get => _symptoms;
-            set => _symptoms = value;
-        }
+        public IEnumerable<Symptom> Symptoms { get;  set; }
 
-        public Appointment Appointment { get; private set; }
+        public Appointment Appointment { get;  set; }
         public string Anamnesis { get; private set;}
         public const string InvalidDateMessage = "Invalid examination date.";
         public const string InvalidAppointmentStateMessage = "Invalid appointment state.";
         public const string InvalidPrescriptionsMessage = "One or more prescriptions is not valid.";
         public const string InvalidAnamnesisMessage = "Anamnesis is not valid";
 
-        public IEnumerable<ExaminationPrescription> Prescriptions
-        {
-            get=> _examinationPrescriptions;
-            set=> _examinationPrescriptions = value;
-        }
+        public IEnumerable<ExaminationPrescription> Prescriptions { get;  set; }
 
         private void AddSymptoms(IEnumerable<Symptom> symptoms)
         {
             Symptoms = symptoms;
             
         }
-        private void AddPrescription(IEnumerable<ExaminationPrescription> prescriptions)
+        private void AddPrescriptions(IEnumerable<ExaminationPrescription> prescriptions)
         {
             Prescriptions = prescriptions;
         }
@@ -46,7 +35,7 @@ namespace HospitalLibrary.Examinations.Model
         {
             Appointment = appointment;
             AddSymptoms(symptoms);
-            AddPrescription(prescriptions);
+            AddPrescriptions(prescriptions);
             Anamnesis = anamnesis;
         }
 
@@ -71,7 +60,7 @@ namespace HospitalLibrary.Examinations.Model
 
         private void ValidatePrescriptions()
         {
-            if (!_examinationPrescriptions.All(prescription => prescription.Validate()))
+            if (!Prescriptions.All(prescription => prescription.Validate()))
             {
                 throw new ExaminationPrescriptionException(InvalidPrescriptionsMessage);
             }
@@ -85,9 +74,13 @@ namespace HospitalLibrary.Examinations.Model
             }
         }
         public Guid IdApp { get; private set; }
-        public Examination()
+        public Examination() : base()
         {
         }
-        
+
+        public override void Apply(DomainEvent<EventStoreExaminationType> @event)
+        {
+            Changes.Add(@event);
+        }
     }
 }

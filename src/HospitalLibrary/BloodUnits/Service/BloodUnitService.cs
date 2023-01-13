@@ -11,7 +11,6 @@ namespace HospitalLibrary.BloodUnits.Service
     {
         private readonly IUnitOfWork _unitOfWork;
 
-
         public BloodUnitService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -34,6 +33,12 @@ namespace HospitalLibrary.BloodUnits.Service
             BloodUnit bloodUnit = await _unitOfWork.GetRepository<BloodUnitRepository>().CreateAsync(bu);
             await _unitOfWork.CompleteAsync();
             return bloodUnit;
+        }
+
+        public async Task<IEnumerable<BloodUnit>> GetUrgentUnits()
+        {
+            var bloodUnits = await _unitOfWork.GetRepository<BloodUnitRepository>().GetUrgentUnits();
+            return bloodUnits;
         }
     }
 }

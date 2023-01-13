@@ -63,7 +63,7 @@ namespace IntegrationLibrary.RabbitMQService
                 var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bSub));
 
                 channel.BasicPublish(exchange: "",
-                                     routingKey: "newsForHospital",
+                                     routingKey: "bloodSubscription",
                                      basicProperties: null,
                                      body: body);
             }
@@ -83,7 +83,7 @@ namespace IntegrationLibrary.RabbitMQService
 
                 MounthlyBloodSubscriptionDTO bloodSubDTO = new()
                 {
-                    APIKey = "NkwQR/sa7Rm97+S7/KQxqWl2nZhnWjzLX3dvHOTngEk=",
+                    APIKey = "gcbrXSsoer1L5TqFMbgU+LFWV2G3VaciUeG9YOtS9FM=",
                     bloodTypeAmountPair = list,
                     messageForManager = "testna poruka za mjesecnu pretplatu za krv"
                 };

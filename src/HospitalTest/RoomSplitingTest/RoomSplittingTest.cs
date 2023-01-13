@@ -22,7 +22,7 @@ namespace HospitalTest.RoomSplitingTest
         
         
         [Fact]
-        public async Task GetMerging_Succesfull()
+        public void GetMerging_Succesfull()
         {
             var mockSearchRepo = new Mock<IRoomSplitingRepository>();
             var GetMovementByRoomId = new Mock<RoomRenovationService>();

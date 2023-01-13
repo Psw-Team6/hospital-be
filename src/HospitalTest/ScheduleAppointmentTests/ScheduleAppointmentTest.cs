@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.Appointments.Service.EventStoreService;
 using HospitalLibrary.Common;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Doctors.Model;
@@ -25,6 +26,7 @@ namespace HospitalTest.ScheduleAppointmentTests
             var mockPatientRepo = new Mock<IPatientRepository>();
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockEmailService = new Mock<IEmailService>();
+            var mockEventStoreSchedulingAppointmentService = new Mock<EventStoreSchedulingAppointmentService>();
 
             var patient1 = SeedDataPateint(out var appointment);
             
@@ -36,7 +38,7 @@ namespace HospitalTest.ScheduleAppointmentTests
             mockUnitOfWork.Setup(x => x.DoctorRepository
                     .GetByIdAsync(It.IsAny<Guid>()))
                     .ReturnsAsync(()=>null);
-            var scheduleService = new ScheduleService(mockUnitOfWork.Object,mockEmailService.Object);
+            var scheduleService = new ScheduleService(mockUnitOfWork.Object,mockEmailService.Object, mockEventStoreSchedulingAppointmentService.Object);
             Func<Task> act = () => scheduleService.ScheduleAppointment(appointment);
             var ex = await Assert.ThrowsAsync<DoctorNotExist>(act);
             Assert.Equal("Doctor does not exist",ex.Message);
@@ -73,6 +75,8 @@ namespace HospitalTest.ScheduleAppointmentTests
             var mockPatientRepo = new Mock<IPatientRepository>();
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockEmailService = new Mock<IEmailService>();
+            var mockEventStoreSchedulingAppointmentService = new Mock<EventStoreSchedulingAppointmentService>();
+
 
             Address address = new()
             {
@@ -139,9 +143,8 @@ namespace HospitalTest.ScheduleAppointmentTests
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com"
             };
-            Appointment appointment = new()
+            Appointment appointment = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 Doctor = doctor1,
                 Patient = patient1,
@@ -167,7 +170,7 @@ namespace HospitalTest.ScheduleAppointmentTests
                     .GetDoctorWorkingSchedule(appointment.DoctorId))
                 .ReturnsAsync(() => workingSchedule1);
 
-            scheduleService = new ScheduleService(mockUnitOfWork.Object, mockEmailService.Object);
+            scheduleService = new ScheduleService(mockUnitOfWork.Object, mockEmailService.Object, mockEventStoreSchedulingAppointmentService.Object);
             return appointment;
         }
 
@@ -177,6 +180,8 @@ namespace HospitalTest.ScheduleAppointmentTests
             var mockPatientRepo = new Mock<IPatientRepository>();
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockEmailService = new Mock<IEmailService>();
+            var mockEventStoreSchedulingAppointmentService = new Mock<EventStoreSchedulingAppointmentService>();
+
 
             Address address = new()
             {
@@ -248,9 +253,8 @@ namespace HospitalTest.ScheduleAppointmentTests
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com"
             };
-            Appointment appointment = new()
+            Appointment appointment = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 Doctor = doctor1,
                 Patient = patient1,
@@ -272,7 +276,7 @@ namespace HospitalTest.ScheduleAppointmentTests
             mockUnitOfWork.Setup(x => x.DoctorRepository
                     .GetByIdAsync(appointment.DoctorId))
                 .ReturnsAsync(() => doctor1);
-            scheduleService = new ScheduleService(mockUnitOfWork.Object, mockEmailService.Object);
+            scheduleService = new ScheduleService(mockUnitOfWork.Object, mockEmailService.Object, mockEventStoreSchedulingAppointmentService.Object);
             return appointment;
         }
 
@@ -348,9 +352,8 @@ namespace HospitalTest.ScheduleAppointmentTests
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com"
             };
-            appointment = new()
+            appointment = new Appointment(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 Doctor = doctor1,
                 Patient = patient1,
@@ -370,6 +373,8 @@ namespace HospitalTest.ScheduleAppointmentTests
             var mockPatientRepo = new Mock<IPatientRepository>();
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockEmailService = new Mock<IEmailService>();
+            var mockEventStoreSchedulingAppointmentService = new Mock<EventStoreSchedulingAppointmentService>();
+
 
             Address address = new()
             {
@@ -441,9 +446,8 @@ namespace HospitalTest.ScheduleAppointmentTests
                 Surname = "Lave",
                 Email = "psw.isa.mail@gmail.com"
             };
-            Appointment appointment = new()
+            Appointment appointment = new(Guid.NewGuid())
             {
-                Id = Guid.NewGuid(),
                 Emergent = false,
                 Doctor = doctor1,
                 Patient = patient1,
@@ -463,7 +467,7 @@ namespace HospitalTest.ScheduleAppointmentTests
             mockUnitOfWork.Setup(x => x.DoctorRepository
                     .GetByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(() => doctor1);
-            scheduleService = new ScheduleService(mockUnitOfWork.Object, mockEmailService.Object);
+            scheduleService = new ScheduleService(mockUnitOfWork.Object, mockEmailService.Object, mockEventStoreSchedulingAppointmentService.Object);
             return appointment;
         }
     }

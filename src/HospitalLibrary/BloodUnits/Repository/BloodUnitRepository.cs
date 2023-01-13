@@ -32,5 +32,10 @@ namespace HospitalLibrary.BloodUnits.Repository
             return await Task.FromResult(DbSet.Where(x => x.BloodType == bloodType).Sum(i => i.Amount));
         }
 
+        public async Task<IEnumerable<BloodUnit>> GetUrgentUnits()
+        {
+            return await DbSet.Where(x => x.Source == "URGENT").ToListAsync();
+        }
+
     }
 }

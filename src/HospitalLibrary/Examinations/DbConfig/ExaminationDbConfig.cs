@@ -18,6 +18,7 @@ namespace HospitalLibrary.Examinations.DbConfig
                 .WithOne();
                 
             _ = builder.Ignore(x => x.IdApp);
+            _ = builder.Ignore(x => x.Changes);
         }
     }
 }

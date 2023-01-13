@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using HospitalLibrary.CustomException;
 using HospitalLibrary.Examinations.Exceptions;
+using HospitalLibrary.Patients.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
@@ -60,12 +61,19 @@ namespace HospitalAPI.Exceptions
             {
                 await BadRequestException(context, e);
             }
+            catch (PatientNotFound e)
+            {
+                await NotFoundException(context, e);
+            }
+            catch (ExaminationNotFoundException e)
+            {
+                await NotFoundException(context, e);
+            }
         }
 
         private static async Task BadRequestException(HttpContext context, Exception e)
         {
             var response = context.Response;
-            //Set response ContentType
             response.ContentType = "application/json";
             response.StatusCode = (int) HttpStatusCode.BadRequest;
             var responseContent = new ResponseContent()

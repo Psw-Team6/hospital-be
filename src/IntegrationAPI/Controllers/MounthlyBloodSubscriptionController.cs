@@ -22,6 +22,7 @@ using IntegrationLibrary.RabbitMQService.RabbitMQProducer;
 
 namespace IntegrationAPI.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class MounthlyBloodSubscriptionController : ControllerBase
@@ -35,8 +36,9 @@ namespace IntegrationAPI.Controllers
             _bbService = bbService;
         }
 
+
         // POST api/MounthlyBloodSubscription
-        /*[HttpPost]
+        [HttpPost]
         public ActionResult Create(MounthlyBloodSubscriptionRequest bSup)
         {
             if (!ModelState.IsValid)
@@ -49,7 +51,8 @@ namespace IntegrationAPI.Controllers
             mounthlyBloodSubscription.bloodBankId = _bbService.GetByName(bSup.bloodBankName).Id;
             mounthlyBloodSubscription.amountOfBloodTypes = bSup.bloodTypeAmountPair;
 
-            IntegrationLibrary.RabbitMQPublisher.MounthlyBloodSubscriptionResponse bSupResponse = new IntegrationLibrary.RabbitMQPublisher.MounthlyBloodSubscriptionResponse();
+            IntegrationLibrary.RabbitMQPublisher.MounthlyBloodSubscriptionResponse bSupResponse =
+                new IntegrationLibrary.RabbitMQPublisher.MounthlyBloodSubscriptionResponse();
             bSupResponse.APIKey = _bbService.GetByName(bSup.bloodBankName).ApiKey.Value;
             bSupResponse.dateAndTimeOfSubscription = mounthlyBloodSubscription.dateAndTimeOfSubscription;
             bSupResponse.bloodTypeAmountPair = mounthlyBloodSubscription.amountOfBloodTypes;
@@ -60,7 +63,11 @@ namespace IntegrationAPI.Controllers
             RabbitMQPublisher.SendBloodSubscription(bSupResponse);
 
             _supService.Create(mounthlyBloodSubscription);
-            return CreatedAtAction("GetById", new { id = mounthlyBloodSubscription.id }, mounthlyBloodSubscription);
-        }*/
+
+            return CreatedAtAction("Create", new { id = mounthlyBloodSubscription.id }, mounthlyBloodSubscription);
+
+
+        }
     }
+
 }
