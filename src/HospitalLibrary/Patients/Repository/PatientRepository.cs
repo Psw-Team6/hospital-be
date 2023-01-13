@@ -24,7 +24,6 @@ namespace HospitalLibrary.Patients.Repository
         public async Task<List<Patient>> GetAllPatients()
         {
             return await DbSet.Include(p => p.Address)
-                .Include(p => p.Feedbacks)
                 .Include(p=> p.Allergies)
                 .Include(p=> p.Doctor)
                 .ToListAsync();
@@ -33,7 +32,6 @@ namespace HospitalLibrary.Patients.Repository
         public async Task<Patient> GetPatientById(Guid id)
         {
             return await DbSet.Include(p => p.Address)
-                .Include(p => p.Feedbacks)
                 .Include(p=> p.Allergies)
                 .Include(p=> p.Doctor)
                 .FirstOrDefaultAsync(p => p.Id == id);
