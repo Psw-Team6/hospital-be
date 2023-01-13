@@ -6,6 +6,7 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.Common.EventSourcing;
 using HospitalLibrary.Examinations.EventStores;
+using HospitalLibrary.Examinations.Exceptions;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Examinations.Repository;
 using HospitalLibrary.Examinations.Service.EventStoreService;
@@ -129,7 +130,7 @@ namespace HospitalLibrary.Examinations.Service
 
             if (!filteredEx.Any())
             {
-                throw new NotFoundException("No Exeminatiosn found");
+                throw new ExaminationNotFoundException("No Exeminatiosn found");
             }
             return filteredEx;
         }

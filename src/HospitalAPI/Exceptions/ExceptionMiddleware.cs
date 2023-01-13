@@ -65,6 +65,10 @@ namespace HospitalAPI.Exceptions
             {
                 await NotFoundException(context, e);
             }
+            catch (ExaminationNotFoundException e)
+            {
+                await NotFoundException(context, e);
+            }
         }
 
         private static async Task BadRequestException(HttpContext context, Exception e)
