@@ -10,7 +10,5 @@ namespace HospitalLibrary.Common.EventSourcing
     {
         Task<int> GetVersion(Guid aggregateId);
         Task<int> GetSequence();
-
-        Task CreateEventStore(Examination examination, List<DomainEvent<EventStoreExaminationType>> events);
     }
 }

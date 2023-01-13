@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
 using HospitalLibrary.Common.EventSourcing;
+using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Examinations.Repository;
 using HospitalLibrary.Examinations.Service.EventStoreService;
@@ -16,9 +17,9 @@ namespace HospitalLibrary.Examinations.Service
     public class ExaminationService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IEventStoreService _eventStoreService;
+        private readonly IEventStoreExaminationService _eventStoreService;
 
-        public ExaminationService(IUnitOfWork unitOfWork, IEventStoreService eventStoreService)
+        public ExaminationService(IUnitOfWork unitOfWork, IEventStoreExaminationService eventStoreService)
         {
             _unitOfWork = unitOfWork;
             _eventStoreService = eventStoreService;

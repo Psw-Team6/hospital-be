@@ -38,7 +38,7 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HospitalDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
+            options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")).EnableSensitiveDataLogging());
             services.Configure<EmailOptions>(Configuration.GetSection(EmailOptions.SendGridEmail));
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters(); //OVU SI ODKOMENTRISAO

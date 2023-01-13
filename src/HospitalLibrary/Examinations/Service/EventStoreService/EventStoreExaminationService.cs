@@ -10,7 +10,7 @@ using HospitalLibrary.Examinations.Model;
 
 namespace HospitalLibrary.Examinations.Service.EventStoreService
 {
-    public class EventStoreExaminationService : IEventStoreService
+    public class EventStoreExaminationService : IEventStoreExaminationService
     {
         private readonly IUnitOfWork _unitOfWork;
 
