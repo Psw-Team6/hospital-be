@@ -41,12 +41,15 @@ namespace HospitalLibrary.SharedModel
         
         protected override int GetHashCodeCore()
         {
-            var hashCode = -1186395504;
-            hashCode = hashCode * -1521134295 + ToEmail.GetHashCode();
-            hashCode = hashCode * -1521134295 + Subject.GetHashCode();
-            hashCode = hashCode * -1521134295 + PlainTextContent.GetHashCode();
-            hashCode = hashCode * -1521134295 + HtmlContent.GetHashCode();
-            return hashCode;
+            unchecked
+            {
+                var hashCode = -1186395504;
+                hashCode = hashCode * -1521134295 + ToEmail.GetHashCode();
+                hashCode = hashCode * -1521134295 + Subject.GetHashCode();
+                hashCode = hashCode * -1521134295 + PlainTextContent.GetHashCode();
+                hashCode = hashCode * -1521134295 + HtmlContent.GetHashCode();
+                return hashCode;   
+            }
         }
     }
 }

@@ -37,8 +37,10 @@ namespace HospitalLibrary.Appointments.Model
         {
             if (!Duration.IsValidRange()) return false;
             //if more than 2 day earlier
+            if (AppointmentState != AppointmentState.Pending) return false;
             var durationRange = Duration.To - Duration.From;
-            if (Duration.From.Date < DateTime.Now.Date.AddDays(-2) && Duration.To.Date < DateTime.Now.Date.AddDays(-2).Add(durationRange))
+            if (Duration.From.Date < DateTime.Now.Date.AddDays(-2) 
+                && Duration.To.Date < DateTime.Now.Date.AddDays(-2).Add(durationRange))
             {
                 return false;
             }

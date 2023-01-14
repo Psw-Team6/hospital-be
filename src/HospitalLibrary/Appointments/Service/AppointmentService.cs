@@ -91,8 +91,7 @@ namespace HospitalLibrary.Appointments.Service
         {
             var appointments=  await _unitOfWork.AppointmentRepository.GetAppointmentsForExamination(doctorId);
             var sorted = appointments
-                .Where(app => app.AppointmentState == AppointmentState.Pending)
-                .OrderBy(x => x.Duration.From).ToList();
+                .OrderBy(x => x.Duration.To).ToList();
             return sorted;
         }
         public async Task<List<Appointment>> GetNextAppointments(Guid doctorId)
