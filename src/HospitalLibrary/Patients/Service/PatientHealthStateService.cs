@@ -47,7 +47,7 @@ namespace HospitalLibrary.Patients.Service
             }
 
             var notification = new PatientHealthStateNotification(patientHealthState.Root,
-                    patientHealthState.CheckPatientState());
+                    patientHealthState.CheckPatientState(),DateTime.Now);
             await _notificationRepository.CreateAsync(notification);
             await _unitOfWork.CompleteAsync();
         }

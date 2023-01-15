@@ -49,6 +49,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Holiday> Holidays { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<EventStoreExamination> EventStoreExaminations { get; set; }
+        public DbSet<PatientHealthStateNotification> PatientHealthStateNotifications { get; set; }
         //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
 
@@ -716,7 +717,7 @@ namespace HospitalLibrary.Settings
 
             Patient patient1 = new()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("0bcf5d99-617e-48f4-a04d-c6ee2baa23cd"),
                 AddressId = address.Id,
                 Username = "Sale",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
