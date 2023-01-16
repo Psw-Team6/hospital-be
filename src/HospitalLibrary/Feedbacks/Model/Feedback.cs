@@ -9,15 +9,15 @@ namespace HospitalLibrary.Feedbacks.Model
 
 {
 
-    public class Feedback:AbstractAggregate<Patient, Guid>
+    public class Feedback
     {
-        /*public Guid Id { get; private set; }*/
+        public Guid Id { get; private set; }
         [Required]
         [MinLength(3)]
         public Guid PatientId { get; private set; }
 
-        /*
-        public Patient Patient { get; private set; }*/
+        
+        public Patient Patient { get; private set; }
 
         public DateTime Date { get; private set; }
        

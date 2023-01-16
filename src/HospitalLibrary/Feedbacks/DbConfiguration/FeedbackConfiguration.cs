@@ -9,7 +9,7 @@ namespace HospitalLibrary.Feedbacks.DbConfiguration
         public void Configure(EntityTypeBuilder<Feedback> builder)
         {
             _ = builder.HasKey(x => x.Id);
-            _ = builder.HasOne(feedback => feedback.Root)
+            _ = builder.HasOne(feedback => feedback.Patient)
                 .WithMany(patient => patient.Feedbacks)
                 .HasForeignKey(feedback => feedback.PatientId);
             /*_ = builder.HasOne(doctor => doctor.WorkingSchedule)

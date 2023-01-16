@@ -16,7 +16,7 @@ namespace HospitalAPI.Controllers.Private
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [HospitalAuthorization(UserRole.Doctor)]
+    //[HospitalAuthorization(UserRole.Doctor)]
     public class ExaminationController:ControllerBase
     {
         private readonly IMapper _mapper;
