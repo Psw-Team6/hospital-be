@@ -16,11 +16,13 @@ namespace HospitalLibrary.ApplicationUsers.DbConfiguration
                 .IsUnique();// _ = builder.HasKey(x => x.Id);
             _ = builder.Property(x => x.Email)
                 .IsRequired();
-            _ = builder.Property(x => x.Jmbg)
-                .HasColumnType("jsonb");
-            _ = builder.Property(x => x.Phone)
-                .HasColumnType("jsonb");
             
+            // _ = builder.Property(x => x.Jmbg)
+            //     .HasColumnType("jsonb");
+            // _ = builder.Property(x => x.Phone)
+            //     .HasColumnType("jsonb");
+            
+
         }
     }
 }
