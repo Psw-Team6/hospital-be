@@ -179,7 +179,7 @@ namespace HospitalLibrary.Examinations.Service
             var split = splitQuery(query);
             foreach (var word in split)
             {
-                if (patient.Name.ToLower().Contains(word.ToLower()) || patient.Surname.ToLower().Contains(word.ToLower()))
+                if ((patient.Name.ToLower() + " " + patient.Surname.ToLower()).Contains(word.ToLower()) || (patient.Surname.ToLower() + " " + patient.Name.ToLower()).Contains(word.ToLower()))
                 {
                     return true;
                 }
@@ -194,7 +194,7 @@ namespace HospitalLibrary.Examinations.Service
             var split = splitQuery(query);
             foreach (var word in split)
             {
-                if (doctor.Name.ToLower().Contains(word.ToLower()) || doctor.Surname.ToLower().Contains(word.ToLower()))
+                if ((doctor.Name.ToLower() + " " + doctor.Surname.ToLower()).Contains(word.ToLower()) || (doctor.Surname.ToLower() + " " + doctor.Name.ToLower()).Contains(word.ToLower()))
                 {
                     return true;
                 }
