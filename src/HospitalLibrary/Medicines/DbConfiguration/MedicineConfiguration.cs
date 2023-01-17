@@ -45,40 +45,80 @@ namespace HospitalLibrary.Medicines.DbConfiguration
             var med1 = new Medicine
             {
                 Id = Guid.NewGuid(),
-                Name = "Medicine1",
+                Name = "Xanax",
                 Amount = 1000
             };
             var med2 = new Medicine
             {
                 Id = Guid.NewGuid(),
-                Name = "Medicine2",
+                Name = "Aderol",
                 Amount = 1000
             };
             var med3 = new Medicine
             {
                 Id = Guid.NewGuid(),
-                Name = "Medicine3",
+                Name = "Defrinol",
                 Amount = 1000
             };
             var med4 = new Medicine
             {
                 Id = Guid.NewGuid(),
-                Name = "Medicine4",
+                Name = "Fervex",
                 Amount = 1000
             };
             var med5 = new Medicine
             {
                 Id = Guid.NewGuid(),
-                Name = "Medicine5",
+                Name = "Paracetanol",
                 Amount = 1000
             };
             var med6 = new Medicine
             {
                 Id = Guid.NewGuid(),
-                Name = "Medicine6",
+                Name = "Cefalexin",
                 Amount = 1000
             };
+            
             _ = builder.HasData(med1,med2,med3,med4,med5,med6);
+            
+            var med7 = new Medicine
+            {
+                Id = Guid.NewGuid(),
+                Name = "Kafetin",
+                Amount = 1000
+            };
+            var med8 = new Medicine
+            {
+                Id = Guid.NewGuid(),
+                Name = "Hemomicin",
+                Amount = 1000
+            };
+            var med9 = new Medicine
+            {
+                Id = Guid.NewGuid(),
+                Name = "Strpsils",
+                Amount = 1000
+            };
+            var med10 = new Medicine
+            {
+                Id = Guid.NewGuid(),
+                Name = "Dexomin",
+                Amount = 1000
+            };
+            var med11 = new Medicine
+            {
+                Id = Guid.NewGuid(),
+                Name = "Lexilium",
+                Amount = 1000
+            };
+            var med12 = new Medicine
+            {
+                Id = Guid.NewGuid(),
+                Name = "Aerius",
+                Amount = 1000
+            };
+            
+            _ = builder.HasData(med7,med8,med9,med10,med11,med12);
         }
     }
 }

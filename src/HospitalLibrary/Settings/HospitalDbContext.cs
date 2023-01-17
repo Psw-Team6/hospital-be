@@ -826,7 +826,7 @@ namespace HospitalLibrary.Settings
             };
             Doctor doctor1 = new()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("c94fcdfd-5ce3-4133-ab82-2ac292bcd0e2"),
                 SpecializationId = specializationGeneral.Id,
                 AddressId = address.Id,
                 WorkingScheduleId = workingSchedule1.Id,
@@ -920,7 +920,7 @@ namespace HospitalLibrary.Settings
             };
             Patient patient2 = new()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("dd3959fa-ed05-43a0-b549-95c40cb6bd04"),
                 Phone = "021420420",
                 AddressId = address2.Id,
                 Jmbg = "131213121312",
@@ -942,7 +942,7 @@ namespace HospitalLibrary.Settings
             
             Patient patient3 = new()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("f85589c1-7405-4afd-9e47-c54e30c168dd"),
                 Phone = "021420420",
                 Jmbg = "131213121312",
                 AddressId = address2.Id,
@@ -961,7 +961,7 @@ namespace HospitalLibrary.Settings
             };
             Patient patient4 = new()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("01bf0f4d-3ccb-422b-9c6b-5612f0ecf5a7"),
                 Phone = "021420420",
                 AddressId = address2.Id,
                 Jmbg = "131213121312",
@@ -980,7 +980,7 @@ namespace HospitalLibrary.Settings
             };
             Patient patient5 = new()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("4e0ffa00-c738-4ba0-9445-815325262b5b"),
                 Phone = "021420420",
                 AddressId = address2.Id,
                 Jmbg = "131213121312",
@@ -999,7 +999,7 @@ namespace HospitalLibrary.Settings
             };
             Patient patient6 = new()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("ce4b4c0f-4db2-4565-832b-19aa7425ea6b"),
                 Phone = "021420420",
                 AddressId = address2.Id,
                 Username = "Marko",
@@ -1018,7 +1018,7 @@ namespace HospitalLibrary.Settings
             };
             Patient patient7 = new()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("ff37875b-73c6-44bd-b8a4-b53d7fce7bd3"),
                 Phone = "021420420",
                 AddressId = address2.Id,
                 Username = "Manja",
@@ -1037,7 +1037,7 @@ namespace HospitalLibrary.Settings
             };
             Patient patient8 = new()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("eae6cae2-2d8c-4689-8902-21d2fbeb57bb"),
                 Phone = "021420420",
                 AddressId = address2.Id,
                 Username = "Darko",
@@ -1056,7 +1056,7 @@ namespace HospitalLibrary.Settings
             };
             Patient patient9 = new()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("659d588f-e141-437e-8d9f-232a537b6c74"),
                 Phone = "021420420",
                 AddressId = address2.Id,
                 Username = "Filip",
@@ -1075,7 +1075,7 @@ namespace HospitalLibrary.Settings
             };
             Patient patient10 = new()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("f748eecd-22bb-43c6-943c-1800e392da97"),
                 AddressId = address2.Id,
                 Phone = "021420420",
                 Username = "Tara",
