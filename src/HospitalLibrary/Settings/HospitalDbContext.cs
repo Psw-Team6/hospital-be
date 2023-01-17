@@ -49,6 +49,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Holiday> Holidays { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<EventStoreExamination> EventStoreExaminations { get; set; }
+        public DbSet<PatientHealthStateNotification> PatientHealthStateNotifications { get; set; }
         //public DbSet<ExaminationSymptom> ExaminationSymptoms  { get; set; }
        
 
@@ -716,7 +717,7 @@ namespace HospitalLibrary.Settings
 
             Patient patient1 = new()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("0bcf5d99-617e-48f4-a04d-c6ee2baa23cd"),
                 AddressId = address.Id,
                 Username = "Sale",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
@@ -729,6 +730,8 @@ namespace HospitalLibrary.Settings
                 DateOfBirth = new DateTime(2007,10,12),
                 Gender = Gender.MALE,
                 Age = 15,
+                Phone = "021420420",
+                Jmbg = "131213121312",
                 BloodType = BloodType.ABpos,
                 Allergies = new List<Allergen>(),
                 IsBlocked = false
@@ -736,7 +739,9 @@ namespace HospitalLibrary.Settings
             Patient patient2 = new()
             {
                 Id = Guid.NewGuid(),
+                Phone = "021420420",
                 AddressId = address2.Id,
+                Jmbg = "131213121312",
                 Username = "Miki",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
                 Name = "Miki",
@@ -756,6 +761,8 @@ namespace HospitalLibrary.Settings
             Patient patient3 = new()
             {
                 Id = Guid.NewGuid(),
+                Phone = "021420420",
+                Jmbg = "131213121312",
                 AddressId = address2.Id,
                 Username = "Nina",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
@@ -773,7 +780,9 @@ namespace HospitalLibrary.Settings
             Patient patient4 = new()
             {
                 Id = Guid.NewGuid(),
+                Phone = "021420420",
                 AddressId = address2.Id,
+                Jmbg = "131213121312",
                 Username = "Mina",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
                 Name = "Mina",
@@ -790,7 +799,9 @@ namespace HospitalLibrary.Settings
             Patient patient5 = new()
             {
                 Id = Guid.NewGuid(),
+                Phone = "021420420",
                 AddressId = address2.Id,
+                Jmbg = "131213121312",
                 Username = "Nikola",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
                 Name = "Nikola",
@@ -807,6 +818,7 @@ namespace HospitalLibrary.Settings
             Patient patient6 = new()
             {
                 Id = Guid.NewGuid(),
+                Phone = "021420420",
                 AddressId = address2.Id,
                 Username = "Marko",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
@@ -815,6 +827,7 @@ namespace HospitalLibrary.Settings
                 Email = "psw.isa.mail@gmail.com",
                 UserRole = UserRole.Patient,
                 Enabled = true,
+                Jmbg = "131213121312",
                 DoctorId = doctor2.Id,
                 Gender = Gender.MALE,
                 Age = 65,
@@ -824,6 +837,7 @@ namespace HospitalLibrary.Settings
             Patient patient7 = new()
             {
                 Id = Guid.NewGuid(),
+                Phone = "021420420",
                 AddressId = address2.Id,
                 Username = "Manja",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
@@ -832,6 +846,7 @@ namespace HospitalLibrary.Settings
                 Email = "psw.isa.mail@gmail.com",
                 UserRole = UserRole.Patient,
                 Enabled = true,
+                Jmbg = "131213121312",
                 DoctorId = doctor2.Id,
                 Gender = Gender.FEMALE,
                 Age = 50,
@@ -841,6 +856,7 @@ namespace HospitalLibrary.Settings
             Patient patient8 = new()
             {
                 Id = Guid.NewGuid(),
+                Phone = "021420420",
                 AddressId = address2.Id,
                 Username = "Darko",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
@@ -848,6 +864,7 @@ namespace HospitalLibrary.Settings
                 Surname = "Darkovic",
                 Email = "psw.isa.mail@gmail.com",
                 UserRole = UserRole.Patient,
+                Jmbg = "131213121312",
                 Enabled = true,
                 DoctorId = doctor.Id,
                 Gender = Gender.MALE,
@@ -858,12 +875,14 @@ namespace HospitalLibrary.Settings
             Patient patient9 = new()
             {
                 Id = Guid.NewGuid(),
+                Phone = "021420420",
                 AddressId = address2.Id,
                 Username = "Filip",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
                 Name = "Filip",
                 Surname = "Filipic",
                 Email = "psw.isa.mail@gmail.com",
+                Jmbg = "131213121312",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor.Id,
@@ -876,11 +895,13 @@ namespace HospitalLibrary.Settings
             {
                 Id = Guid.NewGuid(),
                 AddressId = address2.Id,
+                Phone = "021420420",
                 Username = "Tara",
                 Password = "VNEXwZIHrujyvlg0wnmHM2FkQ52BKSkUTv5Gobgj4MeeAADy",
                 Name = "Tara",
                 Surname = "Markovic",
                 Email = "psw.isa.mail@gmail.com",
+                Jmbg = "131213121312",
                 UserRole = UserRole.Patient,
                 Enabled = true,
                 DoctorId = doctor2.Id,
@@ -965,7 +986,7 @@ namespace HospitalLibrary.Settings
             Appointment appointment1 = new(Guid.NewGuid())
             { 
                 Emergent = false,
-                PatientId = patient1.Id,
+                PatientId = patient4.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
@@ -981,7 +1002,7 @@ namespace HospitalLibrary.Settings
             Appointment appointment3 = new(Guid.NewGuid())
             {
                 Emergent = false,
-                PatientId = patient1.Id,
+                PatientId = patient3.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
@@ -989,7 +1010,7 @@ namespace HospitalLibrary.Settings
             Appointment appointment4 = new(Guid.NewGuid())
             {
                 Emergent = false,
-                PatientId = patient1.Id,
+                PatientId = patient2.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
@@ -997,7 +1018,7 @@ namespace HospitalLibrary.Settings
             Appointment appointment5 = new(Guid.NewGuid())
             {
                 Emergent = false,
-                PatientId = patient1.Id,
+                PatientId = patient2.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
@@ -1005,7 +1026,7 @@ namespace HospitalLibrary.Settings
             Appointment appointment6 = new(Guid.NewGuid())
             {
                 Emergent = false,
-                PatientId = patient1.Id,
+                PatientId = patient6.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
@@ -1013,7 +1034,7 @@ namespace HospitalLibrary.Settings
             Appointment appointment7 = new(Guid.NewGuid())
             {
                 Emergent = false,
-                PatientId = patient1.Id,
+                PatientId = patient4.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
@@ -1021,7 +1042,7 @@ namespace HospitalLibrary.Settings
             Appointment appointment8 = new(Guid.NewGuid())
             {
                 Emergent = false,
-                PatientId = patient1.Id,
+                PatientId = patient3.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
@@ -1037,7 +1058,7 @@ namespace HospitalLibrary.Settings
             Appointment appointment10 = new(Guid.NewGuid())
             {
                 Emergent = false,
-                PatientId = patient1.Id,
+                PatientId = patient2.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
@@ -1053,7 +1074,7 @@ namespace HospitalLibrary.Settings
             Appointment appointment12 = new(Guid.NewGuid())
             {
                 Emergent = false,
-                PatientId = patient1.Id,
+                PatientId = patient4.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
@@ -1061,7 +1082,7 @@ namespace HospitalLibrary.Settings
             Appointment appointment13 = new(Guid.NewGuid())
             {
                 Emergent = false,
-                PatientId = patient1.Id,
+                PatientId = patient7.Id,
                 DoctorId = doctor1.Id,
                 AppointmentType = AppointmentType.Examination,
                 AppointmentState = AppointmentState.Pending
@@ -1096,7 +1117,7 @@ namespace HospitalLibrary.Settings
                     new
                     {
                         AppointmentId = appointment4.Id,
-                        From = DateTime.Now.AddMinutes(-270),
+                        From = DateTime.Now.AddMinutes(-240),
                         To = DateTime.Now.AddMinutes(-200)
                     },
                     new

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Common;
+using HospitalLibrary.Common.EventSourcing;
+using HospitalLibrary.Examinations.EventStores;
+using HospitalLibrary.Examinations.Exceptions;
 using HospitalLibrary.Examinations.Model;
 using HospitalLibrary.Examinations.Repository;
 using HospitalLibrary.Examinations.Service.EventStoreService;
@@ -15,9 +18,9 @@ namespace HospitalLibrary.Examinations.Service
     public class ExaminationService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly EventStoreExaminationService _eventStoreService;
+        private readonly IEventStoreExaminationService _eventStoreService;
 
-        public ExaminationService(IUnitOfWork unitOfWork, EventStoreExaminationService eventStoreService)
+        public ExaminationService(IUnitOfWork unitOfWork, IEventStoreExaminationService eventStoreService)
         {
             _unitOfWork = unitOfWork;
             _eventStoreService = eventStoreService;
@@ -115,7 +118,7 @@ namespace HospitalLibrary.Examinations.Service
         }
         public async Task<IEnumerable<Examination>> GetSearchedExaminations(String query)
         {
-            var allExaminations = await _unitOfWork.GetRepository<ExaminationRepository>().GetAllExaminations();
+            var allExaminations = await _unitOfWork.ExaminationRepository.GetAllExaminations();
             IEnumerable<Examination> filteredEx = new List<Examination>();
             foreach (var examination in allExaminations)
             {
@@ -127,7 +130,7 @@ namespace HospitalLibrary.Examinations.Service
 
             if (!filteredEx.Any())
             {
-                throw new NotFoundException("No Exeminatiosn found");
+                throw new ExaminationNotFoundException("No Exeminatiosn found");
             }
             return filteredEx;
         }
@@ -176,7 +179,7 @@ namespace HospitalLibrary.Examinations.Service
             var split = splitQuery(query);
             foreach (var word in split)
             {
-                if (patient.Name.ToLower().Contains(word.ToLower()) || patient.Surname.ToLower().Contains(word.ToLower()))
+                if ((patient.Name.ToLower() + " " + patient.Surname.ToLower()).Contains(word.ToLower()) || (patient.Surname.ToLower() + " " + patient.Name.ToLower()).Contains(word.ToLower()))
                 {
                     return true;
                 }
@@ -191,7 +194,7 @@ namespace HospitalLibrary.Examinations.Service
             var split = splitQuery(query);
             foreach (var word in split)
             {
-                if (doctor.Name.ToLower().Contains(word.ToLower()) || doctor.Surname.ToLower().Contains(word.ToLower()))
+                if ((doctor.Name.ToLower() + " " + doctor.Surname.ToLower()).Contains(word.ToLower()) || (doctor.Surname.ToLower() + " " + doctor.Name.ToLower()).Contains(word.ToLower()))
                 {
                     return true;
                 }

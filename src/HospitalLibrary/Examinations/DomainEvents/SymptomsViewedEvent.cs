@@ -9,5 +9,8 @@ namespace HospitalLibrary.Examinations.DomainEvents
         public SymptomsViewedEvent(Guid aggregateId) : base(aggregateId)
         {
         }
+        public SymptomsViewedEvent(DateTime createdAt, EventStoreExaminationType @event) :  base(createdAt,@event)
+        {
+        }
     }
 }

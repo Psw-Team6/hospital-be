@@ -15,8 +15,7 @@ namespace HospitalLibrary.Examinations.DbConfig
             _ = builder.Property(x => x.Anamnesis);
             _ = builder
                 .HasMany(x => x.Prescriptions)
-                .WithOne()
-                .HasForeignKey(x => x.Id);
+                .WithOne();
                 
             _ = builder.Ignore(x => x.IdApp);
             _ = builder.Ignore(x => x.Changes);

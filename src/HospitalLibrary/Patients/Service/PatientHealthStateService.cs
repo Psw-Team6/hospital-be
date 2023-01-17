@@ -47,7 +47,7 @@ namespace HospitalLibrary.Patients.Service
             }
 
             var notification = new PatientHealthStateNotification(patientHealthState.Root,
-                    patientHealthState.CheckPatientState());
+                    patientHealthState.CheckPatientState(),DateTime.Now);
             await _notificationRepository.CreateAsync(notification);
             await _unitOfWork.CompleteAsync();
         }
@@ -57,9 +57,9 @@ namespace HospitalLibrary.Patients.Service
             return await _patientHealthStateRepository.GetAllByPatientId(patientId);
         }
 
-        public async Task<List<PatientHealthStateNotification>> GetAllNotifications(Guid patientId)
+        public async Task<List<PatientHealthStateNotification>> GetAllNotifications(Guid doctorId)
         {
-            return await _notificationRepository.GetAllNotifications(patientId);
+            return await _notificationRepository.GetAllNotifications(doctorId);
         }
     }
 }

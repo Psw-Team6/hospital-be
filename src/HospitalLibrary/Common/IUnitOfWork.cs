@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using HospitalLibrary.ApplicationUsers.Repository;
 using HospitalLibrary.Appointments.Repository;
+using HospitalLibrary.Appointments.Repository.EventStoreRepository;
 using HospitalLibrary.BloodConsumptions.Repository;
 using HospitalLibrary.BloodUnits.Repository;
 using HospitalLibrary.Consiliums.Repository;
@@ -44,7 +45,7 @@ namespace HospitalLibrary.Common
         IEquipmentMovementAppointmentRepository EquipmentMovementAppointmentRepository { get; }
         IMedicinePrescriptionRepository MedicinePrescriptionRepository { get; }
         IEventStoreExaminationRepository EventStoreExaminationRepository { get; }
-
+        IEventStoreSchedulingAppointmentRepository EventStoreSchedulingAppointmentRepository { get; }
         IAddressRepository AddressRepository { get; }
         IAllergenRepository AllergenRepository { get; }
         IMedicineRepository MedicineRepository { get; }

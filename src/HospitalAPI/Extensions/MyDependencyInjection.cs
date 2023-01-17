@@ -1,13 +1,17 @@
 ﻿using HospitalLibrary.ApplicationUsers.Service;
+using HospitalLibrary.Appointments.DomainEvents;
 using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.Appointments.Service.EventStoreService;
 using HospitalLibrary.BloodConsumptions.Service;
 using HospitalLibrary.BloodUnits.Service;
 using HospitalLibrary.Common;
+using HospitalLibrary.Common.EventSourcing;
 using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Consiliums.Service;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.EquipmentMovement.Service;
+using HospitalLibrary.Examinations.EventStores;
 using HospitalLibrary.Examinations.Repository.EventStoreRepository;
 using HospitalLibrary.Examinations.Service;
 using HospitalLibrary.Examinations.Service.EventStoreService;
@@ -95,8 +99,9 @@ namespace HospitalAPI.Extensions
             services.AddScoped<EventStoreExaminationService>();
             services.AddScoped<IEventStoreExaminationRepository, EventStoreExaminationRepository>();
             services.AddScoped<PatientHealthStateService>();
-
-
+            services.AddScoped<EventStoreSchedulingAppointmentService>();
+            services.AddScoped<IEventStoreExaminationService, EventStoreExaminationService>();
+            services.AddScoped<IEventStoreService, EventStoreSchedulingAppointmentService>();
         }
     }
 }
