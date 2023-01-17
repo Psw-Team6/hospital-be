@@ -67,6 +67,15 @@ namespace IntegrationAPI.Controllers
         public List<BloodStatisticResponse> getUrgentStatistic(DateRange range)
         {
             List<BloodUnit> units = getUrgentUnits().Result.Value;
+
+            String pdfName = "SupplyStatistic " + range.From.Day.ToString() + "-" + range.From.Month.ToString() + "-" + range.From.Year.ToString() + "  " + range.To.Day.ToString() + "-" + range.To.Month.ToString() + "-" + range.To.Year.ToString() + ".pdf";
+            //String pdfName = "proba.pdf";
+            PDFReportDetails details = new PDFReportDetails(pdfName, range.From, range.To, IntegrationLibrary.Enums.PDFReportType.Supply);
+
+
+            sFTPService.UploadFileToRebexServer(pDFReportService.CreateDocumentInRange(bloodStatisticService.getUrgentStatistic(range, units)), pdfName);
+            pDFReportDetailsService.Create(details);
+
             return bloodStatisticService.getUrgentStatistic(range, units);
         }
 
