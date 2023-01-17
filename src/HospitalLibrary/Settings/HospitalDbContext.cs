@@ -235,7 +235,7 @@ namespace HospitalLibrary.Settings
             {
                 Id = Guid.NewGuid(),
                 FloorId = floor11.Id,
-                Name = "A11",
+                Name = "G1",
                 BuildingId = floor11.BuildingId,
                 Type = RoomType.EXAMINATION
             };
@@ -246,15 +246,93 @@ namespace HospitalLibrary.Settings
                 RoomId = room1.Id,
                 PositionX = 0,
                 PositionY = 0,
-                Lenght = 5,
+                Lenght = 6,
                 Width = 5
             };
+
+            Room room13 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor11.Id,
+                Name = "G3",
+                BuildingId = floor11.BuildingId,
+                Type = RoomType.EXAMINATION
+            };
+            
+            GRoom gRoom13 = new()
+            {
+                Id = Guid.NewGuid(),
+                RoomId = room13.Id,
+                PositionX = 10,
+                PositionY = 0,
+                Lenght = 6,
+                Width = 5
+            };
+            Room room14 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor11.Id,
+                Name = "G4",
+                BuildingId = floor11.BuildingId,
+                Type = RoomType.EXAMINATION
+            };
+            
+            GRoom gRoom14 = new()
+            {
+                Id = Guid.NewGuid(),
+                RoomId = room14.Id,
+                PositionX = 15,
+                PositionY = 0,
+                Lenght = 6,
+                Width = 5
+            };
+            Room room15 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor11.Id,
+                Name = "H",
+                BuildingId = floor11.BuildingId,
+                Type = RoomType.EXAMINATION
+            };
+            
+            GRoom gRoom15 = new()
+            {
+                Id = Guid.NewGuid(),
+                RoomId = room15.Id,
+                PositionX = 0,
+                PositionY = 6,
+                Lenght = 3,
+                Width = 20
+            };
+            
+            Room room16 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor11.Id,
+                Name = "C1",
+                BuildingId = floor11.BuildingId,
+                Type = RoomType.EXAMINATION
+            };
+            
+            GRoom gRoom16 = new()
+            {
+                Id = Guid.NewGuid(),
+                RoomId = room16.Id,
+                PositionX = 0,
+                PositionY = 9,
+                Lenght = 6,
+                Width = 20
+            };
             room1.GRoomId = gRoom1.Id;
+            room13.GRoomId = gRoom13.Id;
+            room14.GRoomId = gRoom14.Id;
+            room15.GRoomId = gRoom15.Id;
+            room16.GRoomId = gRoom16.Id;
             Room room2 = new()
             {
                 Id = Guid.NewGuid(),
                 FloorId = floor11.Id,
-                Name = "B11",
+                Name = "G21",
                 BuildingId = floor11.BuildingId,
                 Type = RoomType.EXAMINATION
             };
@@ -263,16 +341,17 @@ namespace HospitalLibrary.Settings
                 Id = Guid.NewGuid(),
                 RoomId = room2.Id,
                 PositionX = 5,
-                PositionY  = 0,
-                Lenght = 5,
+                PositionY = 0,
+                Lenght = 6,
                 Width = 5
             };
             room2.GRoomId = gRoom2.Id;
+            ////
             Room room3 = new()
             {
                 Id = Guid.NewGuid(),
                 FloorId = floor12.Id,
-                Name = "A12",
+                Name = "F1",
                 BuildingId = floor12.BuildingId,
                 Type = RoomType.EXAMINATION
             };
@@ -280,12 +359,92 @@ namespace HospitalLibrary.Settings
             {
                 Id = Guid.NewGuid(),
                 RoomId = room3.Id,
-                PositionX = 5,
+                PositionX = 0,
                 PositionY  = 0,
-                Lenght = 5,
-                Width = 5
+                Lenght = 10,
+                Width = 8
             };
             room3.GRoomId = gRoom3.Id;
+            
+            Room room31 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor12.Id,
+                Name = "F2",
+                BuildingId = floor12.BuildingId,
+                Type = RoomType.EXAMINATION
+            };
+            GRoom gRoom31 = new()
+            {
+                Id = Guid.NewGuid(),
+                RoomId = room31.Id,
+                PositionX = 0,
+                PositionY  = 10,
+                Lenght = 5,
+                Width = 8
+            };
+            room31.GRoomId = gRoom31.Id;
+            
+            
+            Room room32 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor12.Id,
+                Name = "F3",
+                BuildingId = floor12.BuildingId,
+                Type = RoomType.EXAMINATION
+            };
+            GRoom gRoom32 = new()
+            {
+                Id = Guid.NewGuid(),
+                RoomId = room32.Id,
+                PositionX = 12,
+                PositionY  = 0,
+                Lenght = 10,
+                Width = 8
+            };
+            room32.GRoomId = gRoom32.Id;
+            Room room33 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor12.Id,
+                Name = "F4",
+                BuildingId = floor12.BuildingId,
+                Type = RoomType.EXAMINATION
+            };
+            GRoom gRoom33 = new()
+            {
+                Id = Guid.NewGuid(),
+                RoomId = room33.Id,
+                PositionX = 12,
+                PositionY  = 10,
+                Lenght = 5,
+                Width = 8
+            };
+            room33.GRoomId = gRoom33.Id;
+            
+            Room room34 = new()
+            {
+                Id = Guid.NewGuid(),
+                FloorId = floor12.Id,
+                Name = "H",
+                BuildingId = floor12.BuildingId,
+                Type = RoomType.EXAMINATION
+            };
+            GRoom gRoom34 = new()
+            {
+                Id = Guid.NewGuid(),
+                RoomId = room34.Id,
+                PositionX = 8,
+                PositionY  = 0,
+                Lenght = 15,
+                Width = 4
+            };
+            room34.GRoomId = gRoom34.Id;
+
+            
+            
+            ///
             Room room4 = new()
             {
                 Id = Guid.NewGuid(),
@@ -395,11 +554,34 @@ namespace HospitalLibrary.Settings
                 Width = 5
             };
             room9.GRoomId = gRoom9.Id;
+            
+            
+            Room room10 = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "C23",
+                FloorId = floor23.Id,
+                BuildingId = floor23.BuildingId,
+                Type = RoomType.MEETING_ROOM
+            };
+            GRoom gRoom10 = new()
+            {
+                Id = Guid.NewGuid(),
+                RoomId = room10.Id,
+                PositionX = 15,
+                PositionY  = 0,
+                Lenght = 10,
+                Width = 5
+            };
+            room10.GRoomId = gRoom10.Id;
+            
             modelBuilder.Entity<Room>().HasData(
-                room1,room2,room3,room4,room5,room6,room7,room8,room9
+                room1,room2,room3,room4,room5,room6,room7,room8,room9,room10,room13,room14,room15,room16,
+                room31,room32,room33,room34
             );
             modelBuilder.Entity<GRoom>().HasData(
-                gRoom1,gRoom2,gRoom3,gRoom4,gRoom5,gRoom6,gRoom7,gRoom8,gRoom9
+                gRoom1,gRoom2,gRoom3,gRoom4,gRoom5,gRoom6,gRoom7,gRoom8,gRoom9,gRoom10,
+                gRoom13,gRoom14,gRoom15,gRoom16,gRoom31,gRoom32,gRoom33,gRoom34
             );
 
             RoomEquipment roomEquipment1 = new()
