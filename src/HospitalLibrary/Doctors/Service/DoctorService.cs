@@ -70,7 +70,7 @@ namespace HospitalLibrary.Doctors.Service
                 DateRange newDuration = new DateRange();
                 newDuration.From = appointmentSuggestion.Duration.From;
                 int ctr = 0;
-                while (newDuration.From > DateTime.Now.AddDays(1)  && ctr < 5 )
+                while (newDuration.From > DateTime.Now.AddDays(2)  && ctr < 5 )
                 {
                     ctr++;
                     newDuration.From = newDuration.From.AddDays(-1);
