@@ -93,5 +93,14 @@ namespace HospitalLibrary.BloodUnits.Model
             Date = date;
             Source = source;
         }
+
+        public BloodUnit(int amount,BloodType bloodType, string bloodBankName, DateTime date, string source)
+        {
+            Amount = amount;
+            BloodType = bloodType;
+            BloodBankName = bloodBankName;
+            Date = date;
+            Source = source;
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace IntegrationLibrary.SFTP.Service
         {
             byte[] fileData = new byte[16 * 1024];
 
-            using (SftpClient client = new SftpClient("192.168.0.17", 2222, "tester", "password"))
+            using (SftpClient client = new SftpClient("127.0.0.1", 2222, "tester", "password"))
             {
                 client.Connect();
 
@@ -34,7 +34,7 @@ namespace IntegrationLibrary.SFTP.Service
 
         public void ShowAllFilesFromRebexServer()
         {
-            using (SftpClient client = new SftpClient("192.168.0.17", 2222, "tester", "password"))
+            using (SftpClient client = new SftpClient("127.0.0.1", 2222, "tester", "password"))
             {
                 client.Connect();
 
@@ -50,7 +50,7 @@ namespace IntegrationLibrary.SFTP.Service
 
         public void UploadFileToRebexServer(byte[] file, String fileName)
         {
-            using (SftpClient client = new SftpClient("192.168.0.17", 2222, "tester", "password")) 
+            using (SftpClient client = new SftpClient("127.0.0.1", 2222, "tester", "password")) 
             {
                 client.Connect();
 
