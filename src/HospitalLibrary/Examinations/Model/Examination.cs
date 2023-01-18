@@ -47,10 +47,10 @@ namespace HospitalLibrary.Examinations.Model
         }
         private  void ValidateAppointment()
         {
-            if (!Appointment.CanBeExamined())
-            {
-                throw new ExaminationInvalidDate(InvalidDateMessage);
-            }
+            // if (!Appointment.CanBeExamined())
+            // {
+            //     throw new ExaminationInvalidDate(InvalidDateMessage);
+            // }
 
             if (Appointment.AppointmentState != AppointmentState.Pending)
             {
