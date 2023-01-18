@@ -66,17 +66,19 @@ namespace HospitalLibrary.Doctors.Service
             Doctor doctor = await _unitOfWork.DoctorRepository.GetByIdAsync(appointmentSuggestion.DoctorId);
             try
             {
+                
                 DateRange newDuration = new DateRange();
                 newDuration.From = appointmentSuggestion.Duration.From;
                 int ctr = 0;
-                while (newDuration.From > DateTime.Now  && ctr < 6 )
+                while (newDuration.From > DateTime.Now.AddDays(2)  && ctr < 5 )
                 {
                     ctr++;
-                    newDuration.From = appointmentSuggestion.Duration.From.AddDays(-1);
+                    newDuration.From = newDuration.From.AddDays(-1);
                 }
                 //newDuration.From = appointmentSuggestion.Duration.From.AddDays(-5);
                 newDuration.To = appointmentSuggestion.Duration.To.AddDays(5);
                 IEnumerable<DateRange> freeTermsChosenDoctor = await generateFreeTimeSpans(newDuration, appointmentSuggestion.DoctorId);
+               
                 if (freeTermsChosenDoctor.Any())
                 {
                     foreach (var term in freeTermsChosenDoctor)
@@ -97,6 +99,7 @@ namespace HospitalLibrary.Doctors.Service
             
 
             }
+            
             return freeAppointments;
             
         }
@@ -170,6 +173,7 @@ namespace HospitalLibrary.Doctors.Service
         {
             Boolean found = false;
             await Validate(selectedDateSpan, doctorId);
+            Console.WriteLine("x");
             IEnumerable<DateRange> busyHours = await getBusyHours(selectedDateSpan, doctorId);
             IEnumerable<DateRange> freeHours = new List<DateRange>();
             DateTime endDate = selectedDateSpan.To;

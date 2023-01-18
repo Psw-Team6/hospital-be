@@ -139,12 +139,11 @@ namespace HospitalAPI.Controllers
             a.Duration = appointmentRangeResponse.Duration;
             if (time)
             {
+                Console.WriteLine("time");
                 var ranges = await _doctorService.GetFreeTermsByTimeRangePriority(a); 
                 return ranges == null ? NotFound() : Ok(ranges);
                
             }
-
-            Console.WriteLine("X");
             var ranges2 = await _doctorService.GetFreeTermsByDoctorPriority(a);
             return ranges2 == null ? NotFound() : Ok(ranges2);
         }

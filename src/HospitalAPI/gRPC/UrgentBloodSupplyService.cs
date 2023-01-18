@@ -27,7 +27,8 @@ namespace HospitalAPI.gRPC
             if(response.BloodBankName != "")
             {
                 BloodType bt = ConvertToBloodType(response.BloodType);
-                BloodUnit bloodUnit = new BloodUnit(response.Quantity, bt, response.BloodBankName);
+                //BloodUnit bloodUnit = new BloodUnit(response.Quantity, bt, response.BloodBankName);
+                BloodUnit bloodUnit = new BloodUnit(response.Quantity, bt, response.BloodBankName, DateTime.Now, "URGENT");
 
                 await _bloodUnitService.Create(bloodUnit);
                 Console.WriteLine("ODGOVOR:");

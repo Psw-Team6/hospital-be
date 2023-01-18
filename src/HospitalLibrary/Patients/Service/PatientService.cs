@@ -48,8 +48,7 @@ namespace HospitalLibrary.Patients.Service
             patient.UserRole = UserRole.Patient;
             patient.IsBlocked = false;
             patient.CalculateAge();
-            patient.Jmbg = new Jmbg(patient.Jmbg.Text);
-            patient.Jmbg.ValidateJmbg();
+            patient.Jmbg = patient.Jmbg;
             List<Allergen> allergens = new List<Allergen>();
             foreach (var id in patient.AllergyIds)
             {
