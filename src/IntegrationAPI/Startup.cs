@@ -35,6 +35,7 @@ using IntegrationLibrary.SFTP.Service;
 using IntegrationLibrary.BloodStatistic.Service;
 using IntegrationLibrary.PDFReportDetails.Service;
 using IntegrationLibrary.PDFReportDetails.Repository;
+using IntegrationLibrary.RabbitMQService.VehicleCoordinate;
 
 namespace IntegrationAPI
 {
@@ -101,6 +102,10 @@ namespace IntegrationAPI
             services.AddScoped<IBloodSubscriptionService, BloodSubscriptionService>();
             services.AddScoped<IMounthlyBloodSubscriptionRepository, MounthlyBloodSubscriptionRepository>();
             services.AddScoped<ISFTPService, SFTPService>();
+
+            services.AddScoped<IVehicleCoordinateSender, VehicleCoordinateSender>();
+            services.AddScoped<IVehicleMovementService, VehicleMovementService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
