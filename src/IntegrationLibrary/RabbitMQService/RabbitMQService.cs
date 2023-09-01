@@ -129,7 +129,7 @@ namespace IntegrationLibrary.RabbitMQService
             
         }
 
-        /*private void reciveResponseForBloodSubscription(CancellationToken cancellationToken)
+        private void reciveResponseForBloodSubscription(CancellationToken cancellationToken)
         {
             try
             {
@@ -189,7 +189,7 @@ namespace IntegrationLibrary.RabbitMQService
             catch (Exception e) 
             {  
             }
-        }*/
+        }
 
         private BloodBank.BloodBank getByApiKey(String apikey, List<BloodBank.BloodBank> bloodBanks) 
         {
