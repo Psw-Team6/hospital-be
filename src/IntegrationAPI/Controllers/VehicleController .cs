@@ -24,26 +24,38 @@ namespace IntegrationAPI.Controllers {
     public class VehicleController : ControllerBase
     {
         private readonly IVehicleMovementService _vehicleMovementService;
+        private readonly IVehicleCoordinateSender _vehicleCoordinateSender;
 
-        public VehicleController(IVehicleMovementService vehicleMovementService)
+        public VehicleController(IVehicleMovementService vehicleMovementService, IVehicleCoordinateSender vehicleCoordinateSender)
         {
             _vehicleMovementService = vehicleMovementService;
-        }
+            _vehicleCoordinateSender = vehicleCoordinateSender;
+        }   
 
         [HttpPost]
         public IActionResult StartVehicleMovement()
         {
+            List<Tuple<double, double>> coordinates = new List<Tuple<double, double>>
+        {
+            Tuple.Create(-22.9, -43.1),
+            Tuple.Create(-34.6, -58.3),
+            Tuple.Create(-33.8, 151.2),
+            Tuple.Create(-33.9, 18.4),
+            Tuple.Create(-36.8, 174.7)
+        };
+
+            Random random = new Random();
+            int randomIndex = random.Next(0, coordinates.Count);
+            Tuple<double, double> randomCoordinates = coordinates[randomIndex];
             // Fiksirane koordinate tačke A i tačke B
-            double startLatitude = 42.123456;
-            double startLongitude = 18.654321;
-            double endLatitude = 42.987654;
-            double endLongitude = 19.876543;
+            double startLatitude = randomCoordinates.Item1;
+            double startLongitude = randomCoordinates.Item2;
+           
 
-            double steps = 10; // Broj koraka (koordinata) između A i B
+            //_vehicleMovementService.StartMoving(startLatitude, startLongitude, endLatitude, endLongitude, steps);
+            _vehicleCoordinateSender.SendCoordinates(startLatitude, startLongitude, 10, 0);
 
-            _vehicleMovementService.StartMoving(startLatitude, startLongitude, endLatitude, endLongitude, steps);
-
-            return Ok("Kretanje vozila završeno.");
+            return Ok("Zahtjev poslat.");
         }
     }
 }

@@ -8,7 +8,7 @@ namespace IntegrationLibrary.RabbitMQService.VehicleCoordinate
 {
     public class VehicleCoordinateSender:IVehicleCoordinateSender
     {
-        public void SendCoordinates(double latitude, double longitude)
+        public void SendCoordinates(double latitude, double longitude, int bloodUnits, int status)
         {
             //var factory = new ConnectionFactory { HostName = "localhost" };
             var factory = new ConnectionFactory
@@ -28,7 +28,10 @@ namespace IntegrationLibrary.RabbitMQService.VehicleCoordinate
             var coordinates = new
             {
                 Latitude = latitude,
-                Longitude = longitude
+                Longitude = longitude,
+                BloodUnits = bloodUnits,
+                Status  = status
+
             };
 
             var json = JsonConvert.SerializeObject(coordinates);

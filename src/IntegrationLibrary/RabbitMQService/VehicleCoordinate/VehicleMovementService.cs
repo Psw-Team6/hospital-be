@@ -22,7 +22,7 @@ namespace IntegrationLibrary.RabbitMQService.VehicleCoordinate
 
             for (int i = 0; i <= steps; i++)
             {
-                _coordinateSender.SendCoordinates(currentLatitude, currentLongitude);
+                //_coordinateSender.SendCoordinates(currentLatitude, currentLongitude);
 
                 currentLatitude += latitudeStep;
                 currentLongitude += longitudeStep;
@@ -30,7 +30,7 @@ namespace IntegrationLibrary.RabbitMQService.VehicleCoordinate
                 Thread.Sleep(1000); // Pauza od 1 sekunde između koordinata
             }
 
-            _coordinateSender.SendCoordinates(endLatitude, endLongitude);
+            //_coordinateSender.SendCoordinates(endLatitude, endLongitude);
         }
     }
 }
